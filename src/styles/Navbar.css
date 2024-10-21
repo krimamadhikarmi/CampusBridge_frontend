@@ -1,0 +1,33 @@
+#nav {
+  background-color: rgb(105, 94, 80);
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+#nav .logo{
+  margin-right: 50px;
+  margin-left:50px ;
+}
+
+.menuitem {
+  display: flex;
+  gap: 100px;
+  margin-left: 160px;
+}
+
+#nav a {
+  text-decoration: none;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+#nav a:hover {
+  color: rgb(74, 71, 71);
+}
+
+.user{
+  margin-left: 100px;
+}
