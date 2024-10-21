@@ -6,22 +6,22 @@ const Navbar = () => {
   return (
     <div id="nav">
       <div className="logo">
-        <a href="/">
+        <a href="/dashboard">
           <img src="logo192.png" alt="Logo" width={50} />
           {/* yo logo just ahile lai place bauna matra haleko pachi replace garne */}
         </a>
       </div>
       <div className="menuitem">
-        <a href="/">Syllabus</a>
-        <a href="/">Assesment</a>
-        <a href="/">Result</a>
-        <a href="/">Articles</a>
-        <a href="/">Notices</a>
-        <a href="/">Help</a>
+        <a href="/syllabus">Syllabus</a>
+        <a href="/assesment">Assesment</a>
+        <a href="/result">Result</a>
+        <a href="/articles">Articles</a>
+        <a href="/notices">Notices</a>
+        <a href="/help">Help</a>
       </div>
       <div className="user">
-        <a href="/">
-          <FontAwesomeIcon icon={faUser} /> {/* Use Font Awesome icon */}
+        <a href="/profile">
+          <FontAwesomeIcon icon={faUser} /> 
         </a>
       </div>
     </div>

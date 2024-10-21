@@ -6,20 +6,33 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import DashBoard from './pages/Dashboard';
+import Syllabus from './pages/Syllabus';
+import Assesment from './pages/Assesment';
+import Result from './pages/Result';
+import Articles from './pages/Articles';
+import Notices from './pages/Notices';
+import Help from './pages/Help';
+import Profile from './pages/Profile';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-     <Routes>
-      <Route path='/' element={<App/>}>
-      <Route index element={<Login/>}/>
-      <Route path='/dashboard' element={<DashBoard/>}/>
-      </Route>
-     </Routes>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<Login />} />
+          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/syllabus" element={<Syllabus />} />
+          <Route path="/assesment" element={<Assesment />} />
+          <Route path="/result" element={<Result />} />
+          <Route path="/articles" element={<Articles />} />
+          <Route path="/notices" element={<Notices />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
-  
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
