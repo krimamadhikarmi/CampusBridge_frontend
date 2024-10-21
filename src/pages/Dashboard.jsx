@@ -1,5 +1,7 @@
+import ChatBox from '../components/Chatbox';
 import Navbar from '../components/Navbar';
 import '../styles/Dashboard.css';
+
 
 const DashBoard = () => {
   return (
@@ -15,12 +17,14 @@ const DashBoard = () => {
           </div>
           <div className=" box box2">Academic Calendar</div>
         </div>
-        <div className="content2">Upcoming Event
-        <div className="maincontent">
-              <p> No content</p>
-            </div>
+        <div className="content2">
+          Upcoming Event
+          <div className="maincontent">
+            <p> No content</p>
+          </div>
         </div>
       </div>
+      <ChatBox/>
     </>
   );
 };

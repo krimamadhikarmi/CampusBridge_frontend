@@ -65,3 +65,18 @@ body {
   align-items: center;
 
 }
+.chatIcon {
+  position: fixed; 
+  right: 20px;
+  bottom: 20px; 
+  border: 1px solid whitesmoke;
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  background-color: #4b8282;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
