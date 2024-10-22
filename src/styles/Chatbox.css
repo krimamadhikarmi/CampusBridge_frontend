@@ -1,0 +1,106 @@
+.chatIcon {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  border: 1px solid whitesmoke;
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  background-color: #4b8282;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.chatIcon:hover {
+  background-color: #004d4d; /* Change color on hover */
+}
+
+.chatBox {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  width: 300px;
+  height: 400px;
+  border-radius: 12px;
+  background-color: #fffff0; /* Ivory background */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.chathead {
+  background-color: #004d4d;
+  height: 50px;
+  font-weight: bold;
+  color: #fffff0;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* .chatBox h3 {
+    margin: 20px 0 10px 20px;
+    color: #004d4d;
+  }
+  
+  .chatBox p {
+    margin-left: 20px;
+    color: #555; /* Soft text color 
+  } */
+.closebutton {
+  position: absolute;
+  right: 18px;
+  top: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.closebutton :hover {
+  background-color: #047272;
+  border-radius: 4px;
+}
+
+.querybox {
+  display: flex;
+  bottom: 10px;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+  margin-top: auto;
+  border-top: 1px solid #ccc; 
+}
+
+.textbox input {
+  border-radius: 10px;
+  border: 1px solid #004d4d;
+  padding: 10px 15px;
+  width: 180px;
+  font-size: 16px;
+  outline: none; 
+}
+.textbox input::placeholder {
+  color: #888;
+}
+
+.submitbutton {
+  background-color: #004d4d;
+  color: #fffff0;
+  font-size: 16px;
+  padding: 6px 12px;
+  margin-left: 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.submitButton:hover {
+    background-color: #556B2F; /* Dark Olive Green on hover */
+  }
