@@ -48,60 +48,74 @@
 }
 
 /* general tab style */
-
 .generaltab-style {
-  width: 580px;
-  height: 690px;
+  width: 500px;
+  height: auto;
   border-radius: 20px;
   background-color: #d9ead3;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-  padding-left: 25px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* softer shadow for a more modern look */
+  padding: 25px;
   padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   position: absolute;
-  top:57%;
-  left:59%;
+  top: 57%;
+  left: 59%;
+  transform: translate(-50%, -50%);
   max-height: 495px;
   overflow-y: auto;
-  transform: translate(-50%, -50%); 
 }
+
+/* Profile picture styling */
 .profile-picture {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  width: 190px;
-  height: 190px;
+  width: 160px; 
+  height: 160px;
   background-color: #fffff0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
-  margin-top: 30px;
-  margin-right: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+  margin-top: 20px;
+  margin-right: 0px;
 }
-.introduction {
-  font-weight: bold;
-  color: #004d4d;
-  font-size: 18px;
-  text-align: center;
-}
+
+/* Header section styling */
 .header-part {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 16px;
 }
-.profile-details {
-  font-size: 18px;
-  line-height: 3.5;
+
+.header-part h2 {
   color: #004d4d;
-  padding: 15px;
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.profile-details {
+  font-size: 20px;
+  line-height: 1.8;
+  color: #004d4d;
+  padding: 20px;
   border-radius: 10px;
   max-width: 400px;
-  
+  margin-top: 15px;
 }
+
 .profile-details p {
   margin: 0;
+  margin-bottom: 15px;
+}
+
+.profile-details b {
+  font-weight: bold;
 }
 
 .generaltab-style::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
