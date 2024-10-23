@@ -1,17 +1,16 @@
 .sidebar {
-  background-color: #004d4d; 
-  color: #fffff0; 
+  background-color: #004d4d;
+  color: #fffff0;
   width: 150px;
-  height: auto;
+  height: 75vh;
   position: fixed;
-  top: 125px;
+  top: 100px;
   left: 10px;
   padding: 20px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  
 }
 
 .sidebar p {
@@ -30,4 +29,14 @@
 
 .sidebar p:active {
   background-color: #4b8282;
+}
+.profile-container {
+  display: flex;
+}
+.content-area {
+  margin-left: 220px;
+  padding: 20px;
+  width: calc(100% - 220px);
+  margin-top: 100px; 
+  margin-right: 20px;
 }
