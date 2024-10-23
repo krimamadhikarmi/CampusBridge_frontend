@@ -1,13 +1,18 @@
 #nav {
-  background-color: #004D4D;
+  background-color: #004d4d;
   height: 70px;
   width: 100%;
   display: flex;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
 }
-#nav .logo{
+#nav .logo {
   margin-right: 50px;
-  margin-left:50px ;
+  margin-left: 50px;
 }
 
 .menuitem {
@@ -28,6 +33,6 @@
   color: #a7bba0;
 }
 
-.user{
+.user {
   margin-left: 100px;
 }

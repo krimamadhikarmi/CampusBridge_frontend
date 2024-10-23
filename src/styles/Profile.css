@@ -1,0 +1,33 @@
+.sidebar {
+  background-color: #004d4d; 
+  color: #fffff0; 
+  width: 150px;
+  height: auto;
+  position: fixed;
+  top: 125px;
+  left: 10px;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+}
+
+.sidebar p {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  color: #fffff0;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.sidebar p:hover {
+  background-color: #4b8282;
+}
+
+.sidebar p:active {
+  background-color: #4b8282;
+}

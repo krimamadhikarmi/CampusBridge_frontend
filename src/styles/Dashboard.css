@@ -5,6 +5,7 @@ body {
 }
 .dashContent {
   padding: 20px;
+  margin-top: 80px; 
 }
 .content1 {
   display: grid;
