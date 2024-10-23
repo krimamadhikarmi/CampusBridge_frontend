@@ -1,3 +1,5 @@
+/* side bar style */
+
 .sidebar {
   background-color: #004d4d;
   color: #fffff0;
@@ -44,3 +46,37 @@
   background-color: #498080;
   font-weight: bold;
 }
+
+.tab-style {
+  width: auto;
+  height: 100vh;
+  border-radius: 20px;
+  background-color: #d9ead3;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+/* general tab style */
+.profile-picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 190px;
+  height: 190px;
+  background-color: #fffff0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+  0 6px 20px rgba(0, 0, 0, 0.19); 
+  margin-top: 30px;
+}
+.introduction {
+  font-weight: bold;
+  color: #004d4d; 
+  font-size: 16px; 
+  text-align: center;
+  margin-top: 8px; 
+  padding: 10px;
+  line-height: 1.5;
+}
+

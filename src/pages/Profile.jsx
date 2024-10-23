@@ -20,7 +20,7 @@ const Profile = () => {
         return <MyClubTab />;
       case 'Account':
         return <AccountTab />;
-      case 'Assement':
+      case 'Assesment':
         return <AssesmentTab />;
       default:
         return <GeneralTab />;
