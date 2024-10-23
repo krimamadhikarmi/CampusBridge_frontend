@@ -30,7 +30,7 @@ const Profile = () => {
     <>
       <Navbar />
       <div className="profile-container">
-        <Sidebar setIsActiveTab={setIsActiveTab} />
+        <Sidebar setIsActiveTab={setIsActiveTab} isActiveTab={isActiveTab} />
         <div className="content-area">{renderTab()}</div>
       </div>
     </>
