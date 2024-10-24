@@ -60,7 +60,7 @@
   flex-direction: column;
   justify-content: flex-start;
   position: absolute;
-  top: 57%;
+  top: 59%;
   left: 59%;
   transform: translate(-50%, -50%);
   max-height: 495px;
@@ -73,10 +73,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  width: 160px; 
+  width: 160px;
   height: 160px;
   background-color: #fffff0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
   margin-right: 0px;
 }
@@ -85,17 +85,30 @@
 .header-part {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   text-align: center;
   margin-bottom: 16px;
+  margin-top: 12px;
 }
 
-.header-part h2 {
+.profile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0px 20px;
+  position: relative;
+}
+.profile-header h2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   color: #004d4d;
   font-size: 24px;
-  margin-bottom: 6px;
+  margin-bottom: 32px;
+
 }
+
 
 .profile-details {
   font-size: 20px;
@@ -118,4 +131,11 @@
 
 .generaltab-style::-webkit-scrollbar {
   display: none;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 20px; 
+  cursor: pointer;
+  font-size: 24px;
 }

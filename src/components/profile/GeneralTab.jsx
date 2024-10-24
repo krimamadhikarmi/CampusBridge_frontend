@@ -1,9 +1,17 @@
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'; // Import specific icon
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 const GeneralTab = () => {
   return (
     <div className="generaltab-style">
       <div>
         <div className="header-part">
-          <h2>Your Profile</h2>
+          <div className="profile-header">
+            <h2>Your Profile</h2>
+            <div className="edit-icon">
+              <FontAwesomeIcon icon={faPenToSquare} color="#004d4d" />
+            </div>
+          </div>
           <div className="profile-picture">
             <img src="girl.webp" alt="girl" width={140} />
           </div>
