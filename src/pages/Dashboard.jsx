@@ -2,7 +2,6 @@ import ChatBox from '../components/Chatbox';
 import Navbar from '../components/Navbar';
 import '../styles/Dashboard.css';
 
-
 const DashBoard = () => {
   return (
     <>
@@ -24,7 +23,7 @@ const DashBoard = () => {
           </div>
         </div>
       </div>
-      <ChatBox/>
+      <ChatBox />
     </>
   );
 };
