@@ -165,19 +165,6 @@
   border-bottom: 2px solid #004d4d;
   margin-bottom: 12px;
 }
-.closebutton {
-  position: absolute;
-  right: 18px;
-  top: 29px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.closebutton :hover {
-  background-color: #ceeaea;
-  border-radius: 4px;
-}
 
 .form-fields {
   display: flex;
@@ -273,7 +260,7 @@
 
 .club-card {
   border: 1px solid #ccc;
-  background-color:#8AB6A1;
+  background-color: #8ab6a1;
   width: 250px;
   height: 290px;
   border-radius: 20px;
@@ -293,22 +280,22 @@
 
 .club-title {
   font-size: 24px;
-  color: #004D4D;
+  color: #004d4d;
   font-weight: bold;
   margin-bottom: 5px;
 }
 .club-image {
   width: 100%;
-  height: 177.5px; 
+  height: 177.5px;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .club-image img {
-  width: 100%;          /* Set width to 100% of the container */
-  height: 100%;         /* Set height to 100% of the container */
-  object-fit: cover;    /* Ensures image fits without overflow */
+  width: 100%; /* Set width to 100% of the container */
+  height: 100%; /* Set height to 100% of the container */
+  object-fit: cover; /* Ensures image fits without overflow */
   border-radius: 10px;
 }
 .club-button {

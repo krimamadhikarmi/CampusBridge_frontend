@@ -55,19 +55,7 @@
     margin-left: 20px;
     color: #555; /* Soft text color 
   } */
-.closebutton {
-  position: absolute;
-  right: 18px;
-  top: 15px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
 
-.closebutton :hover {
-  background-color: #047272;
-  border-radius: 4px;
-}
 
 .querybox {
   display: flex;

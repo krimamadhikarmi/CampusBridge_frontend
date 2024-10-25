@@ -1,0 +1,27 @@
+.closebutton.editform {
+  position: absolute;
+  right: 18px;
+  top: 29px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.closebutton.editform:hover {
+  background-color: #ceeaea;
+  border-radius: 4px;
+}
+
+.closebutton.chatbox {
+  position: absolute;
+  right: 18px;
+  top: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.closebutton.chatbox:hover {
+  background-color: #047272;
+  border-radius: 4px;
+}

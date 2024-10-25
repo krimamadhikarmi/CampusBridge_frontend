@@ -28,7 +28,7 @@ const EditForm = ({ toogleEditForm }) => {
       <div className="edit-form">
         <div className="form-head">
           Edit Your Profile
-          <CloseButton toggleBox={toogleEditForm} fill={'#004d4d'} />
+          <CloseButton toggleBox={toogleEditForm} fill={'#004d4d'} variant={"editform"} />
         </div>
         <div>
           <form onSubmit={handleSubmit} className="form-fields">

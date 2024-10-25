@@ -1,6 +1,7 @@
-const CloseButton = ({ toggleBox,fill}) => {
+import '../styles/closeButton.css';
+const CloseButton = ({ toggleBox, fill, variant }) => {
   return (
-    <div className="closebutton">
+    <div className={`closebutton ${variant}`}>
       {/* Add the SVG as a close button */}
       <svg
         xmlns="http://www.w3.org/2000/svg"

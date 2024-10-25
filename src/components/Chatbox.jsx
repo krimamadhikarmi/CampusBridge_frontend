@@ -20,7 +20,7 @@ const ChatBox = () => {
         <div className="chatBox">
           <div className="chathead">
             ChatAI
-            <CloseButton toggleBox={toggleChatBox} fill={"white"}/>
+            <CloseButton toggleBox={toggleChatBox} fill={"white"} variant={"chatbox"}/>
           </div>
           
           <div className='querybox'>
