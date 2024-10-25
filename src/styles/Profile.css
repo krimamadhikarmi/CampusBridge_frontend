@@ -244,3 +244,85 @@
 .form-field-data .form-field {
   flex: 1;
 }
+
+/* myclub styles */
+.tab-style {
+  width: 100%;
+  max-width: 965px;
+  height: auto;
+  margin: auto;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #d9ead3;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tab-header h1 {
+  color: #004d4d;
+  text-align: center;
+  font-size: 38px;
+  margin-bottom: 25px;
+}
+
+.clubs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  padding: 15px;
+}
+
+.club-card {
+  border: 1px solid #ccc;
+  background-color:#8AB6A1;
+  width: 250px;
+  height: 290px;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+
+.club-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.club-title {
+  font-size: 24px;
+  color: #004D4D;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.club-image {
+  width: 100%;
+  height: 177.5px; 
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.club-image img {
+  width: 100%;          /* Set width to 100% of the container */
+  height: 100%;         /* Set height to 100% of the container */
+  object-fit: cover;    /* Ensures image fits without overflow */
+  border-radius: 10px;
+}
+.club-button {
+  padding: 10px 20px;
+  font-size: 17px;
+  border-radius: 8px;
+  border: none;
+  color: #fffff0;
+  background-color: #0e9797;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100px;
+}
+
+.club-button:hover {
+  background-color: #498080;
+}
