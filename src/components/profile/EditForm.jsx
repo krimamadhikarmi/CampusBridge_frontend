@@ -45,7 +45,7 @@ const EditForm = ({ toogleEditForm }) => {
         </div>
         <div>
           <form onSubmit={handleSubmit} className="form-fields">
-            <CustomFormField label={'Name'} name={'name'} value={formData.name} type={'text'} />
+            <CustomFormField label={'Name'} name={'name'} value={formData.name} type={'text'} readOnly={true} />
             <div className="form-field-data">
               <div>
                 <CustomFormField

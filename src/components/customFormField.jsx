@@ -1,4 +1,4 @@
-const CustomFormField = ({ label, name, placeholder, type, value, cname, onChange }) => {
+const CustomFormField = ({ label, name, placeholder, type, value, cname, onChange,readOnly}) => {
   return (
     <>
       <p id="login-label">
@@ -11,6 +11,7 @@ const CustomFormField = ({ label, name, placeholder, type, value, cname, onChang
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        readOnly={readOnly}
       />
     </>
   );
