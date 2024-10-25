@@ -138,35 +138,37 @@
   font-size: 24px;
 }
 
+/* edit form styling */
 .edit-form {
   position: fixed;
-  width: 500px;
-  height: 450px;
+  width: 450px;
   border-radius: 12px;
   background-color: #fffff0;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   z-index: 100;
   display: flex;
   flex-direction: column;
+  padding: 25px;
+  border-radius: 8px;
+  max-height: 75vh;
+  overflow-y: auto;
 }
 
 .form-head {
-  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
   font-weight: bold;
   color: #004d4d;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  position: relative;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #004d4d;
+  margin-bottom: 12px;
 }
 .closebutton {
   position: absolute;
   right: 18px;
-  top: 15px;
+  top: 29px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -175,4 +177,70 @@
 .closebutton :hover {
   background-color: #ceeaea;
   border-radius: 4px;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-fields input {
+  padding: 9px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 95%;
+}
+.form-fields input:focus {
+  border-color: #004d4d;
+  box-shadow: 0 0 5px rgba(0, 77, 77, 0.3);
+  outline: none;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+.submit-button,
+.cancel-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.submit-button {
+  background: linear-gradient(135deg, #004d4d, #498080);
+  color: #fffff0;
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, #498080, #004d4d);
+  transform: translateY(-2px);
+}
+
+.cancel-button {
+  background-color: #a30707;
+  color: #fffff0;
+}
+
+.cancel-button:hover {
+  background-color: #d23636;
+  transform: translateY(-2px);
+}
+
+.edit-form::-webkit-scrollbar {
+  display: none;
+}
+
+.form-field-data {
+  display: flex;
+  gap: 24px;
+}
+
+.form-field-data .form-field {
+  flex: 1;
 }
