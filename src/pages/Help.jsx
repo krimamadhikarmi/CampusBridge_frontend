@@ -1,29 +1,3 @@
-// import Navbar from '../components/Navbar';
-// import '../styles/Help.css';
-
-// const Help = () => {
-//   return (
-//     <>
-//       <Navbar />
-//       <div className="help-header">
-//         <h2>Ask & Assit</h2>
-//       </div>
-//       <div className="help-box">
-//         <div className="question-box">
-//           <div className="question-form-header">
-//             <p className="form-header">Ask Your Question</p>
-//             <p>
-//               If you have any question related to courses,events or want to provide a feedback, feel free to ask it{' '}
-//             </p>
-//           </div>
-//         </div>
-//         <div className="rules-box">Rules</div>
-//       </div>
-//     </>
-//   );
-// };
-// export default Help;
-
 import Navbar from '../components/Navbar';
 import '../styles/Help.css';
 
