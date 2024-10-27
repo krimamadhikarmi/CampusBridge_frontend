@@ -2,12 +2,11 @@ import Navbar from '../components/Navbar';
 import '../styles/Help.css';
 
 const Help = () => {
-  const userName = 'Krima Madhikarmi'; // Replace this with actual user name from login data
+  const userName = 'Krima Madhikarmi'; 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    // You can now send formData to the backend, which includes the hidden name field
     console.log('Form Data:', Object.fromEntries(formData));
   };
 
@@ -49,8 +48,6 @@ const Help = () => {
                 <input type="checkbox" name="target[]" value="University" /> University
               </label>
             </div>
-
-            {/* Submit button */}
             <button type="submit" className="submit-button">
               Submit
             </button>
