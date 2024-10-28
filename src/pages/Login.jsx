@@ -4,27 +4,40 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate from react
 
 import '../styles/LoginStyle.css';
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (email.length === 0) {
-      alert('Please enter the email');
-      return;
+    const payload = { username, password }; // Create the payload
+    console.log('Payload:', payload); // Log the payload for debugging
+    try {
+      const response = await fetch('https://localhost:7276/api/Auth/Login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      console.log('Response:', response);
+      console.log('Login response data:', data);
+
+      if (response.ok) {
+        console.log('Login successful, navigating to dashboard');
+        navigate('/dashboard');
+      } else {
+        throw new Error(data.message || 'Invalid username or password');
+      }
+    } catch (err) {
+      console.error('Login failed:', err);
     }
-    if (password.length === 0) {
-      alert('Please enter the password');
-      return;
-    }
-    console.log('email', email);
-    console.log('password', password);
-    navigate('/dashboard');
   };
 
   const handleEmail = (event) => {
-    setEmail(event.target.value);
+    setUsername(event.target.value);
   };
   const handlePassword = (event) => {
     setPassword(event.target.value);
@@ -42,7 +55,7 @@ const Login = () => {
               cname="Email"
               placeholder="Enter your email"
               type="email"
-              value={email}
+              value={username}
               onChange={handleEmail}
             />
             <CustomFormField
