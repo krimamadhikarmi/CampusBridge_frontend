@@ -12,23 +12,37 @@ const Result = () => {
       <div className="result-box">
         {hasResult ? (
           <div className="result-present">
-            <div className="info-box">
-              <p className="label">Name</p>
-              <p className="value">Krima Madhikarmi</p>
-            </div>
-            <div className="info-box">
-              <p className="label">Semester</p>
-              <p className="value">7th Semester</p>
-            </div>
-            <div className="info-box">
-              <p className="label">Result</p>
-              <p className="value">Passed</p>
-            </div>
-            <div className="info-box">
-              <p className="label">Percentage</p>
-              <p className="value">70%</p>
-            </div>
-            <button className="view-button">View</button>
+            <table className="result-table">
+              <thead>
+                <tr>
+                  <th>Examination</th>
+                  <th>Semester</th>
+                  <th>Result</th>
+                  <th>Percentage</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mid Term</td>
+                  <td>7th Semester</td>
+                  <td>Passed</td>
+                  <td>70%</td>
+                  <td>
+                    <button className="view-button">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mid Term</td>
+                  <td>7th Semester</td>
+                  <td>Passed</td>
+                  <td>70%</td>
+                  <td>
+                    <button className="view-button">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         ) : (
           <div className="no-result">

@@ -1,45 +1,71 @@
 .result-box {
-  /* border: 1px solid #004d4d;  */
   width: 90vw;
-  max-width: 1100px;
-  margin: 20px auto;
-  padding: 20px;
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 25px;
   border-radius: 15px;
-  /* background-color: #fffff0;  */
 }
 
 .result-present {
-  display: flex;
-  gap: 80px;
-  /* justify-content: space-around; */
-  align-items: center;
   padding: 20px;
-  background-color: #f5f5dc; /* Light Beige */
   border-radius: 12px;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
 }
 
-.info-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 15px;
-  /* border: 1px solid #e0e0e0; */
-  /* background-color: #ffffff; */
-  border-radius: 8px;
-  width: 150px;
+.result-table th,
+.result-table td {
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.label {
+.result-table th {
+  background-color: #004d4d;
+  color: #ffffff;
   font-weight: bold;
-  font-size: 20px;
-  color: #004d4d;
+  padding: 15px;
 }
 
-.value {
-  font-size: 18px;
-  color: #17794f; /* Dark Olive Green */
+.result-table td {
+  background-color: #fffff0;
+  color: #17794f;
+  padding: 15px;
+}
+
+.result-table tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+/* tr:last-child: Targets the last row in the table.
+td:first-child: Selects the first cell in that last row. */
+
+.result-table tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* td:last-child: Selects the last cell in that last row. 
+border-bottom-left-radius and border-bottom-right-radius: These add rounded corners specifically to the bottom left and bottom right of the table. */
+
+.view-button {
+  padding: 8px 15px;
+  background-color: #004d4d; /* Deep Teal */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: #003a3a;
 }
 
 .no-result {
@@ -58,22 +84,4 @@
 .icon {
   font-size: 40px;
   margin-bottom: 10px;
-}
-
-.view-button {
-  position: absolute;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: #004d4d;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  top: 90px;
-}
-
-.view-button:hover {
-  background-color: #003a3a;
 }
