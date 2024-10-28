@@ -2,8 +2,10 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import PageHeader from '../components/PageHeader';
 import '../styles/Notices.css';
+import NoticeList from '../components/NoticeList';
 
 const Notices = () => {
+  //for now i have created fake json data to test purpose
   const noticesData = [
     {
       id: 1,
@@ -36,22 +38,24 @@ const Notices = () => {
       <PageHeader pageTitle={'Notices'} />
       <div className="notice-box">
         <div className="choice-box">
-          <button onClick={() => setSelectCategory('All')}>All</button>
-          <button onClick={() => setSelectCategory('College')}>College</button>
-          <button onClick={() => setSelectCategory('University')}>University</button>
+          <button onClick={() => setSelectCategory('All')} className={selectCategory === 'All' ? 'active' : ''}>
+            All
+          </button>
+          <button onClick={() => setSelectCategory('College')} className={selectCategory === 'College' ? 'active' : ''}>
+            College
+          </button>
+          <button onClick={() => setSelectCategory('University')} className={selectCategory === 'University' ? 'active' : ''}>University</button>
         </div>
         <div className="notice-list">
           {filterData.map((notice, index) => (
             <div key={index} className="notice-item">
-              <div className="notice-number">{index + 1}</div>
-              <div className="notice-content">
-                <p className="notice-title">{notice.title}</p>
-                <p className="notice-data">{notice.content}</p>
-                <div className="notice-bottom">
-                  <p className="notice-category">{notice.category} </p>
-                  <p className="notice-date">Date:{notice.date}</p>
-                </div>
-              </div>
+              <NoticeList
+                index={index}
+                title={notice.title}
+                content={notice.content}
+                category={notice.category}
+                date={notice.date}
+              />
             </div>
           ))}
         </div>

@@ -98,3 +98,8 @@
   margin: 0;
   margin-bottom: 5px;
 }
+
+.choice-box button.active {
+  background-color: #007373;
+  color: #ffffff;
+}
