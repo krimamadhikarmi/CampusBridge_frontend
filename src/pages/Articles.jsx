@@ -1,29 +1,3 @@
-// import Navbar from '../components/Navbar';
-// import PageHeader from '../components/PageHeader';
-// import '../styles/Articles.css'
-
-// const Articles = () => {
-//   return (
-//     <>
-//       <Navbar />
-//       <PageHeader pageTitle={'Articles'} />
-//       <div className="article-box">
-//         <div className='article-list'>
-//             <div className='article-item'>
-//                <div className='article-title'>Title</div>
-//                <div className='article-image'>image</div>
-//             </div>
-//             <div className='article-bottom'>
-//               <p className='author'>Krima Madhikarmi</p>
-//               <p className='article-date'>13 June 2024</p>
-//             </div>
-
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-// export default Articles;
 import React from 'react';
 import Navbar from '../components/Navbar';
 import PageHeader from '../components/PageHeader';
