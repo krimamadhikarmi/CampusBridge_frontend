@@ -1,4 +1,5 @@
 import Navbar from '../components/Navbar';
+import PageHeader from '../components/PageHeader';
 import '../styles/Help.css';
 
 const Help = () => {
@@ -13,9 +14,7 @@ const Help = () => {
   return (
     <>
       <Navbar />
-      <div className="help-header">
-        <h2>Ask & Assist</h2>
-      </div>
+      <PageHeader pageTitle={'Ask & Assit'}/>
       <div className="help-box">
         <div className="question-box">
           <div className="question-form-header">
