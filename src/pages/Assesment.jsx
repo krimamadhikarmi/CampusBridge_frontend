@@ -1,10 +1,11 @@
 import Navbar from "../components/Navbar";
+import PageHeader from "../components/PageHeader";
 
 const Assesment=()=>{
     return(
         <>
         <Navbar/>
-        <h1>Assesment page</h1>
+        <PageHeader pageTitle={'Assessment'}/>
         </>
     )
 }

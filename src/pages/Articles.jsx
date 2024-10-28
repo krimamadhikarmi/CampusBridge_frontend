@@ -1,10 +1,11 @@
 import Navbar from "../components/Navbar";
+import PageHeader from "../components/PageHeader";
 
 const Articles=()=>{
     return(
         <>
         <Navbar/>
-        <h1>Articles page</h1>
+       <PageHeader pageTitle={'Articles'}/>
         </>
     )
 }

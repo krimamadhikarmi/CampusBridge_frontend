@@ -1,11 +1,12 @@
-import Navbar from "../components/Navbar"
+import Navbar from '../components/Navbar';
+import PageHeader from '../components/PageHeader';
 
-const Result=()=>{
-    return(
-        <>
-        <Navbar/>
-        <h1>Result page</h1>
-        </>
-    )
-}
+const Result = () => {
+  return (
+    <>
+      <Navbar />
+      <PageHeader pageTitle={'Result'} />
+    </>
+  );
+};
 export default Result;

@@ -1,11 +1,12 @@
-import Navbar from "../components/Navbar";
+import Navbar from '../components/Navbar';
+import PageHeader from '../components/PageHeader';
 
-const Syllabus=()=>{
-    return(
-        <>
-        <Navbar/>
-        <h1>Syllabus page</h1>
-        </>
-    )
-}
+const Syllabus = () => {
+  return (
+    <>
+      <Navbar />
+      <PageHeader pageTitle={'Syllabus'} />
+    </>
+  );
+};
 export default Syllabus;
