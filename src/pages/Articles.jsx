@@ -2,8 +2,10 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import PageHeader from '../components/PageHeader';
 import '../styles/Articles.css';
+import ArticleList from '../components/ArticleList';
 
 const Articles = () => {
+  //created a fake api for testing purpose
   const articles = [
     {
       id: 1,
@@ -35,21 +37,13 @@ const Articles = () => {
         <div className="article-list">
           {articles.map((article) => (
             <div key={article.id} className="article-item">
-              <div className="article-content">
-                <h2 className="article-title">{article.title}</h2>
-                <p className="article-description">{article.description}</p>
-                <div className="article-info">
-                  <span className="article-date">{article.date}</span>
-                  <p className="author-name">{article.author}</p>
-                </div>
-              </div>
-              <div className="article-image">
-                <img
-                  src={article.imageUrl}
-                  alt={article.title}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
+              <ArticleList
+                title={article.title}
+                description={article.description}
+                date={article.date}
+                author={article.author}
+                imageUrl={article.imageUrl}
+              />
             </div>
           ))}
         </div>
