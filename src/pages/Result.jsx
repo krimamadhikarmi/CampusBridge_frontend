@@ -21,6 +21,14 @@ const Result = () => {
             appear; record at respective college administration or University will be refered.
           </p>
         </div>
+        <div className="result-type">
+          <select>
+            <option>Assessment </option>
+            <option>Mid Term</option>
+            <option>Pre-Board</option>
+            <option>Board</option>
+          </select>
+        </div>
         {hasResult ? (
           <div className="result-present">
             <table className="result-table">
