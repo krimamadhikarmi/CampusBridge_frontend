@@ -12,10 +12,24 @@ const Navbar = () => {
     setDropDown(!dropDown);
   };
 
-  const onLogout = () => {
+  const onLogout = async () => {
     const confirmed = window.confirm('Are you sure you want to log out?');
     if (confirmed) {
-      navigate('/login');
+      try {
+        const response = await fetch('https://localhost:7276/api/Auth/Login', {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          navigate('/login');
+        } else {
+          const errorData = await response.json();
+          alert(`Logout failed: ${errorData.message || 'Unknown error'}`);
+        }
+      } catch (error) {
+        alert('Network error. Please try again later.', error);
+        console.error('Logout error:', error);
+      }
     }
   };
 
