@@ -1,28 +1,51 @@
 import '../styles/Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons'; // Import specific icon
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const [dropDown, setDropDown] = useState(false);
+  const navigate = useNavigate();
+
+  const toggleDropdown = () => {
+    setDropDown(!dropDown);
+  };
+
+  const onLogout = () => {
+    const confirmed = window.confirm('Are you sure you want to log out?');
+    if (confirmed) {
+      navigate('/login');
+    }
+  };
+
   return (
     <div id="nav">
       <div className="logo">
-        <a href="/dashboard">
+        <Link to="/dashboard">
           <img src="logo192.png" alt="Logo" width={50} />
-          {/* yo logo just ahile lai place bauna matra haleko pachi replace garne */}
-        </a>
+        </Link>
       </div>
       <div className="menuitem">
-        <a href="/syllabus">Syllabus</a>
-        <a href="/assesment">Assesment</a>
-        <a href="/result">Result</a>
-        <a href="/articles">Articles</a>
-        <a href="/notices">Notices</a>
-        <a href="/help">Help</a>
+        <Link to="/syllabus">Syllabus</Link>
+        <Link to="/assesment">Assesment</Link>
+        <Link to="/result">Result</Link>
+        <Link to="/articles">Articles</Link>
+        <Link to="/notices">Notices</Link>
+        <Link to="/help">Help</Link>
       </div>
       <div className="user">
-        <a href="/profile">
-          <FontAwesomeIcon icon={faUser} /> 
-        </a>
+        <div onClick={toggleDropdown} className="user-icon">
+          <FontAwesomeIcon icon={faUser} />
+        </div>
+        {dropDown && (
+          <div className="dropdown">
+            <Link to="/profile">Profile</Link>
+            <button onClick={onLogout} className="logout-button">
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

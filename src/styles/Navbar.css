@@ -35,3 +35,50 @@
 .user {
   margin-left: 100px;
 }
+.user-icon {
+  color: #f0f0f0;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 50px;
+  right: 30px;
+  background-color: #004d4d;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.dropdown a {
+  padding: 10px;
+  color: #004d4d;
+  text-decoration: none;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+#nav .dropdown a:hover {
+  border-radius: 5px;
+  color: #a7bba0;
+}
+/* Dropdown logout button */
+.dropdown .logout-button {
+  background: none;
+  border: none;
+  color: #f0f0f0;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.dropdown .logout-button:hover {
+  color: #a7bba0;
+  border-radius: 5px;
+}
