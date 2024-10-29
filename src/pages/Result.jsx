@@ -1,9 +1,36 @@
+import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import PageHeader from '../components/PageHeader';
 import '../styles/Result.css';
 
 const Result = () => {
-  const hasResult = true;
+  const [selectExam, setSelectExam] = useState('All');
+
+  const resultData = [
+    {
+      id: 1,
+      exam: 'Mid-Term',
+      result: 'Passed',
+      percentage: '80',
+      semester: '6th',
+    },
+    {
+      id: 2,
+      exam: 'Assessment',
+      result: 'Failed',
+      percentage: '40',
+      semester: '6th',
+    },
+    {
+      id: 3,
+      exam: 'Board',
+      result: 'Passed',
+      percentage: '80',
+      semester: '6th',
+    },
+  ];
+
+  const filterData = selectExam === 'All' ? resultData : resultData.filter((examdata) => examdata.exam === selectExam);
 
   return (
     <>
@@ -15,21 +42,22 @@ const Result = () => {
           <p>TH: THEORY </p>
           <p>PR: PRACTICAL </p>
           <p>Abs: ABSENT </p>
-          <p> W: WITHHELD </p>
+          <p>W: WITHHELD </p>
           <p>
-            This sheet is for general ideas of grade(s) you secured.This is not for official appear. If any mistakes
-            appear; record at respective college administration or University will be refered.
+            This sheet is for general ideas of grade(s) you secured. This is not for official appear. If any mistakes
+            appear; record at respective college administration or University will be referred.
           </p>
         </div>
         <div className="result-type">
-          <select>
-            <option>Assessment </option>
-            <option>Mid Term</option>
-            <option>Pre-Board</option>
-            <option>Board</option>
+          <select value={selectExam} onChange={(e) => setSelectExam(e.target.value)}>
+            <option value="All">All</option>
+            <option value="Assessment">Assessment</option>
+            <option value="Mid-Term">Mid Term</option>
+            <option value="Pre-Board">Pre-Board</option>
+            <option value="Board">Board</option>
           </select>
         </div>
-        {hasResult ? (
+        {filterData.length > 0 ? (
           <div className="result-present">
             <table className="result-table">
               <thead>
@@ -42,31 +70,24 @@ const Result = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Mid Term</td>
-                  <td>7th Semester</td>
-                  <td>Passed</td>
-                  <td>70%</td>
-                  <td>
-                    <button className="view-button">View</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Mid Term</td>
-                  <td>7th Semester</td>
-                  <td>Passed</td>
-                  <td>70%</td>
-                  <td>
-                    <button className="view-button">View</button>
-                  </td>
-                </tr>
+                {filterData.map((examdata) => (
+                  <tr key={examdata.id}>
+                    <td>{examdata.exam}</td>
+                    <td>{examdata.semester}</td>
+                    <td>{examdata.result}</td>
+                    <td>{examdata.percentage}%</td>
+                    <td>
+                      <button className="view-button">View</button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         ) : (
           <div className="no-result">
             <div className="icon">📄</div>
-            <p>No published result</p>
+            <p>No published result for {selectExam}</p>
           </div>
         )}
       </div>
