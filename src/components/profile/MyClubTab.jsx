@@ -10,7 +10,7 @@ const MyClubTab = () => {
           <div className="club-image">
             <img src="images.png" alt="ball" />
           </div>
-          <div className="view-button">
+          <div className="view-box">
             <button className="club-button">View</button>
           </div>
         </div>
@@ -19,7 +19,7 @@ const MyClubTab = () => {
           <div className="club-image">
             <img src="sports.jpeg" alt="ball" />
           </div>
-          <div className="view-button">
+          <div className="view-box">
             <button className="club-button">View</button>
           </div>
         </div>
@@ -29,7 +29,7 @@ const MyClubTab = () => {
           <div className="club-image">
             <img src="images.png" alt="ball" />
           </div>
-          <div className="view-button">
+          <div className="view-box">
             <button className="club-button">View</button>
           </div>
         </div>
@@ -39,7 +39,7 @@ const MyClubTab = () => {
           <div className="club-image">
             <img src="images.png" alt="ball" />
           </div>
-          <div className="view-button">
+          <div className="view-box">
             <button className="club-button">View</button>
           </div>
         </div>
@@ -49,7 +49,7 @@ const MyClubTab = () => {
           <div className="club-image">
             <img src="images.png" alt="ball" />
           </div>
-          <div className="view-button">
+          <div className="view-box">
             <button className="club-button">View</button>
           </div>
         </div>

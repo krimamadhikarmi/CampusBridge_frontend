@@ -6,6 +6,7 @@ import AttendanceTab from '../components/profile/AttendanceTab';
 import MyClubTab from '../components/profile/MyClubTab';
 import AccountTab from '../components/profile/AccountTab';
 import AssesmentTab from '../components/profile/AssesmentTab';
+import '../styles/Profile.css';
 
 const Profile = () => {
   const [isActiveTab, setIsActiveTab] = useState('General');

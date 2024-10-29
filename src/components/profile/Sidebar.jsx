@@ -1,4 +1,4 @@
-import '../../styles/Profile.css'
+
 const Sidebar=({isActiveTab,setIsActiveTab})=>{
   return(
     <div className="sidebar">
