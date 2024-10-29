@@ -6,6 +6,14 @@
   border-radius: 15px;
 }
 
+.result-info {
+  border-bottom: 3px solid #004d4d;
+  padding: 20px;
+  font-size: 15px;
+  color: #004d4d;
+  line-height: 1.2;
+}
+
 .result-present {
   padding: 20px;
   border-radius: 12px;
