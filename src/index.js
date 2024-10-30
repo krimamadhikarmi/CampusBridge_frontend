@@ -7,12 +7,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import DashBoard from './pages/Dashboard';
 import Syllabus from './pages/Syllabus';
-import Assesment from './pages/Assesment';
 import Result from './pages/Result';
 import Articles from './pages/Articles';
 import Notices from './pages/Notices';
 import Help from './pages/Help';
 import Profile from './pages/Profile';
+import Assignment from './pages/Assignment';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,7 +24,7 @@ root.render(
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/syllabus" element={<Syllabus />} />
-          <Route path="/assesment" element={<Assesment />} />
+          <Route path="/assignment" element={<Assignment />} />
           <Route path="/result" element={<Result />} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/notices" element={<Notices />} />

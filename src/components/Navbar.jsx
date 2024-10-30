@@ -42,7 +42,7 @@ const Navbar = () => {
       </div>
       <div className="menuitem">
         <Link to="/syllabus">Syllabus</Link>
-        <Link to="/assesment">Assesment</Link>
+        <Link to="/assignment">Assignment</Link>
         <Link to="/result">Result</Link>
         <Link to="/articles">Articles</Link>
         <Link to="/notices">Notices</Link>

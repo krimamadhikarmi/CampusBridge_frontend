@@ -5,8 +5,9 @@ import GeneralTab from '../components/profile/GeneralTab';
 import AttendanceTab from '../components/profile/AttendanceTab';
 import MyClubTab from '../components/profile/MyClubTab';
 import AccountTab from '../components/profile/AccountTab';
-import AssesmentTab from '../components/profile/AssesmentTab';
+
 import '../styles/Profile.css';
+import AssignmentTab from '../components/profile/Assignment';
 
 const Profile = () => {
   const [isActiveTab, setIsActiveTab] = useState('General');
@@ -22,7 +23,7 @@ const Profile = () => {
       case 'Account':
         return <AccountTab />;
       case 'Assesment':
-        return <AssesmentTab />;
+        return <AssignmentTab />;
       default:
         return <GeneralTab />;
     }
