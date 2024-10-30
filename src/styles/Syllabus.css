@@ -8,7 +8,7 @@
   background-color: #004d4d;
   color: #fffff0;
   width: 290px;
-  height: 85vh;
+  height: 95vh;
   position: relative;
   top: 0px;
   left: 10px;
@@ -32,7 +32,6 @@
 }
 
 .syllabus-content {
-  
   border-radius: 15px;
   margin-left: 90px;
   padding: 20px;
@@ -41,4 +40,24 @@
   height: calc(100vh - 30px); /* Adjust as needed */
   overflow-y: auto;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.elective-options {
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid #498080;
+  color: #fffff0;
+}
+
+.elective-options p {
+  font-size: 16px;
+  margin: 5px 0;
+  cursor: pointer;
+  color: #fffff0;
+  transition: color 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.elective-options p:hover {
+  color: #d9ead3;
 }
