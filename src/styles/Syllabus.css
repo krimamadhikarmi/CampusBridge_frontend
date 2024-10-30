@@ -61,3 +61,15 @@
 .elective-options p:hover {
   color: #d9ead3;
 }
+
+.syllabus-side-bar p.active {
+  background-color: #498080;
+  color: #fffff0;
+  font-weight: bold;
+  border-radius: 4px;
+  height: 50px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

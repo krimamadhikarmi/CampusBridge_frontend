@@ -6,9 +6,15 @@ import '../styles/Syllabus.css';
 const Syllabus = () => {
   const [showElectives, setShowElectives] = useState(false);
   const [selectSubject, setSelectSubject] = useState('Advanced Java Programming');
+  const [activeTab, setActiveTab] = useState('Advanced Java Programming');
 
   const toggleElective = () => {
     setShowElectives(!showElectives);
+  };
+
+  const handleActiveTab = (subject) => {
+    setSelectSubject(subject);
+    setActiveTab(subject);
   };
 
   return (
@@ -17,18 +23,44 @@ const Syllabus = () => {
       <PageHeader pageTitle={'Syllabus'} />
       <div className="syllabus-box">
         <div className="syllabus-side-bar">
-          <p onClick={() => setSelectSubject('Advanced Java Programming')}>Advanced Java Programming</p>
-          <p onClick={() => setSelectSubject('Data WareHousing and Data Mining')}>Data WareHousing and Data Mining</p>
-          <p onClick={() => setSelectSubject('Principle of Management')}>Principle of Management</p>
-          <p onClick={() => setSelectSubject('Project Work')}>Project Work</p>
+          <p
+            className={activeTab === 'Advanced Java Programming' ? 'active' : ''}
+            onClick={() => handleActiveTab('Advanced Java Programming')}>
+            Advanced Java Programming
+          </p>
+          <p
+            className={activeTab === 'Data WareHousing and Data Mining' ? 'active' : ''}
+            onClick={() => handleActiveTab('Data WareHousing and Data Mining')}>
+            Data WareHousing and Data Mining
+          </p>
+          <p
+            className={activeTab === 'Principle of Management' ? 'active' : ''}
+            onClick={() => handleActiveTab('Principle of Management')}>
+            Principle of Management
+          </p>
+          <p className={activeTab === 'Project Work' ? 'active' : ''} onClick={() => handleActiveTab('Project Work')}>
+            Project Work
+          </p>
           <p onClick={toggleElective} style={{ cursor: 'pointer', fontWeight: 'bold', color: '#fffff0' }}>
             Electives {showElectives ? '▲' : '▼'}
           </p>
           {showElectives && (
             <div className="elective-options">
-              <p onClick={() => setSelectSubject('Software Project Management')}>Software Project Management</p>
-              <p onClick={() => setSelectSubject('Network Security')}>Network Security</p>
-              <p onClick={() => setSelectSubject('Information Retrieval')}>Information Retrieval</p>
+              <p
+                className={activeTab === 'Software Project Management' ? 'active' : ''}
+                onClick={() => handleActiveTab('Software Project Management')}>
+                Software Project Management
+              </p>
+              <p
+                className={activeTab === 'Network Security' ? 'active' : ''}
+                onClick={() => handleActiveTab('Network Security')}>
+                Network Security
+              </p>
+              <p
+                className={activeTab === 'Information Retrieval' ? 'active' : ''}
+                onClick={() => handleActiveTab('Information Retrieval')}>
+                Information Retrieval
+              </p>
             </div>
           )}
         </div>
