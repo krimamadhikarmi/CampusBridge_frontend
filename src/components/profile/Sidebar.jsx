@@ -6,7 +6,7 @@ const Sidebar=({isActiveTab,setIsActiveTab})=>{
       <p className={isActiveTab==='Attendance'?'active': '' } onClick={()=> setIsActiveTab('Attendance')}>Attendance</p>
       <p  className={isActiveTab==='My Clubs'?'active': '' } onClick={()=> setIsActiveTab('My Clubs')}>My Clubs</p>
       <p  className={isActiveTab==='Account'?'active': '' } onClick={()=> setIsActiveTab('Account')}>Account</p>
-      <p  className={isActiveTab==='Assesment'?'active': '' } onClick={()=> setIsActiveTab('Assesment')}>Assesment</p>
+      <p  className={isActiveTab==='Assignment'?'active': '' } onClick={()=> setIsActiveTab('Assignment')}>Assignment</p>
     </div>
   )
 }

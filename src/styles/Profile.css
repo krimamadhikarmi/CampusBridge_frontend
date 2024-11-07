@@ -313,3 +313,102 @@
 .club-button:hover {
   background-color: #498080;
 }
+
+/* assignment styling */
+.tab-style {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 800px;
+}
+
+.assignment-heading {
+  font-size: 1.8rem;
+  color: #004d4d;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.assignment-present {
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.assignment-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.assignment-table th,
+.assignment-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.assignment-table th {
+  background-color: #004d4d;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.assignment-table td {
+  background-color: #fffff0;
+  color: #17794f;
+  font-size: 0.95rem;
+}
+
+.assignment-table th:first-child,
+.assignment-table td:first-child {
+  width: 70%; /* Increases the width of the "Assignments" column */
+}
+
+.assignment-table tr:hover {
+  background-color: #f0f0e0;
+}
+
+.assignment-table tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.assignment-table tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+.activity-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.view-button,
+.download-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.view-button {
+  background-color: #17794f; /* Olive Green */
+  color: #ffffff;
+}
+
+.view-button:hover {
+  background-color: #135d3d;
+}
+
+.download-button {
+  background-color: #004d4d; /* Deep Teal */
+  color: #ffffff;
+}
+
+.download-button:hover {
+  background-color: #003a3a;
+}
