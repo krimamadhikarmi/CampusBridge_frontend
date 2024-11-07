@@ -2,9 +2,9 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import PageHeader from '../components/PageHeader';
 import '../styles/Result.css';
-import ResultTable from '../components/ResultTable';
-import ResultInfo from '../components/ResultInfo';
-import ResultType from '../components/ResultType';
+import ResultTable from '../components/result/ResultTable';
+import ResultInfo from '../components/result/ResultInfo';
+import ResultType from '../components/result/ResultType';
 
 const Result = () => {
   const [selectExam, setSelectExam] = useState('All');
