@@ -415,6 +415,17 @@
 
 /* account tab styling */
 
+.account-tab-style {
+  width: 100%;
+  max-width: 965px;
+  height: 500px;
+  margin: auto;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #d9ead3;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
 .account-header {
   text-align: center;
   margin-bottom: 20px;
@@ -428,19 +439,25 @@
 }
 
 .student-info {
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  gap: 70px;
-  padding: 15px;
-
+  gap: 70px; */
+  padding: 20px;
   border-radius: 8px;
   color: #004d4d;
   font-weight: bold;
   font-size: 16px;
+  line-height: 32px;
 }
 
 .student-info p {
   margin: 0;
+}
+.fee-table {
+  max-height: 500px;
+  overflow: hidden;
+  margin-left: 17px;
+  margin-right: 17px;
 }
 
 .fee-table-design {
@@ -450,6 +467,7 @@
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  height: 200px;
 }
 
 .fee-table-design th,
@@ -477,4 +495,42 @@
   background-color: #e8f5e9;
   color: #0b3a26;
   font-size: 1rem;
+}
+/* Fee Instruction Styling */
+.fee-instruction {
+  display: flex;
+  gap: 90px;
+  align-items: center;
+  padding-left: 22px;
+  margin-top: 20px;
+}
+
+.fee-instruction p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #21a86e; 
+}
+
+.duedate {
+  font-weight: normal;
+  color: #004d4d; 
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  
+}
+
+.status.paid {
+  color: #17794f; 
+}
+
+.status.unpaid {
+  color: #d32f2f;
+}
+
+.status.pending {
+  color: #ff9800;
 }
