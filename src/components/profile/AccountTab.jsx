@@ -54,8 +54,8 @@ const AccountTab = () => {
       </div>
       <div className="fee-instruction">
         <p className="duedate">Due Date: {studentData.dueDate}</p>
-        {/* <p className='status'>Status: {studentData.paymentStatus}</p> */}
         <p className={`status ${studentData.paymentStatus.toLowerCase()}`}>Status: {studentData.paymentStatus}</p>
+        <button className="pay-now-button">Pay Now</button>
       </div>
     </div>
   );
