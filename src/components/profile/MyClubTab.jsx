@@ -1,6 +1,6 @@
 const MyClubTab = () => {
   return (
-    <div className="tab-style">
+    <div className="myclub-tab-style">
       <div className="tab-header">
         <h1> My Clubs</h1>
       </div>

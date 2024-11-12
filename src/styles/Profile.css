@@ -233,7 +233,7 @@
 }
 
 /* myclub styles */
-.tab-style {
+.myclub-tab-style {
   width: 100%;
   max-width: 965px;
   height: auto;
@@ -315,10 +315,15 @@
 }
 
 /* assignment styling */
-.tab-style {
+.assignment-tab-style {
   margin: 0 auto;
   width: 90%;
-  max-width: 800px;
+  max-width: 900px;
+  height: auto;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #d9ead3;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .assignment-heading {
