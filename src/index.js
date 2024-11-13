@@ -13,10 +13,12 @@ import Notices from './pages/Notices';
 import Help from './pages/Help';
 import Profile from './pages/Profile';
 import Assignment from './pages/Assignment';
+import { TokenProvider } from './components/tokenContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+     <TokenProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
@@ -33,7 +35,8 @@ root.render(
         </Route>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+    </TokenProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -4,11 +4,14 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate from react
 
 import axios from 'axios';
 
+
 import '../styles/LoginStyle.css';
+import { useToken } from '../components/tokenContext';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [responseMessage, setResponseMessage] = useState(null);
+
+  const {setToken,token}=useToken();
 
   const navigate = useNavigate();
 
@@ -41,8 +44,10 @@ const Login = () => {
   // };
 
   const handleSubmit = async (event) => {
+   console.log("token",token)
     event.preventDefault();
     const payload = { username, password }; // Data to be sent in the request body
+
 
     try {
       const response = await axios.post('https://localhost:7276/api/Auth/Login', payload);
@@ -52,6 +57,7 @@ const Login = () => {
     } catch (error) {
       console.error('Error during POST request:', error);
       // setResponseMessage(error.response?.data?.message || 'Error occurred');
+
     }
   };
   const handleEmail = (event) => {
