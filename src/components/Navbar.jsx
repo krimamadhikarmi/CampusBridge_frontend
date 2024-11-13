@@ -3,24 +3,54 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useToken } from './tokenContext';
 
 const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
+  // const [token, setToken] = useToken();
+  const {token}=useToken();
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setDropDown(!dropDown);
   };
 
+  // const onLogout = async () => {
+  //   const confirmed = window.confirm('Are you sure you want to log out?');
+  //   if (confirmed) {
+  //     try {
+  //       const response = await fetch('https://localhost:7276/api/Auth/Login', {
+  //         method: 'DELETE',
+  //       });
+
+  //       if (response.ok) {
+  //         navigate('/login');
+  //       } else {
+  //         const errorData = await response.json();
+  //         alert(`Logout failed: ${errorData.message || 'Unknown error'}`);
+  //       }
+  //     } catch (error) {
+  //       alert('Network error. Please try again later.', error);
+  //       console.error('Logout error:', error);
+  //     }
+  //   }
+  // };
+
   const onLogout = async () => {
+    console.log("token:",token);
     const confirmed = window.confirm('Are you sure you want to log out?');
     if (confirmed) {
       try {
-        const response = await fetch('https://localhost:7276/api/Auth/Login', {
-          method: 'DELETE',
+        const response = await fetch('https://localhost:7276/api/Auth/Logout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(token),
         });
-
+        
         if (response.ok) {
+          // setToken(null);
           navigate('/login');
         } else {
           const errorData = await response.json();

@@ -2,13 +2,17 @@ import { useState } from 'react';
 import CustomFormField from '../components/customFormField';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
+
 import '../styles/LoginStyle.css';
+import { useToken } from '../components/tokenContext';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const {setToken,token}=useToken();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
+   console.log("token",token)
     event.preventDefault();
     const payload = { username, password }; // Create the payload
     console.log('Payload:', payload); // Log the payload for debugging
@@ -26,7 +30,9 @@ const Login = () => {
       console.log('Login response data:', data);
 
       if (response.ok) {
-        console.log('Login successful, navigating to dashboard');
+        console.log('Login successful, navigating to dashboard'); 
+        setToken(data);
+        console.log(data)
         navigate('/dashboard');
       } else {
         throw new Error(data.message || 'Invalid username or password');
