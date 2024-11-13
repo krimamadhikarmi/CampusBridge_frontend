@@ -1,46 +1,63 @@
 import { useState } from 'react';
 import CustomFormField from '../components/customFormField';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-
-
 import '../styles/LoginStyle.css';
-import { useToken } from '../components/tokenContext';
+import { useToken } from '../context/TokenContext';
+import axios from 'axios';
+
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const {setToken,token}=useToken();
+  const {token,setToken}=useToken();
   const navigate = useNavigate();
 
+  // const handleSubmit = async (event) => {
+  //   console.log("token",token)
+  //   event.preventDefault();
+  //   const payload = { username, password }; // Create the payload
+  //   console.log('Payload:', payload); // Log the payload for debugging
+  //   try {
+  //     const response = await fetch('https://localhost:7276/api/Auth/Login', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ username, password }),
+  //     });
+
+  //     const data = await response.json();
+  //     console.log('Response:', response);
+  //     console.log('Login response data:', data);
+
+  //     if (response.ok) {
+  //       console.log('Login successful, navigating to dashboard'); 
+  //       setToken(data);
+  //       console.log(data)
+  //       navigate('/dashboard');
+  //     } else {
+  //       throw new Error(data.message || 'Invalid username or password');
+  //     }
+  //   } catch (err) {
+  //     console.error('Login failed:', err);
+  //   }
+  // };
+
   const handleSubmit = async (event) => {
-   console.log("token",token)
-    event.preventDefault();
-    const payload = { username, password }; // Create the payload
-    console.log('Payload:', payload); // Log the payload for debugging
-    try {
-      const response = await fetch('https://localhost:7276/api/Auth/Login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
+    console.log("token",token)
+     event.preventDefault();
+     try {
+       const response = await axios.post('https://localhost:7276/api/Auth/Login', { username, password });
+       // setResponseMessage(response.data.message); // Handle the response data
+       console.log('Response data:', response.data);
+       setToken(response.data);
+       navigate('/dashboard');
+     } catch (error) {
+       console.error('Error during POST request:', error);
+       // setResponseMessage(error.response?.data?.message || 'Error occurred');
+ 
+     }
+   };
 
-      const data = await response.json();
-      console.log('Response:', response);
-      console.log('Login response data:', data);
-
-      if (response.ok) {
-        console.log('Login successful, navigating to dashboard'); 
-        setToken(data);
-        console.log(data)
-        navigate('/dashboard');
-      } else {
-        throw new Error(data.message || 'Invalid username or password');
-      }
-    } catch (err) {
-      console.error('Login failed:', err);
-    }
-  };
 
   const handleEmail = (event) => {
     setUsername(event.target.value);

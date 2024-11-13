@@ -13,7 +13,7 @@ import Notices from './pages/Notices';
 import Help from './pages/Help';
 import Profile from './pages/Profile';
 import Assignment from './pages/Assignment';
-import { TokenProvider } from './components/tokenContext';
+import { TokenProvider } from './context/TokenContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
