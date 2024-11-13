@@ -559,3 +559,74 @@
 .pay-now-button:hover {
   background-color: #135d3d;
 }
+
+/* attendance tab styling */
+.attendance-tab-style {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 900px;
+  height: auto;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #d9ead3;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.attendance-header {
+  /* border: 1px solid black; */
+  padding: 12px;
+  text-align: center;
+}
+
+.attendance-header h2 {
+  color: #0b3a26;
+  font-size: 32px;
+}
+
+.attendance-chart {
+  border: 1px solid black;
+  padding: 20px;
+}
+
+.attendance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.attendance-item {
+  margin-top: 12px;
+  background-color: #fffff0;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+}
+
+.month-design {
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.days-design {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+.day-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.day-count {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.day-label {
+  font-size: 14px;
+  color: #555;
+}
