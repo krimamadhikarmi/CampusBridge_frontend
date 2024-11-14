@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
-   const {token, setToken} = useToken();
+  const { token, setToken } = useToken();
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -16,19 +16,15 @@ const Navbar = () => {
   };
 
   const onLogout = async () => {
-    console.log("token:",token);
+    console.log('token:', token);
     const confirmed = window.confirm('Are you sure you want to log out?');
     if (confirmed) {
       try {
-        const response = await axios.post(
-          'https://localhost:7276/api/Auth/Logout',
-          token,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const response = await axios.post('https://localhost:7276/api/Auth/Logout', token, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         console.log(response.data);
         setToken(null);
         navigate('/login');

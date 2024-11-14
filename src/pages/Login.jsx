@@ -53,6 +53,7 @@ const Login = () => {
        navigate('/dashboard');
      } catch (error) {
        console.error('Error during POST request:', error);
+       console.log(error.response.data.message);
        // setResponseMessage(error.response?.data?.message || 'Error occurred');
  
      }
