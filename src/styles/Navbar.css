@@ -93,7 +93,7 @@
   text-align: center;
 }
 
-.logout-box h3{
+.logout-box h3 {
   margin-bottom: 30px;
 }
 
@@ -133,5 +133,18 @@
   font-size: 1rem;
   border-radius: 8px;
   border: none;
+  cursor: pointer;
+}
+
+/* univeristy navbar */
+.university-menuitem {
+  display: flex;
+  gap: 120px;
+  margin-left: 150px;
+}
+
+.logout-icon{
+  margin-left: 100px;
+  color: white;
   cursor: pointer;
 }
