@@ -15,6 +15,7 @@ const Navbar = () => {
   const user = 'university-admin';
 
   const toggleDropdown = () => {
+    console.log(token);
     setDropDown(!dropDown);
   };
 

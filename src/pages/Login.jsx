@@ -49,7 +49,11 @@ const Login = () => {
        const response = await axios.post('https://localhost:7276/api/Auth/Login', { username, password });
        // setResponseMessage(response.data.message); // Handle the response data
        console.log('Response data:', response.data);
-       setToken(response.data);
+       const jwtToken = {
+        "jwtToken":response.data.jwtToken
+       };
+       console.log("Token data:",jwtToken);
+       setToken(jwtToken);
        navigate('/dashboard');
      } catch (error) {
        console.error('Error during POST request:', error);
