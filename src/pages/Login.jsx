@@ -8,7 +8,7 @@ import axios from 'axios';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const {token,setToken}=useToken();
+  const {setToken,setRole} = useToken();
   const navigate = useNavigate();
 
   // const handleSubmit = async (event) => {
@@ -30,7 +30,7 @@ const Login = () => {
   //     console.log('Login response data:', data);
 
   //     if (response.ok) {
-  //       console.log('Login successful, navigating to dashboard'); 
+  //       console.log('Login successful, navigating to dashboard');
   //       setToken(data);
   //       console.log(data)
   //       navigate('/dashboard');
@@ -43,26 +43,27 @@ const Login = () => {
   // };
 
   const handleSubmit = async (event) => {
-    console.log("token",token)
-     event.preventDefault();
-     try {
-       const response = await axios.post('https://localhost:7276/api/Auth/Login', { username, password });
-       // setResponseMessage(response.data.message); // Handle the response data
-       console.log('Response data:', response.data);
-       const jwtToken = {
-        "jwtToken":response.data.jwtToken
-       };
-       console.log("Token data:",jwtToken);
-       setToken(jwtToken);
-       navigate('/dashboard');
-     } catch (error) {
-       console.error('Error during POST request:', error);
-       console.log(error.response.data.message);
-       // setResponseMessage(error.response?.data?.message || 'Error occurred');
- 
-     }
-   };
+    event.preventDefault();
+    try {
+      const response = await axios.post('https://localhost:7276/api/Auth/Login', { username, password });
+      // setResponseMessage(response.data.message); // Handle the response data
+      console.log('Response data:', response.data);
+      const jwtToken = {
+        jwtToken: response.data.jwtToken,
+      };
+      const userRole = response.data.role;
 
+      console.log('Token data:', jwtToken);
+      console.log('role', userRole);
+      setToken(jwtToken);
+      setRole(userRole);
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Error during POST request:', error);
+      console.log(error.response.data.message);
+      // setResponseMessage(error.response?.data?.message || 'Error occurred');
+    }
+  };
 
   const handleEmail = (event) => {
     setUsername(event.target.value);

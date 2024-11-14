@@ -10,9 +10,8 @@ import LogoutPopup from './LogoutPopup';
 const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
-  const { token, setToken } = useToken();
+  const { token, setToken, role } = useToken();
   const navigate = useNavigate();
-  const user = 'university-admin';
 
   const toggleDropdown = () => {
     console.log(token);
@@ -40,7 +39,7 @@ const Navbar = () => {
   };
 
   const renderItems = () => {
-    if (user === 'student') {
+    if (role === 'Student') {
       return (
         <>
           <div className="menuitem">
@@ -66,7 +65,7 @@ const Navbar = () => {
           </div>
         </>
       );
-    } else if (user === 'university-admin') {
+    } else if (role === 'UniversityAdmin') {
       return (
         <>
           <div className="university-menuitem">
