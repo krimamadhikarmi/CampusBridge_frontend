@@ -70,7 +70,15 @@ const Navbar = () => {
       return (
         <>
           <div className="university-menuitem">
-            <Link to="/syllabus">Syllabus</Link>
+            <div className="menu-link" onClick={toggleDropdown}>
+              Syllabus
+            </div>
+            {dropDown && (
+              <div className="syllabus-dropdown">
+                <Link to="/syllabus">View Syllabus</Link>
+                <Link to="/">Create Syllabus</Link>
+              </div>
+            )}
             <Link to="/result">Result</Link>
             <Link to="/articles">Articles</Link>
             <Link to="/notices">Notices</Link>
