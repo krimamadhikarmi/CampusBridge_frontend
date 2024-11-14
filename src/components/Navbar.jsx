@@ -10,7 +10,7 @@ import LogoutPopup from './LogoutPopup';
 const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
-  const { token, setToken, role } = useToken();
+  const { token, setToken, role, setRole } = useToken();
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -31,6 +31,7 @@ const Navbar = () => {
       });
       console.log(response.data);
       setToken(null);
+      setRole(null);
       navigate('/login');
     } catch (error) {
       alert('Network error. Please try again later.', error);
