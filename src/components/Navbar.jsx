@@ -73,7 +73,7 @@ const Navbar = () => {
             <Link to="/result">Result</Link>
             <Link to="/articles">Articles</Link>
             <Link to="/notices">Notices</Link>
-            <Link to="/help">Colleges</Link>
+            <Link to="/">Colleges</Link>
           </div>
           <div onClick={handleLogout} className="logout-icon">
             <FontAwesomeIcon icon={faSignOut} />
