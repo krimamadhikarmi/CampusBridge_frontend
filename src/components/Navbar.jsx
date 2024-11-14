@@ -14,6 +14,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
+    console.log(token);
     setDropDown(!dropDown);
   };
 
