@@ -70,7 +70,7 @@ const Articles = () => {
       <PageHeader pageTitle={'Articles'} />
       <div className="article-box">
         <div className="article-form">
-          <button onClick={toggleDown}>Add article</button>
+          <button className='article-button' onClick={toggleDown}>Add article</button>
         </div>
         <div className="article-list">
           {articles.map((article) => (

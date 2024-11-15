@@ -67,6 +67,22 @@
   overflow: hidden;
 }
 
+.article-button {
+  background-color: #004d4d;
+  border-radius: 12px;
+  color: #fffff0;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.article-button:hover {
+  background: linear-gradient(135deg, #498080, #004d4d);
+  transform: translateY(-2px);
+}
+
 .article-form {
   margin-bottom: 12px;
 }
