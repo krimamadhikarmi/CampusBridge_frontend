@@ -39,3 +39,17 @@
   background-color: #047272;
   border-radius: 4px;
 }
+
+.closebutton.syllabusform {
+  position: absolute;
+  right: 24px;
+  top: 34px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.closebutton.syllabusform:hover {
+  background-color: #ceeaea;
+  border-radius: 4px;
+}
