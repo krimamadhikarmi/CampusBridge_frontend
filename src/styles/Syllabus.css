@@ -144,7 +144,7 @@
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 550px; 
+  width: 550px;
   border-radius: 12px;
   background-color: #fffff0;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
@@ -187,4 +187,55 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.course-field {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
 
+.course-field input {
+  flex: 1;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.course-field button {
+  background-color: #004d4d;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.course-field button:hover {
+  background: linear-gradient(135deg, #498080, #004d4d);
+  transform: translateY(-2px);
+}
+
+.add-div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-field-button {
+  background-color: #004d4d;
+  border-radius: 12px;
+  color: #fffff0;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.syllabus-form::-webkit-scrollbar {
+  display: none;
+}

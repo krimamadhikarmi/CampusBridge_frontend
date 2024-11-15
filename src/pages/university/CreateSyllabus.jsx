@@ -1,11 +1,21 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import CloseButton from '../../components/common/CloseButton';
 import CustomFormField from '../../components/customFormField';
 import ButtonGroup from '../../components/common/ButtonGroup';
+import { reducer, initialFields } from '../../hooks/reducer';
 
 const CreateSyllabus = () => {
   const [toogleForm, setToogleForm] = useState(false);
+  const [fieldState, dispatch] = useReducer(reducer, initialFields);
+  const handleAddField = (event) => {
+    event.preventDefault();
+    dispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter Course Id', value: '' });
+  };
+
+  // const handleUpdateField = (id, value) => {
+  //   dispatch({ type: 'UPDATE', id: id, value: value });
+  // };
 
   const handleSyllabusForm = () => {
     setToogleForm(!toogleForm);
@@ -53,6 +63,27 @@ const CreateSyllabus = () => {
                   type={'text'}
                   placeholder={'Enter the semester'}
                 />
+
+                {fieldState.map((field) => {
+                  return (
+                    <div key={field.id} className="course-field">
+                      <CustomFormField
+                        label={'Course Id'}
+                        name={field.name}
+                        type={'text'}
+                        value={field.value}
+                        placeholder={field.placeholder}
+                      />
+                      <button>Add</button>
+                    </div>
+                  );
+                })}
+                <div className="add-div">
+                  <button onClick={handleAddField} className="add-field-button">
+                    Add Courses
+                  </button>
+                </div>
+
                 <CustomFormField
                   label={'Number of Electives'}
                   name={'AllowedElectiveNo'}
