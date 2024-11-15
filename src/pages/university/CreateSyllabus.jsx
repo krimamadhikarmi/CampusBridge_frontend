@@ -8,18 +8,42 @@ import { reducer, initialFields } from '../../hooks/reducer';
 const CreateSyllabus = () => {
   const [toogleForm, setToogleForm] = useState(false);
   const [fieldState, dispatch] = useReducer(reducer, initialFields);
+  const [syllabusId, setSyllabusId] = useState(0);
+  const [semester, setSemester] = useState(0);
+  const [electiveno, setElectiveno] = useState(0);
+  const [courseId, setCourseId] = useState(0);
   const handleAddField = (event) => {
     event.preventDefault();
     dispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter Course Id', value: '' });
   };
-
-  // const handleUpdateField = (id, value) => {
-  //   dispatch({ type: 'UPDATE', id: id, value: value });
-  // };
-
   const handleSyllabusForm = () => {
     setToogleForm(!toogleForm);
   };
+
+  const handleFormSubmit = () => {
+    console.log('syllabus', syllabusId);
+    console.log('semester', semester);
+    console.log('elective', electiveno);
+    console.log('courseid', courseId);
+    handleSyllabusForm();
+  };
+
+  const handleSyllabusid = (event) => {
+    setSyllabusId(event.target.value);
+  };
+  const handleCourseId = (event, id) => {
+    const value = event.target.value;
+    setCourseId(value);
+    dispatch({ type: 'UPDATE', id: id, value: value }); 
+  };
+
+  const handleSemester = (event) => {
+    setSemester(event.target.value);
+  };
+  const handleElective = (event) => {
+    setElectiveno(event.target.value);
+  };
+
   return (
     <>
       <Navbar />
@@ -50,18 +74,20 @@ const CreateSyllabus = () => {
               <CloseButton toggleBox={handleSyllabusForm} fill={'#004d4d'} variant={'syllabusform'} />
             </div>
             <div>
-              <form>
+              <form onSubmit={handleFormSubmit}>
                 <CustomFormField
                   label={'Syllabus Id'}
                   name={'SyllabusId'}
                   type={'text'}
                   placeholder={'Enter the Syllabus Id'}
+                  onChange={handleSyllabusid}
                 />
                 <CustomFormField
                   label={'Semester'}
                   name={'Semester'}
                   type={'text'}
                   placeholder={'Enter the semester'}
+                  onChange={handleSemester}
                 />
 
                 {fieldState.map((field) => {
@@ -73,6 +99,7 @@ const CreateSyllabus = () => {
                         type={'text'}
                         value={field.value}
                         placeholder={field.placeholder}
+                        onChange={(e) => handleCourseId(e, field.id)}
                       />
                       <button>Add</button>
                     </div>
@@ -89,6 +116,7 @@ const CreateSyllabus = () => {
                   name={'AllowedElectiveNo'}
                   type={'number'}
                   placeholder={'Enter the number of electives'}
+                  onChange={handleElective}
                 />
 
                 <ButtonGroup handleClose={handleSyllabusForm} />

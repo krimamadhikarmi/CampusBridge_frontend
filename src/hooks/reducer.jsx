@@ -1,12 +1,12 @@
 export const initialFields = [
   {
-    id:'',
-    value:'',
+    id: '',
+    value: '',
     placeholder: 'Enter your Course Id',
     name: 'CourseId',
   },
 ];
-export const reducer = ( state, action ) => {
+export const reducer = (state, action) => {
   switch (action.type) {
     case 'ADD':
       return [
@@ -18,6 +18,8 @@ export const reducer = ( state, action ) => {
           name: action.name,
         },
       ];
+    case 'UPDATE':
+      return state.map((field) => (field.id === action.id ? { ...field, value: action.value } : field));
     default:
       return state;
   }
