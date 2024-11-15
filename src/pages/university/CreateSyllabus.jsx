@@ -43,16 +43,23 @@ const CreateSyllabus = () => {
               <form>
                 <CustomFormField
                   label={'Syllabus Id'}
-                  name={'syllabusId'}
+                  name={'SyllabusId'}
                   type={'text'}
                   placeholder={'Enter the Syllabus Id'}
                 />
                 <CustomFormField
+                  label={'Semester'}
+                  name={'Semester'}
+                  type={'text'}
+                  placeholder={'Enter the semester'}
+                />
+                <CustomFormField
                   label={'Number of Electives'}
-                  name={'electivesno'}
+                  name={'AllowedElectiveNo'}
                   type={'number'}
                   placeholder={'Enter the number of electives'}
-                />{' '}
+                />
+
                 <ButtonGroup handleClose={handleSyllabusForm} />
               </form>
             </div>

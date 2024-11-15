@@ -141,10 +141,10 @@
 
 .syllabus-form {
   position: fixed;
-  top: 45%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 550px;
+  width: 550px; 
   border-radius: 12px;
   background-color: #fffff0;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
@@ -187,38 +187,4 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* .buttongroup {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-  justify-content: center;
-}
 
-.submitbutton,
-.cancelbutton {
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-.submitbutton {
-  background: linear-gradient(135deg, #004d4d, #498080);
-  color: #fffff0;
-}
-
-.submitbutton:hover {
-  background: linear-gradient(135deg, #498080, #004d4d);
-  transform: translateY(-2px);
-}
-
-.cancelbutton {
-  background-color: #a30707;
-  color: #fffff0;
-}
-
-.cancelbutton:hover {
-  background-color: #d23636;
-  transform: translateY(-2px);
-} */
