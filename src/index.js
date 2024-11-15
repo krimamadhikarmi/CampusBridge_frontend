@@ -6,14 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import DashBoard from './pages/Dashboard';
-import Syllabus from './pages/Syllabus';
+import Syllabus from './pages/student/Syllabus';
 import Result from './pages/Result';
 import Articles from './pages/Articles';
 import Notices from './pages/Notices';
-import Help from './pages/Help';
+import Help from './pages/student/Help';
 import Profile from './pages/Profile';
-import Assignment from './pages/Assignment';
+import Assignment from './pages/student/Assignment';
 import { TokenProvider } from './context/TokenContext';
+import CreateSyllabus from './pages/university/CreateSyllabus';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -32,6 +33,7 @@ root.render(
           <Route path="/notices" element={<Notices />} />
           <Route path="/help" element={<Help />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/createsyllabus" element={<CreateSyllabus/>} />
         </Route>
       </Routes>
     </BrowserRouter>

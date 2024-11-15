@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
-import PageHeader from '../components/PageHeader';
-import '../styles/Syllabus.css';
+import Navbar from '../../components/Navbar';
+import PageHeader from '../../components/PageHeader';
+import '../../styles/Syllabus.css';
 
 const Syllabus = () => {
   const [showElectives, setShowElectives] = useState(false);

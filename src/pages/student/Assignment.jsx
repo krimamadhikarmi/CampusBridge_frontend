@@ -1,6 +1,6 @@
-import Navbar from '../components/Navbar';
-import PageHeader from '../components/PageHeader';
-import '../styles/Assignment.css';
+import Navbar from '../../components/Navbar';
+import PageHeader from '../../components/PageHeader';
+import '../../styles/Assignment.css';
 import { useState } from 'react';
 
 //function to get assignment status

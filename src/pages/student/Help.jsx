@@ -1,6 +1,6 @@
-import Navbar from '../components/Navbar';
-import PageHeader from '../components/PageHeader';
-import '../styles/Help.css';
+import Navbar from '../../components/Navbar';
+import PageHeader from '../../components/PageHeader';
+import '../../styles/Help.css';
 
 const Help = () => {
   const userName = 'Krima Madhikarmi';

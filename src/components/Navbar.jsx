@@ -76,7 +76,7 @@ const Navbar = () => {
             {dropDown && (
               <div className="syllabus-dropdown">
                 <Link to="/syllabus">View Syllabus</Link>
-                <Link to="/">Create Syllabus</Link>
+                <Link to="/createsyllabus">Create Syllabus</Link>
               </div>
             )}
             <Link to="/result">Result</Link>

@@ -23,11 +23,8 @@
   font-size: 16px;
   font-weight: bold;
   padding: 5px;
-  /* padding-bottom: 20px; */
   color: #fffff0;
-  /* border-radius: 6px; */
   transition: background-color 0.3s ease;
-  /* border-bottom: 1px solid #fffff0; */
   cursor: pointer;
 }
 
@@ -37,7 +34,7 @@
   padding: 20px;
   width: calc(100% - 220px);
   margin-right: 20px;
-  height: calc(100vh - 30px); /* Adjust as needed */
+  height: calc(100vh - 30px);
   overflow-y: auto;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
@@ -72,4 +69,47 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* create-syllabus styling */
+.syllabus-body {
+  border-radius: 10px;
+  margin-top: 100px;
+  margin-left: 30px;
+  padding: 15px;
+  width: 93%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
+}
+
+.display-div {
+  /* border: 1px solid rgb(122, 185, 136); */
+  /* box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); */
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.display-div h2 {
+  text-align: center;
+  color: #004d4d;
+  font-size: 32px;
+}
+
+.no-data-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #888;
+  margin-top: 12px;
+  background-color: #f5f5dc;
+  border-radius: 8px;
+  height: 200px;
+}
+.divider {
+  border-top: 4px solid #004d4d; 
+  margin-top: 80px;
+  width: 100%;
 }
