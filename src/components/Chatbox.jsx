@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons'; // Import specific icon
 import { useState } from 'react';
 import '../styles/Chatbox.css';
-import CloseButton from './CloseButton';
+import CloseButton from './common/CloseButton';
 
 const ChatBox = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,15 +20,17 @@ const ChatBox = () => {
         <div className="chatBox">
           <div className="chathead">
             ChatAI
-            <CloseButton toggleBox={toggleChatBox} fill={"white"} variant={"chatbox"}/>
+            <CloseButton toggleBox={toggleChatBox} fill={'white'} variant={'chatbox'} />
           </div>
-          
-          <div className='querybox'>
-            <div className='textbox'>
-              <input type='text' placeholder='Enter something..'/>
+
+          <div className="querybox">
+            <div className="textbox">
+              <input type="text" placeholder="Enter something.." />
             </div>
             <div>
-              <button type='submit' className='submitbutton'>Enter</button>
+              <button type="submit" className="submitbutton">
+                Enter
+              </button>
             </div>
           </div>
         </div>

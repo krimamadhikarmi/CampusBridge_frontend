@@ -1,4 +1,4 @@
-import '../styles/common.css';
+import '../../styles/common.css';
 const CloseButton = ({ toggleBox, fill, variant }) => {
   return (
     <div className={`closebutton ${variant}`}>

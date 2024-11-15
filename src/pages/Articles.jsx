@@ -4,6 +4,7 @@ import PageHeader from '../components/PageHeader';
 import '../styles/Articles.css';
 import ArticleList from '../components/ArticleList';
 import CustomFormField from '../components/customFormField';
+import ButtonGroup from '../components/common/ButtonGroup';
 
 const Articles = () => {
   const [dropdown, setDropDown] = useState(false);
@@ -70,7 +71,9 @@ const Articles = () => {
       <PageHeader pageTitle={'Articles'} />
       <div className="article-box">
         <div className="article-form">
-          <button className='article-button' onClick={toggleDown}>Add article</button>
+          <button className="article-button" onClick={toggleDown}>
+            Add article
+          </button>
         </div>
         <div className="article-list">
           {articles.map((article) => (
@@ -112,14 +115,8 @@ const Articles = () => {
               onChange={handleDescription}
             />
             <CustomFormField label={'Date'} name={'date'} type={'date'} value={currentDate} />
-            <div className="button-group">
-              <button type="submit" className="submit-button">
-                Save Changes
-              </button>
-              <button type="submit" className="cancel-button" onClick={toggleDown}>
-                Cancel
-              </button>
-            </div>
+
+            <ButtonGroup handleClose={toggleDown} />
           </div>
         </form>
       )}

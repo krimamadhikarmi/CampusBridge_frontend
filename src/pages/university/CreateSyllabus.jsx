@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
-import CloseButton from '../../components/CloseButton';
+import CloseButton from '../../components/common/CloseButton';
+import CustomFormField from '../../components/customFormField';
+import ButtonGroup from '../../components/common/ButtonGroup';
 
 const CreateSyllabus = () => {
   const [toogleForm, setToogleForm] = useState(false);
@@ -36,6 +38,23 @@ const CreateSyllabus = () => {
             <div className="syllabus-form-header">
               Create Syllabus
               <CloseButton toggleBox={handleSyllabusForm} fill={'#004d4d'} variant={'syllabusform'} />
+            </div>
+            <div>
+              <form>
+                <CustomFormField
+                  label={'Syllabus Id'}
+                  name={'syllabusId'}
+                  type={'text'}
+                  placeholder={'Enter the Syllabus Id'}
+                />
+                <CustomFormField
+                  label={'Number of Electives'}
+                  name={'electivesno'}
+                  type={'number'}
+                  placeholder={'Enter the number of electives'}
+                />{' '}
+                <ButtonGroup handleClose={handleSyllabusForm} />
+              </form>
             </div>
           </div>
         </div>

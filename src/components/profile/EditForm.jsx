@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CustomFormField from '../customFormField';
-import CloseButton from '../CloseButton';
+import CloseButton from '../common/CloseButton';
+import ButtonGroup from '../common/ButtonGroup';
 const EditForm = ({ toogleEditForm }) => {
   const [formData, setFormData] = useState({
     name: 'Krima Madhikarmi',
@@ -28,7 +29,7 @@ const EditForm = ({ toogleEditForm }) => {
       <div className="edit-form">
         <div className="form-head">
           Edit Your Profile
-          <CloseButton toggleBox={toogleEditForm} fill={'#004d4d'} variant={"editform"} />
+          <CloseButton toggleBox={toogleEditForm} fill={'#004d4d'} variant={'editform'} />
         </div>
         <div>
           <form onSubmit={handleSubmit} className="form-fields">
@@ -102,14 +103,7 @@ const EditForm = ({ toogleEditForm }) => {
               </div>
             </div>
 
-            <div className="button-group">
-              <button type="submit" className="submit-button">
-                Save Changes
-              </button>
-              <button type="submit" className="cancel-button" onClick={toogleEditForm}>
-                Cancel
-              </button>
-            </div>
+            <ButtonGroup handleClose={toogleEditForm} />
           </form>
         </div>
       </div>
