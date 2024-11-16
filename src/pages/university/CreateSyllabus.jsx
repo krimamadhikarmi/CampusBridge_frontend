@@ -4,6 +4,7 @@ import CloseButton from '../../components/common/CloseButton';
 import CustomFormField from '../../components/customFormField';
 import ButtonGroup from '../../components/common/ButtonGroup';
 import { BooksReducer, SyllabusReducer, initialBook, initialFields } from '../../hooks/reducer';
+import FormHeader from '../../components/common/FormHeader';
 
 const CreateSyllabus = () => {
   const [toogleSyllabusForm, setToogleSyllabusForm] = useState(false);
@@ -106,10 +107,7 @@ const CreateSyllabus = () => {
       {toogleSyllabusForm && (
         <div className="form-overlay">
           <div className="form-design" onClick={(e) => e.stopPropagation()}>
-            <div className="syllabus-form-header">
-              Create Syllabus
-              <CloseButton toggleBox={handleSyllabusForm} fill={'#004d4d'} variant={'syllabusform'} />
-            </div>
+            <FormHeader handleForm={handleSyllabusForm} title={'Create Syllabus'} />
             <div>
               <form onSubmit={handleFormSubmit}>
                 <CustomFormField
@@ -168,10 +166,7 @@ const CreateSyllabus = () => {
       {toogleCourseForm && (
         <div className="form-overlay">
           <div className="form-design" onClick={(e) => e.stopPropagation()}>
-            <div className="syllabus-form-header">
-              Create Courses
-              <CloseButton toggleBox={handleCourseForm} fill={'#004d4d'} variant={'syllabusform'} />
-            </div>
+            <FormHeader handleForm={handleCourseForm} title={'Create Courses'} />
             <div>
               <form>
                 <CustomFormField
