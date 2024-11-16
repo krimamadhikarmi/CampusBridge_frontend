@@ -1,41 +1,28 @@
 import { useReducer, useState } from 'react';
 import Navbar from '../../components/Navbar';
-import CloseButton from '../../components/common/CloseButton';
-import CustomFormField from '../../components/customFormField';
-import ButtonGroup from '../../components/common/ButtonGroup';
 import { BooksReducer, SyllabusReducer, initialBook, initialFields } from '../../hooks/reducer';
-import FormHeader from '../../components/common/FormHeader';
+import SyllabusForm from '../../components/syllabus/SyllabusForm';
+import CourseForm from '../../components/syllabus/CourseForm';
 
 const CreateSyllabus = () => {
   const [toogleSyllabusForm, setToogleSyllabusForm] = useState(false);
   const [toogleCourseForm, setToogleCourseForm] = useState(false);
+
   const [fieldState, dispatch] = useReducer(SyllabusReducer, initialFields);
   const [bookState, bookDispatch] = useReducer(BooksReducer, initialBook);
 
-  const [syllabusId, setSyllabusId] = useState(0);
-  const [semester, setSemester] = useState(0);
-  const [electiveno, setElectiveno] = useState(0);
-  const [courseId, setCourseId] = useState(0);
+  const [syllabusId, setSyllabusId] = useState('');
+  const [semester, setSemester] = useState('');
+  const [electiveno, setElectiveno] = useState('');
+  const [courseId, setCourseId] = useState('');
 
   const [book, setBook] = useState('');
   const [isElective, setIsElective] = useState(false);
+  const [coursetitle, setCourseTitle] = useState('');
 
-  const handleAddField = (event) => {
-    event.preventDefault();
-    dispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter Course Id', value: '' });
-  };
-
-  const handleBookField = (event) => {
-    event.preventDefault();
-    bookDispatch({ type: 'ADD', name: 'Books', placeholder: 'Enter Books', value: '' });
-  };
-
+  // syllabus form functions
   const handleSyllabusForm = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
-  };
-
-  const handleCourseForm = () => {
-    setToogleCourseForm(!toogleCourseForm);
   };
 
   const handleFormSubmit = () => {
@@ -50,10 +37,44 @@ const CreateSyllabus = () => {
     setSyllabusId(event.target.value);
   };
 
+  const handleSemester = (event) => {
+    setSemester(event.target.value);
+  };
+
+  const handleAddCourseId = (event) => {
+    event.preventDefault();
+    console.log('added course');
+  };
+
+  const handleElective = (event) => {
+    setElectiveno(event.target.value);
+  };
+
+  const handleAddField = (event) => {
+    event.preventDefault();
+    dispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter Course Id', value: '' });
+  };
+
   const handleUpdateCourse = (event, id) => {
     const value = event.target.value;
     setCourseId(value);
     dispatch({ type: 'UPDATE', id: id, value: value });
+  };
+
+  // course form functions
+  const handleCourseSubmit = () => {
+    console.log('elective', isElective);
+    console.log('book', book);
+    console.log('courseid', courseId);
+  };
+
+  const handleBookField = (event) => {
+    event.preventDefault();
+    bookDispatch({ type: 'ADD', name: 'Books', placeholder: 'Enter Books', value: '' });
+  };
+
+  const handleCourseForm = () => {
+    setToogleCourseForm(!toogleCourseForm);
   };
 
   const handleUpdateBook = (event, id) => {
@@ -62,21 +83,21 @@ const CreateSyllabus = () => {
     bookDispatch({ type: 'UPDATE', id: id, value: value });
   };
 
-  const handleSemester = (event) => {
-    setSemester(event.target.value);
-  };
-
-  const handleElective = (event) => {
-    setElectiveno(event.target.value);
-  };
-
-  const handleAddCourseId = (event) => {
+  const handleAddBook = (event) => {
     event.preventDefault();
-    console.log('added course');
+    console.log('added book');
   };
 
   const handleElectiveChange = (event) => {
-    setIsElective(event.target.checked); // Update state based on checkbox
+    setIsElective(event.target.checked);
+  };
+
+  const handleCourseId = (event) => {
+    setCourseId(event.target.value);
+  };
+
+  const handleCourseTitle = (event) => {
+    setCourseTitle(event.target.value);
   };
 
   return (
@@ -106,152 +127,33 @@ const CreateSyllabus = () => {
 
       {toogleSyllabusForm && (
         <div className="form-overlay">
-          <div className="form-design" onClick={(e) => e.stopPropagation()}>
-            <FormHeader handleForm={handleSyllabusForm} title={'Create Syllabus'} />
-            <div>
-              <form onSubmit={handleFormSubmit}>
-                <CustomFormField
-                  label={'Syllabus Id'}
-                  name={'SyllabusId'}
-                  type={'text'}
-                  placeholder={'Enter the Syllabus Id'}
-                  onChange={handleSyllabusid}
-                />
-                <CustomFormField
-                  label={'Semester'}
-                  name={'Semester'}
-                  type={'text'}
-                  placeholder={'Enter the semester'}
-                  onChange={handleSemester}
-                />
-
-                {fieldState.map((field) => {
-                  return (
-                    <div key={field.id} className="course-field">
-                      <CustomFormField
-                        label={'Course Id'}
-                        name={field.name}
-                        type={'text'}
-                        value={field.value}
-                        placeholder={field.placeholder}
-                        onChange={(e) => handleUpdateCourse(e, field.id)}
-                      />
-                      <button type="button" onClick={handleAddCourseId}>
-                        Add
-                      </button>
-                    </div>
-                  );
-                })}
-                <div className="add-div">
-                  <button onClick={handleAddField} className="add-field-button">
-                    Add Courses
-                  </button>
-                </div>
-
-                <CustomFormField
-                  label={'Number of Electives'}
-                  name={'AllowedElectiveNo'}
-                  type={'number'}
-                  placeholder={'Enter the number of electives'}
-                  onChange={handleElective}
-                />
-
-                <ButtonGroup handleClose={handleSyllabusForm} />
-              </form>
-            </div>
-          </div>
+          <SyllabusForm
+            handleSyllabusForm={handleSyllabusForm}
+            handleFormSubmit={handleFormSubmit}
+            handleSyllabusid={handleSyllabusid}
+            handleSemester={handleSemester}
+            handleAddCourseId={handleAddCourseId}
+            handleElective={handleElective}
+            handleAddField={handleAddField}
+            handleUpdateCourse={handleUpdateCourse}
+            fieldState={fieldState}
+          />
         </div>
       )}
 
       {toogleCourseForm && (
         <div className="form-overlay">
-          <div className="form-design" onClick={(e) => e.stopPropagation()}>
-            <FormHeader handleForm={handleCourseForm} title={'Create Courses'} />
-            <div>
-              <form>
-                <CustomFormField
-                  label={'Course Id'}
-                  name={'CourseId'}
-                  type={'text'}
-                  placeholder={'Enter the Course Id'}
-                />
-                <CustomFormField
-                  label={'Course Title'}
-                  name={'CourseTitle'}
-                  type={'text'}
-                  placeholder={'Enter the Course Title'}
-                />
-                <CustomFormField
-                  label={'Course Description'}
-                  name={'CourseDescription'}
-                  type={'text'}
-                  placeholder={'Enter the Course Description'}
-                />
-                <CustomFormField
-                  label={'Course Objectives'}
-                  name={'CourseObjective'}
-                  type={'text'}
-                  placeholder={'Enter the Course Objective'}
-                />
-                <div className="checkbox-container">
-                  <CustomFormField
-                    label={'Is Elective?'}
-                    name={'isElective'}
-                    type={'checkbox'}
-                    onChange={handleElectiveChange}
-                  />
-                </div>
-
-                <CustomFormField
-                  label={'Full Marks'}
-                  name={'FullMarks'}
-                  type={'text'}
-                  placeholder={'Enter the Full Marks of Course'}
-                />
-                <CustomFormField
-                  label={'Pass Marks'}
-                  name={'PassMarks'}
-                  type={'text'}
-                  placeholder={'Enter the Pass Marks of Course'}
-                />
-                <CustomFormField
-                  label={'Credit Hour'}
-                  name={'CreditHour'}
-                  type={'text'}
-                  placeholder={'Enter the Course Credit Hours'}
-                />
-                <CustomFormField
-                  label={'Lab Description'}
-                  name={'LabDescription'}
-                  type={'text'}
-                  placeholder={'Enter the Lab Description'}
-                />
-                {bookState.map((book) => {
-                  return (
-                    <div key={book.id} className="course-field">
-                      <CustomFormField
-                        label={'Books'}
-                        name={book.name}
-                        type={'text'}
-                        value={book.value}
-                        placeholder={book.placeholder}
-                        onChange={(e) => handleUpdateBook(e, book.id)}
-                      />
-                      <button type="button" onClick={handleAddCourseId}>
-                        Add
-                      </button>
-                    </div>
-                  );
-                })}
-                <div className="add-div">
-                  <button onClick={handleBookField} className="add-field-button">
-                    Add Book
-                  </button>
-                </div>
-                <ButtonGroup handleClose={handleCourseForm} />
-              </form>
-            </div>
-          </div>
+          <CourseForm
+            handleCourseSubmit={handleCourseSubmit}
+            handleCourseForm={handleCourseForm}
+            handleElectiveChange={handleElectiveChange}
+            handleUpdateBook={handleUpdateBook}
+            handleAddBook={handleAddBook}
+            handleBookField={handleBookField}
+            bookState={bookState}
+            handleCourseId={handleCourseId}
+            handleCourseTitle={handleCourseTitle}
+          />
         </div>
       )}
     </>
