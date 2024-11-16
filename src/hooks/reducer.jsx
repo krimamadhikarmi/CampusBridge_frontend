@@ -6,7 +6,7 @@ export const initialFields = [
     name: 'CourseId',
   },
 ];
-export const reducer = (state, action) => {
+export const SyllabusReducer = (state, action) => {
   switch (action.type) {
     case 'ADD':
       return [

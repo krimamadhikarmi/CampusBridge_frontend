@@ -3,11 +3,11 @@ import Navbar from '../../components/Navbar';
 import CloseButton from '../../components/common/CloseButton';
 import CustomFormField from '../../components/customFormField';
 import ButtonGroup from '../../components/common/ButtonGroup';
-import { reducer, initialFields } from '../../hooks/reducer';
+import { SyllabusReducer, initialFields } from '../../hooks/reducer';
 
 const CreateSyllabus = () => {
   const [toogleForm, setToogleForm] = useState(false);
-  const [fieldState, dispatch] = useReducer(reducer, initialFields);
+  const [fieldState, dispatch] = useReducer(SyllabusReducer, initialFields);
   const [syllabusId, setSyllabusId] = useState(0);
   const [semester, setSemester] = useState(0);
   const [electiveno, setElectiveno] = useState(0);
@@ -34,7 +34,7 @@ const CreateSyllabus = () => {
   const handleCourseId = (event, id) => {
     const value = event.target.value;
     setCourseId(value);
-    dispatch({ type: 'UPDATE', id: id, value: value }); 
+    dispatch({ type: 'UPDATE', id: id, value: value });
   };
 
   const handleSemester = (event) => {
@@ -42,6 +42,10 @@ const CreateSyllabus = () => {
   };
   const handleElective = (event) => {
     setElectiveno(event.target.value);
+  };
+  const handleAddCourseId = (event) => {
+    event.preventDefault();
+    console.log('added course');
   };
 
   return (
@@ -101,7 +105,9 @@ const CreateSyllabus = () => {
                         placeholder={field.placeholder}
                         onChange={(e) => handleCourseId(e, field.id)}
                       />
-                      <button>Add</button>
+                      <button type="button" onClick={handleAddCourseId}>
+                        Add
+                      </button>
                     </div>
                   );
                 })}
