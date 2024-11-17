@@ -10,11 +10,13 @@ import {
 } from '../../hooks/reducer';
 import SyllabusForm from '../../components/syllabus/SyllabusForm';
 import CourseForm from '../../components/syllabus/CourseForm';
-// import '../../styles/Syllabus.css'
-
+import { useNavigate } from 'react-router-dom';
+import SyllabusTable from '../../components/syllabus/SyllabusTable';
+import CoursesTable from '../../components/syllabus/CoursesTable';
 const CreateSyllabus = () => {
   const [toogleSyllabusForm, setToogleSyllabusForm] = useState(false);
   const [toogleCourseForm, setToogleCourseForm] = useState(false);
+  const navigate = useNavigate();
 
   const [fieldState, dispatch] = useReducer(SyllabusReducer, initialFields);
   const [bookState, bookDispatch] = useReducer(BooksReducer, initialBook);
@@ -34,6 +36,11 @@ const CreateSyllabus = () => {
   const [creditHour, setCreditHour] = useState('');
 
   const syllabus = true;
+  const course = true;
+
+  const handleViewClick = () => {
+    navigate('/syllabus');
+  };
 
   // syllabus form functions
   const handleSyllabusForm = () => {
@@ -188,28 +195,7 @@ const CreateSyllabus = () => {
             </button>
           </div>
           {syllabus ? (
-            <div className="syllabus-present">
-              <table className="syllabus-table">
-                <thead>
-                  <tr>
-                    <th>Syllabus</th>
-                    {/* <th>Semester</th> */}
-                    <th>Activity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>7th Semester</td>
-
-                    <td>
-                      <div className='activity-button'>
-                        <button className="view-button">View</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <SyllabusTable handleViewClick={handleViewClick} />
           ) : (
             <div className="no-data-list">No Syllabus Yet</div>
           )}
@@ -222,8 +208,7 @@ const CreateSyllabus = () => {
               Add Courses
             </button>
           </div>
-
-          <div className="no-data-list">No Courses Yet</div>
+          {course ? <CoursesTable /> : <div className="no-data-list">No Courses Yet</div>}
         </div>
       </div>
 
