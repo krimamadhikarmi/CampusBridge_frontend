@@ -10,6 +10,7 @@ import {
 } from '../../hooks/reducer';
 import SyllabusForm from '../../components/syllabus/SyllabusForm';
 import CourseForm from '../../components/syllabus/CourseForm';
+// import '../../styles/Syllabus.css'
 
 const CreateSyllabus = () => {
   const [toogleSyllabusForm, setToogleSyllabusForm] = useState(false);
@@ -31,6 +32,8 @@ const CreateSyllabus = () => {
   const [unitId, setUnitId] = useState('');
   const [title, setTitle] = useState('');
   const [creditHour, setCreditHour] = useState('');
+
+  const syllabus = true;
 
   // syllabus form functions
   const handleSyllabusForm = () => {
@@ -184,7 +187,32 @@ const CreateSyllabus = () => {
               Add Syllabus
             </button>
           </div>
-          <div className="no-data-list">No Syllabus Yet</div>
+          {syllabus ? (
+            <div className="syllabus-present">
+              <table className="syllabus-table">
+                <thead>
+                  <tr>
+                    <th>Syllabus</th>
+                    {/* <th>Semester</th> */}
+                    <th>Activity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>7th Semester</td>
+
+                    <td>
+                      <div className='activity-button'>
+                        <button className="view-button">View</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="no-data-list">No Syllabus Yet</div>
+          )}
         </div>
         <hr className="divider" />
         <div className="display-div">
@@ -194,6 +222,7 @@ const CreateSyllabus = () => {
               Add Courses
             </button>
           </div>
+
           <div className="no-data-list">No Courses Yet</div>
         </div>
       </div>
