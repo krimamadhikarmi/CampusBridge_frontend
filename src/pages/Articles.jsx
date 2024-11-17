@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '../components/common/PageHeader';
 import '../styles/Articles.css';
 import ArticleList from '../components/ArticleList';
 import CustomFormField from '../components/customFormField';

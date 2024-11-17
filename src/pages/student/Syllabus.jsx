@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
-import PageHeader from '../../components/PageHeader';
+import PageHeader from '../../components/common/PageHeader';
 import '../../styles/Syllabus.css';
 
 const Syllabus = () => {

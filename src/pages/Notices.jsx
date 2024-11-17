@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '../components/common/PageHeader';
 import '../styles/Notices.css';
 import NoticeList from '../components/NoticeList';
 
@@ -44,7 +44,11 @@ const Notices = () => {
           <button onClick={() => setSelectCategory('College')} className={selectCategory === 'College' ? 'active' : ''}>
             College
           </button>
-          <button onClick={() => setSelectCategory('University')} className={selectCategory === 'University' ? 'active' : ''}>University</button>
+          <button
+            onClick={() => setSelectCategory('University')}
+            className={selectCategory === 'University' ? 'active' : ''}>
+            University
+          </button>
         </div>
         <div className="notice-list">
           {filterData.map((notice, index) => (

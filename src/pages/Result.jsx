@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '../components/common/PageHeader';
 import '../styles/Result.css';
 import ResultTable from '../components/result/ResultTable';
 import ResultInfo from '../components/result/ResultInfo';
@@ -40,8 +40,8 @@ const Result = () => {
       <Navbar />
       <PageHeader pageTitle={'Result'} />
       <div className="result-box">
-        <ResultInfo/>
-        <ResultType selectExam={selectExam} setSelectExam={setSelectExam}/>
+        <ResultInfo />
+        <ResultType selectExam={selectExam} setSelectExam={setSelectExam} />
         {filterData.length > 0 ? (
           <ResultTable filterData={filterData} />
         ) : (
