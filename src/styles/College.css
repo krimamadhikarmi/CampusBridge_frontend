@@ -1,5 +1,14 @@
+.college-box {
+  width: 90vw;
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 15px;
+
+}
+
 .college-present {
-  padding: 40px;
+  padding: 10px;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -9,7 +18,7 @@
 .college-table {
   width: 90%;
   border-collapse: collapse;
-  margin-top: 60px;
+
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
@@ -80,4 +89,30 @@
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   height: 200px;
+}
+
+.college-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  position: relative; 
+  right: 80px; 
+  margin-bottom: 10px;
+}
+
+.add-college-button {
+  background-color: #004d4d;
+  border-radius: 12px;
+  color: #fffff0;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+ 
+}
+
+.add-college-button:hover {
+  background: linear-gradient(135deg, #498080, #004d4d);
+  transform: translateY(-2px);
 }
