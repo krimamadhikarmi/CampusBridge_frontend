@@ -11,6 +11,11 @@ const CourseForm = ({
   bookState,
   handleCourseId,
   handleCourseTitle,
+  handleUnitForm,
+  handleUpdateUnit,
+  handleAddUnit,
+  handleAddSubUnit,
+  unitState,
 }) => {
   return (
     <div className="form-design" onClick={(e) => e.stopPropagation()}>
@@ -87,7 +92,7 @@ const CourseForm = ({
                   placeholder={book.placeholder}
                   onChange={(e) => handleUpdateBook(e, book.id)}
                 />
-                <button type="button" onClick={handleAddBook}>
+                <button type="button" onClick={handleAddSubUnit}>
                   Add
                 </button>
               </div>
@@ -96,6 +101,62 @@ const CourseForm = ({
           <div className="add-div">
             <button onClick={handleBookField} className="add-field-button">
               Add Book
+            </button>
+          </div>
+          {unitState.map((unit) => {
+            return (
+              <div key={unit.id}>
+                <div className="course-field">
+                  <CustomFormField
+                    label={'Unit Id'}
+                    name={'UnitId'}
+                    type={'text'}
+                    value={unit.unitId}
+                    onChange={(e) => handleUpdateUnit(unit.id, 'unitId', e.target.value)}
+                  />
+                </div>
+                <div className="course-field">
+                  <CustomFormField
+                    label={'Title'}
+                    name={'Title'}
+                    type={'text'}
+                    value={unit.title}
+                    onChange={(e) => handleUpdateUnit(unit.id, 'title', e.target.value)}
+                  />
+                </div>
+                <div className="course-field">
+                  <CustomFormField
+                    label={'Credit Hour'}
+                    name={'CreditHour'}
+                    type={'text'}
+                    value={unit.creditHour}
+                    onChange={(e) => handleUpdateUnit(unit.id, 'creditHour', e.target.value)}
+                  />
+                </div>
+                <button type="button" onClick={handleUnitForm} className="add-button">
+                  Add Unit
+                </button>
+
+                {/* {unit.subUnits.map((subunit) => (
+                  <div className="course-field">
+                    <CustomFormField
+                      type={'text'}
+                      label={'Subunit'}
+                      name={'SubUnit'}
+                      value={subunit.value}
+                      onChange={(e) => handleUpdateSubUnit(e, subunit.id,unit.id)}
+                    />
+                    <button type="button" onClick={() => setSelectedUnitId(unit.id)}>
+                      Add Subunit
+                    </button>
+                  </div>
+                ))} */}
+              </div>
+            );
+          })}
+          <div className="add-div">
+            <button onClick={handleAddUnit} className="add-field-button">
+              Add More Unit
             </button>
           </div>
           <ButtonGroup handleClose={handleCourseForm} />

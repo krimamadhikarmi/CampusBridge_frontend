@@ -1,6 +1,13 @@
 import { useReducer, useState } from 'react';
 import Navbar from '../../components/Navbar';
-import { BooksReducer, SyllabusReducer, initialBook, initialFields } from '../../hooks/reducer';
+import {
+  BooksReducer,
+  SyllabusReducer,
+  UnitsReducer,
+  initialBook,
+  initialFields,
+  initialUnits,
+} from '../../hooks/reducer';
 import SyllabusForm from '../../components/syllabus/SyllabusForm';
 import CourseForm from '../../components/syllabus/CourseForm';
 
@@ -10,6 +17,7 @@ const CreateSyllabus = () => {
 
   const [fieldState, dispatch] = useReducer(SyllabusReducer, initialFields);
   const [bookState, bookDispatch] = useReducer(BooksReducer, initialBook);
+  const [unitState, unitDispatch] = useReducer(UnitsReducer, initialUnits);
 
   const [syllabusId, setSyllabusId] = useState('');
   const [semester, setSemester] = useState('');
@@ -19,6 +27,10 @@ const CreateSyllabus = () => {
   const [book, setBook] = useState('');
   const [isElective, setIsElective] = useState(false);
   const [coursetitle, setCourseTitle] = useState('');
+
+  const [unitId, setUnitId] = useState('');
+  const [title, setTitle] = useState('');
+  const [creditHour, setCreditHour] = useState('');
 
   // syllabus form functions
   const handleSyllabusForm = () => {
@@ -75,6 +87,67 @@ const CreateSyllabus = () => {
 
   const handleCourseForm = () => {
     setToogleCourseForm(!toogleCourseForm);
+  };
+  const handleAddUnit = (event) => {
+    event.preventDefault();
+    unitDispatch({
+      type: 'ADD_UNIT',
+      unitId,
+      title,
+      creditHour,
+    });
+    // Clear input fields after adding a unit
+    setUnitId('');
+    setTitle('');
+    setCreditHour('');
+  };
+
+  const handleUnitForm = (event) => {
+    event.preventDefault();
+    console.log('unitid', unitId);
+    console.log('tile', title);
+    console.log('hour', creditHour);
+  };
+
+  const handleUpdateUnit = (unitId, field, value, event) => {
+    // const value = event.target.value;
+    setUnitId(value);
+    setCreditHour(value);
+    setTitle(value);
+    unitDispatch({
+      type: 'UPDATE_UNIT',
+      id: unitId,
+      field: field,
+      value: value,
+    });
+  };
+
+  // const handleAddSubUnit = (event) => {
+  //   event.preventDefault();
+  //   if (selectedUnitId) {
+  //     unitDispatch({
+  //       type: 'ADD_SUB_UNIT',
+  //       unitId: selectedUnitId,
+  //       value: typedValue, // Pass typed value here, or an empty string if no value is provided
+  //     });
+  //     setTypedValue(''); // Reset the typedValue after adding
+  //   } else {
+  //     console.log('No unit selected');
+  //   }
+  // };
+
+  // const handleUpdateSubUnit = (unitId, subUnitId, value) => {
+  //   unitDispatch({
+  //     type: 'UPDATE_SUB_UNIT',
+  //     unitId,
+  //     id: subUnitId,
+  //     value,
+  //   });
+  // };
+
+  const handleUnitAdd = (event) => {
+    event.preventDefault();
+    console.log('added unit');
   };
 
   const handleUpdateBook = (event, id) => {
@@ -153,6 +226,14 @@ const CreateSyllabus = () => {
             bookState={bookState}
             handleCourseId={handleCourseId}
             handleCourseTitle={handleCourseTitle}
+            // handleAddSubUnit={handleAddSubUnit}
+            handleAddUnit={handleAddUnit}
+            handleUpdateUnit={handleUpdateUnit}
+            // handleUpdateSubUnit={handleUpdateSubUnit}
+            handleUnitAdd={handleUnitAdd}
+            unitState={unitState}
+            // setSelectedUnitId={setSelectedUnitId}
+            handleUnitForm={handleUnitForm}
           />
         </div>
       )}
