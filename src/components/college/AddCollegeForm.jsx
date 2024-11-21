@@ -7,40 +7,51 @@ const AddCollegeForm = ({
   handleCollgeFormSubmit,
   name,
   handleCName,
-  userName,
-  handleCUsername,
   password,
   handleCPassword,
   address,
   handleCAddress,
   email,
   handleCEmail,
-  phoneNumber,
+  phone,
   handleCPhone,
+  id,
+  handleCId,
+  description,
+  handleCDescription,
 }) => {
   return (
     <div className="form-design">
       <FormHeader handleForm={handleCollegePopUp} title={'Add College'} />
       <form onSubmit={handleCollgeFormSubmit}>
         <CustomFormField
+          label={'College Id'}
+          name={'CollegeId'}
+          type={'text'}
+          placeholder={'Enter College Id'}
+          value={id}
+          onChange={handleCId}
+        />
+        <CustomFormField
           label={'College Name'}
-          name={'CollegeName'}
+          name={'Name'}
           type={'text'}
           placeholder={'Enter College name'}
           value={name}
           onChange={handleCName}
         />
         <CustomFormField
-          label={'Username'}
-          name={'username'}
+          label={'Email'}
+          name={'Email'}
           type={'email'}
-          placeholder={'Enter College Username'}
-          value={userName}
-          onChange={handleCUsername}
+          placeholder={'Enter College email'}
+          onChange={handleCEmail}
+          value={email}
         />
+
         <CustomFormField
           label={'Password'}
-          name={'CollegePassword'}
+          name={'Password'}
           type={'password'}
           placeholder={'Enter Password'}
           onChange={handleCPassword}
@@ -48,27 +59,28 @@ const AddCollegeForm = ({
         />
         <CustomFormField
           label={'Address'}
-          name={'CollegeAddress'}
+          name={'Location'}
           type={'text'}
           placeholder={'Enter College Address'}
           value={address}
           onChange={handleCAddress}
         />
-        <CustomFormField
-          label={'Email'}
-          name={'CollegeEmail'}
-          type={'email'}
-          placeholder={'Enter College email'}
-          onChange={handleCEmail}
-          value={email}
-        />
+
         <CustomFormField
           label={'Phone Number'}
-          name={'CollegeNumber'}
+          name={'phone'}
           type={'tel'}
           placeholder={'Enter College Phone Number'}
-          value={phoneNumber}
+          value={phone}
           onChange={handleCPhone}
+        />
+        <CustomFormField
+          label={'Description'}
+          name={'Description'}
+          type={'text'}
+          placeholder={'Enter College Description'}
+          value={description}
+          onChange={handleCDescription}
         />
         <ButtonGroup handleClose={handleCollegePopUp} />
       </form>

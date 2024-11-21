@@ -16,6 +16,7 @@ const CollegeTable = () => {
           <td>samriddhi123</td>
           <td className="activity-button">
             <button className="view-button">Edit</button>
+            <button className="delete-button">Delete</button>
           </td>
         </tr>
         <tr>
@@ -24,6 +25,7 @@ const CollegeTable = () => {
           <td>samriddhi123</td>
           <td className="activity-button">
             <button className="view-button">Edit</button>
+            <button className="delete-button">Delete</button>
           </td>
         </tr>
       </tbody>

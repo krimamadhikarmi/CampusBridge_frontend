@@ -11,10 +11,12 @@ const Colleges = () => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [userName, setUserName] = useState('');
+
   const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState(0);
+  const [phone, setPhoneNumber] = useState('');
+  const [description, setDescription] = useState('');
+  const [id, setId] = useState('');
 
   const college = true;
 
@@ -25,13 +27,14 @@ const Colleges = () => {
   const handleCName = (event) => {
     setName(event.target.value);
   };
+  const handleCId = (event) => {
+    setId(event.target.value);
+  };
 
   const handleCEmail = (event) => {
     setEmail(event.target.value);
   };
-  const handleCUsername = (event) => {
-    setUserName(event.target.value);
-  };
+
   const handleCPassword = (event) => {
     setPassword(event.target.value);
   };
@@ -42,14 +45,17 @@ const Colleges = () => {
   const handleCPhone = (event) => {
     setPhoneNumber(event.target.value);
   };
+  const handleCDescription = (event) => {
+    setDescription(event.target.value);
+  };
 
   const handleCollgeFormSubmit = () => {
     console.log('name', name);
     console.log('email', email);
-    console.log('username', userName);
+
     console.log('password', password);
     console.log('address', address);
-    console.log('phonenumber', phoneNumber);
+    console.log('phonenumber', phone);
   };
 
   return (
@@ -80,14 +86,16 @@ const Colleges = () => {
             handleCName={handleCName}
             email={email}
             handleCEmail={handleCEmail}
-            handleCUsername={handleCUsername}
-            userName={userName}
             handleCPassword={handleCPassword}
             password={password}
             handleCPhone={handleCPhone}
-            phoneNumber={phoneNumber}
+            phone={phone}
             address={address}
             handleCAddress={handleCAddress}
+            handleCId={handleCId}
+            id={id}
+            description={description}
+            setDescription={handleCDescription}
           />
         </div>
       )}
