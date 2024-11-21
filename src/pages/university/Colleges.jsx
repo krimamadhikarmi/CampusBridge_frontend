@@ -2,9 +2,8 @@ import { useState } from 'react';
 import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/College.css';
-import FormHeader from '../../components/common/FormHeader';
-import CustomFormField from '../../components/customFormField';
-import ButtonGroup from '../../components/common/ButtonGroup';
+import AddCollegeForm from '../../components/college/AddCollegeForm';
+import CollegeTable from '../../components/college/CollegeTable';
 
 const Colleges = () => {
   const [collegePopup, setCollegePopUp] = useState(false);
@@ -15,6 +14,8 @@ const Colleges = () => {
   const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState(0);
+
+  const college = true;
 
   const handleCollegePopUp = () => {
     setCollegePopUp(!collegePopup);
@@ -60,95 +61,33 @@ const Colleges = () => {
             Add College
           </button>
         </div>
-        <div className="college-present">
-          <table className="college-table">
-            <thead>
-              <tr>
-                <th>College Name</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Activity</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Samriddhi College</td>
-                <td>samriddhi@college.com</td>
-                <td>samriddhi123</td>
-                <td className="activity-button">
-                  <button className="view-button">Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Samriddhi College</td>
-                <td>samriddhi@college.com</td>
-                <td>samriddhi123</td>
-                <td className="activity-button">
-                  <button className="view-button">Edit</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {college ? (
+          <div className="college-present">
+            <CollegeTable />
+          </div>
+        ) : (
+          <div className="no-data-list">No Registered College </div>
+        )}
       </div>
 
       {collegePopup && (
         <div className="form-overlay">
-          <div className="form-design">
-            <FormHeader handleForm={handleCollegePopUp} title={'Add College'} />
-
-            <form onSubmit={handleCollgeFormSubmit}>
-              <CustomFormField
-                label={'College Name'}
-                name={'CollegeName'}
-                type={'text'}
-                placeholder={'Enter College name'}
-                value={name}
-                onChange={handleCName}
-              />
-              <CustomFormField
-                label={'Username'}
-                name={'username'}
-                type={'email'}
-                placeholder={'Enter College Username'}
-                value={userName}
-                onChange={handleCUsername}
-              />
-              <CustomFormField
-                label={'Password'}
-                name={'CollegePassword'}
-                type={'password'}
-                placeholder={'Enter Password'}
-                onChange={handleCPassword}
-                value={password}
-              />
-              <CustomFormField
-                label={'Address'}
-                name={'CollegeAddress'}
-                type={'text'}
-                placeholder={'Enter College Address'}
-                value={address}
-                onChange={handleCAddress}
-              />
-              <CustomFormField
-                label={'Email'}
-                name={'CollegeEmail'}
-                type={'email'}
-                placeholder={'Enter College email'}
-                onChange={handleCEmail}
-                value={email}
-              />
-              <CustomFormField
-                label={'Phone Number'}
-                name={'CollegeNumber'}
-                type={'tel'}
-                placeholder={'Enter College Phone Number'}
-                value={phoneNumber}
-                onChange={handleCPhone}
-              />
-              <ButtonGroup handleClose={handleCollegePopUp} />
-            </form>
-          </div>
+          <AddCollegeForm
+            handleCollegePopUp={handleCollegePopUp}
+            handleCollgeFormSubmit={handleCollgeFormSubmit}
+            name={name}
+            handleCName={handleCName}
+            email={email}
+            handleCEmail={handleCEmail}
+            handleCUsername={handleCUsername}
+            userName={userName}
+            handleCPassword={handleCPassword}
+            password={password}
+            handleCPhone={handleCPhone}
+            phoneNumber={phoneNumber}
+            address={address}
+            handleCAddress={handleCAddress}
+          />
         </div>
       )}
     </>
