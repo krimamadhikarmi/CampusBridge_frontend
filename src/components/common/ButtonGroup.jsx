@@ -5,7 +5,7 @@ const ButtonGroup = ({ handleClose }) => {
       <button type="submit" className="submit-button">
         Save Changes
       </button>
-      <button type="submit" className="cancel-button" onClick={handleClose}>
+      <button type="button" className="cancel-button" onClick={handleClose}>
         Cancel
       </button>
     </div>
