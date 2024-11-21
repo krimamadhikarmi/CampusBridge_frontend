@@ -60,6 +60,11 @@
 /* td:last-child: Selects the last cell in that last row. 
   border-bottom-left-radius and border-bottom-right-radius: These add rounded corners specifically to the bottom left and bottom right of the table. */
 
+.activity-button {
+  display: flex;
+  gap: 10px;
+}
+
 .view-button {
   padding: 8px 15px;
   background-color: #004d4d; /* Deep Teal */
@@ -74,6 +79,22 @@
 
 .view-button:hover {
   background-color: #003a3a;
+}
+
+.delete-button {
+  padding: 8px 15px;
+  background-color: #a30707;
+  color: #fffff0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #d23636;
 }
 
 .no-college {

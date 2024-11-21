@@ -1,8 +1,8 @@
 import '../styles/Navbar.css';
-const LogoutPopup = ({ onConfirm, onClose }) => (
+const ConfirmPopup = ({ onConfirm, onClose, title }) => (
   <div className="logout-overlay" onClick={onClose}>
     <div className="logout-box">
-      <h3>Are you sure you want to logout?</h3>
+      <h3>{title}</h3>
       <div className="button-group">
         <button className="confirm-button" onClick={onConfirm}>
           Yes
@@ -15,4 +15,4 @@ const LogoutPopup = ({ onConfirm, onClose }) => (
   </div>
 );
 
-export default LogoutPopup;
+export default ConfirmPopup;
