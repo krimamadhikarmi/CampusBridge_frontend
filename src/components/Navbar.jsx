@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToken } from '../context/TokenContext';
 import axios from 'axios';
-import LogoutPopup from './LogoutPopup';
+import ConfirmPopup from './LogoutPopup';
 
 const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
@@ -100,7 +100,13 @@ const Navbar = () => {
         </Link>
       </div>
       {renderItems()}
-      {showLogout && <LogoutPopup onConfirm={onLogout} onClose={() => setShowLogout(false)} />}
+      {showLogout && (
+        <ConfirmPopup
+          onConfirm={onLogout}
+          onClose={() => setShowLogout(false)}
+          title={'Are you sure you want to logout?'}
+        />
+      )}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import FormHeader from '../common/FormHeader';
 import CustomFormField from '../customFormField';
 import ButtonGroup from '../common/ButtonGroup';
+import ConfirmPopup from '../LogoutPopup';
 
 const CollegeTable = ({ handleEditForm, showEdit }) => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
     location: 'Lokanthali,Bhaktapur',
     description: 'It is an IT College',
   });
+
+  const [deletepop, setDeletePop] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +27,11 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
     console.log('Updated Profile Data:', formData);
     handleEditForm();
   };
+
+  const handleDelete = () => {
+    setDeletePop(!deletepop);
+  };
+
   return (
     <>
       <table className="college-table">
@@ -41,10 +49,12 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
             <td>samriddhi@college.com</td>
             <td>samriddhi123</td>
             <td className="activity-button">
-              <button className="view-button" on onClick={handleEditForm}>
+              <button className="view-button" onClick={handleEditForm}>
                 Edit
               </button>
-              <button className="delete-button">Delete</button>
+              <button className="delete-button" onClick={handleDelete}>
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
@@ -106,6 +116,9 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
             </form>
           </div>
         </div>
+      )}
+      {deletepop && (
+        <ConfirmPopup onConfirm={handleDelete} onClose={handleDelete} title={'Are you sure you want to delete?'} />
       )}
     </>
   );
