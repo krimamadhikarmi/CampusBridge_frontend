@@ -18,6 +18,12 @@ const Colleges = () => {
   const [description, setDescription] = useState('');
   const [id, setId] = useState('');
 
+  const [showEdit, setShowEdit] = useState(false);
+
+  const handleEditForm = () => {
+    setShowEdit(!showEdit);
+  };
+
   const college = true;
 
   const handleCollegePopUp = () => {
@@ -70,7 +76,7 @@ const Colleges = () => {
         </div>
         {college ? (
           <div className="college-present">
-            <CollegeTable />
+            <CollegeTable handleEditForm={handleEditForm} showEdit={showEdit} />
           </div>
         ) : (
           <div className="no-data-list">No Registered College </div>
