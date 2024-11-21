@@ -114,35 +114,3 @@
   background: linear-gradient(135deg, #498080, #004d4d);
   transform: translateY(-2px);
 }
-
-.form-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.form-design {
-  position: fixed;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 550px;
-  border-radius: 12px;
-  background-color: #fffff0;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  padding: 25px;
-  max-height: 75vh;
-  overflow-y: auto;
-  transition: opacity 0.3s ease;
-  opacity: 1;
-}

@@ -13,6 +13,7 @@ import CourseForm from '../../components/syllabus/CourseForm';
 import { useNavigate } from 'react-router-dom';
 import SyllabusTable from '../../components/syllabus/SyllabusTable';
 import CoursesTable from '../../components/syllabus/CoursesTable';
+import '../../styles/common.css';
 const CreateSyllabus = () => {
   const [toogleSyllabusForm, setToogleSyllabusForm] = useState(false);
   const [toogleCourseForm, setToogleCourseForm] = useState(false);

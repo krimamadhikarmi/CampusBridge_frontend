@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import '../../styles/College.css';
 import AddCollegeForm from '../../components/college/AddCollegeForm';
 import CollegeTable from '../../components/college/CollegeTable';
+import '../../styles/common.css';
 
 const Colleges = () => {
   const [collegePopup, setCollegePopUp] = useState(false);
