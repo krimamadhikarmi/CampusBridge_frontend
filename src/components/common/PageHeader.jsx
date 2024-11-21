@@ -1,4 +1,4 @@
-import '../styles/common.css'
+import '../../styles/common.css'
 const PageHeader = ({pageTitle}) => {
   return (
     <div className="page-header">

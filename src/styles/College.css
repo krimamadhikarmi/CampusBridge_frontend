@@ -1,0 +1,116 @@
+.college-box {
+  width: 90vw;
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.college-present {
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.college-table {
+  width: 90%;
+  border-collapse: collapse;
+
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.college-table th,
+.college-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.college-table th {
+  background-color: #004d4d;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.college-table td {
+  background-color: #fffff0;
+  color: #17794f;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.college-table tr:hover {
+  background-color: #f0f0e0;
+}
+
+.college-table tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.college-table tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* td:last-child: Selects the last cell in that last row. 
+  border-bottom-left-radius and border-bottom-right-radius: These add rounded corners specifically to the bottom left and bottom right of the table. */
+
+.view-button {
+  padding: 8px 15px;
+  background-color: #004d4d; /* Deep Teal */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: #003a3a;
+}
+
+.no-college {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #888;
+  margin-top: 12px;
+  background-color: #f5f5dc;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  height: 200px;
+}
+
+.college-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  position: relative;
+  right: 80px;
+  margin-bottom: 10px;
+}
+
+.add-college-button {
+  background-color: #004d4d;
+  border-radius: 12px;
+  color: #fffff0;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.add-college-button:hover {
+  background: linear-gradient(135deg, #498080, #004d4d);
+  transform: translateY(-2px);
+}

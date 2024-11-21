@@ -15,6 +15,7 @@ import Profile from './pages/Profile';
 import Assignment from './pages/student/Assignment';
 import { TokenProvider } from './context/TokenContext';
 import CreateSyllabus from './pages/university/CreateSyllabus';
+import Colleges from './pages/university/Colleges';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,7 +24,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<DashBoard />} />
+          <Route index element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/syllabus" element={<Syllabus />} />
@@ -34,6 +35,7 @@ root.render(
           <Route path="/help" element={<Help />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/createsyllabus" element={<CreateSyllabus/>} />
+          <Route path="/colleges" element={<Colleges/>} />
         </Route>
       </Routes>
     </BrowserRouter>

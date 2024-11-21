@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '../components/common/PageHeader';
 import '../styles/Articles.css';
 import ArticleList from '../components/ArticleList';
 import CustomFormField from '../components/customFormField';
 import ButtonGroup from '../components/common/ButtonGroup';
+import FormHeader from '../components/common/FormHeader';
 
 const Articles = () => {
   const [dropdown, setDropDown] = useState(false);
@@ -90,35 +91,38 @@ const Articles = () => {
         </div>
       </div>
       {dropdown && (
-        <form onSubmit={handleSubmit}>
-          <div className={`article-form-box ${dropdown ? 'show' : ''}`}>
-            <CustomFormField label={'Tag'} name={'tag'} type={'text'} value={tag} onChange={handleTag} />
-            <CustomFormField
-              label={'Headline'}
-              name={'headline'}
-              type={'text'}
-              value={headline}
-              onChange={handleTitle}
-            />
-            <CustomFormField
-              label={'Tagline'}
-              name={'tagline'}
-              type={'text'}
-              value={tagLine}
-              onChange={handleTagLine}
-            />
-            <CustomFormField
-              label={'Description'}
-              name={'description'}
-              type={'text'}
-              value={description}
-              onChange={handleDescription}
-            />
-            <CustomFormField label={'Date'} name={'date'} type={'date'} value={currentDate} />
+        <div className="form-overlay">
+          <div className='form-design'>
+            <FormHeader handleForm={toggleDown} title={'Create Article'}/>
+            <form onSubmit={handleSubmit}>
+              <CustomFormField label={'Tag'} name={'tag'} type={'text'} value={tag} onChange={handleTag} />
+              <CustomFormField
+                label={'Headline'}
+                name={'headline'}
+                type={'text'}
+                value={headline}
+                onChange={handleTitle}
+              />
+              <CustomFormField
+                label={'Tagline'}
+                name={'tagline'}
+                type={'text'}
+                value={tagLine}
+                onChange={handleTagLine}
+              />
+              <CustomFormField
+                label={'Description'}
+                name={'description'}
+                type={'text'}
+                value={description}
+                onChange={handleDescription}
+              />
+              <CustomFormField label={'Date'} name={'date'} type={'date'} value={currentDate} />
 
-            <ButtonGroup handleClose={toggleDown} />
+              <ButtonGroup handleClose={toggleDown} />
+            </form>
           </div>
-        </form>
+        </div>
       )}
     </>
   );

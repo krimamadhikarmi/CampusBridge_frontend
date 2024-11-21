@@ -1,5 +1,5 @@
 import Navbar from '../../components/Navbar';
-import PageHeader from '../../components/PageHeader';
+import PageHeader from '../../components/common/PageHeader';
 import '../../styles/Assignment.css';
 import { useState } from 'react';
 
