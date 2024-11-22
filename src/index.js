@@ -16,31 +16,33 @@ import Assignment from './pages/student/Assignment';
 import { TokenProvider } from './context/TokenContext';
 import CreateSyllabus from './pages/university/CreateSyllabus';
 import Colleges from './pages/university/Colleges';
+import CreateResult from './pages/university/CreateResult';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-     <TokenProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/syllabus" element={<Syllabus />} />
-          <Route path="/assignment" element={<Assignment />} />
-          <Route path="/result" element={<Result />} />
-          <Route path="/articles" element={<Articles />} />
-          <Route path="/notices" element={<Notices />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/createsyllabus" element={<CreateSyllabus/>} />
-          <Route path="/colleges" element={<Colleges/>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <TokenProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<DashBoard />} />
+            <Route path="/syllabus" element={<Syllabus />} />
+            <Route path="/assignment" element={<Assignment />} />
+            <Route path="/result" element={<Result />} />
+            <Route path="/articles" element={<Articles />} />
+            <Route path="/notices" element={<Notices />} />
+            <Route path="/help" element={<Help />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/createsyllabus" element={<CreateSyllabus />} />
+            <Route path="/colleges" element={<Colleges />} />
+            <Route path="/createresult" element={<CreateResult />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </TokenProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

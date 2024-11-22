@@ -20,8 +20,9 @@ const ResultTable = ({ filterData }) => {
               <td>{examdata.semester}</td>
               <td>{examdata.result}</td>
               <td>{examdata.percentage}%</td>
-              <td>
-                <button className="view-button">View</button>
+              <td className="activity-button">
+                <button className="view-button">Edit</button>
+                <button className="delete-button">Delete</button>
               </td>
             </tr>
           ))}
