@@ -114,10 +114,12 @@ const Notices = () => {
             <div key={index} className="notice-item">
               <NoticeList
                 index={index}
+                id={notice.id}
                 title={notice.title}
                 content={notice.content}
                 category={notice.category}
                 date={notice.date}
+                getCheckboxOptions={getCheckboxOptions}
               />
             </div>
           ))}
