@@ -4,13 +4,13 @@ import PageHeader from '../components/common/PageHeader';
 import '../styles/Notices.css';
 import NoticeList from '../components/NoticeList';
 import '../styles/common.css';
-import FormHeader from '../components/common/FormHeader';
-import CustomFormField from '../components/customFormField';
-import ButtonGroup from '../components/common/ButtonGroup';
+
+import AddNotice from '../components/notice/AddNotice';
+import SelectNotice from '../components/notice/SelectNotice';
 
 const Notices = () => {
   const admin = true;
-  const user = 'teacher';
+  const user = 'club-head';
   //for now i have created fake json data to test purpose
   const noticesData = [
     {
@@ -92,7 +92,7 @@ const Notices = () => {
           <input type="checkbox" name="DirectedTo" value="Student" /> Student
         </label>
       </>
-    ); 
+    );
   };
   const filterData =
     selectCategory === 'All' ? noticesData : noticesData.filter((notice) => notice.category === selectCategory);
@@ -101,19 +101,7 @@ const Notices = () => {
       <Navbar />
       <PageHeader pageTitle={'Notices'} />
       <div className="notice-box">
-        <div className="choice-box">
-          <button onClick={() => setSelectCategory('All')} className={selectCategory === 'All' ? 'active' : ''}>
-            All
-          </button>
-          <button onClick={() => setSelectCategory('College')} className={selectCategory === 'College' ? 'active' : ''}>
-            College
-          </button>
-          <button
-            onClick={() => setSelectCategory('University')}
-            className={selectCategory === 'University' ? 'active' : ''}>
-            University
-          </button>
-        </div>
+        <SelectNotice selectCategory={selectCategory} setSelectCategory={setSelectCategory} />
         {admin && (
           <div>
             <button className="add-notice-button" onClick={handleArticlePop}>
@@ -136,34 +124,11 @@ const Notices = () => {
         </div>
       </div>
       {showpopup && (
-        <div className="form-overlay">
-          <div className="form-design">
-            <FormHeader handleForm={handleArticlePop} title={'Create Notice'} />
-            <form>
-              <CustomFormField
-                name={'NoticeId'}
-                label={'Notice Id'}
-                placeholder={'Enter the Notice Id'}
-                type={'text'}
-              />
-              <CustomFormField name={'Title'} label={'Title'} placeholder={'Enter the title of notice'} type={'text'} />
-              <CustomFormField
-                name={'Description'}
-                label={'Description'}
-                placeholder={'Enter the Notice Description'}
-                type={'text'}
-              />
-              <div className="check-group">
-                <p>Who is your notice directed to?</p>
-                <div className="check-group-item">{getCheckboxOptions()}</div>
-              </div>
-
-              <CustomFormField label={'Date'} name={'date'} type={'date'} value={currentDate} />
-
-              <ButtonGroup handleClose={handleArticlePop} />
-            </form>
-          </div>
-        </div>
+        <AddNotice
+          handleArticlePop={handleArticlePop}
+          currentDate={currentDate}
+          getCheckboxOptions={getCheckboxOptions}
+        />
       )}
     </>
   );
