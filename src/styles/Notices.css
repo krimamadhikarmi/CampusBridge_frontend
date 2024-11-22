@@ -47,6 +47,36 @@
   align-items: center;
 }
 
+.notice-options {
+  display: flex;
+  gap: 25px;
+  margin-right: 20px;
+}
+
+.notice-options .fa-icon {
+  color: #004d4d;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.notice-options .fa-icon:hover {
+  color: #007373;
+  transform: scale(1.1);
+}
+
+.notice-options .fa-icon-trash {
+  color: #bd3005;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.notice-options .fa-icon-trash:hover {
+  color: #fc2d11;
+  transform: scale(1.1);
+}
+
 .notice-number {
   font-size: 24px;
   font-weight: bold;

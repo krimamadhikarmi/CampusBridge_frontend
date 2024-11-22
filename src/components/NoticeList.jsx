@@ -1,3 +1,5 @@
+import { faBucket, faDeleteLeft, faEllipsisVertical, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const NoticeList = ({ index, title, content, category, date }) => {
   return (
     <>
@@ -9,6 +11,10 @@ const NoticeList = ({ index, title, content, category, date }) => {
           <p className="notice-category">{category} </p>
           <p className="notice-date">Date:{date}</p>
         </div>
+      </div>
+      <div className="notice-options">
+        <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" />
+        <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" />
       </div>
     </>
   );
