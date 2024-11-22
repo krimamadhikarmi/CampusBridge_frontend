@@ -10,6 +10,7 @@ import ButtonGroup from '../components/common/ButtonGroup';
 
 const Notices = () => {
   const admin = true;
+  const user = 'teacher';
   //for now i have created fake json data to test purpose
   const noticesData = [
     {
@@ -45,6 +46,53 @@ const Notices = () => {
 
   const handleArticlePop = () => {
     setShowPopUp(!showpopup);
+  };
+
+  const getCheckboxOptions = () => {
+    if (user === 'college') {
+      return (
+        <>
+          <label>
+            <input type="checkbox" name="DirectedTo" value="Teacher" /> Teacher
+          </label>
+          <label>
+            <input type="checkbox" name="DirectedTo" value="Student" /> Student
+          </label>
+        </>
+      );
+    } else if (user === 'club-head') {
+      return (
+        <>
+          <label>
+            <input type="checkbox" name="DirectedTo" value="Club Member" /> Club Member
+          </label>
+          <label>
+            <input type="checkbox" name="DirectedTo" value="College" /> College
+          </label>
+        </>
+      );
+    } else if (user === 'university') {
+      return (
+        <>
+          <label>
+            <input type="checkbox" name="DirectedTo" value="College" /> College
+          </label>
+          <label>
+            <input type="checkbox" name="DirectedTo" value="Student" /> Student
+          </label>
+        </>
+      );
+    }
+    return (
+      <>
+        <label>
+          <input type="checkbox" name="DirectedTo" value="College" /> College
+        </label>
+        <label>
+          <input type="checkbox" name="DirectedTo" value="Student" /> Student
+        </label>
+      </>
+    ); 
   };
   const filterData =
     selectCategory === 'All' ? noticesData : noticesData.filter((notice) => notice.category === selectCategory);
@@ -105,18 +153,11 @@ const Notices = () => {
                 placeholder={'Enter the Notice Description'}
                 type={'text'}
               />
-              <div className="form-group">
-                <label>Who is your notice directed to?</label>
-                <label>
-                  <input type="checkbox" name="DirectedTo" value="Teacher" /> Teacher
-                </label>
-                <label>
-                  <input type="checkbox" name="DirectedTo" value="College" /> College
-                </label>
-                <label>
-                  <input type="checkbox" name="DirectedTo" value="University" /> University
-                </label>
+              <div className="check-group">
+                <p>Who is your notice directed to?</p>
+                <div className="check-group-item">{getCheckboxOptions()}</div>
               </div>
+
               <CustomFormField label={'Date'} name={'date'} type={'date'} value={currentDate} />
 
               <ButtonGroup handleClose={handleArticlePop} />
