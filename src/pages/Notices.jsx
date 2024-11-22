@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import PageHeader from '../components/common/PageHeader';
 import '../styles/Notices.css';
 import NoticeList from '../components/NoticeList';
+import '../styles/common.css';
+import FormHeader from '../components/common/FormHeader';
+import CustomFormField from '../components/customFormField';
+import ButtonGroup from '../components/common/ButtonGroup';
 
 const Notices = () => {
+  const admin = true;
   //for now i have created fake json data to test purpose
   const noticesData = [
     {
@@ -30,6 +35,17 @@ const Notices = () => {
     },
   ];
   const [selectCategory, setSelectCategory] = useState('All');
+  const [showpopup, setShowPopUp] = useState(false);
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setCurrentDate(today);
+  }, []);
+
+  const handleArticlePop = () => {
+    setShowPopUp(!showpopup);
+  };
   const filterData =
     selectCategory === 'All' ? noticesData : noticesData.filter((notice) => notice.category === selectCategory);
   return (
@@ -50,6 +66,13 @@ const Notices = () => {
             University
           </button>
         </div>
+        {admin && (
+          <div>
+            <button className="add-notice-button" onClick={handleArticlePop}>
+              Add Notice
+            </button>
+          </div>
+        )}
         <div className="notice-list">
           {filterData.map((notice, index) => (
             <div key={index} className="notice-item">
@@ -64,6 +87,43 @@ const Notices = () => {
           ))}
         </div>
       </div>
+      {showpopup && (
+        <div className="form-overlay">
+          <div className="form-design">
+            <FormHeader handleForm={handleArticlePop} title={'Create Notice'} />
+            <form>
+              <CustomFormField
+                name={'NoticeId'}
+                label={'Notice Id'}
+                placeholder={'Enter the Notice Id'}
+                type={'text'}
+              />
+              <CustomFormField name={'Title'} label={'Title'} placeholder={'Enter the title of notice'} type={'text'} />
+              <CustomFormField
+                name={'Description'}
+                label={'Description'}
+                placeholder={'Enter the Notice Description'}
+                type={'text'}
+              />
+              <div className="form-group">
+                <label>Who is your notice directed to?</label>
+                <label>
+                  <input type="checkbox" name="DirectedTo" value="Teacher" /> Teacher
+                </label>
+                <label>
+                  <input type="checkbox" name="DirectedTo" value="College" /> College
+                </label>
+                <label>
+                  <input type="checkbox" name="DirectedTo" value="University" /> University
+                </label>
+              </div>
+              <CustomFormField label={'Date'} name={'date'} type={'date'} value={currentDate} />
+
+              <ButtonGroup handleClose={handleArticlePop} />
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

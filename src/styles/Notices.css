@@ -33,6 +33,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-top: 20px;
 }
 
 .notice-item {
@@ -102,4 +103,23 @@
 .choice-box button.active {
   background-color: #007373;
   color: #ffffff;
+}
+
+
+
+.add-notice-button {
+  background-color: #004d4d;
+  border-radius: 12px;
+  color: #fffff0;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.add-notice-button:hover {
+  background: linear-gradient(135deg, #498080, #004d4d);
+  transform: translateY(-2px);
 }

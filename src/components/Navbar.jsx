@@ -122,7 +122,7 @@ const Navbar = () => {
     <div id="nav">
       <div className="logo">
         <Link to="/dashboard">
-          <img src="logo192.png" alt="Logo" width={50} />
+          <img src="logo4.png" alt="Logo" width={150} />
         </Link>
       </div>
       {renderItems()}

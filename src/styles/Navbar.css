@@ -1,6 +1,6 @@
 #nav {
   background-color: #004d4d;
-  height: 70px;
+  height: 90px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -10,14 +10,14 @@
   z-index: 100;
 }
 #nav .logo {
-  margin-right: 50px;
+  /* margin-right: 50px; */
   margin-left: 50px;
 }
 
 .menuitem {
   display: flex;
   gap: 90px;
-  margin-left: 150px;
+  margin-left: 100px;
 }
 
 #nav a {
