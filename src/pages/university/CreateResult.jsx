@@ -2,17 +2,27 @@ import { useState } from 'react';
 import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/Result.css';
-import FormHeader from '../../components/common/FormHeader';
-import CustomFormField from '../../components/customFormField';
-import ButtonGroup from '../../components/common/ButtonGroup';
 import AddResultForm from '../../components/result/AddResultForm';
+import EditResultForm from '../../components/result/EditResultForm';
+import ConfirmPopup from '../../components/LogoutPopup';
 
 const CreateResult = () => {
   const [addResult, setAddResult] = useState(false);
+  const [editResult, setEditResult] = useState(false);
+  const [deleteData, setDeleteData] = useState(false);
 
   const handleResultPop = () => {
     setAddResult(!addResult);
   };
+
+  const handleEditPop = () => {
+    setEditResult(!editResult);
+  };
+
+  const handleDeletePop = () => {
+    setDeleteData(!deleteData);
+  };
+
   return (
     <>
       <Navbar />
@@ -41,8 +51,12 @@ const CreateResult = () => {
                 <td>Passed</td>
                 <td>70%</td>
                 <td className="activity-button">
-                  <button className="view-button">Edit</button>
-                  <button className="delete-button">Delete</button>
+                  <button className="view-button" onClick={handleEditPop}>
+                    Edit
+                  </button>
+                  <button className="delete-button" onClick={handleDeletePop}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -50,6 +64,14 @@ const CreateResult = () => {
         </div>
       </div>
       {addResult && <AddResultForm handleResultPop={handleResultPop} />}
+      {editResult && <EditResultForm handleEditPop={handleEditPop} />}
+      {deleteData && (
+        <ConfirmPopup
+          onClose={handleDeletePop}
+          onConfirm={handleDeletePop}
+          title={'Are you sure you want to delete?'}
+        />
+      )}
     </>
   );
 };
