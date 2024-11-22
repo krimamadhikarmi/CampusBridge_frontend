@@ -39,7 +39,7 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
           <tr>
             <th>College Name</th>
             <th>Email</th>
-            <th>Password</th>
+            <th>Address</th>
             <th>Activity</th>
           </tr>
         </thead>
@@ -47,7 +47,7 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
           <tr>
             <td>Samriddhi College</td>
             <td>samriddhi@college.com</td>
-            <td>samriddhi123</td>
+            <td>Lokanthali,Bhaktapur</td>
             <td className="activity-button">
               <button className="view-button" onClick={handleEditForm}>
                 Edit
@@ -72,22 +72,7 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
                 value={formData.name}
                 onChange={handleInputChange}
               />
-              <CustomFormField
-                label={'Email'}
-                name={'email'}
-                type={'email'}
-                placeholder={'Enter College email'}
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-              <CustomFormField
-                label={'Password'}
-                name={'password'}
-                type={'password'}
-                placeholder={'Enter Password'}
-                value={formData.password}
-                onChange={handleInputChange}
-              />
+
               <CustomFormField
                 label={'Address'}
                 name={'location'}

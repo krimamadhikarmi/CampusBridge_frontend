@@ -89,6 +89,32 @@ const Navbar = () => {
           </div>
         </>
       );
+    } else {
+      return (
+        <>
+          <div className="menuitem">
+            <Link to="/syllabus">Syllabus</Link>
+            <Link to="/assignment">Assignment</Link>
+            <Link to="/result">Result</Link>
+            <Link to="/articles">Articles</Link>
+            <Link to="/notices">Notices</Link>
+            <Link to="/help">Help</Link>
+          </div>
+          <div className="user">
+            <div onClick={toggleDropdown} className="user-icon">
+              <FontAwesomeIcon icon={faUser} />
+            </div>
+            {dropDown && (
+              <div className="dropdown">
+                <Link to="/profile">Profile</Link>
+                <button onClick={handleLogout} className="logout-button">
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </>
+      );
     }
   };
 
