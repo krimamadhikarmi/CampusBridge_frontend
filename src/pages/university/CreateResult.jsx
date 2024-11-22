@@ -5,6 +5,7 @@ import '../../styles/Result.css';
 import FormHeader from '../../components/common/FormHeader';
 import CustomFormField from '../../components/customFormField';
 import ButtonGroup from '../../components/common/ButtonGroup';
+import AddResultForm from '../../components/result/AddResultForm';
 
 const CreateResult = () => {
   const [addResult, setAddResult] = useState(false);
@@ -48,48 +49,7 @@ const CreateResult = () => {
           </table>
         </div>
       </div>
-      {addResult && (
-        <div className="form-overlay">
-          <div className="form-design">
-            <FormHeader handleForm={handleResultPop} title={'Add Result'} />
-            <form>
-              <CustomFormField
-                name={'ResultId'}
-                label={'Result Id'}
-                placeholder={'Enter the Result Id'}
-                type={'text'}
-              />
-
-              <CustomFormField
-                name={'ExaminationType'}
-                label={'Examination Type'}
-                placeholder={'Enter the  Examination Type'}
-                type={'text'}
-              />
-
-              <CustomFormField name={'Semester'} label={'Semester'} placeholder={'Enter the Semester'} type={'text'} />
-
-              <CustomFormField
-                name={'Percentage'}
-                label={'Percentage'}
-                placeholder={'Enter the secured percentage'}
-                type={'text'}
-              />
-
-              <CustomFormField name={'Status'} label={'Status'} placeholder={'Enter the result status'} type={'text'} />
-
-              <CustomFormField
-                name={'StudentID'}
-                label={'Student Id'}
-                placeholder={'Enter the Student Id'}
-                type={'text'}
-              />
-
-              <ButtonGroup handleClose={handleResultPop} />
-            </form>
-          </div>
-        </div>
-      )}
+      {addResult && <AddResultForm handleResultPop={handleResultPop} />}
     </>
   );
 };
