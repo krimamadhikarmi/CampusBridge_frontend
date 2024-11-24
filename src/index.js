@@ -16,6 +16,7 @@ import Assignment from './pages/student/Assignment';
 import { TokenProvider } from './context/TokenContext';
 import CreateSyllabus from './pages/university/CreateSyllabus';
 import Colleges from './pages/university/Colleges';
+import Calendar from './components/calendar/Calendar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -36,6 +37,7 @@ root.render(
           <Route path="/profile" element={<Profile />} />
           <Route path="/createsyllabus" element={<CreateSyllabus/>} />
           <Route path="/colleges" element={<Colleges/>} />
+          <Route path="/calendar" element={<Calendar/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
