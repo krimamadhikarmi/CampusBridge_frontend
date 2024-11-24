@@ -1,4 +1,27 @@
-const NoticeList = ({ index, title, content, category, date }) => {
+import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState, useEffect } from 'react';
+
+import ConfirmPopup from './LogoutPopup';
+import EditNotice from './notice/EditNotice';
+const NoticeList = ({ index, id, title, content, category, date, getCheckboxOptions }) => {
+  const [showEdit, setShowEdit] = useState(false);
+  const [currentDate, setCurrentDate] = useState('');
+  const [deletepop, setDeletePop] = useState(false);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setCurrentDate(today);
+  }, []);
+
+  const handleEditForm = () => {
+    setShowEdit(!showEdit);
+  };
+
+  const handleDeletePop = () => {
+    setDeletePop(!deletepop);
+  };
+
   return (
     <>
       <div className="notice-number">{index + 1}</div>
@@ -10,6 +33,29 @@ const NoticeList = ({ index, title, content, category, date }) => {
           <p className="notice-date">Date:{date}</p>
         </div>
       </div>
+      <div className="notice-options">
+        <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" onClick={handleEditForm} />
+        <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={handleDeletePop} />
+      </div>
+
+      {showEdit && (
+        <EditNotice
+          handleEditForm={handleEditForm}
+          id={id}
+          title={title}
+          content={content}
+          getCheckboxOptions={getCheckboxOptions}
+          currentDate={currentDate}
+        />
+      )}
+
+      {deletepop && (
+        <ConfirmPopup
+          onClose={handleDeletePop}
+          onConfirm={handleDeletePop}
+          title={'Are you sure you want to delete ?'}
+        />
+      )}
     </>
   );
 };

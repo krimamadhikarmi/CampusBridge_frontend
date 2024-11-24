@@ -10,8 +10,8 @@
   z-index: 100;
 }
 #nav .logo {
-  /* margin-right: 50px; */
-  margin-left: 50px;
+  margin-right: 20px;
+  margin-left: 30px;
 }
 
 .menuitem {
@@ -139,8 +139,8 @@
 /* univeristy navbar */
 .university-menuitem {
   display: flex;
-  gap: 120px;
-  margin-left: 150px;
+  gap: 130px;
+  margin-left: 90px;
 }
 
 .logout-icon {

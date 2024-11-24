@@ -9,6 +9,7 @@ import ConfirmPopup from './LogoutPopup';
 
 const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
+  // const [resultdropDown, setResultDropDown] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const { token, setToken, role, setRole } = useToken();
   const navigate = useNavigate();
@@ -17,6 +18,11 @@ const Navbar = () => {
     console.log(token);
     setDropDown(!dropDown);
   };
+
+  // const toggleResultDropdown = () => {
+  //   console.log(token);
+  //   setResultDropDown(!resultdropDown);
+  // };
 
   const handleLogout = () => {
     setShowLogout(true);
@@ -79,7 +85,17 @@ const Navbar = () => {
                 <Link to="/createsyllabus">Create Syllabus</Link>
               </div>
             )}
-            <Link to="/result">Result</Link>
+            {/* <div className="menu-link" onClick={toggleResultDropdown}>
+              Result
+            </div> */}
+            {/* {resultdropDown && (
+              <div className="syllabus-dropdown">
+                <Link to="/result">View Result</Link> */}
+            <Link to="/createresult">Result</Link>
+            {/* </div>
+            )} */}
+
+            {/* <Link to="/result">Result</Link> */}
             <Link to="/articles">Articles</Link>
             <Link to="/notices">Notices</Link>
             <Link to="/colleges">Colleges</Link>
