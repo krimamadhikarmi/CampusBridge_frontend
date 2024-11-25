@@ -16,6 +16,7 @@ const CourseForm = ({
   handleAddMoreUnit,
   handleAddSubUnit,
   handleUpdateSubUnit,
+  handleSub,
   unitState,
 }) => {
   return (
@@ -134,24 +135,26 @@ const CourseForm = ({
                     onChange={(e) => handleUpdateUnit(unit.id, 'creditHour', e.target.value)}
                   />
                 </div>
-                {/* <div>
-                  {unit.subUnits.map((subUnit) => (
-                    <div key={subUnit.id} className="course-field">
-                      <CustomFormField
-                        label={'Subunit'}
-                        name={'Subunit'}
-                        type={'text'}
-                        value={subUnit.title}
-                        onChange={(e) => handleUpdateSubUnit(unit.id, subUnit.id, e.target.value)}
-                      />
-                       <button onClick={() => handleAddSubUnit(unit.id)} className="add-field-button ">
-                    Add
-                  </button>
 
-                    </div>
-                  ))}
-                                 </div> */}
-                <div className='unit-add-div'>
+                {unit.subUnits.map((subUnit) => (
+                  <div key={subUnit.id} className="course-field">
+                    <CustomFormField
+                      label={'Subunit'}
+                      name={'Subunit'}
+                      type={'text'}
+                      value={subUnit.title}
+                      onChange={(e) => handleUpdateSubUnit(unit.id, subUnit.id, e.target.value)}
+                    />
+                    <button onClick={handleSub} className="add-field-button">
+                      Add
+                    </button>
+                  </div>
+                ))}
+
+                <div className="unit-add-div">
+                  <button onClick={(e) => handleAddSubUnit(unit.id, e)} className="add-field-button">
+                    Add SubUnit
+                  </button>
                   <button type="button" onClick={handleUnitAdd} className="unit-add-button">
                     Add Unit
                   </button>

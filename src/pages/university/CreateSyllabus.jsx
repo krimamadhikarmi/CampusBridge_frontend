@@ -161,10 +161,18 @@ const CreateSyllabus = () => {
 
   //handling subunit
   // Add a new subunit to a specific unit
-  const handleAddSubUnit = (unitId, event) => {
-    console.log("unitid",unitId)
+  const handleAddSubUnit = (unitId, e) => {
+    e.preventDefault();
+    // e.stopPropagation();
     unitDispatch({ type: 'ADD_SUB_UNIT', unitId });
   };
+
+  const handleSub = (event) => {
+    event.preventDefault();
+    event.stopPropagation(); // Prevent the event from propagating to the parent div
+    console.log("Added subunit");
+  };
+  
 
   // Update a subunit's title
   const handleUpdateSubUnit = (unitId, subUnitId, value) => {
@@ -239,6 +247,7 @@ const CreateSyllabus = () => {
             unitState={unitState}
             handleAddSubUnit={handleAddSubUnit}
             handleUpdateSubUnit={handleUpdateSubUnit}
+            handleSub={handleSub}
           />
         </div>
       )}

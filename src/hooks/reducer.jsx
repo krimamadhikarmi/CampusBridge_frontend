@@ -79,6 +79,12 @@ export const UnitsReducer = (state, action) => {
           unitId: '', // Initialize fields to empty
           title: '',
           creditHour: '',
+          subUnits: [
+            {
+              id: Math.floor(Math.random() * 2000),
+              title: '',
+            },
+          ],
         },
       ];
     case 'UPDATE_UNIT':
