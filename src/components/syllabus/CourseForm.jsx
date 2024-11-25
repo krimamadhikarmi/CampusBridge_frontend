@@ -11,10 +11,11 @@ const CourseForm = ({
   bookState,
   handleCourseId,
   handleCourseTitle,
-  handleUnitForm,
+  handleUnitAdd,
   handleUpdateUnit,
-  handleAddUnit,
+  handleAddMoreUnit,
   handleAddSubUnit,
+  handleUpdateSubUnit,
   unitState,
 }) => {
   return (
@@ -92,7 +93,7 @@ const CourseForm = ({
                   placeholder={book.placeholder}
                   onChange={(e) => handleUpdateBook(e, book.id)}
                 />
-                <button type="button" onClick={handleAddSubUnit}>
+                <button type="button" onClick={handleAddBook}>
                   Add
                 </button>
               </div>
@@ -133,29 +134,33 @@ const CourseForm = ({
                     onChange={(e) => handleUpdateUnit(unit.id, 'creditHour', e.target.value)}
                   />
                 </div>
-                <button type="button" onClick={handleUnitForm} className="add-button">
-                  Add Unit
-                </button>
+                {/* <div>
+                  {unit.subUnits.map((subUnit) => (
+                    <div key={subUnit.id} className="course-field">
+                      <CustomFormField
+                        label={'Subunit'}
+                        name={'Subunit'}
+                        type={'text'}
+                        value={subUnit.title}
+                        onChange={(e) => handleUpdateSubUnit(unit.id, subUnit.id, e.target.value)}
+                      />
+                       <button onClick={() => handleAddSubUnit(unit.id)} className="add-field-button ">
+                    Add
+                  </button>
 
-                {/* {unit.subUnits.map((subunit) => (
-                  <div className="course-field">
-                    <CustomFormField
-                      type={'text'}
-                      label={'Subunit'}
-                      name={'SubUnit'}
-                      value={subunit.value}
-                      onChange={(e) => handleUpdateSubUnit(e, subunit.id,unit.id)}
-                    />
-                    <button type="button" onClick={() => setSelectedUnitId(unit.id)}>
-                      Add Subunit
-                    </button>
-                  </div>
-                ))} */}
+                    </div>
+                  ))}
+                                 </div> */}
+                <div className='unit-add-div'>
+                  <button type="button" onClick={handleUnitAdd} className="unit-add-button">
+                    Add Unit
+                  </button>
+                </div>
               </div>
             );
           })}
           <div className="add-div">
-            <button onClick={handleAddUnit} className="add-field-button">
+            <button onClick={handleAddMoreUnit} className="add-field-button">
               Add More Unit
             </button>
           </div>

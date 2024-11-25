@@ -18,10 +18,16 @@ export const initialBook = [
 
 export const initialUnits = [
   {
-    id: '',
+    id: 1,
     unitId: '',
     title: '',
     creditHour: '',
+    subUnits: [
+      {
+        id: 1,
+        title: '',
+      },
+    ],
   },
 ];
 
@@ -69,46 +75,49 @@ export const UnitsReducer = (state, action) => {
       return [
         ...state,
         {
-          id: Math.floor(Math.random() * 2000),
-          unitId: action.unitId || '',
-          title: action.title || '',
-          creditHour: action.creditHour || '',
+          id: Math.floor(Math.random() * 2000), // Unique id
+          unitId: '', // Initialize fields to empty
+          title: '',
+          creditHour: '',
         },
       ];
     case 'UPDATE_UNIT':
+      console.log('Action:', action);
       return state.map((unit) =>
         unit.id === action.id
-          ? { ...unit, [action.field]: action.value } // Update only the specified field
+          ? { ...unit, [action.field]: action.value } // Correctly update the specific field
           : unit,
       );
 
-    // case 'ADD_SUB_UNIT':
-    //   return state.map((unit) =>
-    //     unit.id === action.unitId
-    //       ? {
-    //           ...unit,
-    //           subUnits: [
-    //             ...unit.subUnits,
-    //             {
-    //               id: Math.floor(Math.random() * 2000),
-    //               value: action.value,
-    //             },
-    //           ],
-    //         }
-    //       : unit,
-    //   );
+    case 'ADD_SUB_UNIT':
+      return state.map((unit) =>
+        unit.id === action.unitId
+          ? {
+              ...unit,
+              subUnits: [
+                ...unit.subUnits,
+                {
+                  id: Math.floor(Math.random() * 2000), // Unique ID for subunit
+                  title: '', // Initialize empty title
+                },
+              ],
+            }
+          : unit,
+      );
+    case 'UPDATE_SUB_UNIT':
+      return state.map((unit) =>
+        unit.id === action.unitId
+          ? {
+              ...unit,
+              subUnits: unit.subUnits.map((subUnit) =>
+                subUnit.id === action.id
+                  ? { ...subUnit, title: action.value } // Update the subunit title
+                  : subUnit,
+              ),
+            }
+          : unit,
+      );
 
-    // case 'UPDATE_SUB_UNIT':
-    //   return state.map((unit) =>
-    //     unit.id === action.unitId
-    //       ? {
-    //           ...unit,
-    //           subUnits: unit.subUnits.map((subUnit) =>
-    //             subUnit.id === action.id ? { ...subUnit, value: action.value } : subUnit,
-    //           ),
-    //         }
-    //       : unit,
-    //   );
     default:
       return state;
   }

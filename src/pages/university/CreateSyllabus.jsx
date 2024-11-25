@@ -56,6 +56,18 @@ const CreateSyllabus = () => {
     handleSyllabusForm();
   };
 
+  const handleAddField = (event) => {
+    event.preventDefault();
+    dispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter Course Id', value: '' });
+  };
+
+  const handleUpdateCourse = (event, id) => {
+    const value = event.target.value;
+    dispatch({ type: 'UPDATE', id: id, value: value });
+  };
+
+  //setting the value entered in the input field
+
   const handleSyllabusid = (event) => {
     setSyllabusId(event.target.value);
   };
@@ -73,92 +85,34 @@ const CreateSyllabus = () => {
     setElectiveno(event.target.value);
   };
 
-  const handleAddField = (event) => {
-    event.preventDefault();
-    dispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter Course Id', value: '' });
-  };
-
-  const handleUpdateCourse = (event, id) => {
-    const value = event.target.value;
-    setCourseId(value);
-    dispatch({ type: 'UPDATE', id: id, value: value });
-  };
-
   // course form functions
+
+  const handleCourseForm = () => {
+    setToogleCourseForm(!toogleCourseForm);
+  };
+
   const handleCourseSubmit = () => {
     console.log('elective', isElective);
     console.log('book', book);
     console.log('courseid', courseId);
   };
 
+  const handleElectiveChange = (event) => {
+    setIsElective(event.target.checked);
+  };
+
+  const handleCourseId = (event) => {
+    setCourseId(event.target.value);
+  };
+
+  const handleCourseTitle = (event) => {
+    setCourseTitle(event.target.value);
+  };
+
+  // handling book field
   const handleBookField = (event) => {
     event.preventDefault();
     bookDispatch({ type: 'ADD', name: 'Books', placeholder: 'Enter Books', value: '' });
-  };
-
-  const handleCourseForm = () => {
-    setToogleCourseForm(!toogleCourseForm);
-  };
-  const handleAddUnit = (event) => {
-    event.preventDefault();
-    unitDispatch({
-      type: 'ADD_UNIT',
-      unitId,
-      title,
-      creditHour,
-    });
-    // Clear input fields after adding a unit
-    setUnitId('');
-    setTitle('');
-    setCreditHour('');
-  };
-
-  const handleUnitForm = (event) => {
-    event.preventDefault();
-    console.log('unitid', unitId);
-    console.log('tile', title);
-    console.log('hour', creditHour);
-  };
-
-  const handleUpdateUnit = (unitId, field, value, event) => {
-    // const value = event.target.value;
-    setUnitId(value);
-    setCreditHour(value);
-    setTitle(value);
-    unitDispatch({
-      type: 'UPDATE_UNIT',
-      id: unitId,
-      field: field,
-      value: value,
-    });
-  };
-
-  // const handleAddSubUnit = (event) => {
-  //   event.preventDefault();
-  //   if (selectedUnitId) {
-  //     unitDispatch({
-  //       type: 'ADD_SUB_UNIT',
-  //       unitId: selectedUnitId,
-  //       value: typedValue, // Pass typed value here, or an empty string if no value is provided
-  //     });
-  //     setTypedValue(''); // Reset the typedValue after adding
-  //   } else {
-  //     console.log('No unit selected');
-  //   }
-  // };
-
-  // const handleUpdateSubUnit = (unitId, subUnitId, value) => {
-  //   unitDispatch({
-  //     type: 'UPDATE_SUB_UNIT',
-  //     unitId,
-  //     id: subUnitId,
-  //     value,
-  //   });
-  // };
-
-  const handleUnitAdd = (event) => {
-    event.preventDefault();
-    console.log('added unit');
   };
 
   const handleUpdateBook = (event, id) => {
@@ -172,16 +126,54 @@ const CreateSyllabus = () => {
     console.log('added book');
   };
 
-  const handleElectiveChange = (event) => {
-    setIsElective(event.target.checked);
+  // handling unit form
+
+  const handleAddMoreUnit = (event) => {
+    event.preventDefault();
+    console.log('Submitting units:', unitState);
+    unitDispatch({
+      type: 'ADD_UNIT',
+      unitId,
+      title,
+      creditHour,
+    });
   };
 
-  const handleCourseId = (event) => {
-    setCourseId(event.target.value);
+  const handleUpdateUnit = (unitId, field, value, event) => {
+    setUnitId(value);
+    setCreditHour(value);
+    setTitle(value);
+    unitDispatch({
+      type: 'UPDATE_UNIT',
+      id: unitId,
+      field: field,
+      value: value,
+    });
   };
 
-  const handleCourseTitle = (event) => {
-    setCourseTitle(event.target.value);
+  const handleUnitAdd = (event) => {
+    event.preventDefault();
+    console.log('added unit');
+    console.log('unitid', unitId);
+    console.log('tile', title);
+    console.log('hour', creditHour);
+  };
+
+  //handling subunit
+  // Add a new subunit to a specific unit
+  const handleAddSubUnit = (unitId, event) => {
+    console.log("unitid",unitId)
+    unitDispatch({ type: 'ADD_SUB_UNIT', unitId });
+  };
+
+  // Update a subunit's title
+  const handleUpdateSubUnit = (unitId, subUnitId, value) => {
+    unitDispatch({
+      type: 'UPDATE_SUB_UNIT',
+      unitId,
+      id: subUnitId,
+      value,
+    });
   };
 
   return (
@@ -241,14 +233,12 @@ const CreateSyllabus = () => {
             bookState={bookState}
             handleCourseId={handleCourseId}
             handleCourseTitle={handleCourseTitle}
-            // handleAddSubUnit={handleAddSubUnit}
-            handleAddUnit={handleAddUnit}
+            handleAddMoreUnit={handleAddMoreUnit}
             handleUpdateUnit={handleUpdateUnit}
-            // handleUpdateSubUnit={handleUpdateSubUnit}
             handleUnitAdd={handleUnitAdd}
             unitState={unitState}
-            // setSelectedUnitId={setSelectedUnitId}
-            handleUnitForm={handleUnitForm}
+            handleAddSubUnit={handleAddSubUnit}
+            handleUpdateSubUnit={handleUpdateSubUnit}
           />
         </div>
       )}
