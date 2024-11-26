@@ -6,7 +6,7 @@ const TeacherNavbar = ({ toggleDropdown, dropDown, handleLogout }) => {
     <>
       <div className="teacher-menuitem">
         <Link to="/syllabus">Syllabus</Link>
-        <Link to="/assignment">Assignment</Link>
+        <Link to="/teacherassignment">Assignment</Link>
         <Link to="/result">Result</Link>
         <Link to="/articles">Articles</Link>
         <Link to="/notices">Notices</Link>

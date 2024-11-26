@@ -113,3 +113,33 @@
   background-color: #ff5c5c; /* Red */
   color: #fff;
 }
+
+/* teacher assignment page */
+.teacher-assignment-box {
+  /* border: 1px solid black; */
+  width: 90vw;
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+}
+.add-assignment-button {
+  background-color: #004d4d;
+  border-radius: 12px;
+  color: #fffff0;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.add-assignment-button:hover {
+  background: linear-gradient(135deg, #498080, #004d4d);
+  transform: translateY(-2px);
+}
+
+.button-div {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}

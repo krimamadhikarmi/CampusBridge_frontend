@@ -20,6 +20,7 @@ import Calendar from './components/calendar/Calendar';
 import CreateResult from './pages/university/CreateResult';
 import Attendance from './pages/teacher/Attendance';
 import Account from './pages/college/Account';
+import TeacherAssignment from './pages/college/TeacherAssignment';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -44,6 +45,7 @@ root.render(
             <Route path="/createresult" element={<CreateResult />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/teacherassignment" element={<TeacherAssignment />} />
           </Route>
         </Routes>
       </BrowserRouter>
