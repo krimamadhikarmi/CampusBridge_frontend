@@ -1,24 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/Assignment.css';
-import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import AddAssignmentForm from '../../components/assignment/AddAssignmentForm';
+import AssignmentList from '../../components/assignment/AssignmentList';
 
 const TeacherAssignment = () => {
-  const [popup, setPopUp] = useState(false);
-
-  const handleAddForm = () => {
-    setPopUp(!popup);
-  };
-
-  const [currentDate, setCurrentDate] = useState('');
-
-  useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
-    setCurrentDate(today);
-  }, []);
   const assignments = [
     {
       id: 1,
@@ -39,6 +26,20 @@ const TeacherAssignment = () => {
       submissionDate: '2024-01-15',
     },
   ];
+
+  const [popup, setPopUp] = useState(false);
+
+  const [currentDate, setCurrentDate] = useState('');
+
+  const handleAddForm = () => {
+    setPopUp(!popup);
+  };
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setCurrentDate(today);
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -53,19 +54,12 @@ const TeacherAssignment = () => {
           {assignments.map((assignment, index) => {
             return (
               <div key={assignment.id} className="assignment-item">
-                <div className="assignment-content">
-                  <h2 className="assignment-title">
-                    {index + 1}. {assignment.title}
-                  </h2>
-                  <div className="assignment-info">
-                    <p className="subject-style">{assignment.subject}</p>
-                    <p className="date-style">Submission Date: {assignment.submissionDate}</p>
-                  </div>
-                </div>
-                <div className="assignment-options">
-                  <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" />
-                  <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" />
-                </div>
+                <AssignmentList
+                  title={assignment.title}
+                  subject={assignment.subject}
+                  submissionDate={assignment.submissionDate}
+                  index={index}
+                />
               </div>
             );
           })}
