@@ -1,11 +1,14 @@
 import '../styles/Navbar.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToken } from '../context/TokenContext';
 import axios from 'axios';
 import ConfirmPopup from './LogoutPopup';
+import UniversityNavbar from './navbar/UniversityNavbar';
+import CollegeNavbar from './navbar/CollegeNavbar';
+import TeacherNavbar from './navbar/TeacherNavbar';
+import StudentNavbar from './navbar/StudentNavbar';
 
 const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
@@ -19,12 +22,7 @@ const Navbar = () => {
     setDropDown(!dropDown);
   };
 
-  const role='other'
-
-  // const toggleResultDropdown = () => {
-  //   console.log(token);
-  //   setResultDropDown(!resultdropDown);
-  // };
+  const role = 'Teacher';
 
   const handleLogout = () => {
     setShowLogout(true);
@@ -49,117 +47,13 @@ const Navbar = () => {
 
   const renderItems = () => {
     if (role === 'Student') {
-      return (
-        <>
-          <div className="menuitem">
-            <Link to="/syllabus">Syllabus</Link>
-            <Link to="/assignment">Assignment</Link>
-            <Link to="/result">Result</Link>
-            <Link to="/articles">Articles</Link>
-            <Link to="/notices">Notices</Link>
-            <Link to="/help">Help</Link>
-          </div>
-          <div className="user">
-            <div onClick={toggleDropdown} className="user-icon">
-              <FontAwesomeIcon icon={faUser} />
-            </div>
-            {dropDown && (
-              <div className="dropdown">
-                <Link to="/profile">Profile</Link>
-                <button onClick={handleLogout} className="logout-button">
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
-        </>
-      );
+      return <StudentNavbar handleLogout={handleLogout} toggleDropdown={toggleDropdown} dropDown={dropDown} />;
     } else if (role === 'UniversityAdmin') {
-      return (
-        <>
-          <div className="university-menuitem">
-            <div className="menu-link" onClick={toggleDropdown}>
-              Syllabus
-            </div>
-            {dropDown && (
-              <div className="syllabus-dropdown">
-                <Link to="/syllabus">View Syllabus</Link>
-                <Link to="/createsyllabus">Create Syllabus</Link>
-              </div>
-            )}
-            {/* <div className="menu-link" onClick={toggleResultDropdown}>
-              Result
-            </div> */}
-            {/* {resultdropDown && (
-              <div className="syllabus-dropdown">
-                <Link to="/result">View Result</Link> */}
-            <Link to="/createresult">Result</Link>
-            {/* </div>
-            )} */}
-
-            {/* <Link to="/result">Result</Link> */}
-            <Link to="/articles">Articles</Link>
-            <Link to="/notices">Notices</Link>
-            <Link to="/colleges">Colleges</Link>
-          </div>
-          <div onClick={handleLogout} className="logout-icon">
-            <FontAwesomeIcon icon={faSignOut} />
-          </div>
-        </>
-      );
+      return <UniversityNavbar handleLogout={handleLogout} dropDown={dropDown} toggleDropdown={toggleDropdown} />;
     } else if (role === 'Teacher') {
-      return (
-        <>
-          <div className="teacher-menuitem">
-            <Link to="/syllabus">Syllabus</Link>
-            <Link to="/assignment">Assignment</Link>
-            <Link to="/result">Result</Link>
-            <Link to="/articles">Articles</Link>
-            <Link to="/notices">Notices</Link>
-            <Link to="/attendance">Attendance</Link>
-          </div>
-          <div className="user">
-            <div onClick={toggleDropdown} className="user-icon">
-              <FontAwesomeIcon icon={faUser} />
-            </div>
-            {dropDown && (
-              <div className="dropdown">
-                <Link to="/profile">Profile</Link>
-                <button onClick={handleLogout} className="logout-button">
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
-        </>
-      );
+      return <TeacherNavbar toggleDropdown={toggleDropdown} dropDown={dropDown} handleLogout={handleLogout} />;
     } else {
-      return (
-        <>
-          <div className="college-menuitem">
-            <Link to="/account">Accounts</Link>
-            <Link to="/result">Result</Link>
-            <Link to="/articles">Articles</Link>
-            <Link to="/notices">Notices</Link>
-            <Link to="/attendance">Attendance</Link>
-            {/* <Link to="/syllabus">Syllabus</Link>
-            <Link to="/assignment">Assignment</Link> */}
-          </div>
-          <div className="user">
-            <div onClick={toggleDropdown} className="user-icon">
-              <FontAwesomeIcon icon={faUser} />
-            </div>
-            {dropDown && (
-              <div className="dropdown">
-                <Link to="/profile">Profile</Link>
-                <button onClick={handleLogout} className="logout-button">
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
-        </>
-      );
+      return <CollegeNavbar toggleDropdown={toggleDropdown} dropDown={dropDown} handleLogout={handleLogout} />;
     }
   };
 
