@@ -18,6 +18,8 @@ import CreateSyllabus from './pages/university/CreateSyllabus';
 import Colleges from './pages/university/Colleges';
 import Calendar from './components/calendar/Calendar';
 import CreateResult from './pages/university/CreateResult';
+import Attendance from './pages/teacher/Attendance';
+import Account from './pages/college/Account';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -38,8 +40,10 @@ root.render(
             <Route path="/profile" element={<Profile />} />
             <Route path="/createsyllabus" element={<CreateSyllabus />} />
             <Route path="/colleges" element={<Colleges />} />
-            <Route path="/calendar" element={<Calendar/>}/>
+            <Route path="/calendar" element={<Calendar />} />
             <Route path="/createresult" element={<CreateResult />} />
+            <Route path="/attendance" element={<Attendance />} />
+            <Route path="/account" element={<Account />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -11,13 +11,15 @@ const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
   // const [resultdropDown, setResultDropDown] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
-  const { token, setToken, role, setRole } = useToken();
+  const { token, setToken, setRole } = useToken();
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
     console.log(token);
     setDropDown(!dropDown);
   };
+
+  const role='other'
 
   // const toggleResultDropdown = () => {
   //   console.log(token);
@@ -105,16 +107,43 @@ const Navbar = () => {
           </div>
         </>
       );
-    } else {
+    } else if (role === 'Teacher') {
       return (
         <>
-          <div className="menuitem">
+          <div className="teacher-menuitem">
             <Link to="/syllabus">Syllabus</Link>
             <Link to="/assignment">Assignment</Link>
             <Link to="/result">Result</Link>
             <Link to="/articles">Articles</Link>
             <Link to="/notices">Notices</Link>
-            <Link to="/help">Help</Link>
+            <Link to="/attendance">Attendance</Link>
+          </div>
+          <div className="user">
+            <div onClick={toggleDropdown} className="user-icon">
+              <FontAwesomeIcon icon={faUser} />
+            </div>
+            {dropDown && (
+              <div className="dropdown">
+                <Link to="/profile">Profile</Link>
+                <button onClick={handleLogout} className="logout-button">
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div className="college-menuitem">
+            <Link to="/account">Accounts</Link>
+            <Link to="/result">Result</Link>
+            <Link to="/articles">Articles</Link>
+            <Link to="/notices">Notices</Link>
+            <Link to="/attendance">Attendance</Link>
+            {/* <Link to="/syllabus">Syllabus</Link>
+            <Link to="/assignment">Assignment</Link> */}
           </div>
           <div className="user">
             <div onClick={toggleDropdown} className="user-icon">
