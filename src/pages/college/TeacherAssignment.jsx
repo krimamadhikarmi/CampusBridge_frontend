@@ -2,9 +2,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/Assignment.css';
-import { faPenToSquare, faTractor, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
+import AddAssignmentForm from '../../components/assignment/AddAssignmentForm';
 
 const TeacherAssignment = () => {
+  const [popup, setPopUp] = useState(false);
+
+  const handleAddForm = () => {
+    setPopUp(!popup);
+  };
+
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setCurrentDate(today);
+  }, []);
   const assignments = [
     {
       id: 1,
@@ -31,13 +45,14 @@ const TeacherAssignment = () => {
       <PageHeader pageTitle={'Assignment'} />
       <div className="teacher-assignment-box">
         <div className="button-div">
-          <button className="add-assignment-button">Add Assignment</button>
+          <button className="add-assignment-button" onClick={handleAddForm}>
+            Add Assignment
+          </button>
         </div>
         <div className="assignment-list">
           {assignments.map((assignment, index) => {
             return (
               <div key={assignment.id} className="assignment-item">
-                
                 <div className="assignment-content">
                   <h2 className="assignment-title">
                     {index + 1}. {assignment.title}
@@ -45,18 +60,18 @@ const TeacherAssignment = () => {
                   <div className="assignment-info">
                     <p className="subject-style">{assignment.subject}</p>
                     <p className="date-style">Submission Date: {assignment.submissionDate}</p>
-                    
                   </div>
                 </div>
-                <div className='assignment-options'>
-                  <FontAwesomeIcon icon={faPenToSquare} className='fa-icon' />
-                  <FontAwesomeIcon icon={faTrash} className='fa-icon-trash'/>
+                <div className="assignment-options">
+                  <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" />
+                  <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" />
                 </div>
               </div>
             );
           })}
         </div>
       </div>
+      {popup && <AddAssignmentForm currentDate={currentDate} handleAddForm={handleAddForm} />}
     </>
   );
 };
