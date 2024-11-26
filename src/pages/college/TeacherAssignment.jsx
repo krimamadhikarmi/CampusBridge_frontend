@@ -1,6 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/Assignment.css';
+import { faPenToSquare, faTractor, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const TeacherAssignment = () => {
   const assignments = [
@@ -35,6 +37,7 @@ const TeacherAssignment = () => {
           {assignments.map((assignment, index) => {
             return (
               <div key={assignment.id} className="assignment-item">
+                
                 <div className="assignment-content">
                   <h2 className="assignment-title">
                     {index + 1}. {assignment.title}
@@ -44,6 +47,10 @@ const TeacherAssignment = () => {
                     <p className="date-style">Submission Date: {assignment.submissionDate}</p>
                     
                   </div>
+                </div>
+                <div className='assignment-options'>
+                  <FontAwesomeIcon icon={faPenToSquare} className='fa-icon' />
+                  <FontAwesomeIcon icon={faTrash} className='fa-icon-trash'/>
                 </div>
               </div>
             );
