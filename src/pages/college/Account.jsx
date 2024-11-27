@@ -7,7 +7,14 @@ import AccountTable from '../../components/account/AccountTable';
 import FormHeader from '../../components/common/FormHeader';
 import CustomFormField from '../../components/customFormField';
 import ButtonGroup from '../../components/common/ButtonGroup';
-import { ClubReducer, ElectiveReducer, initialClub, initialElective } from '../../hooks/reducer';
+import {
+  ClubReducer,
+  ElectiveReducer,
+  initialClub,
+  initialElective,
+  initialFields,
+  SyllabusReducer,
+} from '../../hooks/reducer';
 import StudentForm from '../../components/account/StudentForm';
 
 const Account = () => {
@@ -73,6 +80,7 @@ const Account = () => {
 
   const [clubState, clubdispatch] = useReducer(ClubReducer, initialClub);
   const [electiveState, electivedispatch] = useReducer(ElectiveReducer, initialElective);
+  const [courseState, coursedispatch] = useReducer(SyllabusReducer, initialFields);
 
   const handleCreate = () => {
     setCreatePop(!createpop);
@@ -125,6 +133,21 @@ const Account = () => {
     console.log('added elective');
   };
 
+  const handleAddCourse = (event) => {
+    event.preventDefault();
+    coursedispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter the course id', value: '' });
+  };
+
+  const handleUpdateCourse = (event, id) => {
+    const value = event.target.value;
+    coursedispatch({ type: 'UPDATE', id: id, value: value });
+  };
+
+  const handleAddedCourse = (event) => {
+    event.preventDefault();
+    console.log('added course');
+  };
+
   const filterData = selectaccount === 'All' ? data : data.filter((account) => account.role === selectaccount);
 
   return (
@@ -175,6 +198,59 @@ const Account = () => {
           handleAddedClub={handleAddedClub}
           handleAddedElective={handleAddedElective}
         />
+      )}
+      {createpop && accountType === 'Teacher' && (
+        <div className="form-overlay">
+          <div className="form-design">
+            <FormHeader title={`Create ${accountType}`} handleForm={handleAddAccount} />
+            <form>
+              <CustomFormField
+                label={'Teacher Id'}
+                name={'TeacherId'}
+                placeholder={'Enter the teacher id'}
+                type={'text'}
+              />
+              <CustomFormField label={'Name'} name={'Name'} placeholder={'Enter the teacher name'} type={'text'} />
+              <CustomFormField label={'Email'} name={'Email'} placeholder={'Enter the teacher email'} type={'email'} />
+              <CustomFormField
+                label={'Password'}
+                name={'Password'}
+                placeholder={'Enter the password'}
+                type={'password'}
+              />
+              <CustomFormField
+                label={'Phone Number'}
+                name={'Phone'}
+                placeholder={'Enter the teacher phone number'}
+                type={'text'}
+              />
+
+              {courseState.map((course) => {
+                return (
+                  <div key={course.id} className="course-field">
+                    <CustomFormField
+                      label={'Course Id'}
+                      name={course.name}
+                      type={'text'}
+                      value={course.value}
+                      placeholder={course.placeholder}
+                      onChange={(e) => handleUpdateCourse(e, course.id)}
+                    />
+                    <button type="button" onClick={handleAddedCourse}>
+                      Add
+                    </button>
+                  </div>
+                );
+              })}
+              <div className="add-div">
+                <button onClick={handleAddCourse} className="add-field-button">
+                  Add More
+                </button>
+              </div>
+              <ButtonGroup handleClose={handleAddAccount} />
+            </form>
+          </div>
+        </div>
       )}
     </>
   );
