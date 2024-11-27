@@ -2,6 +2,8 @@ import { useState } from 'react';
 import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/Account.css';
+import AccountType from '../../components/account/AccountType';
+import AccountTable from '../../components/account/AccountTable';
 
 const Account = () => {
   const [selectaccount, setSelectAccount] = useState('All');
@@ -65,39 +67,9 @@ const Account = () => {
       <Navbar />
       <PageHeader pageTitle={'Account'} />
       <div className="account-box">
-        <div className="account-type">
-          <select value={selectaccount} onChange={(e) => setSelectAccount(e.target.value)}>
-            <option value="All">All</option>
-            <option value="Teacher">Teacher</option>
-            <option value="Student">Student</option>
-          </select>
-        </div>
+        <AccountType selectaccount={selectaccount} setSelectAccount={setSelectAccount} />
         {filterData.length > 0 ? (
-          <div className="account-present">
-            <table className="account-table">
-              <thead>
-                <tr>
-                  <th>S.N</th>
-                  <th>Name</th>
-                  <th>Role</th>
-                  <th>Activity</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filterData.map((account, index) => (
-                  <tr key={account.id}>
-                    <td>{index + 1}</td>
-                    <td>{account.name}</td>
-                    <td>{account.role}</td>
-                    <td className="activity-button">
-                      <button className="view-button">Edit</button>
-                      <button className="delete-button">Delete</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <AccountTable filterData={filterData} />
         ) : (
           <div className="no-account">
             <p>No accounts for {selectaccount}</p>
