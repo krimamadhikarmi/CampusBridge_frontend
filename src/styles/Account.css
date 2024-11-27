@@ -141,3 +141,78 @@
   height: 200px;
 }
 
+.account-header {
+  display: flex;
+  justify-content: space-between; /* Ensures items are spaced out between left and right */
+  align-items: center;
+  margin-bottom: 20px;
+}
+.account-button {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+  position: relative;
+  left: 75px;
+}
+
+.add-account-button {
+  background-color: #004d4d;
+  border-radius: 12px;
+  color: #fffff0;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.add-account-button:hover {
+  background: linear-gradient(135deg, #498080, #004d4d);
+  transform: translateY(-2px);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 310px; /* Adjust depending on your layout */
+  left: 290px;
+  background-color: #f5f5dc;
+  border-radius: 5px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  background-color: #004d4d;
+  color: #ffffff;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.dropdown-item:hover {
+  background-color: #003a3a;
+}
+
+.account-checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: -12px;
+  margin-top: 10px;
+}
+
+.account-checkbox-container input[type='checkbox'] {
+  margin: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.account-checkbox-container label {
+  margin: 0;
+  font-size: 16px;
+}
