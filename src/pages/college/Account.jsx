@@ -99,7 +99,9 @@ const Account = () => {
             </table>
           </div>
         ) : (
-          <div></div>
+          <div className="no-account">
+            <p>No accounts for {selectaccount}</p>
+          </div>
         )}
       </div>
     </>
