@@ -1,0 +1,128 @@
+.account-box {
+  width: 95vw;
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.account-type {
+  margin-top: 18px;
+  position: relative;
+  margin-right: 55px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.account-type select {
+  padding: 10px 15px;
+  border: 1px solid #004d4d;
+  border-radius: 5px;
+  background-color: #f5f5dc;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.account-type select:hover {
+  border-color: #556b2f;
+  background-color: #fffff0;
+}
+
+.account-type select:focus {
+  outline: none;
+  border-color: #008c8c;
+  box-shadow: 0 0 5px rgba(0, 140, 140, 0.5);
+}
+
+.account-present {
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.account-table {
+  width: 90%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.account-table th,
+.account-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.account-table th {
+  background-color: #004d4d;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.account-table td {
+  background-color: #fffff0;
+  color: #17794f;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.account-table tr:hover {
+  background-color: #f0f0e0;
+}
+
+.account-table tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.account-table tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* td:last-child: Selects the last cell in that last row. 
+    border-bottom-left-radius and border-bottom-right-radius: These add rounded corners specifically to the bottom left and bottom right of the table. */
+
+.activity-button {
+  display: flex;
+  gap: 10px;
+}
+
+.view-button {
+  padding: 8px 15px;
+  background-color: #004d4d; /* Deep Teal */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: #003a3a;
+}
+
+.delete-button {
+  padding: 8px 15px;
+  background-color: #a30707;
+  color: #fffff0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #d23636;
+}

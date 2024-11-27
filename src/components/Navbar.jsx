@@ -22,7 +22,7 @@ const Navbar = () => {
     setDropDown(!dropDown);
   };
 
-  const role = 'Teacher';
+  const role = 'other';
 
   const handleLogout = () => {
     setShowLogout(true);
