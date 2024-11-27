@@ -14,7 +14,8 @@ const AddAssignmentForm = ({handleAddForm,currentDate}) => {
               placeholder={'Enter the assignment id'}
               type={'text'}
             />
-            <CustomFormField label={'Question'} name={'Question'} placeholder={'Enter the question'} type={'file'} />
+            <CustomFormField label={'Question'} name={'Question'} placeholder={'Enter the question'} type={'text'} />
+            <CustomFormField label={'File'} name={'File'} placeholder={'Upload the file'} type={'file'} />
             <CustomFormField label={'Course Id'} name={'CourseId'} placeholder={'Enter the course id'} type={'text'} />
             <CustomFormField label={'Assigned Date'} name={'AssignedDate'} type={'date'} value={currentDate} />
             <CustomFormField label={'Submission Date'} name={'SubmissionDate'} type={'date'} />

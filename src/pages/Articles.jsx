@@ -84,7 +84,7 @@ const Articles = () => {
                 description={article.description}
                 date={article.date}
                 author={article.author}
-                imageUrl={article.imageUrl}
+                // imageUrl={article.imageUrl}
               />
             </div>
           ))}

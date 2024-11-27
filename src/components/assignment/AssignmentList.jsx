@@ -1,10 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
-import CustomFormField from '../customFormField';
-import FormHeader from '../common/FormHeader';
+import { useState } from 'react';
 import ConfirmPopup from '../LogoutPopup';
-import ButtonGroup from '../common/ButtonGroup';
 import EditAssignmentForm from './EditAssignment.Form';
 
 const AssignmentList = ({ title, subject, submissionDate, index }) => {

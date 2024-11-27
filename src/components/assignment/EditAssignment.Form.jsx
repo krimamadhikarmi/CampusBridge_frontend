@@ -15,6 +15,7 @@ const EditAssignmentForm = ({ handleEdit, title, subject, currentDate, submissio
               type={'text'}
               value={title}
             />
+            <CustomFormField label={'File'} name={'File'} type={'file'} />
             <CustomFormField
               label={'Course Id'}
               name={'CourseId'}
@@ -22,7 +23,6 @@ const EditAssignmentForm = ({ handleEdit, title, subject, currentDate, submissio
               type={'text'}
               value={subject}
             />
-            <CustomFormField label={'Assigned Date'} name={'AssignedDate'} type={'date'} value={currentDate} />
 
             <CustomFormField label={'Submission Date'} name={'SubmissionDate'} type={'date'} value={submissionDate} />
 

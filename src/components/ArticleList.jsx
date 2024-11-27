@@ -9,9 +9,9 @@ const ArticleList = ({ title, description, date, author, imageUrl }) => {
           <p className="author-name">{author}</p>
         </div>
       </div>
-      <div className="article-image">
+      {/* <div className="article-image">
         <img src={imageUrl} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-      </div>
+      </div> */}
     </>
   );
 };
