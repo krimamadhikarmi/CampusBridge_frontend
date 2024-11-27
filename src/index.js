@@ -20,7 +20,7 @@ import Calendar from './components/calendar/Calendar';
 import CreateResult from './pages/university/CreateResult';
 import Attendance from './pages/teacher/Attendance';
 import Account from './pages/college/Account';
-import TeacherAssignment from './pages/college/TeacherAssignment';
+import TeacherAssignment from './pages/teacher/TeacherAssignment';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
