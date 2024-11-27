@@ -31,6 +31,24 @@ export const initialUnits = [
   },
 ];
 
+export const initialClub = [
+  {
+    id: '',
+    value: '',
+    placeholder: 'Enter your Club Id',
+    name: 'ClubIds',
+  },
+];
+
+export const initialElective = [
+  {
+    id: '',
+    value: '',
+    placeholder: 'Enter the elective id',
+    name: 'ElectiveIds',
+  },
+];
+
 export const SyllabusReducer = (state, action) => {
   switch (action.type) {
     case 'ADD':
@@ -124,6 +142,44 @@ export const UnitsReducer = (state, action) => {
           : unit,
       );
 
+    default:
+      return state;
+  }
+};
+
+export const ClubReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_CLUB':
+      return [
+        ...state,
+        {
+          id: Math.floor(Math.random() * 2000),
+          value: '',
+          placeholder: action.placeholder,
+          name: action.name,
+        },
+      ];
+    case 'UPDATE_CLUB':
+      return state.map((club) => (club.id === action.id ? { ...club, value: action.value } : club));
+    default:
+      return state;
+  }
+};
+
+export const ElectiveReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_ELECTIVE':
+      return [
+        ...state,
+        {
+          id: Math.floor(Math.random() * 2000),
+          value: '',
+          placeholder: action.placeholder,
+          name: action.name,
+        },
+      ];
+    case 'UPDATE_ELECTIVE':
+      return state.map((field) => (field.id === action.id ? { ...field, value: action.value } : field));
     default:
       return state;
   }

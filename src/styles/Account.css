@@ -173,7 +173,7 @@
 
 .dropdown-menu {
   position: absolute;
-  top: 310px; /* Adjust depending on your layout */
+  top: 310px;
   left: 290px;
   background-color: #f5f5dc;
   border-radius: 5px;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/Account.css';
@@ -7,6 +7,8 @@ import AccountTable from '../../components/account/AccountTable';
 import FormHeader from '../../components/common/FormHeader';
 import CustomFormField from '../../components/customFormField';
 import ButtonGroup from '../../components/common/ButtonGroup';
+import { ClubReducer, ElectiveReducer, initialClub, initialElective } from '../../hooks/reducer';
+import StudentForm from '../../components/account/StudentForm';
 
 const Account = () => {
   const [selectaccount, setSelectAccount] = useState('All');
@@ -69,6 +71,9 @@ const Account = () => {
   const [isclubHead, setIsClubHead] = useState(false);
   const [isauthor, setIsAuthor] = useState(false);
 
+  const [clubState, clubdispatch] = useReducer(ClubReducer, initialClub);
+  const [electiveState, electivedispatch] = useReducer(ElectiveReducer, initialElective);
+
   const handleCreate = () => {
     setCreatePop(!createpop);
   };
@@ -88,6 +93,36 @@ const Account = () => {
   const handleSubmit = () => {
     console.log('club', isclubHead);
     console.log('club', isauthor);
+  };
+
+  const handleAddClub = (event) => {
+    event.preventDefault();
+    clubdispatch({ type: 'ADD_CLUB', name: 'ClubIds', placeholder: 'Enter the club id', value: '' });
+  };
+
+  const handleUpdateClub = (event, id) => {
+    const value = event.target.value;
+    clubdispatch({ type: 'UPDATE_CLUB', id: id, value: value });
+  };
+
+  const handleAddedClub = (event) => {
+    event.preventDefault();
+    console.log('added club');
+  };
+
+  const handleAddElective = (event) => {
+    event.preventDefault();
+    electivedispatch({ type: 'ADD_ELECTIVE', name: 'ElectiveIds', placeholder: 'Enter the elective id', value: '' });
+  };
+
+  const handleUpdateElective = (event, id) => {
+    const value = event.target.value;
+    electivedispatch({ type: 'UPDATE_ELECTIVE', id: id, value: value });
+  };
+
+  const handleAddedElective = (event) => {
+    event.preventDefault();
+    console.log('added elective');
   };
 
   const filterData = selectaccount === 'All' ? data : data.filter((account) => account.role === selectaccount);
@@ -125,65 +160,21 @@ const Account = () => {
         </div>
       )}
       {createpop && accountType === 'Student' && (
-        <div className="form-overlay">
-          <div className="form-design">
-            <FormHeader title={`Create ${accountType}`} handleForm={handleAddAccount} />
-            {/* Student Form */}
-            <form onSubmit={handleSubmit}>
-              <CustomFormField
-                label={'Student Id'}
-                name={'StudentId'}
-                placeholder={'Enter the student id'}
-                type={'text'}
-              />
-              <CustomFormField label={'Name'} name={'Name'} placeholder={'Enter the student name'} type={'text'} />
-              <CustomFormField label={'Email'} name={'Email'} placeholder={'Enter the student email'} type={'email'} />
-              <CustomFormField
-                label={'Password'}
-                name={'Password'}
-                placeholder={'Enter the password'}
-                type={'password'}
-              />
-              <CustomFormField
-                label={'Phone Number'}
-                name={'Phone'}
-                placeholder={'Enter the student phone number'}
-                type={'text'}
-              />
-              <CustomFormField
-                label={'Address'}
-                name={'Location'}
-                placeholder={'Enter the student address'}
-                type={'text'}
-              />
-              <div className="account-checkbox-container">
-                <CustomFormField label={'Is ClubHead?'} name={'isClubHead'} type={'checkbox'} onChange={handleIsClub} />
-                <CustomFormField label={'Is Author?'} name={'isAuthor'} type={'checkbox'} onChange={handleIsAuthor} />
-              </div>
-
-              <CustomFormField
-                label={'Financial Id'}
-                name={'FinancialId'}
-                placeholder={'Enter the student financial id'}
-                type={'text'}
-              />
-              <CustomFormField
-                label={'Academic Id'}
-                name={'AcademicId'}
-                placeholder={'Enter the student academic id'}
-                type={'text'}
-              />
-              <CustomFormField
-                label={'College Id'}
-                name={'CollegeId'}
-                placeholder={'Enter the student college id'}
-                type={'text'}
-              />
-
-              <ButtonGroup handleClose={handleAddAccount} />
-            </form>
-          </div>
-        </div>
+        <StudentForm
+          accountType={accountType}
+          handleAddAccount={handleAddAccount}
+          handleSubmit={handleSubmit}
+          handleIsAuthor={handleIsAuthor}
+          handleIsClub={handleIsClub}
+          clubState={clubState}
+          electiveState={electiveState}
+          handleUpdateClub={handleUpdateClub}
+          handleUpdateElective={handleUpdateElective}
+          handleAddClub={handleAddClub}
+          handleAddElective={handleAddElective}
+          handleAddedClub={handleAddedClub}
+          handleAddedElective={handleAddedElective}
+        />
       )}
     </>
   );
