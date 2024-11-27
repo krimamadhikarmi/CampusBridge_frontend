@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 const TeacherNavbar = ({ toggleDropdown, dropDown, handleLogout }) => {
   return (
     <>
@@ -12,18 +12,8 @@ const TeacherNavbar = ({ toggleDropdown, dropDown, handleLogout }) => {
         <Link to="/notices">Notices</Link>
         <Link to="/attendance">Attendance</Link>
       </div>
-      <div className="user">
-        <div onClick={toggleDropdown} className="user-icon">
-          <FontAwesomeIcon icon={faUser} />
-        </div>
-        {dropDown && (
-          <div className="dropdown">
-            <Link to="/profile">Profile</Link>
-            <button onClick={handleLogout} className="logout-button">
-              Logout
-            </button>
-          </div>
-        )}
+      <div onClick={handleLogout} className="logout-icon">
+        <FontAwesomeIcon icon={faSignOut} />
       </div>
     </>
   );
