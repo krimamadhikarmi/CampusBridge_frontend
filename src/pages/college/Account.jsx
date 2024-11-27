@@ -4,9 +4,7 @@ import Navbar from '../../components/Navbar';
 import '../../styles/Account.css';
 import AccountType from '../../components/account/AccountType';
 import AccountTable from '../../components/account/AccountTable';
-import FormHeader from '../../components/common/FormHeader';
-import CustomFormField from '../../components/customFormField';
-import ButtonGroup from '../../components/common/ButtonGroup';
+
 import {
   ClubReducer,
   ElectiveReducer,
@@ -16,6 +14,7 @@ import {
   SyllabusReducer,
 } from '../../hooks/reducer';
 import StudentForm from '../../components/account/StudentForm';
+import TeacherForm from '../../components/account/TeacherForm';
 
 const Account = () => {
   const [selectaccount, setSelectAccount] = useState('All');
@@ -200,57 +199,14 @@ const Account = () => {
         />
       )}
       {createpop && accountType === 'Teacher' && (
-        <div className="form-overlay">
-          <div className="form-design">
-            <FormHeader title={`Create ${accountType}`} handleForm={handleAddAccount} />
-            <form>
-              <CustomFormField
-                label={'Teacher Id'}
-                name={'TeacherId'}
-                placeholder={'Enter the teacher id'}
-                type={'text'}
-              />
-              <CustomFormField label={'Name'} name={'Name'} placeholder={'Enter the teacher name'} type={'text'} />
-              <CustomFormField label={'Email'} name={'Email'} placeholder={'Enter the teacher email'} type={'email'} />
-              <CustomFormField
-                label={'Password'}
-                name={'Password'}
-                placeholder={'Enter the password'}
-                type={'password'}
-              />
-              <CustomFormField
-                label={'Phone Number'}
-                name={'Phone'}
-                placeholder={'Enter the teacher phone number'}
-                type={'text'}
-              />
-
-              {courseState.map((course) => {
-                return (
-                  <div key={course.id} className="course-field">
-                    <CustomFormField
-                      label={'Course Id'}
-                      name={course.name}
-                      type={'text'}
-                      value={course.value}
-                      placeholder={course.placeholder}
-                      onChange={(e) => handleUpdateCourse(e, course.id)}
-                    />
-                    <button type="button" onClick={handleAddedCourse}>
-                      Add
-                    </button>
-                  </div>
-                );
-              })}
-              <div className="add-div">
-                <button onClick={handleAddCourse} className="add-field-button">
-                  Add More
-                </button>
-              </div>
-              <ButtonGroup handleClose={handleAddAccount} />
-            </form>
-          </div>
-        </div>
+        <TeacherForm
+          accountType={accountType}
+          handleAddAccount={handleAddAccount}
+          courseState={courseState}
+          handleUpdateCourse={handleUpdateCourse}
+          handleAddCourse={handleAddCourse}
+          handleAddedCourse={handleAddedCourse}
+        />
       )}
     </>
   );
