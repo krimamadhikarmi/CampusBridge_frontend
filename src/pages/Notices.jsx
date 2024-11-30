@@ -6,10 +6,12 @@ import NoticeList from '../components/NoticeList';
 import '../styles/common.css';
 import AddNotice from '../components/notice/AddNotice';
 import SelectNotice from '../components/notice/SelectNotice';
+import { useToken } from '../context/TokenContext';
 
 const Notices = () => {
-  const admin = true;
-  const user = 'club-head';
+  const { role } = useToken();
+  
+
   //for now i have created fake json data to test purpose
   const noticesData = [
     {
@@ -33,6 +35,13 @@ const Notices = () => {
       category: 'University',
       date: '2081-08-15',
     },
+    {
+      id: 3,
+      title: 'Club Meeting Cancelled',
+      content: 'The Wednesday Club Meeting for Cl101 has been cancelled.',
+      category: 'Club',
+      date: '2081-08-15',
+    },
   ];
   const [selectCategory, setSelectCategory] = useState('All');
   const [showpopup, setShowPopUp] = useState(false);
@@ -48,7 +57,7 @@ const Notices = () => {
   };
 
   const getCheckboxOptions = () => {
-    if (user === 'college') {
+    if (role.includes('College')) {
       return (
         <>
           <label>
@@ -59,7 +68,7 @@ const Notices = () => {
           </label>
         </>
       );
-    } else if (user === 'club-head') {
+    } else if (role.includes('ClubHead')) {
       return (
         <>
           <label>
@@ -70,7 +79,7 @@ const Notices = () => {
           </label>
         </>
       );
-    } else if (user === 'university') {
+    } else if (role.includes('University')) {
       return (
         <>
           <label>
@@ -101,13 +110,13 @@ const Notices = () => {
       <PageHeader pageTitle={'Notices'} />
       <div className="notice-box">
         <SelectNotice selectCategory={selectCategory} setSelectCategory={setSelectCategory} />
-        {admin && (
+        {role.includes('College') || role.includes('University') || role.includes('ClubHead') ? (
           <div>
             <button className="add-notice-button" onClick={handleArticlePop}>
               Add Notice
             </button>
           </div>
-        )}
+        ) : null}
         <div className="notice-list">
           {filterData.map((notice, index) => (
             <div key={index} className="notice-item">
@@ -119,6 +128,7 @@ const Notices = () => {
                 category={notice.category}
                 date={notice.date}
                 getCheckboxOptions={getCheckboxOptions}
+                role={role}
               />
             </div>
           ))}

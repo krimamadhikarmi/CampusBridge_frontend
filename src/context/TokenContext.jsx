@@ -6,9 +6,9 @@ export const TokenProvider = ({ children }) => {
   const [role, setRole] = useState(() => {
     const storedRole = localStorage.getItem('role');
     try {
-      return storedRole ? JSON.parse(storedRole) : null;
+      return storedRole ? JSON.parse(storedRole) : [];
     } catch {
-      return null;
+      return [];
     }
   });
   const [token, setToken] = useState(() => {
@@ -17,6 +17,15 @@ export const TokenProvider = ({ children }) => {
       return storedToken ? JSON.parse(storedToken) : null;
     } catch {
       return null;
+    }
+  });
+
+  const [id, setId] = useState(() => {
+    const storedId = localStorage.getItem('id');
+    try {
+      return storedId ? JSON.parse(storedId) : [];
+    } catch {
+      return [];
     }
   });
 
@@ -32,9 +41,17 @@ export const TokenProvider = ({ children }) => {
     } else {
       localStorage.removeItem('role');
     }
-  }, [token, role]);
 
-  return <TokenContext.Provider value={{ token, setToken, role, setRole }}>{children}</TokenContext.Provider>;
+    if (id) {
+      localStorage.setItem('id', JSON.stringify(id));
+    } else {
+      localStorage.removeItem('id');
+    }
+  }, [token, role, id]);
+
+  return (
+    <TokenContext.Provider value={{ token, setToken, role, setRole, id, setId }}>{children}</TokenContext.Provider>
+  );
 };
 
 export const useToken = () => {

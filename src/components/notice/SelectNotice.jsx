@@ -12,6 +12,11 @@ const SelectNotice = ({ selectCategory, setSelectCategory }) => {
         className={selectCategory === 'University' ? 'active' : ''}>
         University
       </button>
+      <button
+        onClick={() => setSelectCategory('Club')}
+        className={selectCategory === 'Club' ? 'active' : ''}>
+        Club
+      </button>
     </div>
   );
 };

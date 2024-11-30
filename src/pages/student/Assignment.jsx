@@ -1,4 +1,5 @@
 import Navbar from '../../components/Navbar';
+import StudentAssignmentList from '../../components/assignment/StudentAssignmentList';
 import PageHeader from '../../components/common/PageHeader';
 import '../../styles/Assignment.css';
 import { useState } from 'react';
@@ -66,18 +67,16 @@ const Assignment = () => {
           {filteredAssignments.map((assignment, index) => {
             const { statusText, statusClass } = getStatus(assignment.submissionDate);
             return (
-              <div key={assignment.id} className="assignment-item">
-                <div className="assignment-content">
-                  <h2 className="assignment-title">
-                    {index + 1}. {assignment.title}
-                  </h2>
-                  <div className="assignment-info">
-                    <p className="subject-style">{assignment.subject}</p>
-                    <p className="date-style">Submission Date: {assignment.submissionDate}</p>
-                    <p className={`status-badge ${statusClass}`}>{statusText}</p>
-                  </div>
-                </div>
-              </div>
+              <StudentAssignmentList
+                key={assignment.id} // Always use a unique key when rendering lists
+                index={index}
+                id={assignment.id}
+                title={assignment.title}
+                subject={assignment.subject}
+                submissionDate={assignment.submissionDate}
+                statusClass={statusClass}
+                statusText={statusText}
+              />
             );
           })}
         </div>
