@@ -14,7 +14,7 @@ const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
   // const [resultdropDown, setResultDropDown] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
-  const { token, setToken, setRole } = useToken();
+  const { token, setToken, setRole, role } = useToken();
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -22,7 +22,7 @@ const Navbar = () => {
     setDropDown(!dropDown);
   };
 
-  const role = 'other';
+  // const role = 'UniversityAdmin';
 
   const handleLogout = () => {
     setShowLogout(true);
@@ -48,7 +48,7 @@ const Navbar = () => {
   const renderItems = () => {
     if (role === 'Student') {
       return <StudentNavbar handleLogout={handleLogout} toggleDropdown={toggleDropdown} dropDown={dropDown} />;
-    } else if (role === 'UniversityAdmin') {
+    } else if (role === 'University') {
       return <UniversityNavbar handleLogout={handleLogout} dropDown={dropDown} toggleDropdown={toggleDropdown} />;
     } else if (role === 'Teacher') {
       return <TeacherNavbar toggleDropdown={toggleDropdown} dropDown={dropDown} handleLogout={handleLogout} />;
