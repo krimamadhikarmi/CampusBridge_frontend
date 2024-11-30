@@ -22,7 +22,7 @@ const Navbar = () => {
     setDropDown(!dropDown);
   };
 
-  // const role = 'UniversityAdmin';
+  // const role = 'Student';
 
   const handleLogout = () => {
     setShowLogout(true);
@@ -37,7 +37,7 @@ const Navbar = () => {
       });
       console.log(response.data);
       setToken(null);
-      setRole(null);
+      setRole([]);
       navigate('/login');
     } catch (error) {
       alert('Network error. Please try again later.', error);
@@ -46,11 +46,11 @@ const Navbar = () => {
   };
 
   const renderItems = () => {
-    if (role === 'Student') {
+    if (role.includes('Student')) {
       return <StudentNavbar handleLogout={handleLogout} toggleDropdown={toggleDropdown} dropDown={dropDown} />;
-    } else if (role === 'University') {
+    } else if (role.includes('University')) {
       return <UniversityNavbar handleLogout={handleLogout} dropDown={dropDown} toggleDropdown={toggleDropdown} />;
-    } else if (role === 'Teacher') {
+    } else if (role.includes('Teacher')) {
       return <TeacherNavbar toggleDropdown={toggleDropdown} dropDown={dropDown} handleLogout={handleLogout} />;
     } else {
       return <CollegeNavbar toggleDropdown={toggleDropdown} dropDown={dropDown} handleLogout={handleLogout} />;

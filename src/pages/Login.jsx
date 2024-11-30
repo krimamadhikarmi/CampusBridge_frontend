@@ -52,10 +52,10 @@ const Login = () => {
         jwtToken: response.data.jwtToken,
       };
       const userRole = response.data.role;
-      console.log(userRole)
+      // console.log(response)
 
       console.log('Token data:', jwtToken);
-      console.log('role', userRole);
+      // console.log('role', userRole);
       setToken(jwtToken);
       setRole(userRole);
       navigate('/dashboard');

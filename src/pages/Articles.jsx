@@ -18,6 +18,7 @@ const Articles = () => {
   const [currentDate, setCurrentDate] = useState('');
   const { role } = useToken();
 
+
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
@@ -76,7 +77,7 @@ const Articles = () => {
       <PageHeader pageTitle={'Articles'} />
       <div className="article-box">
         <div className="article-form">
-          {role === 'Editor' && (
+          {role.includes('Editor') && (
             <button className="article-button" onClick={toggleDown}>
               Add article
             </button>

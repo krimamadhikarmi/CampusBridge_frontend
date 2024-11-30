@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import ConfirmPopup from './LogoutPopup';
 import EditNotice from './notice/EditNotice';
-const NoticeList = ({ index, id, title, content, category, date, getCheckboxOptions, role }) => {
+const NoticeList = ({ index, id, title, content, category, role, date, getCheckboxOptions }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [currentDate, setCurrentDate] = useState('');
   const [deletepop, setDeletePop] = useState(false);
@@ -33,7 +33,7 @@ const NoticeList = ({ index, id, title, content, category, date, getCheckboxOpti
           <p className="notice-date">Date:{date}</p>
         </div>
       </div>
-      {role === 'College' || role === 'University' || role === 'ClubHead' ? (
+      {role.includes('College') || role.includes('University') || role.includes('ClubHead') ? (
         <div className="notice-options">
           <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" onClick={handleEditForm} />
           <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={handleDeletePop} />

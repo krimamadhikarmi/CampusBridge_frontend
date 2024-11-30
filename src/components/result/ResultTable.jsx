@@ -12,7 +12,7 @@ const ResultTable = ({ filterData }) => {
             <th>Semester</th>
             <th>Result</th>
             <th>Percentage</th>
-            {role === 'University' && <th>Action</th>}
+            {role.includes('University') && <th>Action</th>}
           </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@ const ResultTable = ({ filterData }) => {
               <td>{examdata.semester}</td>
               <td>{examdata.result}</td>
               <td>{examdata.percentage}%</td>
-              {role === 'University' && (
+              {role.includes('University') && (
                 <td className="activity-button">
                   <button className="view-button">Edit</button>
                   <button className="delete-button">Delete</button>

@@ -10,6 +10,7 @@ import { useToken } from '../context/TokenContext';
 
 const Notices = () => {
   const { role } = useToken();
+  
 
   //for now i have created fake json data to test purpose
   const noticesData = [
@@ -56,7 +57,7 @@ const Notices = () => {
   };
 
   const getCheckboxOptions = () => {
-    if (role === 'college') {
+    if (role.includes('College')) {
       return (
         <>
           <label>
@@ -67,7 +68,7 @@ const Notices = () => {
           </label>
         </>
       );
-    } else if (role === 'ClubHead') {
+    } else if (role.includes('ClubHead')) {
       return (
         <>
           <label>
@@ -78,7 +79,7 @@ const Notices = () => {
           </label>
         </>
       );
-    } else if (role === 'University') {
+    } else if (role.includes('University')) {
       return (
         <>
           <label>
@@ -109,7 +110,7 @@ const Notices = () => {
       <PageHeader pageTitle={'Notices'} />
       <div className="notice-box">
         <SelectNotice selectCategory={selectCategory} setSelectCategory={setSelectCategory} />
-        {role === 'College' || role === 'University' || role === 'ClubHead' ? (
+        {role.includes('College') || role.includes('University') || role.includes('ClubHead') ? (
           <div>
             <button className="add-notice-button" onClick={handleArticlePop}>
               Add Notice
