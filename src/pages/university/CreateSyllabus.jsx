@@ -51,26 +51,28 @@ const CreateSyllabus = () => {
   };
 
   const handleFormSubmit = async (syllabusData) => {
+    const completeSyllabusData = {
+      syllabusId: syllabusData.syllabusId,
+      courseId: courseIds,
+      semester: syllabusData.semester,
+      allowedElectiveNo: syllabusData.electiveno,
+    };
+    console.log('Before api call:', JSON.stringify(completeSyllabusData));
 
-    var completeSyllabusData = {
-      syllabusId : syllabusData.syllabusId,
-      courseId : courseIds,
-      semester : syllabusData.semester,
-      allowedElectiveNo : syllabusData.electiveno
-    }
-    console.log("Before api call:",JSON.stringify(completeSyllabusData));
-
-    try{
-      const response = await axios.post('https://localhost:7276/api/Syllabus/CreateSyllabus',JSON.stringify(completeSyllabusData),{
-        headers: {
-          'Content-Type': 'application/json',
+    try {
+      const response = await axios.post(
+        'https://localhost:7276/api/Syllabus/CreateSyllabus',
+        JSON.stringify(completeSyllabusData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      });
-      console.log("Response data:",response.data);
-    } catch(e){
+      );
+      console.log('Response data:', response.data);
+    } catch (e) {
       console.log(e);
     }
-
 
     handleSyllabusForm();
   };
@@ -80,11 +82,11 @@ const CreateSyllabus = () => {
     dispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter Course Id', value: '' });
   };
 
-  const [courseIds,setCourseIds] = useState([]);
+  const [courseIds, setCourseIds] = useState([]);
 
   const handleUpdateCourse = (event, id) => {
-    if(id){
-      setCourseIds((prevIds)=>prevIds.concat(id));
+    if (id) {
+      setCourseIds((prevIds) => prevIds.concat(id));
     }
     const value = event.target.value;
     dispatch({ type: 'UPDATE', id: id, value: value });
@@ -116,7 +118,6 @@ const CreateSyllabus = () => {
   };
 
   const handleCourseSubmit = async (courseData) => {
-
     const completeCourseData = {
       courseId: courseData.CourseId,
       courseTitle: courseData.CourseTitle,
@@ -128,19 +129,23 @@ const CreateSyllabus = () => {
       creditHour: courseData.CreditHour,
       labDescription: courseData.LabDescription,
       books: books,
-      unitsDTO :
-    }
-    try{
-      const response = await axios.post('https://localhost:7276/api/Syllabus/CreateCourse', JSON.stringify(completeCourseData), {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log("Response data:",response.data);
-    } catch(e){
-       console.log(e);
-    }
+      unitsDTO: 
+    };
 
+    try {
+      const response = await axios.post(
+        'https://localhost:7276/api/Syllabus/CreateCourse',
+        JSON.stringify(completeCourseData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log('Response data:', response.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleElectiveChange = (event) => {
@@ -161,13 +166,13 @@ const CreateSyllabus = () => {
     bookDispatch({ type: 'ADD', name: 'Books', placeholder: 'Enter Books', value: '' });
   };
 
-  const [books,setBooks]=useState([]);
+  const [books, setBooks] = useState([]);
 
   const handleUpdateBook = (event, id) => {
     const value = event.target.value;
 
-    if(value){
-      setBooks((prevBook)=>prevBook.concat(value));
+    if (value) {
+      setBooks((prevBook) => prevBook.concat(value));
     }
 
     setBook(value);
@@ -192,7 +197,7 @@ const CreateSyllabus = () => {
     });
   };
 
-  const [units,setUnits]=useState([]);
+  const [units, setUnits] = useState([]);
 
   const handleUpdateUnit = (unitId, field, value, event) => {
     setUnitId(value);
@@ -225,15 +230,15 @@ const CreateSyllabus = () => {
   const handleSub = (event) => {
     event.preventDefault();
     event.stopPropagation(); // Prevent the event from propagating to the parent div
-    console.log("Added subunit");
+    console.log('Added subunit');
   };
 
-  const [subUnits,setSubUnits]=useState([]);
+  const [subUnits, setSubUnits] = useState([]);
 
   // Update a subunit's title
   const handleUpdateSubUnit = (unitId, subUnitId, value) => {
-    if(value){
-      setSubUnits((prevValue)=>prevValue.concat(value));
+    if (value) {
+      setSubUnits((prevValue) => prevValue.concat(value));
     }
     unitDispatch({
       type: 'UPDATE_SUB_UNIT',

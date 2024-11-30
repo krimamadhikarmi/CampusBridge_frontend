@@ -22,6 +22,16 @@ const Articles = () => {
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
+
+    const fetchArticle = async () => {
+      try {
+        const response = await axios.get('https://localhost:7276/api/Article/GetArticle');
+        console.log(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchArticle();
   }, []);
 
   const toggleDown = () => {
@@ -49,7 +59,7 @@ const Articles = () => {
           },
         },
       );
-      console.log('article',response.data);
+      console.log('article', response.data);
     } catch (e) {
       console.log(e);
     }
