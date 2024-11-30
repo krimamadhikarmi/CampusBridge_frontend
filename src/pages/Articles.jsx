@@ -6,6 +6,7 @@ import ArticleList from '../components/ArticleList';
 import CustomFormField from '../components/customFormField';
 import ButtonGroup from '../components/common/ButtonGroup';
 import FormHeader from '../components/common/FormHeader';
+import { useToken } from '../context/TokenContext';
 
 const Articles = () => {
   const [dropdown, setDropDown] = useState(false);
@@ -15,6 +16,7 @@ const Articles = () => {
   const [tagLine, setTagLine] = useState('');
 
   const [currentDate, setCurrentDate] = useState('');
+  const { role } = useToken();
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -72,9 +74,11 @@ const Articles = () => {
       <PageHeader pageTitle={'Articles'} />
       <div className="article-box">
         <div className="article-form">
-          <button className="article-button" onClick={toggleDown}>
-            Add article
-          </button>
+          {role === 'Editor' && (
+            <button className="article-button" onClick={toggleDown}>
+              Add article
+            </button>
+          )}
         </div>
         <div className="article-list">
           {articles.map((article) => (
@@ -92,8 +96,8 @@ const Articles = () => {
       </div>
       {dropdown && (
         <div className="form-overlay">
-          <div className='form-design'>
-            <FormHeader handleForm={toggleDown} title={'Create Article'}/>
+          <div className="form-design">
+            <FormHeader handleForm={toggleDown} title={'Create Article'} />
             <form onSubmit={handleSubmit}>
               <CustomFormField label={'Tag'} name={'tag'} type={'text'} value={tag} onChange={handleTag} />
               <CustomFormField

@@ -9,7 +9,8 @@ import SelectNotice from '../components/notice/SelectNotice';
 import { useToken } from '../context/TokenContext';
 
 const Notices = () => {
- 
+  const { role } = useToken();
+
   //for now i have created fake json data to test purpose
   const noticesData = [
     {
@@ -33,11 +34,17 @@ const Notices = () => {
       category: 'University',
       date: '2081-08-15',
     },
+    {
+      id: 3,
+      title: 'Club Meeting Cancelled',
+      content: 'The Wednesday Club Meeting for Cl101 has been cancelled.',
+      category: 'Club',
+      date: '2081-08-15',
+    },
   ];
   const [selectCategory, setSelectCategory] = useState('All');
   const [showpopup, setShowPopUp] = useState(false);
   const [currentDate, setCurrentDate] = useState('');
-  const {role}=useToken();
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -102,13 +109,13 @@ const Notices = () => {
       <PageHeader pageTitle={'Notices'} />
       <div className="notice-box">
         <SelectNotice selectCategory={selectCategory} setSelectCategory={setSelectCategory} />
-        {role==='College'|| role==='University'||role==='ClubHead' ? (
+        {role === 'College' || role === 'University' || role === 'ClubHead' ? (
           <div>
             <button className="add-notice-button" onClick={handleArticlePop}>
               Add Notice
             </button>
           </div>
-        ): null}
+        ) : null}
         <div className="notice-list">
           {filterData.map((notice, index) => (
             <div key={index} className="notice-item">
@@ -120,6 +127,7 @@ const Notices = () => {
                 category={notice.category}
                 date={notice.date}
                 getCheckboxOptions={getCheckboxOptions}
+                role={role}
               />
             </div>
           ))}
