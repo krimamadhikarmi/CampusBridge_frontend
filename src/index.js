@@ -21,6 +21,7 @@ import CreateResult from './pages/university/CreateResult';
 import Attendance from './pages/teacher/Attendance';
 import Account from './pages/college/Account';
 import TeacherAssignment from './pages/teacher/TeacherAssignment';
+import ArticlePage from './pages/ArticlePage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -46,6 +47,7 @@ root.render(
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/account" element={<Account />} />
             <Route path="/teacherassignment" element={<TeacherAssignment />} />
+            <Route path="/articles/:id" element={<ArticlePage />} />
           </Route>
         </Routes>
       </BrowserRouter>

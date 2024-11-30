@@ -53,7 +53,9 @@ const Articles = () => {
     {
       id: 1,
       title: '5 Amazing New JavaScript Features in ES15 (2024)',
-      description: '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
+      tagline: '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
+      description:
+        '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
       author: 'Tari Ibaba',
       date: 'Jun 2',
       imageUrl: 'sports.jpeg',
@@ -85,9 +87,11 @@ const Articles = () => {
             <div key={article.id} className="article-item">
               <ArticleList
                 title={article.title}
-                description={article.description}
+                tagline={article.tagline}
                 date={article.date}
                 author={article.author}
+                id={article.id}
+                description={article.description}
                 // imageUrl={article.imageUrl}
               />
             </div>
