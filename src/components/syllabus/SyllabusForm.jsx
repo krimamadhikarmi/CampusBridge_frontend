@@ -1,10 +1,11 @@
 import FormHeader from '../common/FormHeader';
 import ButtonGroup from '../common/ButtonGroup';
 import CustomFormField from '../customFormField';
+import { useState } from 'react';
 
 const SyllabusForm = ({
   handleSyllabusForm,
-  handleFormSubmit,
+  handleSyllabusSubmit,
   handleSyllabusid,
   handleSemester,
   handleAddCourseId,
@@ -13,24 +14,36 @@ const SyllabusForm = ({
   handleUpdateCourse,
   fieldState,
 }) => {
+
+  const [syllabusId, setSyllabusId] = useState('');
+  const [semester, setSemester] = useState('');
+  const [electiveno, setElectiveno] = useState('');
+
+  const handleSubmit = ()=>{
+    const syllabusData = {
+      syllabusId,semester,electiveno
+    }
+    handleSyllabusSubmit(syllabusData);
+  }
+
   return (
     <div className="form-design" onClick={(e) => e.stopPropagation()}>
       <FormHeader handleForm={handleSyllabusForm} title={'Create Syllabus'} />
       <div>
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleSubmit}>
           <CustomFormField
             label={'Syllabus Id'}
             name={'SyllabusId'}
             type={'text'}
             placeholder={'Enter the Syllabus Id'}
-            onChange={handleSyllabusid}
+            onChange={(e)=>setSyllabusId(e.target.value)}
           />
           <CustomFormField
             label={'Semester'}
             name={'Semester'}
             type={'text'}
             placeholder={'Enter the semester'}
-            onChange={handleSemester}
+            onChange={(e)=>setSemester(e.target.value)}
           />
 
           {fieldState.map((field) => {
@@ -61,7 +74,7 @@ const SyllabusForm = ({
             name={'AllowedElectiveNo'}
             type={'number'}
             placeholder={'Enter the number of electives'}
-            onChange={handleElective}
+            onChange={(e)=>setElectiveno(e.target.value)}
           />
 
           <ButtonGroup handleClose={handleSyllabusForm} />
