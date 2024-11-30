@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import SyllabusTable from '../../components/syllabus/SyllabusTable';
 import CoursesTable from '../../components/syllabus/CoursesTable';
 import '../../styles/common.css';
+import axios from 'axios';
+
 const CreateSyllabus = () => {
   const [toogleSyllabusForm, setToogleSyllabusForm] = useState(false);
   const [toogleCourseForm, setToogleCourseForm] = useState(false);
@@ -48,11 +50,28 @@ const CreateSyllabus = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
   };
 
-  const handleFormSubmit = () => {
-    console.log('syllabus', syllabusId);
-    console.log('semester', semester);
-    console.log('elective', electiveno);
-    console.log('courseid', courseId);
+  const handleFormSubmit = async (syllabusData) => {
+
+    var completeSyllabusData = {
+      syllabusId : syllabusData.syllabusId,
+      courseId : courseIds,
+      semester : syllabusData.semester,
+      allowedElectiveNo : syllabusData.electiveno
+    }
+    console.log("Before api call:",JSON.stringify(completeSyllabusData));
+
+    try{
+      const response = await axios.post('https://localhost:7276/api/Syllabus/CreateSyllabus',JSON.stringify(completeSyllabusData),{
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log("Response data:",response.data);
+    } catch(e){
+      console.log(e);
+    }
+
+
     handleSyllabusForm();
   };
 
@@ -61,7 +80,12 @@ const CreateSyllabus = () => {
     dispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter Course Id', value: '' });
   };
 
+  const [courseIds,setCourseIds] = useState([]);
+
   const handleUpdateCourse = (event, id) => {
+    if(id){
+      setCourseIds((prevIds)=>prevIds.concat(id));
+    }
     const value = event.target.value;
     dispatch({ type: 'UPDATE', id: id, value: value });
   };
@@ -91,10 +115,32 @@ const CreateSyllabus = () => {
     setToogleCourseForm(!toogleCourseForm);
   };
 
-  const handleCourseSubmit = () => {
-    console.log('elective', isElective);
-    console.log('book', book);
-    console.log('courseid', courseId);
+  const handleCourseSubmit = async (courseData) => {
+
+    const completeCourseData = {
+      courseId: courseData.CourseId,
+      courseTitle: courseData.CourseTitle,
+      courseDescription: courseData.CourseDescription,
+      courseObjective: courseData.CourseObjective,
+      isElective: courseData.IsElective,
+      fullMarks: courseData.FullMarks,
+      passMarks: courseData.PassMarks,
+      creditHour: courseData.CreditHour,
+      labDescription: courseData.LabDescription,
+      books: books,
+      unitsDTO :
+    }
+    try{
+      const response = await axios.post('https://localhost:7276/api/Syllabus/CreateCourse', JSON.stringify(completeCourseData), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log("Response data:",response.data);
+    } catch(e){
+       console.log(e);
+    }
+
   };
 
   const handleElectiveChange = (event) => {
@@ -115,8 +161,15 @@ const CreateSyllabus = () => {
     bookDispatch({ type: 'ADD', name: 'Books', placeholder: 'Enter Books', value: '' });
   };
 
+  const [books,setBooks]=useState([]);
+
   const handleUpdateBook = (event, id) => {
     const value = event.target.value;
+
+    if(value){
+      setBooks((prevBook)=>prevBook.concat(value));
+    }
+
     setBook(value);
     bookDispatch({ type: 'UPDATE', id: id, value: value });
   };
@@ -138,6 +191,8 @@ const CreateSyllabus = () => {
       creditHour,
     });
   };
+
+  const [units,setUnits]=useState([]);
 
   const handleUpdateUnit = (unitId, field, value, event) => {
     setUnitId(value);
@@ -172,10 +227,14 @@ const CreateSyllabus = () => {
     event.stopPropagation(); // Prevent the event from propagating to the parent div
     console.log("Added subunit");
   };
-  
+
+  const [subUnits,setSubUnits]=useState([]);
 
   // Update a subunit's title
   const handleUpdateSubUnit = (unitId, subUnitId, value) => {
+    if(value){
+      setSubUnits((prevValue)=>prevValue.concat(value));
+    }
     unitDispatch({
       type: 'UPDATE_SUB_UNIT',
       unitId,
@@ -217,7 +276,7 @@ const CreateSyllabus = () => {
         <div className="form-overlay">
           <SyllabusForm
             handleSyllabusForm={handleSyllabusForm}
-            handleFormSubmit={handleFormSubmit}
+            handleSyllabusSubmit={handleFormSubmit}
             handleSyllabusid={handleSyllabusid}
             handleSemester={handleSemester}
             handleAddCourseId={handleAddCourseId}
