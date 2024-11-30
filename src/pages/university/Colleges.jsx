@@ -5,6 +5,8 @@ import '../../styles/College.css';
 import AddCollegeForm from '../../components/college/AddCollegeForm';
 import CollegeTable from '../../components/college/CollegeTable';
 import '../../styles/common.css';
+import axios from 'axios';
+import { useToken } from '../../context/TokenContext';
 
 const Colleges = () => {
   const [collegePopup, setCollegePopUp] = useState(false);
@@ -16,9 +18,11 @@ const Colleges = () => {
   const [address, setAddress] = useState('');
   const [phone, setPhoneNumber] = useState('');
   const [description, setDescription] = useState('');
-  const [id, setId] = useState('');
+  // const [id, setId] = useState('');
 
   const [showEdit, setShowEdit] = useState(false);
+
+  const { id } = useToken();
 
   const handleEditForm = () => {
     setShowEdit(!showEdit);
@@ -33,9 +37,9 @@ const Colleges = () => {
   const handleCName = (event) => {
     setName(event.target.value);
   };
-  const handleCId = (event) => {
-    setId(event.target.value);
-  };
+  // const handleCId = (event) => {
+  //   setId(event.target.value);
+  // };
 
   const handleCEmail = (event) => {
     setEmail(event.target.value);
@@ -55,7 +59,7 @@ const Colleges = () => {
     setDescription(event.target.value);
   };
 
-  const handleCollgeFormSubmit = (formData) => {
+  const handleCollgeFormSubmit = async (formData) => {
     const collegeData = {
       collegeId: formData.CollegeId,
       name: formData.CollegeName,
@@ -64,15 +68,31 @@ const Colleges = () => {
       location: formData.CollegeAddress,
       phone: formData.CollegePhone,
       description: formData.CollegeDescription,
-      universityId: formData.UniversityId,
+      universityId: id,
     };
     console.log(JSON.stringify(collegeData));
+
+    try {
+      const response = await axios.post(
+        'https://localhost:7276/api/College/CreateCollege',
+        JSON.stringify(collegeData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log('article', response.data);
+    } catch (e) {
+      console.log(e)
+    }
   };
 
   return (
     <>
       <Navbar />
       <PageHeader pageTitle={'Colleges'} />
+
       <div className="college-box">
         <div className="college-button">
           <button className="add-college-button" onClick={handleCollegePopUp}>
@@ -103,8 +123,8 @@ const Colleges = () => {
             phone={phone}
             address={address}
             handleCAddress={handleCAddress}
-            handleCId={handleCId}
-            id={id}
+            // handleCId={handleCId}
+            // id={id}
             description={description}
             setDescription={handleCDescription}
           />
