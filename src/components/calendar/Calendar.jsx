@@ -29,6 +29,7 @@ import CustomFormField from '../customFormField';
 import { useEffect } from 'react';
 import { DateReducer, GapReducer, initialDate, initialGap } from '../../hooks/reducer';
 import ButtonGroup from '../common/ButtonGroup';
+import { useToken } from '../../context/TokenContext';
 
 const meetings = [
   {
@@ -88,6 +89,8 @@ const Calendar = () => {
   const [semester, setSemester] = useState('');
   const [startdate, setStartDate] = useState('');
   const [enddate, setEndDate] = useState('');
+
+  const { role } = useToken();
 
   const [dateState, datedispatch] = useReducer(DateReducer, initialDate);
   const [gapState, gapdispatch] = useReducer(GapReducer, initialGap);
@@ -203,11 +206,13 @@ const Calendar = () => {
                 <span className="sr-only">Next month</span>
                 <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
               </button>
-              <button
-                className="px-4 py-2 ml-6 mt-3 text-white bg-blue-600 rounded-md hover:bg-blue-700"
-                onClick={handlePop}>
-                Create Schedule
-              </button>
+              {role.includes('University') || role.includes('College') ? (
+                <button
+                  className="px-4 py-2 ml-6 mt-3 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                  onClick={handlePop}>
+                  Create Schedule
+                </button>
+              ) : null}
             </div>
             <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
               <div>S</div>
