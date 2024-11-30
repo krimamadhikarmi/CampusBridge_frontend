@@ -55,13 +55,18 @@ const Colleges = () => {
     setDescription(event.target.value);
   };
 
-  const handleCollgeFormSubmit = () => {
-    console.log('name', name);
-    console.log('email', email);
-
-    console.log('password', password);
-    console.log('address', address);
-    console.log('phonenumber', phone);
+  const handleCollgeFormSubmit = (formData) => {
+    const collegeData = {
+      collegeId: formData.CollegeId,
+      name: formData.CollegeName,
+      email: formData.CollegeEmail,
+      password: formData.CollegePassword,
+      location: formData.CollegeAddress,
+      phone: formData.CollegePhone,
+      description: formData.CollegeDescription,
+      universityId: formData.UniversityId,
+    };
+    console.log(JSON.stringify(collegeData));
   };
 
   return (
