@@ -1,10 +1,12 @@
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, Transition } from '@headlessui/react';
 //import DotsVerticalIcon
-import { DotsVerticalIcon } from '@heroicons/react/outline'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
-import '../../styles/Calendar.css'
+import { DotsVerticalIcon } from '@heroicons/react/outline';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import '../../styles/Calendar.css';
+import axios from 'axios';
 
-import {   add,
+import {
+  add,
   eachDayOfInterval,
   endOfMonth,
   format,
@@ -15,11 +17,18 @@ import {   add,
   isToday,
   parse,
   parseISO,
-  startOfToday } from 'date-fns'
+  setDate,
+  startOfToday,
+} from 'date-fns';
 
 // import normalizeDates from 'date-fns/_lib/normalizeDates';
 
-import { Fragment, useState } from 'react'
+import { Fragment, useReducer, useState } from 'react';
+import FormHeader from '../common/FormHeader';
+import CustomFormField from '../customFormField';
+import { useEffect } from 'react';
+import { DateReducer, GapReducer, initialDate, initialGap } from '../../hooks/reducer';
+import ButtonGroup from '../common/ButtonGroup';
 
 const meetings = [
   {
@@ -62,36 +71,116 @@ const meetings = [
     startDatetime: '2024-11-13T14:00',
     endDatetime: '2024-11-13T14:30',
   },
-]
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
-const Calendar=()=> {
-  let today = startOfToday()
-  let [selectedDay, setSelectedDay] = useState(today)
-  let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
-  let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
+const Calendar = () => {
+  let today = startOfToday();
+  let [selectedDay, setSelectedDay] = useState(today);
+  let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
+  let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
+  const [pop, setPop] = useState(false);
+  const [udate, setUdate] = useState('');
+  const [gaps, setGap] = useState('');
+  const [semester, setSemester] = useState('');
+  const [startdate, setStartDate] = useState('');
+  const [enddate, setEndDate] = useState('');
+
+  const [dateState, datedispatch] = useReducer(DateReducer, initialDate);
+  const [gapState, gapdispatch] = useReducer(GapReducer, initialGap);
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
-  })
+  });
 
   function previousMonth() {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
+    let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
+    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
   }
 
   function nextMonth() {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
+    let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
   }
 
-  let selectedDayMeetings = meetings.filter((meeting) =>
-    isSameDay(parseISO(meeting.startDatetime), selectedDay)
-  )
+  const handlePop = () => {
+    setPop(!pop);
+  };
+
+  const handleDateField = (event) => {
+    event.preventDefault();
+    datedispatch({ type: 'ADD', name: 'UnavailableDates', placeholder: 'Enter unavailable dates', value: '' });
+  };
+
+  // const handleUpdateDate = (event, id) => {
+  //   const value = event.target.value;
+  //   setUdate(value);
+  //   datedispatch({ type: 'UPDATE', id: id, value: value });
+  // };
+  const handleUpdateDate = (event, id) => {
+    const value = event.target.value;
+    setUdate(value);
+    datedispatch({ type: 'UPDATE', id: id, value: value });
+  };
+
+  const handleAddDate = (event) => {
+    event.preventDefault();
+    console.log('added date');
+  };
+
+  const handleGapField = (event) => {
+    event.preventDefault();
+    gapdispatch({ type: 'ADD', name: 'GapBetweenExams', placeholder: 'Enter gap ', value: '' });
+  };
+
+  const handleUpdateGap = (event, id) => {
+    const value = event.target.value;
+    setGap(value);
+    gapdispatch({ type: 'UPDATE', id: id, value: value });
+  };
+
+  const handleAddGap = (event) => {
+    event.preventDefault();
+    console.log('added date');
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const unavailableDates = dateState.map((date) => date.value); // Only extract the date values
+    const gapBetweenExams = gapState.map((gap) => gap.value);
+
+    const scheduledata = {
+      semester: semester,
+      startDate: startdate,
+      endDate: enddate,
+      unavailableDates: unavailableDates,
+      gapBetweenExams: gapBetweenExams,
+    };
+
+    console.log(JSON.stringify(scheduledata));
+
+    try {
+      const response = await axios.post(
+        'https://localhost:7276/api/Schedule/CreateExamSchedule',
+        JSON.stringify(scheduledata),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log('schedule', response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  let selectedDayMeetings = meetings.filter((meeting) => isSameDay(parseISO(meeting.startDatetime), selectedDay));
 
   return (
     <div className="pt-16">
@@ -99,24 +188,25 @@ const Calendar=()=> {
         <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
           <div className="md:pr-14">
             <div className="flex items-center">
-              <h2 className="flex-auto font-semibold text-gray-900">
-                {format(firstDayCurrentMonth, 'MMMM yyyy')}
-              </h2>
+              <h2 className="flex-auto font-semibold text-gray-900">{format(firstDayCurrentMonth, 'MMMM yyyy')}</h2>
               <button
                 type="button"
                 onClick={previousMonth}
-                className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-              >
+                className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
                 <span className="sr-only">Previous month</span>
                 <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
               </button>
               <button
                 onClick={nextMonth}
                 type="button"
-                className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-              >
+                className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
                 <span className="sr-only">Next month</span>
                 <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
+              </button>
+              <button
+                className="px-4 py-2 ml-6 mt-3 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                onClick={handlePop}>
+                Create Schedule
               </button>
             </div>
             <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
@@ -132,19 +222,13 @@ const Calendar=()=> {
               {days.map((day, dayIdx) => (
                 <div
                   key={day.toString()}
-                  className={classNames(
-                    dayIdx === 0 && colStartClasses[getDay(day)],
-                    'py-1.5'
-                  )}
-                >
+                  className={classNames(dayIdx === 0 && colStartClasses[getDay(day)], 'py-1.5')}>
                   <button
                     type="button"
                     onClick={() => setSelectedDay(day)}
                     className={classNames(
                       isEqual(day, selectedDay) && 'text-white',
-                      !isEqual(day, selectedDay) &&
-                        isToday(day) &&
-                        'text-red-500',
+                      !isEqual(day, selectedDay) && isToday(day) && 'text-red-500',
                       !isEqual(day, selectedDay) &&
                         !isToday(day) &&
                         isSameMonth(day, firstDayCurrentMonth) &&
@@ -154,24 +238,16 @@ const Calendar=()=> {
                         !isSameMonth(day, firstDayCurrentMonth) &&
                         'text-gray-400',
                       isEqual(day, selectedDay) && isToday(day) && 'bg-red-500',
-                      isEqual(day, selectedDay) &&
-                        !isToday(day) &&
-                        'bg-gray-900',
+                      isEqual(day, selectedDay) && !isToday(day) && 'bg-gray-900',
                       !isEqual(day, selectedDay) && 'hover:bg-gray-200',
-                      (isEqual(day, selectedDay) || isToday(day)) &&
-                        'font-semibold',
-                      'mx-auto flex h-8 w-8 items-center justify-center rounded-full'
-                    )}
-                  >
-                    <time dateTime={format(day, 'yyyy-MM-dd')}>
-                      {format(day, 'd')}
-                    </time>
+                      (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
+                      'mx-auto flex h-8 w-8 items-center justify-center rounded-full',
+                    )}>
+                    <time dateTime={format(day, 'yyyy-MM-dd')}>{format(day, 'd')}</time>
                   </button>
 
                   <div className="w-1 h-1 mx-auto mt-1">
-                    {meetings.some((meeting) =>
-                      isSameDay(parseISO(meeting.startDatetime), day)
-                    ) && (
+                    {meetings.some((meeting) => isSameDay(parseISO(meeting.startDatetime), day)) && (
                       <div className="w-1 h-1 rounded-full bg-sky-500"></div>
                     )}
                   </div>
@@ -182,15 +258,11 @@ const Calendar=()=> {
           <section className="mt-12 md:mt-0 md:pl-14">
             <h2 className="font-semibold text-gray-900">
               Schedule for{' '}
-              <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
-                {format(selectedDay, 'MMM dd, yyy')}
-              </time>
+              <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
             </h2>
             <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
               {selectedDayMeetings.length > 0 ? (
-                selectedDayMeetings.map((meeting) => (
-                  <Meeting meeting={meeting} key={meeting.id} />
-                ))
+                selectedDayMeetings.map((meeting) => <Meeting meeting={meeting} key={meeting.id} />)
               ) : (
                 <p>No meetings for today.</p>
               )}
@@ -198,37 +270,103 @@ const Calendar=()=> {
           </section>
         </div>
       </div>
+      {pop && (
+        <div className="form-overlay">
+          <div className="form-design">
+            <FormHeader title={'Create Schedule'} handleForm={handlePop} />
+            <form onSubmit={handleSubmit}>
+              <CustomFormField
+                label={'Semester'}
+                type={'text'}
+                name={'Semester'}
+                placeholder={'Enter the semester'}
+                value={semester}
+                onChange={(e) => setSemester(e.target.value)}
+              />
+              <CustomFormField
+                label={'Start Date'}
+                type={'date'}
+                name={'StartDate'}
+                value={startdate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+              <CustomFormField
+                label={'End Date'}
+                type={'date'}
+                name={'EndDate'}
+                value={enddate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+
+              {dateState.map((dates) => {
+                return (
+                  <div key={dates.id} className="course-field">
+                    <CustomFormField
+                      label={'Unavailable Dates'}
+                      name={dates.name}
+                      type={'date'}
+                      value={dates.value}
+                      placeholder={dates.placeholder}
+                      onChange={(e) => handleUpdateDate(e, dates.id)}
+                    />
+                    <button type="button" onClick={handleAddDate}>
+                      Add
+                    </button>
+                  </div>
+                );
+              })}
+              <div className="add-div">
+                <button onClick={handleDateField} className="add-field-button">
+                  Add Date
+                </button>
+              </div>
+
+              {gapState.map((gap) => {
+                return (
+                  <div key={gap.id} className="course-field">
+                    <CustomFormField
+                      label={'Gap Days'}
+                      name={gap.name}
+                      type={'number'}
+                      value={gap.value}
+                      placeholder={gap.placeholder}
+                      onChange={(e) => handleUpdateGap(e, gap.id)}
+                    />
+                    <button type="button" onClick={handleAddGap}>
+                      Add
+                    </button>
+                  </div>
+                );
+              })}
+              <div className="add-div">
+                <button onClick={handleGapField} className="add-field-button">
+                  Add Gap
+                </button>
+              </div>
+              <ButtonGroup handleClose={handlePop} />
+            </form>
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
 function Meeting({ meeting }) {
-  let startDateTime = parseISO(meeting.startDatetime)
-  let endDateTime = parseISO(meeting.endDatetime)
+  let startDateTime = parseISO(meeting.startDatetime);
+  let endDateTime = parseISO(meeting.endDatetime);
 
   return (
     <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
-      <img
-        src={meeting.imageUrl}
-        alt=""
-        className="flex-none w-10 h-10 rounded-full"
-      />
+      <img src={meeting.imageUrl} alt="" className="flex-none w-10 h-10 rounded-full" />
       <div className="flex-auto">
         <p className="text-gray-900">{meeting.name}</p>
         <p className="mt-0.5">
-          <time dateTime={meeting.startDatetime}>
-            {format(startDateTime, 'h:mm a')}
-          </time>{' '}
-          -{' '}
-          <time dateTime={meeting.endDatetime}>
-            {format(endDateTime, 'h:mm a')}
-          </time>
+          <time dateTime={meeting.startDatetime}>{format(startDateTime, 'h:mm a')}</time> -{' '}
+          <time dateTime={meeting.endDatetime}>{format(endDateTime, 'h:mm a')}</time>
         </p>
       </div>
-      <Menu
-        as="div"
-        className="relative opacity-0 focus-within:opacity-100 group-hover:opacity-100"
-      >
+      <Menu as="div" className="relative opacity-0 focus-within:opacity-100 group-hover:opacity-100">
         <div>
           <Menu.Button className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
             <span className="sr-only">Open options</span>
@@ -243,8 +381,7 @@ function Meeting({ meeting }) {
           enterTo="transform opacity-100 scale-100"
           leave="transition ease-in duration-75"
           leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
+          leaveTo="transform opacity-0 scale-95">
           <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-36 ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1">
               <Menu.Item>
@@ -253,9 +390,8 @@ function Meeting({ meeting }) {
                     href="#"
                     className={classNames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 text-sm'
-                    )}
-                  >
+                      'block px-4 py-2 text-sm',
+                    )}>
                     Edit
                   </a>
                 )}
@@ -266,9 +402,8 @@ function Meeting({ meeting }) {
                     href="#"
                     className={classNames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 text-sm'
-                    )}
-                  >
+                      'block px-4 py-2 text-sm',
+                    )}>
                     Cancel
                   </a>
                 )}
@@ -278,17 +413,9 @@ function Meeting({ meeting }) {
         </Transition>
       </Menu>
     </li>
-  )
+  );
 }
 
-let colStartClasses = [
-  '',
-  'col-start-2',
-  'col-start-3',
-  'col-start-4',
-  'col-start-5',
-  'col-start-6',
-  'col-start-7',
-]
+let colStartClasses = ['', 'col-start-2', 'col-start-3', 'col-start-4', 'col-start-5', 'col-start-6', 'col-start-7'];
 
 export default Calendar;

@@ -49,6 +49,24 @@ export const initialElective = [
   },
 ];
 
+export const initialDate = [
+  {
+    id: '',
+    value: '',
+    placeholder: 'Enter your unavailable dates',
+    name: 'UnavailableDates',
+  },
+];
+
+export const initialGap = [
+  {
+    id: '',
+    value: '',
+    placeholder: 'Enter gap days',
+    name: 'GapBetweenExams',
+  },
+];
+
 export const SyllabusReducer = (state, action) => {
   switch (action.type) {
     case 'ADD':
@@ -185,3 +203,41 @@ export const ElectiveReducer = (state, action) => {
   }
 };
 
+export const DateReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD':
+      return [
+        ...state,
+        {
+          id: Math.floor(Math.random() * 2000),
+          value: action.value,
+          placeholder: action.placeholder,
+          name: action.name,
+        },
+      ];
+    case 'UPDATE':
+      return state.map((field) => (field.id === action.id ? { ...field, value: action.value } : field));
+    default:
+      return state;
+  }
+};
+
+
+export const GapReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD':
+      return [
+        ...state,
+        {
+          id: Math.floor(Math.random() * 2000),
+          value: '',
+          placeholder: action.placeholder,
+          name: action.name,
+        },
+      ];
+    case 'UPDATE':
+      return state.map((field) => (field.id === action.id ? { ...field, value: action.value } : field));
+    default:
+      return state;
+  }
+};

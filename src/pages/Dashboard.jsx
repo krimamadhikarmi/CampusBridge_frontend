@@ -1,8 +1,17 @@
+import { useNavigate } from 'react-router-dom';
 import ChatBox from '../components/Chatbox';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
+import { useToken } from '../context/TokenContext';
 import '../styles/Dashboard.css';
+import Navbar from '../components/Navbar';
 
 const DashBoard = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/calendar');
+  };
+
   return (
     <>
       <Navbar />
@@ -14,7 +23,9 @@ const DashBoard = () => {
               <p> No content</p>
             </div>
           </div>
-          <div className=" box box2">Academic Calendar</div>
+          <div className=" box box2" onClick={handleClick} style={{ cursor: 'pointer' }}>
+            Academic Calendar
+          </div>
         </div>
         <div className="content2">
           Upcoming Event
