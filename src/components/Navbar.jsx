@@ -21,7 +21,6 @@ const Navbar = () => {
     console.log(token);
     setDropDown(!dropDown);
   };
-
   // const role = 'Student';
 
   const handleLogout = () => {
@@ -48,6 +47,7 @@ const Navbar = () => {
   const renderItems = () => {
     if (role.includes('Student')) {
       return <StudentNavbar handleLogout={handleLogout} toggleDropdown={toggleDropdown} dropDown={dropDown} />;
+
     } else if (role.includes('University')) {
       return <UniversityNavbar handleLogout={handleLogout} dropDown={dropDown} toggleDropdown={toggleDropdown} />;
     } else if (role.includes('Teacher')) {
@@ -59,6 +59,7 @@ const Navbar = () => {
 
   return (
     <div id="nav">
+    {console.log(role)}
       <div className="logo">
         <Link to="/dashboard">
           <img src="logo4.png" alt="Logo" width={150} />
