@@ -7,17 +7,17 @@ import CustomFormField from '../components/customFormField';
 import ButtonGroup from '../components/common/ButtonGroup';
 import FormHeader from '../components/common/FormHeader';
 import { useToken } from '../context/TokenContext';
+import axios from 'axios';
 
 const Articles = () => {
   const [dropdown, setDropDown] = useState(false);
   const [headline, setHeadLine] = useState('');
   const [description, setDescription] = useState('');
   const [tag, setTag] = useState('');
-  const [tagLine, setTagLine] = useState('');
+  const [tagline, setTagLine] = useState('');
 
   const [currentDate, setCurrentDate] = useState('');
-  const { role } = useToken();
-
+  const { role, id } = useToken();
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -28,12 +28,31 @@ const Articles = () => {
     setDropDown(!dropdown);
   };
 
-  const handleSubmit = () => {
-    console.log('title', headline);
-    console.log('description', description);
-    console.log('tag', tag);
-    console.log('tagline', tagLine);
-    console.log('date', currentDate);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const articleData = {
+      articleId: tag,
+      headline: headline,
+      description: description,
+      tagline: tagline,
+      datePosted: currentDate,
+    };
+    console.log(JSON.stringify(articleData));
+    console.log(id, 'id');
+    try {
+      const response = await axios.post(
+        `https://localhost:7276/api/Article/CreateArticle/${id}`,
+        JSON.stringify(articleData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log('article',response.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleTag = (event) => {
@@ -75,9 +94,10 @@ const Articles = () => {
     <>
       <Navbar />
       <PageHeader pageTitle={'Articles'} />
+      {/* {console.log(role)} */}
       <div className="article-box">
         <div className="article-form">
-          {role.includes('Editor') && (
+          {role.includes('Teacher') && (
             <button className="article-button" onClick={toggleDown}>
               Add article
             </button>
@@ -116,7 +136,7 @@ const Articles = () => {
                 label={'Tagline'}
                 name={'tagline'}
                 type={'text'}
-                value={tagLine}
+                value={tagline}
                 onChange={handleTagLine}
               />
               <CustomFormField

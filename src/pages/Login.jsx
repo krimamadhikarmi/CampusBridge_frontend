@@ -8,7 +8,7 @@ import axios from 'axios';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const {setToken,setRole} = useToken();
+  const { setToken, setRole, setId } = useToken();
   const navigate = useNavigate();
 
   // const handleSubmit = async (event) => {
@@ -52,12 +52,15 @@ const Login = () => {
         jwtToken: response.data.jwtToken,
       };
       const userRole = response.data.role;
-      // console.log(response)
+      const userId = response.data.id;
+      console.log(response.data.id)
 
       console.log('Token data:', jwtToken);
-      // console.log('role', userRole);
+      console.log('role', userRole);
       setToken(jwtToken);
       setRole(userRole);
+      setId(userId);
+
       navigate('/dashboard');
     } catch (error) {
       console.error('Error during POST request:', error);
