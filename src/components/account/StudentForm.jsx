@@ -71,8 +71,8 @@ const StudentForm = ({
             onChange={(e)=>setStudentAddress(e.target.value)}
           />
           <div className="account-checkbox-container">
-            <CustomFormField label={'Is ClubHead?'} name={'isClubHead'} type={'checkbox'} onChange={(e)=>setIsClubHead(e.target.value)} />
-            <CustomFormField label={'Is Author?'} name={'isAuthor'} type={'checkbox'} onChange={(e)=>setIsAuthor(e.target.value)} />
+            <CustomFormField label={'Is ClubHead?'} name={'isClubHead'} type={'checkbox'} onChange={(e)=>setIsClubHead(e.target.checked)} />
+            <CustomFormField label={'Is Author?'} name={'isAuthor'} type={'checkbox'} onChange={(e)=>setIsAuthor(e.target.checked)} />
           </div>
 
           <CustomFormField

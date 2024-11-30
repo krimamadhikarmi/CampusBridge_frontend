@@ -1,6 +1,7 @@
 import FormHeader from '../common/FormHeader';
 import ButtonGroup from '../common/ButtonGroup';
 import CustomFormField from '../customFormField';
+import { useState } from 'react';
 const CourseForm = ({
   handleCourseSubmit,
   handleCourseForm,
@@ -19,43 +20,68 @@ const CourseForm = ({
   handleSub,
   unitState,
 }) => {
+
+  const [CourseId, setCourseId] = useState('');
+  const [CourseTitle, setCourseTitle] = useState('');
+  const [CourseDescription, setCourseDescription] = useState('');
+  const [CourseObjective,setCourseObjective]=useState('');
+  const [IsElective, setIsElective] = useState('');
+  const [FullMarks, setFullMarks] = useState('');
+  const [PassMarks, setPassMarks] = useState('');
+  const [CreditHour, setCreditHour] = useState('');
+  const [LabDescription,setLabDescription] = useState('');
+
+  const handleSubmit = () =>{
+
+    const courseData = {
+      CourseId,CourseTitle,CourseDescription,
+      CourseObjective,IsElective,
+      FullMarks,PassMarks,CreditHour,
+      LabDescription
+    }
+    handleCourseSubmit(courseData);
+  }
+
   return (
+
     <div className="form-design" onClick={(e) => e.stopPropagation()}>
       <FormHeader handleForm={handleCourseForm} title={'Create Courses'} />
       <div>
-        <form onSubmit={handleCourseSubmit}>
+        <form onSubmit={handleSubmit}>
           <CustomFormField
             label={'Course Id'}
             name={'CourseId'}
             type={'text'}
             placeholder={'Enter the Course Id'}
-            onChange={handleCourseId}
+            onChange={(e)=>setCourseId(e.target.value)}
           />
           <CustomFormField
             label={'Course Title'}
             name={'CourseTitle'}
             type={'text'}
             placeholder={'Enter the Course Title'}
-            onChange={handleCourseTitle}
+            onChange={(e)=>setCourseTitle(e.target.value)}
           />
           <CustomFormField
             label={'Course Description'}
             name={'CourseDescription'}
             type={'text'}
             placeholder={'Enter the Course Description'}
+            onChange={(e)=>setCourseDescription(e.target.value)}
           />
           <CustomFormField
             label={'Course Objectives'}
             name={'CourseObjective'}
             type={'text'}
             placeholder={'Enter the Course Objective'}
+            onChange={(e)=>setCourseObjective(e.target.value)}
           />
           <div className="checkbox-container">
             <CustomFormField
               label={'Is Elective?'}
               name={'isElective'}
               type={'checkbox'}
-              onChange={handleElectiveChange}
+              onChange={(e)=>setIsElective(e.target.checked)}
             />
           </div>
 
@@ -64,24 +90,28 @@ const CourseForm = ({
             name={'FullMarks'}
             type={'text'}
             placeholder={'Enter the Full Marks of Course'}
+            onChange={(e)=>setFullMarks(e.target.value)}
           />
           <CustomFormField
             label={'Pass Marks'}
             name={'PassMarks'}
             type={'text'}
             placeholder={'Enter the Pass Marks of Course'}
+            onChange={(e)=>setPassMarks(e.target.value)}
           />
           <CustomFormField
             label={'Credit Hour'}
             name={'CreditHour'}
             type={'text'}
             placeholder={'Enter the Course Credit Hours'}
+            onChange={(e)=>setCreditHour(e.target.value)}
           />
           <CustomFormField
             label={'Lab Description'}
             name={'LabDescription'}
             type={'text'}
             placeholder={'Enter the Lab Description'}
+            onChange={(e)=>setLabDescription(e.target.value)}
           />
           {bookState.map((book) => {
             return (
