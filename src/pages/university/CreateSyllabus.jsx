@@ -129,17 +129,15 @@ const CreateSyllabus = () => {
       creditHour: courseData.CreditHour,
       labDescription: courseData.LabDescription,
       books: books,
-      unitsDTO: 
-    };
+      unitsDTO : units
+    }
 
-    try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Syllabus/CreateCourse',
-        JSON.stringify(completeCourseData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+    console.log(JSON.stringify(completeCourseData));
+
+    try{
+      const response = await axios.post('https://localhost:7276/api/Syllabus/CreateCourse', JSON.stringify(completeCourseData), {
+        headers: {
+          'Content-Type': 'application/json',
         },
       );
       console.log('Response data:', response.data);
@@ -203,6 +201,13 @@ const CreateSyllabus = () => {
     setUnitId(value);
     setCreditHour(value);
     setTitle(value);
+
+    setUnits((prevUnits) =>
+      prevUnits.map((unit) =>
+        unit.unitId === unitId ? { ...unit, [field]: value } : unit
+      )
+    );
+
     unitDispatch({
       type: 'UPDATE_UNIT',
       id: unitId,
@@ -237,9 +242,18 @@ const CreateSyllabus = () => {
 
   // Update a subunit's title
   const handleUpdateSubUnit = (unitId, subUnitId, value) => {
-    if (value) {
-      setSubUnits((prevValue) => prevValue.concat(value));
-    }
+      if (value) {
+    setUnits((prevUnits) =>
+      prevUnits.map((unit) =>
+        unit.unitId === unitId
+          ? {
+              ...unit,
+              subUnits: [...unit.subUnits, value], // Append the subunit to the correct unit
+            }
+          : unit
+      )
+    );
+  }
     unitDispatch({
       type: 'UPDATE_SUB_UNIT',
       unitId,
