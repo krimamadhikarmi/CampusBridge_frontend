@@ -3,12 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import CloseButton from './common/CloseButton';
 
 const ArticleList = ({ title, description, date, author, imageUrl, id, tagline }) => {
-  // const navigate = useNavigate();
-  // const handleClick = () => {
-  //   navigate(`/articles/${id}`, {
-  //     state: { title, description, date, author },
-  //   });
-  // };
 
   const [articlepop, setArticlePop] = useState(false);
 
