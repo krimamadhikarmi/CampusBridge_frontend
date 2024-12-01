@@ -15,6 +15,7 @@ const Articles = () => {
   const [description, setDescription] = useState('');
   const [tag, setTag] = useState('');
   const [tagline, setTagLine] = useState('');
+  const [articles, setArticles] = useState([]);
 
   const [currentDate, setCurrentDate] = useState('');
   const { role, id } = useToken();
@@ -26,7 +27,8 @@ const Articles = () => {
     const fetchArticle = async () => {
       try {
         const response = await axios.get('https://localhost:7276/api/Article/GetArticle');
-        console.log(response.data);
+        console.log('articles', response.data);
+        setArticles(response.data);
       } catch (e) {
         console.log(e);
       }
@@ -79,26 +81,26 @@ const Articles = () => {
     setDescription(event.target.value);
   };
 
-  const articles = [
-    {
-      id: 1,
-      title: '5 Amazing New JavaScript Features in ES15 (2024)',
-      tagline: '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
-      description:
-        '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
-      author: 'Tari Ibaba',
-      date: 'Jun 2',
-      imageUrl: 'sports.jpeg',
-    },
-    {
-      id: 2,
-      title: 'React Native’s New Architecture: The Tricky Parts (2/2)',
-      description: 'The first part ended with you implementing a custom Shadow component.',
-      author: 'Jakub Piasecki',
-      date: 'Jun 10',
-      imageUrl: 'images.png',
-    },
-  ];
+  // const articles = [
+  //   {
+  //     id: 1,
+  //     title: '5 Amazing New JavaScript Features in ES15 (2024)',
+  //     tagline: '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
+  //     description:
+  //       '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
+  //     author: 'Tari Ibaba',
+  //     date: 'Jun 2',
+  //     imageUrl: 'sports.jpeg',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'React Native’s New Architecture: The Tricky Parts (2/2)',
+  //     description: 'The first part ended with you implementing a custom Shadow component.',
+  //     author: 'Jakub Piasecki',
+  //     date: 'Jun 10',
+  //     imageUrl: 'images.png',
+  //   },
+  // ];
 
   return (
     <>
@@ -117,7 +119,7 @@ const Articles = () => {
           {articles.map((article) => (
             <div key={article.id} className="article-item">
               <ArticleList
-                title={article.title}
+                headline={article.headline}
                 tagline={article.tagline}
                 date={article.date}
                 author={article.author}
