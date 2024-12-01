@@ -120,7 +120,7 @@ const Articles = () => {
               <ArticleList
                 headline={article.headline}
                 tagline={article.tagline}
-                date={article.date}
+                date={article.datePosted}
                 author={article.author}
                 id={article.id}
                 description={article.description}
