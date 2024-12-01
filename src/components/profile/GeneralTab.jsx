@@ -8,23 +8,21 @@ import { useToken } from '../../context/TokenContext';
 const GeneralTab = () => {
   const [editForm, setEditForm] = useState(false);
   const { id } = useToken();
-  const [info, setInfo] = useState([]);
+  const [info, setInfo] = useState(null);
 
   useEffect =
     (() => {
       const fetchUser = async () => {
-        try{
-          console.log("hello");
+        try {
+          console.log('hello');
           const response = await axios.get('https://localhost:7276/api/Student/GetStudentById/1');
           console.log('response', response.data);
           setInfo(response.data);
-        }
-        catch(e){
+        } catch (e) {
           console.log(e);
         }
-        
       };
-      console.log(info);  
+      console.log(info);
 
       fetchUser();
     },
@@ -50,38 +48,32 @@ const GeneralTab = () => {
           </div>
         </div>
 
-        {info.map(
-          (
-            user, // Adding parentheses to return JSX
-          ) => (
-            <div className="profile-details" key={user.studentId}>
-              <p>
-                <b>Name:</b> {user.name}
-              </p>
-              <p>
-                <b>Faculty:</b> {user.faculty}
-              </p>
-              <p>
+        <div className="profile-details">
+          <p>
+            <b>Name:</b> {info?.name}
+          </p>
+          <p>
+            <b>Faculty:</b> {info?.academicDTO.faculty}
+          </p>
+          {/* <p>
                 <b>College:</b> {user.college}
-              </p>
-              <p>
-                <b>Batch:</b> {user.batch}
-              </p>
-              <p>
-                <b>Address:</b> {user.location}
-              </p>
-              <p>
-                <b>Phone:</b> {user.phone}
-              </p>
-              <p>
-                <b>Email:</b> {user.email}
-              </p>
-            </div>
-          ),
-        )}
+              </p> */}
+          <p>
+            <b>Batch:</b> {info?.academicDTO.batch}
+          </p>
+          <p>
+            <b>Address:</b> {info?.location}
+          </p>
+          <p>
+            <b>Phone:</b> {info?.phone}
+          </p>
+          <p>
+            <b>Email:</b> {info?.email}
+          </p>
+        </div>
       </div>
       {editForm && <EditForm toogleEditForm={toogleEditForm} />}
     </div>
   );
 };
-export default GeneralTab;
+export default GeneralTab;
