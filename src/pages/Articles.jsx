@@ -23,7 +23,6 @@ const Articles = () => {
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
-
     const fetchArticle = async () => {
       try {
         const response = await axios.get('https://localhost:7276/api/Article/GetArticle');

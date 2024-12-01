@@ -13,14 +13,24 @@ const GeneralTab = () => {
   useEffect =
     (() => {
       const fetchUser = async () => {
+<<<<<<< HEAD
         try {
           console.log('hello');
+=======
+
+        try{
+          console.log("hello");
+>>>>>>> 0ab790b1cc1c420fb294f0c5b05a96725f448c19
           const response = await axios.get('https://localhost:7276/api/Student/GetStudentById/1');
           console.log('response', response.data);
           setInfo(response.data);
         } catch (e) {
           console.log(e);
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0ab790b1cc1c420fb294f0c5b05a96725f448c19
       };
       console.log(info);
 
