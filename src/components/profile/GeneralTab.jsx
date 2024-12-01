@@ -1,15 +1,33 @@
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'; // Import specific icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditForm from './EditForm';
+import axios from 'axios';
+import { useToken } from '../../context/TokenContext';
 
 const GeneralTab = () => {
   const [editForm, setEditForm] = useState(false);
+  const { id } = useToken();
+  const [info, setInfo] = useState([]);
+
+  useEffect =
+    (() => {
+      const fetchUser = async () => {
+        const response = await axios.get('https://localhost:7276/api/Student/GetStudentById/1');
+        console.log('response', response.data);
+        setInfo([response.data]);
+      };
+      console.log(info);
+
+      fetchUser();
+    },
+    []);
 
   const toogleEditForm = () => {
     console.log('toogled');
     setEditForm(!editForm);
   };
+
   return (
     <div className="generaltab-style">
       <div>
@@ -25,33 +43,37 @@ const GeneralTab = () => {
           </div>
         </div>
 
-        <div className="profile-details">
-          <p>
-            <b>Name:</b> Krima Madhikarmi
-          </p>
-          <p>
-            <b>Faculty:</b> Bsc.CSIT
-          </p>
-          <p>
-            <b>College:</b> Samriddhi College
-          </p>
-          <p>
-            <b>Batch:</b> 2075
-          </p>
-          <p>
-            <b>Address:</b> Suryabinayak,Bhaktapur
-          </p>
-          <p>
-            <b>Phone:</b> 98433838828
-          </p>
-          <p>
-            <b>Email:</b> madhikrima20@gmail.com
-          </p>
-        </div>
+        {info.map(
+          (
+            user, // Adding parentheses to return JSX
+          ) => (
+            <div className="profile-details" key={user.studentId}>
+              <p>
+                <b>Name:</b> {user.name}
+              </p>
+              <p>
+                <b>Faculty:</b> {user.faculty}
+              </p>
+              <p>
+                <b>College:</b> {user.college}
+              </p>
+              <p>
+                <b>Batch:</b> {user.batch}
+              </p>
+              <p>
+                <b>Address:</b> {user.location}
+              </p>
+              <p>
+                <b>Phone:</b> {user.phone}
+              </p>
+              <p>
+                <b>Email:</b> {user.email}
+              </p>
+            </div>
+          ),
+        )}
       </div>
-      {editForm &&(
-        <EditForm toogleEditForm={toogleEditForm}/>
-      )}
+      {editForm && <EditForm toogleEditForm={toogleEditForm} />}
     </div>
   );
 };
