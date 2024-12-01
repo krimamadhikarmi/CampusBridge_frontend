@@ -143,7 +143,7 @@ const CreateSyllabus = () => {
             'Content-Type': 'application/json',
           },
         },
-      );
+    );
       console.log('Response data:', response.data);
     } catch (e) {
       console.log(e);
