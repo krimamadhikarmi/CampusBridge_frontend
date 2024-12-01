@@ -15,7 +15,7 @@ const GeneralTab = () => {
       const fetchUser = async () => {
         const response = await axios.get('https://localhost:7276/api/Student/GetStudentById/1');
         console.log('response', response.data);
-        setInfo([response.data]);
+        setInfo(response.data);
       };
       console.log(info);
 
