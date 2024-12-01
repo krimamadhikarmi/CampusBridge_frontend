@@ -13,44 +13,56 @@ const Notices = () => {
   const { role, id } = useToken();
 
   //for now i have created fake json data to test purpose
-  const NoticesData = [
-    {
-      id: 1,
-      title: 'Class Rescheduled',
-      content: 'The CS101 class has been rescheduled to 10:00 AM on 01/01/2023.',
-      category: 'College',
-      date: '2023-01-01',
-    },
-    {
-      id: 2,
-      title: 'BSc Exam Schedule',
-      content: 'Final exam schedule for the BSc program has been released.',
-      category: 'University',
-      date: '2081-08-08',
-    },
-    {
-      id: 3,
-      title: 'Class Cancelled',
-      content: 'The Wednesday class for TU101 has been cancelled.',
-      category: 'University',
-      date: '2081-08-15',
-    },
-    {
-      id: 3,
-      title: 'Club Meeting Cancelled',
-      content: 'The Wednesday Club Meeting for Cl101 has been cancelled.',
-      category: 'Club',
-      date: '2081-08-15',
-    },
-  ];
+  // const NoticesData = [
+  //   {
+  //     id: 1,
+  //     title: 'Class Rescheduled',
+  //     content: 'The CS101 class has been rescheduled to 10:00 AM on 01/01/2023.',
+  //     category: 'College',
+  //     date: '2023-01-01',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'BSc Exam Schedule',
+  //     content: 'Final exam schedule for the BSc program has been released.',
+  //     category: 'University',
+  //     date: '2081-08-08',
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Class Cancelled',
+  //     content: 'The Wednesday class for TU101 has been cancelled.',
+  //     category: 'University',
+  //     date: '2081-08-15',
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Club Meeting Cancelled',
+  //     content: 'The Wednesday Club Meeting for Cl101 has been cancelled.',
+  //     category: 'Club',
+  //     date: '2081-08-15',
+  //   },
+  // ];
   const [selectCategory, setSelectCategory] = useState('All');
   const [showpopup, setShowPopUp] = useState(false);
   const [currentDate, setCurrentDate] = useState('');
+  const [notices, setNotices] = useState([]);
 
   useEffect(() => {
     // Set today's date in the correct format
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
+
+    const fetchNotice = async () => {
+      try {
+        const response = await axios.get('https://localhost:7276/api/Notice/GetNotice');
+        console.log('Response Data:', response.data); // Check the structure here
+        setNotices(response.data);
+      } catch (e) {
+        console.log('Error:', e);
+      }
+    };
+    fetchNotice();
   }, []);
 
   const handleArticlePop = () => {
@@ -69,15 +81,11 @@ const Notices = () => {
     console.log(JSON.stringify(noticeData));
 
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Notice/CreateNotice',
-        JSON.stringify(noticeData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+      const response = await axios.post('https://localhost:7276/api/Notice/CreateNotice', JSON.stringify(noticeData), {
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+      });
       console.log('Resonse', response.data);
     } catch (e) {
       console.log(e);
@@ -131,9 +139,10 @@ const Notices = () => {
     );
   };
   const filterData =
-    selectCategory === 'All' ? NoticesData : NoticesData.filter((notice) => notice.category === selectCategory);
+    selectCategory === 'All' ? notices : notices.filter((notice) => notice.creator === selectCategory);
   return (
     <>
+      {console.log(notices)}
       <Navbar />
       <PageHeader pageTitle={'Notices'} />
       <div className="notice-box">
@@ -150,11 +159,11 @@ const Notices = () => {
             <div key={index} className="notice-item">
               <NoticeList
                 index={index}
-                id={notice.id}
+                id={notice.noticeId}
                 title={notice.title}
-                content={notice.content}
-                category={notice.category}
-                date={notice.date}
+                content={notice.description}
+                category={notice.creator}
+                date={notice.datePosted}
                 getCheckboxOptions={getCheckboxOptions}
                 role={role}
               />
