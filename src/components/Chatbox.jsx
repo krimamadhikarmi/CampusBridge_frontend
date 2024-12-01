@@ -60,9 +60,17 @@ const ChatBox = () => {
           },
         );
 
-        const botMessage = response.data.answer || 'No answer available';
+        var botMessage = response.data.answer || 'No answer available';
 
-        console.log('answer', response.data.answer);
+        console.log('response:', response.data);
+
+        if(response.data.score>70){
+          botMessage=response.data.answer;
+        }
+        else{
+          botMessage="No answer available.";
+        }
+
         setMessages((prevMessages) => [...prevMessages, { text: botMessage, type: 'bot' }]);
       } catch (e) {
         console.error('Error fetching the answer:', e);
