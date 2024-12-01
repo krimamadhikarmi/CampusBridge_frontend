@@ -7,13 +7,13 @@ import '../styles/common.css';
 import AddNotice from '../components/notice/AddNotice';
 import SelectNotice from '../components/notice/SelectNotice';
 import { useToken } from '../context/TokenContext';
+import axios from 'axios';
 
 const Notices = () => {
-  const { role } = useToken();
-  
+  const { role, id } = useToken();
 
   //for now i have created fake json data to test purpose
-  const noticesData = [
+  const NoticesData = [
     {
       id: 1,
       title: 'Class Rescheduled',
@@ -48,6 +48,7 @@ const Notices = () => {
   const [currentDate, setCurrentDate] = useState('');
 
   useEffect(() => {
+    // Set today's date in the correct format
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
   }, []);
@@ -56,15 +57,42 @@ const Notices = () => {
     setShowPopUp(!showpopup);
   };
 
-  const getCheckboxOptions = () => {
+  const handleNoticeSubmit = async (formData) => {
+    const noticeData = {
+      noticeId: formData.noticeId,
+      title: formData.title,
+      description: formData.description,
+      directedTo: formData.directedTo,
+      datePosted: formData.datePosted,
+      creatorId: id,
+    };
+    console.log(JSON.stringify(noticeData));
+
+    try {
+      const response = await axios.post(
+        'https://localhost:7276/api/Notice/CreateNotice',
+        JSON.stringify(noticeData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log('Resonse', response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getCheckboxOptions = (handleCheckboxChange) => {
     if (role.includes('College')) {
       return (
         <>
           <label>
-            <input type="checkbox" name="DirectedTo" value="Teacher" /> Teacher
+            <input type="checkbox" name="directedTo" value="Teacher" onChange={handleCheckboxChange} /> Teacher
           </label>
           <label>
-            <input type="checkbox" name="DirectedTo" value="Student" /> Student
+            <input type="checkbox" name="directedTo" value="Student" onChange={handleCheckboxChange} /> Student
           </label>
         </>
       );
@@ -72,10 +100,10 @@ const Notices = () => {
       return (
         <>
           <label>
-            <input type="checkbox" name="DirectedTo" value="Club Member" /> Club Member
+            <input type="checkbox" name="directedTo" value="Club Member" onChange={handleCheckboxChange} /> Club Member
           </label>
           <label>
-            <input type="checkbox" name="DirectedTo" value="College" /> College
+            <input type="checkbox" name="directedTo" value="College" onChange={handleCheckboxChange} /> College
           </label>
         </>
       );
@@ -83,10 +111,10 @@ const Notices = () => {
       return (
         <>
           <label>
-            <input type="checkbox" name="DirectedTo" value="College" /> College
+            <input type="checkbox" name="directedTo" value="College" onChange={handleCheckboxChange} /> College
           </label>
           <label>
-            <input type="checkbox" name="DirectedTo" value="Student" /> Student
+            <input type="checkbox" name="directedTo" value="Student" onChange={handleCheckboxChange} /> Student
           </label>
         </>
       );
@@ -94,16 +122,16 @@ const Notices = () => {
     return (
       <>
         <label>
-          <input type="checkbox" name="DirectedTo" value="College" /> College
+          <input type="checkbox" name="directedTo" value="College" /> College
         </label>
         <label>
-          <input type="checkbox" name="DirectedTo" value="Student" /> Student
+          <input type="checkbox" name="directedTo" value="Student" /> Student
         </label>
       </>
     );
   };
   const filterData =
-    selectCategory === 'All' ? noticesData : noticesData.filter((notice) => notice.category === selectCategory);
+    selectCategory === 'All' ? NoticesData : NoticesData.filter((notice) => notice.category === selectCategory);
   return (
     <>
       <Navbar />
@@ -139,6 +167,7 @@ const Notices = () => {
           handleArticlePop={handleArticlePop}
           currentDate={currentDate}
           getCheckboxOptions={getCheckboxOptions}
+          handleSubmit={handleNoticeSubmit}
         />
       )}
     </>

@@ -13,6 +13,7 @@ const GeneralTab = () => {
   useEffect =
     (() => {
       const fetchUser = async () => {
+
         try{
           console.log("hello");
           const response = await axios.get('https://localhost:7276/api/Student/GetStudentById/1');
@@ -22,7 +23,7 @@ const GeneralTab = () => {
         catch(e){
           console.log(e);
         }
-        
+
       };
       console.log(info);  
 
