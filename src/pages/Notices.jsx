@@ -70,7 +70,7 @@ const Notices = () => {
 
     try {
       const response = await axios.post(
-        'https://localhost:7276/api/Notice/CreateNotice/id',
+        'https://localhost:7276/api/Notice/CreateNotice',
         JSON.stringify(noticeData),
         {
           headers: {

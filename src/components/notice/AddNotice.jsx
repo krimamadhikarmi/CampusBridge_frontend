@@ -14,8 +14,8 @@ const AddNotice = ({ handleArticlePop, currentDate, getCheckboxOptions, handleSu
     setDirectedTo((prev) => (checked ? [...prev, value] : prev.filter((item) => item !== value)));
   };
 
-  const handleFormSubmit = () => {
-    // event.preventDefault();
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
     const formData = {
       noticeId,
       title,
