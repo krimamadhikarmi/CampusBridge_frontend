@@ -11,11 +11,11 @@ const ArticleList = ({ headline, description, date, author, imageUrl, id, taglin
 
   return (
     <>
-      <div className="article-content" style={{ cursor: 'pointer' }} onClick={handleArticle}>
+      <div className="article-content"  >
         <h2 className="article-title">{headline}</h2>
         <p className="article-description">{tagline}</p>
         <div className="article-info">
-          <span className="article-date">DatePosted:{date}</span>
+          <span className="article-date">DatePosted: {date}</span>
           <p className="author-name">{author}</p>
         </div>
       </div>

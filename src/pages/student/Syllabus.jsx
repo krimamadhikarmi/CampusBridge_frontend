@@ -11,7 +11,7 @@ const Syllabus = () => {
   const fetchSyllabusById = async () => {
     try {
       const response = await axios.get(
-        'https://localhost:7276/api/Syllabus/GetSyllabusById/abc'
+        'https://localhost:7276/api/Syllabus/GetSyllabusById/campus'
       );
       console.log(response.data);
       setSyllabus(response.data);
