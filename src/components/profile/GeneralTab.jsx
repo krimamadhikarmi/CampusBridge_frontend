@@ -10,33 +10,20 @@ const GeneralTab = () => {
   const { id } = useToken();
   const [info, setInfo] = useState(null);
 
-  useEffect =
-    (() => {
-      const fetchUser = async () => {
-<<<<<<< HEAD
-        try {
-          console.log('hello');
-=======
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        console.log('Fetching user data...');
+        const response = await axios.get('https://localhost:7276/api/Student/GetStudentById/1');
+        console.log('response', response.data);
+        setInfo(response.data);
+      } catch (e) {
+        console.error('Error fetching user data:', e);
+      }
+    };
 
-        try{
-          console.log("hello");
->>>>>>> 0ab790b1cc1c420fb294f0c5b05a96725f448c19
-          const response = await axios.get('https://localhost:7276/api/Student/GetStudentById/1');
-          console.log('response', response.data);
-          setInfo(response.data);
-        } catch (e) {
-          console.log(e);
-        }
-<<<<<<< HEAD
-=======
-
->>>>>>> 0ab790b1cc1c420fb294f0c5b05a96725f448c19
-      };
-      console.log(info);
-
-      fetchUser();
-    },
-    []);
+    fetchUser();
+  }, []);
 
   const toogleEditForm = () => {
     console.log('toogled');

@@ -35,7 +35,7 @@ const AddResultForm = ({ handleResultPop }) => {
   const [StudentId, setStudentId] = useState('');
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const resultData = {
       ResultId,
       ExamType,

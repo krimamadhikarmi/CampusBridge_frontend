@@ -14,7 +14,7 @@ const AddCollegeForm = ({ handleCollegePopUp, handleCollgeFormSubmit }) => {
   const [UniversityId, setUniversityId] = useState('');
 
   const handleFormSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const formData = {
       CollegeId,
       CollegeName,
