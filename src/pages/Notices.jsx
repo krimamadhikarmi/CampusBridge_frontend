@@ -56,7 +56,7 @@ const Notices = () => {
     const fetchNotice = async () => {
       try {
         const response = await axios.get('https://localhost:7276/api/Notice/GetNotice');
-        console.log('Response Data:', response.data); // Check the structure here
+        console.log('Response Data:', response.data); 
         setNotices(response.data);
       } catch (e) {
         console.log('Error:', e);

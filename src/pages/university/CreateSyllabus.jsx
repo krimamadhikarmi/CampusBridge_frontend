@@ -84,11 +84,14 @@ const CreateSyllabus = () => {
 
   const [courseIds, setCourseIds] = useState([]);
 
+
   const handleUpdateCourse = (event, id) => {
-    if (id) {
-      setCourseIds((prevIds) => prevIds.concat(id));
-    }
+    console.log('update');
     const value = event.target.value;
+
+    if (id) {
+      setCourseIds((prevIds) => [...prevIds, value]);
+    }
     dispatch({ type: 'UPDATE', id: id, value: value });
   };
 
@@ -143,7 +146,7 @@ const CreateSyllabus = () => {
             'Content-Type': 'application/json',
           },
         },
-    );
+      );
       console.log('Response data:', response.data);
     } catch (e) {
       console.log(e);
