@@ -14,19 +14,15 @@ const handleResultSubmit = async (resultData, event) => {
     studentId: resultData.StudentId,
   };
   console.log(JSON.stringify(completeResultData));
-  try {
-    const response = await axios.post(
-      'https://localhost:7276/api/Result/CreateResult',
-      JSON.stringify(completeResultData),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+  try{
+    const response = await axios.post('https://localhost:7276/api/Result/CreateResult', JSON.stringify(completeResultData), {
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
-    console.log('Response data:', response.data);
-  } catch (e) {
-    console.log(e);
+    });
+    console.log("Response data:",response.data);
+  } catch(e){
+     console.log(e);
   }
   console.log(resultData.ResultId);
 };
@@ -39,7 +35,7 @@ const AddResultForm = ({ handleResultPop }) => {
   const [StudentId, setStudentId] = useState('');
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const resultData = {
       ResultId,
       ExamType,

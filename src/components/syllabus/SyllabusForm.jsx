@@ -19,11 +19,12 @@ const SyllabusForm = ({
   const [semester, setSemester] = useState('');
   const [electiveno, setElectiveno] = useState('');
 
-  const handleSubmit = ()=>{
+  const handleSubmit = (event)=>{
+    event.preventDefault();
     const syllabusData = {
       syllabusId,semester,electiveno
     }
-    handleSyllabusSubmit(syllabusData);
+    handleSyllabusSubmit(syllabusData,event);
   }
 
   return (
@@ -46,23 +47,20 @@ const SyllabusForm = ({
             onChange={(e)=>setSemester(e.target.value)}
           />
 
-          {fieldState.map((field) => {
-            return (
-              <div key={field.id} className="course-field">
-                <CustomFormField
-                  label={'Course Id'}
-                  name={field.name}
-                  type={'text'}
-                  value={field.value}
-                  placeholder={field.placeholder}
-                  onChange={(e) => handleUpdateCourse(e, field.id)}
-                />
-                <button type="button" onClick={handleAddCourseId}>
+{fieldState.map((field) => (
+  <div key={field.id} className="course-field">
+    <CustomFormField
+      label="Course Id"
+      name={field.name}
+      type="text"
+      value={field.value}
+      onChange={(e) => handleUpdateCourse(e, field.id)} // Correctly pass the event and field ID
+    />
+    <button type="button" onClick={handleAddCourseId}>
                   Add
-                </button>
-              </div>
-            );
-          })}
+                </button>
+  </div>
+))}
           <div className="add-div">
             <button onClick={handleAddField} className="add-field-button">
               Add Courses

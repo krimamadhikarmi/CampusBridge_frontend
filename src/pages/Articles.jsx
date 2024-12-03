@@ -40,7 +40,7 @@ const Articles = () => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const articleData = {
       articleId: tag,
       headline: headline,
@@ -108,11 +108,11 @@ const Articles = () => {
       {/* {console.log(role)} */}
       <div className="article-box">
         <div className="article-form">
-          {role.includes('Teacher') && (
+          {role.includes('Teacher')||role.includes('University')||role.includes('College') || role.includes('ClubHead') ? (
             <button className="article-button" onClick={toggleDown}>
               Add article
             </button>
-          )}
+          ):null}
         </div>
         <div className="article-list">
           {articles.map((article) => (

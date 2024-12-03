@@ -124,10 +124,10 @@ const Calendar = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    
     const unavailableDates = dateState.map((date) => date.value); // Only extract the date values
     const gapBetweenExams = gapState.map((gap) => gap.value);
-
+    
     const scheduledata = {
       semester: semester,
       startDate: startdate,

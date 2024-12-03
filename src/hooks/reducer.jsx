@@ -79,8 +79,10 @@ export const SyllabusReducer = (state, action) => {
           name: action.name,
         },
       ];
-    case 'UPDATE':
-      return state.map((field) => (field.id === action.id ? { ...field, value: action.value } : field));
+      case 'UPDATE':
+        return state.map((field) =>
+          field.id === action.id ? { ...field, value: action.value } : field
+        );
     default:
       return state;
   }

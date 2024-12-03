@@ -50,7 +50,8 @@ const CreateSyllabus = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
   };
 
-  const handleFormSubmit = async (syllabusData) => {
+  const handleFormSubmit = async (syllabusData,event) => {
+    event.preventDefault();
     const completeSyllabusData = {
       syllabusId: syllabusData.syllabusId,
       courseId: courseIds,
@@ -86,7 +87,10 @@ const CreateSyllabus = () => {
 
 
   const handleUpdateCourse = (event, id) => {
-    console.log('update');
+    console.log("handleupdate:",id);
+    if (id) {
+      setCourseIds((prevIds) => [...prevIds,value]);
+    }
     const value = event.target.value;
 
     if (id) {
@@ -107,6 +111,7 @@ const CreateSyllabus = () => {
 
   const handleAddCourseId = (event) => {
     event.preventDefault();
+    console.log(fieldState);
     console.log('added course');
   };
 
