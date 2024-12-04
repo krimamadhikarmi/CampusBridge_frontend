@@ -2,7 +2,6 @@ import { useState } from 'react';
 import CloseButton from './common/CloseButton';
 
 const ArticleList = ({ headline, description, date, author, imageUrl, id, tagline }) => {
-
   const [articlepop, setArticlePop] = useState(false);
 
   const handleArticle = () => {
@@ -11,7 +10,7 @@ const ArticleList = ({ headline, description, date, author, imageUrl, id, taglin
 
   return (
     <>
-      <div className="article-content"  >
+      <div className="article-content" onClick={handleArticle} style={{ cursor: 'pointer' }}>
         <h2 className="article-title">{headline}</h2>
         <p className="article-description">{tagline}</p>
         <div className="article-info">

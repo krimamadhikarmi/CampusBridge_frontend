@@ -83,21 +83,23 @@ const Articles = () => {
   // const articles = [
   //   {
   //     id: 1,
-  //     title: '5 Amazing New JavaScript Features in ES15 (2024)',
+  //     headline: '5 Amazing New JavaScript Features in ES15 (2024)',
   //     tagline: '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
   //     description:
   //       '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
   //     author: 'Tari Ibaba',
-  //     date: 'Jun 2',
+  //     datePosted: '2024-04-18',
   //     imageUrl: 'sports.jpeg',
   //   },
   //   {
   //     id: 2,
-  //     title: 'React Native’s New Architecture: The Tricky Parts (2/2)',
-  //     description: 'The first part ended with you implementing a custom Shadow component.',
+  //     headline: 'React Native’s New Architecture: The Tricky Parts (2/2)',
+  //     tagline: 'The first part ended with you implementing a custom Shadow component.',
   //     author: 'Jakub Piasecki',
-  //     date: 'Jun 10',
+  //     datePosted: '2024-04-18',
   //     imageUrl: 'images.png',
+  //     description:
+  //       '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
   //   },
   // ];
 
@@ -108,11 +110,14 @@ const Articles = () => {
       {/* {console.log(role)} */}
       <div className="article-box">
         <div className="article-form">
-          {role.includes('Teacher')||role.includes('University')||role.includes('College') || role.includes('ClubHead') ? (
+          {role.includes('Teacher') ||
+          role.includes('University') ||
+          role.includes('College') ||
+          role.includes('ClubHead') ? (
             <button className="article-button" onClick={toggleDown}>
               Add article
             </button>
-          ):null}
+          ) : null}
         </div>
         <div className="article-list">
           {articles.map((article) => (
