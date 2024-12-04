@@ -31,7 +31,7 @@ const Assignment = () => {
       id: 2,
       title: 'Advanced React Concepts',
       subject: 'Web Development',
-      submissionDate: '2024-11-15',
+      submissionDate: '2024-12-02',
     },
     {
       id: 3,

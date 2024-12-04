@@ -9,6 +9,11 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
   const [answer, setText] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
 
+  const currentDate = new Date();
+  const date = new Date(submissionDate.split('T')[0]);
+  const differenceInTime = currentDate - date;
+  const differenceInDays = Math.floor(differenceInTime / (1000 * 60 * 60 * 24)); // Convert to days
+
   const handleAssignmentSubmit = (event) => {
     event.preventDefault();
     console.log('text', answer);
@@ -78,21 +83,27 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
                 </a>
               </p>
             </div>
-            <div className="assignment-form">
-              <form onSubmit={handleAssignmentSubmit}>
-                <div className="answer-field">
-                  <TextAreaWithFile onFilesSelected={setSelectedFiles} />
-                  <CustomFormField
-                    placeholder={'Submit your assignment'}
-                    type={'text'}
-                    name={answer}
-                    // label={'Answer'}
-                    onChange={(e) => setText(e.target.value)}
-                  />
-                </div>
-                <ButtonGroup handleClose={handleAssignmentPop} />
-              </form>
-            </div>
+            {differenceInDays > 2 ? (
+              <div className="late-submission">
+                You cannot submit the assignment now. The submission period has expired.
+              </div>
+            ) : (
+              <div className="assignment-form">
+                <form onSubmit={handleAssignmentSubmit}>
+                  <div className="answer-field">
+                    <TextAreaWithFile onFilesSelected={setSelectedFiles} />
+                    <CustomFormField
+                      placeholder={'Submit your assignment'}
+                      type={'text'}
+                      name={answer}
+                      // label={'Answer'}
+                      onChange={(e) => setText(e.target.value)}
+                    />
+                  </div>
+                  <ButtonGroup handleClose={handleAssignmentPop} />
+                </form>
+              </div>
+            )}
           </div>
         </div>
       )}

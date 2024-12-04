@@ -255,7 +255,6 @@
 .file-preview {
   margin-top: 12px;
   display: flex;
-  /* flex-wrap: wrap; */
   gap: 15px;
 }
 
@@ -285,5 +284,13 @@
 }
 
 .file-remove-btn:hover {
-  color: #f44336; /* Red color when hovering */
+  color: #f44336;
+}
+
+.late-submission {
+  color: rgb(148, 34, 34);
+  margin-top: '20px';
+  background-color: #f5f5dc;
+  border-radius: 10px;
+  padding: 12px;
 }
