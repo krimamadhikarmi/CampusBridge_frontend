@@ -19,6 +19,7 @@ const Articles = () => {
 
   const [currentDate, setCurrentDate] = useState('');
   const { role, id } = useToken();
+  const authorName = 'Krima Madhikarmi'; //fetch from api
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -32,6 +33,7 @@ const Articles = () => {
         console.log(e);
       }
     };
+
     fetchArticle();
   }, []);
 
@@ -126,7 +128,7 @@ const Articles = () => {
                 headline={article.headline}
                 tagline={article.tagline}
                 date={article.datePosted}
-                author={article.author}
+                author={authorName}
                 id={article.id}
                 description={article.description}
                 // imageUrl={article.imageUrl}
