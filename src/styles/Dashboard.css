@@ -5,7 +5,7 @@ body {
 }
 .dashContent {
   padding: 20px;
-  margin-top: 80px; 
+  margin-top: 80px;
 }
 .content1 {
   display: grid;
@@ -63,4 +63,159 @@ body {
   font-weight: bold;
   justify-content: center;
   align-items: center;
+}
+
+.dashCalendar {
+  padding: 20px;
+  background-color: #4b8282;
+  border-radius: 12px;
+  color: #fffff0;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); */
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendarTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fffff0;
+}
+
+.calendarNavButton {
+  background-color: #f5f5dc;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.calendarNavButton:hover {
+  background-color: #556b2f;
+}
+
+.calendarIcon {
+  width: 20px;
+  height: 20px;
+  color: #4b8282;
+}
+
+.calendarDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fffff0;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendarCell {
+  position: relative;
+}
+
+.calendarButton {
+  width: 40px;
+  height: 40px;
+  background-color: #f5f5dc;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #556b2f;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.calendarButton:hover {
+  background-color: #556b2f;
+  color: #fffff0;
+}
+
+.calendarSelected {
+  background-color: #004d4d;
+  color: #fffff0;
+}
+
+.calendarToday {
+  border: 2px solid #ff4500;
+}
+
+.calendarCurrentMonth {
+  color: #004d4d;
+}
+
+.calendarOtherMonth {
+  color: #a9a9a9;
+}
+
+.calendarDot {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: #ff4500;
+  border-radius: 50%;
+}
+
+.calendar-selected-today {
+  background: #ff6347; /* Highlight today with a red-orange shade */
+  color: white;
+  border: 2px solid #4b8282; /* Match with your box colors */
+}
+
+.calendar-selected-not-today {
+  background: #4b8282; /* Match the dashboard color */
+  color: white;
+  border: 2px solid #556b2f; /* Slight contrast */
+}
+
+.calendar-hover-effect {
+  transition: transform 0.2s, background-color 0.2s;
+  cursor: pointer;
+}
+.calendar-hover-effect:hover {
+  transform: scale(1.1);
+  background-color: #d9ead3; /* Light green shade on hover */
+}
+
+.calendar-font-bold {
+  font-weight: bold;
+}
+
+.calendar-grid-item-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 14px;
+  color: #2d3748; /* Dark text */
+  background-color: #f5f5dc; /* Light beige background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.calendar-grid-item-button:hover {
+  background-color: #4b8282; /* Match dashboard theme */
+  color: white;
 }
