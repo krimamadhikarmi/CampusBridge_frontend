@@ -25,6 +25,7 @@ const Assignment = () => {
       title: 'Introduction to Data Science',
       subject: 'Data Science',
       submissionDate: '2024-12-10',
+      question: './assignment.pdf',
     },
     {
       id: 2,
@@ -76,6 +77,7 @@ const Assignment = () => {
                 submissionDate={assignment.submissionDate}
                 statusClass={statusClass}
                 statusText={statusText}
+                question={assignment.question}
               />
             );
           })}
