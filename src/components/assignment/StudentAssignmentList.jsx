@@ -3,6 +3,7 @@ import CloseButton from '../common/CloseButton';
 import CustomFormField from '../customFormField';
 import TextAreaWithFile from '../TextAreaField';
 import ButtonGroup from '../common/ButtonGroup';
+import axios from 'axios';
 const StudentAssignmentList = ({ id, question, title, subject, submissionDate, statusClass, statusText, index }) => {
   const [assignmentPop, setAssignmentPop] = useState(false);
   const [answer, setText] = useState('');
@@ -24,6 +25,17 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     //validating formData
     for (let pair of formData.entries()) {
       console.log(`${pair[0]}:`, pair[1]);
+    }
+
+    try {
+      const response = axios.post('https://localhost:7276/api/Assignment/SubmitAssignment', JSON.stringify(formData), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('Response data:', response.data);
+    } catch (e) {
+      console.log(e);
     }
   };
 
