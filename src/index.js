@@ -22,6 +22,8 @@ import Attendance from './pages/teacher/Attendance';
 import Account from './pages/college/Account';
 import TeacherAssignment from './pages/teacher/TeacherAssignment';
 import ArticlePage from './pages/ArticlePage';
+import ProtectedRoute from './hooks/protectedRoute';
+import Unauthorized from './pages/unAuthorized';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -32,6 +34,7 @@ root.render(
           <Route path="/" element={<App />}>
             <Route index element={<Login />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/unauthorized" element={<Unauthorized/>} />
             <Route path="/dashboard" element={<DashBoard />} />
             <Route path="/syllabus" element={<Syllabus />} />
             <Route path="/assignment" element={<Assignment />} />
@@ -40,13 +43,23 @@ root.render(
             <Route path="/notices" element={<Notices />} />
             <Route path="/help" element={<Help />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/createsyllabus" element={<CreateSyllabus />} />
-            <Route path="/colleges" element={<Colleges />} />
+            <Route element={<ProtectedRoute allowedRoles={['University']} />}>
+              <Route path="/createsyllabus" element={<CreateSyllabus />} />
+              <Route path="/createresult" element={<CreateResult />} />
+              <Route path="/colleges" element={<Colleges />} />
+            </Route>
+
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/createresult" element={<CreateResult />} />
-            <Route path="/attendance" element={<Attendance />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/teacherassignment" element={<TeacherAssignment />} />
+
+            <Route element={<ProtectedRoute allowedRoles={['Teacher']} />}>
+              <Route path="/attendance" element={<Attendance />} />
+              <Route path="/teacherassignment" element={<TeacherAssignment />} />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={['College']} />}>
+              <Route path="/account" element={<Account />} />
+            </Route>
+
             <Route path="/articles/:id" element={<ArticlePage />} />
           </Route>
         </Routes>

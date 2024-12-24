@@ -56,7 +56,7 @@ const Notices = () => {
     const fetchNotice = async () => {
       try {
         const response = await axios.get('https://localhost:7276/api/Notice/GetNotice');
-        console.log('Response Data:', response.data); 
+        console.log('Response Data:', response.data);
         setNotices(response.data);
       } catch (e) {
         console.log('Error:', e);
@@ -69,7 +69,8 @@ const Notices = () => {
     setShowPopUp(!showpopup);
   };
 
-  const handleNoticeSubmit = async (formData) => {
+  const handleNoticeSubmit = async (formData, event) => {
+    event.preventDefault()
     const noticeData = {
       noticeId: formData.noticeId,
       title: formData.title,
@@ -138,8 +139,7 @@ const Notices = () => {
       </>
     );
   };
-  const filterData =
-    selectCategory === 'All' ? notices : notices.filter((notice) => notice.creator === selectCategory);
+  const filterData = selectCategory === 'All' ? notices : notices.filter((notice) => notice.creator === selectCategory);
   return (
     <>
       {console.log(notices)}

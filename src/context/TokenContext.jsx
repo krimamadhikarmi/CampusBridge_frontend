@@ -49,8 +49,17 @@ export const TokenProvider = ({ children }) => {
     }
   }, [token, role, id]);
 
+  const hasRole = (requiredRole) => {
+    if (Array.isArray(role)) {
+      return role.includes(requiredRole); // Check if the array contains the role
+    }
+    return role === requiredRole; // Fallback for string comparison
+  };
+
   return (
-    <TokenContext.Provider value={{ token, setToken, role, setRole, id, setId }}>{children}</TokenContext.Provider>
+    <TokenContext.Provider value={{ token, setToken, role, setRole, id, setId, hasRole }}>
+      {children}
+    </TokenContext.Provider>
   );
 };
 
