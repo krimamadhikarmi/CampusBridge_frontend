@@ -35,32 +35,36 @@ root.render(
             <Route index element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/unauthorized" element={<Unauthorized/>} />
-            <Route path="/dashboard" element={<DashBoard />} />
-            <Route path="/syllabus" element={<Syllabus />} />
-            <Route path="/assignment" element={<Assignment />} />
-            <Route path="/result" element={<Result />} />
-            <Route path="/articles" element={<Articles />} />
-            <Route path="/notices" element={<Notices />} />
-            <Route path="/help" element={<Help />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route element={<ProtectedRoute allowedRoles={['University']} />}>
-              <Route path="/createsyllabus" element={<CreateSyllabus />} />
-              <Route path="/createresult" element={<CreateResult />} />
-              <Route path="/colleges" element={<Colleges />} />
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<DashBoard />} />
+              <Route path="/syllabus" element={<Syllabus />} />
+              <Route path="/assignment" element={<Assignment />} />
+              <Route path="/result" element={<Result />} />
+              <Route path="/articles" element={<Articles />} />
+              <Route path="/notices" element={<Notices />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/profile" element={<Profile />} />
+            
+              <Route element={<ProtectedRoute allowedRoles={['University']} />}>
+                <Route path="/createsyllabus" element={<CreateSyllabus />} />
+                <Route path="/createresult" element={<CreateResult />} />
+                <Route path="/colleges" element={<Colleges />} />
+              </Route>
+
+              <Route path="/calendar" element={<Calendar />} />
+
+              <Route element={<ProtectedRoute allowedRoles={['Teacher']} />}>
+                <Route path="/attendance" element={<Attendance />} />
+                <Route path="/teacherassignment" element={<TeacherAssignment />} />
+              </Route>
+
+              <Route element={<ProtectedRoute allowedRoles={['College']} />}>
+                <Route path="/account" element={<Account />} />
+              </Route>
+
+              <Route path="/articles/:id" element={<ArticlePage />} />
             </Route>
-
-            <Route path="/calendar" element={<Calendar />} />
-
-            <Route element={<ProtectedRoute allowedRoles={['Teacher']} />}>
-              <Route path="/attendance" element={<Attendance />} />
-              <Route path="/teacherassignment" element={<TeacherAssignment />} />
-            </Route>
-
-            <Route element={<ProtectedRoute allowedRoles={['College']} />}>
-              <Route path="/account" element={<Account />} />
-            </Route>
-
-            <Route path="/articles/:id" element={<ArticlePage />} />
           </Route>
         </Routes>
       </BrowserRouter>
