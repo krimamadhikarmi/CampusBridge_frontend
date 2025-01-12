@@ -1,5 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { format, getDay, isEqual, isSameDay, isSameMonth, isToday, parseISO } from 'date-fns';
+import ScheduleList from './ScheduleList';
 // import { useState } from 'react';
 const DashCalendar = ({
   previousMonth,
@@ -11,8 +12,10 @@ const DashCalendar = ({
   setSelectedDay,
   selectedDay,
   meetings,
-  handleDateClick,
+  selectedDayMeetings,
+  // handleDateClick,
 }) => {
+
   return (
     <>
       <div className="dashCalendar">
@@ -40,7 +43,7 @@ const DashCalendar = ({
             <div key={day.toString()} className={classNames(dayIdx === 0 && colStartClasses[getDay(day)], 'grid-item')}>
               <button
                 type="button"
-                // onClick={() => handleDateClick(day)}
+                onClick={() => setSelectedDay(day)}
                 className={classNames(
                   isEqual(day, selectedDay) && 'calendarSelected',
                   !isEqual(day, selectedDay) && isToday(day) && 'calendarToday',
@@ -70,6 +73,8 @@ const DashCalendar = ({
           ))}
         </div>
       </div>
+      
+      {/* </div> */}
     </>
   );
 };

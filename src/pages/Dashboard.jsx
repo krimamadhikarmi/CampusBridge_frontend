@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Calendar from '../components/calendar/Calendar';
 import DashCalendar from '../components/calendar/DashCalendar';
+import ScheduleList from '../components/calendar/ScheduleList';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -85,22 +86,21 @@ const DashBoard = () => {
     fetchSchedule();
   }, []);
 
-  const handleDateClick = (day) => {
-    navigate('/calendar', { state: { selectedDate: format(day, 'yyyy-MM-dd') } });
-  };
-
+  let selectedDayMeetings = meetings.filter(
+    (meeting) => meeting.date && isSameDay(parseISO(meeting.date), selectedDay),
+  );
   return (
     <>
       <Navbar />
       <div className="dashContent">
         <div className="content1">
-          <div className="box box1">
+          {/* <div className="box box1">
             Todays Event
             <div className="maincontent">
               <p> No content</p>
             </div>
-          </div>
-          <div className=" box box2">
+          </div> */}
+          <div className="box box1">
             Academic Calendar
             <DashCalendar
               previousMonth={previousMonth}
@@ -109,19 +109,38 @@ const DashBoard = () => {
               days={days}
               classNames={classNames}
               colStartClasses={colStartClasses}
-              setSelectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
               selectedDay={selectedDay}
               meetings={meetings}
-              handleDateClick={handleDateClick}
+              // handleDateClick={handleDateClick}
+              selectedDayMeetings={selectedDayMeetings}
             />
           </div>
+          <div className="box box2">
+            <div className="eventDisplay">
+              <section className="event-section">
+                <h2 className="event-header">
+                  Schedule for{' '}
+                  <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
+                </h2>
+                <ol className="event-list">
+                  {selectedDayMeetings.length > 0 ? (
+                    selectedDayMeetings.map((meeting) => <ScheduleList meeting={meeting} key={meeting.id} />)
+                  ) : (
+                    <p>No meetings for today.</p>
+                  )}
+                </ol>
+              </section>
+            </div>
+          </div>
         </div>
-        <div className="content2">
+
+        {/* <div className="content2">
           Upcoming Event
           <div className="maincontent">
             <p> No content</p>
           </div>
-        </div>
+        </div> */}
       </div>
       <ChatBox />
     </>

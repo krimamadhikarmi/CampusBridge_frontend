@@ -28,7 +28,7 @@ const ScheduleContainer = ({
           days={days}
           classNames={classNames}
           colStartClasses={colStartClasses}
-          setSelectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
           selectedDay={selectedDay}
           meetings={meetings}
         />

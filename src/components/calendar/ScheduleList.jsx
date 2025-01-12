@@ -4,6 +4,7 @@ const ScheduleList = ({ meeting }) => {
       <li className="meeting-item">
         {/* <img src={meeting.imageUrl} alt="" className="flex-none w-10 h-10 rounded-full" /> */}
         <div className="meeting-details">
+          {console.log("hi")}
           <p className="meeting-title">{meeting.title}</p>
           {/* <p className="mt-0.5"> */}
           {/* <time dateTime={meeting.date}>{format(date, 'h:mm a')}</time> */}
