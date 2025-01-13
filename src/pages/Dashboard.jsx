@@ -1,15 +1,16 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import ChatBox from '../components/Chatbox';
 // import Navbar from '../components/Navbar';
-import { useToken } from '../context/TokenContext';
+// import { useToken } from '../context/TokenContext';
 import '../styles/Dashboard.css';
 import Navbar from '../components/Navbar';
 import { add, eachDayOfInterval, endOfMonth, format, isSameDay, parse, parseISO, startOfToday } from 'date-fns';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Calendar from '../components/calendar/Calendar';
+
 import DashCalendar from '../components/calendar/DashCalendar';
-import ScheduleList from '../components/calendar/ScheduleList';
+
+import EventDisplay from '../components/calendar/EventDisplay';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -19,7 +20,7 @@ const DashBoard = () => {
   // const meetings = [
   //   {
   //     id: 1,
-  //     date: '2024-12-04',
+  //     date: '2025-1-04',
   //     title: 'Project Discussion',
   //     time: '10:00 AM',
   //     description: 'Discuss the university management system progress.',
@@ -27,7 +28,7 @@ const DashBoard = () => {
   //   },
   //   {
   //     id: 2,
-  //     date: '2024-12-06',
+  //     date: '2025-1-06',
   //     title: 'Code Review',
   //     time: '2:00 PM',
   //     description: 'Review the codebase for the frontend module.',
@@ -35,16 +36,15 @@ const DashBoard = () => {
   //   },
   //   {
   //     id: 3,
-  //     date: '2024-12-08',
+  //     date: '2025-1-19',
   //     title: 'Presentation Rehearsal',
   //     time: '11:00 AM',
   //     description: 'Rehearse the upcoming project presentation.',
   //     location: 'Lab 5',
   //   },
   // ];
-  const navigate = useNavigate();
 
-  const { role } = useToken();
+  // const { role } = useToken();
 
   let colStartClasses = ['', 'col-start-2', 'col-start-3', 'col-start-4', 'col-start-5', 'col-start-6', 'col-start-7'];
 
@@ -101,6 +101,7 @@ const DashBoard = () => {
             </div>
           </div> */}
           <div className="box box1">
+            {console.log(meetings)}
             Academic Calendar
             <DashCalendar
               previousMonth={previousMonth}
@@ -116,23 +117,7 @@ const DashBoard = () => {
               selectedDayMeetings={selectedDayMeetings}
             />
           </div>
-          <div className="box box2">
-            <div className="eventDisplay">
-              <section className="event-section">
-                <h2 className="event-header">
-                  Schedule for{' '}
-                  <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
-                </h2>
-                <ol className="event-list">
-                  {selectedDayMeetings.length > 0 ? (
-                    selectedDayMeetings.map((meeting) => <ScheduleList meeting={meeting} key={meeting.id} />)
-                  ) : (
-                    <p>No meetings for today.</p>
-                  )}
-                </ol>
-              </section>
-            </div>
-          </div>
+          <EventDisplay selectedDay={selectedDay} selectedDayMeetings={selectedDayMeetings} />
         </div>
 
         {/* <div className="content2">

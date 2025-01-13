@@ -66,7 +66,7 @@ const DashCalendar = ({
 
               <div className="dot-container">
                 {meetings.some((meeting) => isSameDay(parseISO(meeting.date), day)) && (
-                  <div className="calendarDot"></div>
+                  <div className="calendarDot">{console.log("meetings")}</div>
                 )}
               </div>
             </div>
