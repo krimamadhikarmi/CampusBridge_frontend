@@ -24,6 +24,7 @@ import TeacherAssignment from './pages/teacher/TeacherAssignment';
 import ArticlePage from './pages/ArticlePage';
 import ProtectedRoute from './hooks/protectedRoute';
 import Unauthorized from './pages/unAuthorized';
+import QuestionPage from './pages/QuestionPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -64,6 +65,7 @@ root.render(
               </Route>
 
               <Route path="/articles/:id" element={<ArticlePage />} />
+              <Route path='/questionpage' element={<QuestionPage/>}/>
             </Route>
           </Route>
         </Routes>
