@@ -28,6 +28,7 @@ const UniversityNavbar = ({ toggleDropdown, dropDown, handleLogout }) => {
         <Link to="/articles">Articles</Link>
         <Link to="/notices">Notices</Link>
         <Link to="/colleges">Colleges</Link>
+        <Link to='/questionpage'>Questions</Link>
       </div>
       <div onClick={handleLogout} className="logout-icon">
         <FontAwesomeIcon icon={faSignOut} />

@@ -10,6 +10,7 @@ const CollegeNavbar = ({ toggleDropdown, handleLogout, dropDown }) => {
         <Link to="/articles">Articles</Link>
         <Link to="/notices">Notices</Link>
         <Link to="/account">Accounts</Link>
+        <Link to="/questionpage">Questions</Link>
       </div>
 
       <div onClick={handleLogout} className="logout-icon">

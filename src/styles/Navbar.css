@@ -139,12 +139,12 @@
 /* univeristy navbar */
 .university-menuitem {
   display: flex;
-  gap: 130px;
-  margin-left: 90px;
+  gap: 100px;
+  margin-left: 60px;
 }
 
 .logout-icon {
-  margin-left: 100px;
+  margin-left: 80px;
   color: white;
   cursor: pointer;
 }
@@ -186,13 +186,13 @@
 /* teacher navbar */
 .teacher-menuitem {
   display: flex;
-  gap: 90px;
+  gap: 70px;
   margin-left: 50px;
 }
 
 /* college navbar */
 .college-menuitem {
   display: flex;
-  gap: 120px;
-  margin-left: 90px;
+  gap: 100px;
+  margin-left: 70px;
 }
