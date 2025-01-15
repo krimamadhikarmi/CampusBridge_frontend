@@ -1,6 +1,6 @@
 import PageHeader from '../components/common/PageHeader';
 import Navbar from '../components/Navbar';
-import QuestionList from '../components/QuestionList';
+import QuestionList from '../components/help/QuestionList';
 import '../styles/Questions.css';
 
 const QuestionPage = () => {
