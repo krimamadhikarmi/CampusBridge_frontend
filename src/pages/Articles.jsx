@@ -16,6 +16,7 @@ const Articles = () => {
   const [tag, setTag] = useState('');
   const [tagline, setTagLine] = useState('');
   const [articles, setArticles] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const [currentDate, setCurrentDate] = useState('');
   const { role, id } = useToken();
@@ -43,19 +44,29 @@ const Articles = () => {
 
   const handleSubmit = async (event) => {
     // event.preventDefault();
-    const articleData = {
-      articleId: tag,
-      headline: headline,
-      description: description,
-      tagline: tagline,
-      datePosted: currentDate,
-    };
-    console.log(JSON.stringify(articleData));
+    const formData = new FormData();
+    formData.append('tag', tag);
+    formData.append('headline', headline);
+    formData.append('description', description);
+    formData.append('tagline', tagline);
+    formData.append('datePosted', currentDate);
+
+    if (selectedFile) {
+      formData.append('image', selectedFile);
+    }
+
+    //validating formdata
+    console.log(JSON.stringify(formData));
     console.log(id, 'id');
+
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}:`, pair[1]);
+    }
+
     try {
       const response = await axios.post(
         `https://localhost:7276/api/Article/CreateArticle/${id}`,
-        JSON.stringify(articleData),
+        JSON.stringify(formData),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -131,7 +142,7 @@ const Articles = () => {
                 author={authorName}
                 id={article.id}
                 description={article.description}
-                // imageUrl={article.imageUrl}
+                imageUrl={article.imageUrl}
               />
             </div>
           ))}
@@ -163,6 +174,13 @@ const Articles = () => {
                 type={'text'}
                 value={description}
                 onChange={handleDescription}
+              />
+              <CustomFormField
+                label={'Image'}
+                name={'image'}
+                type={'file'}
+                // value={description}
+                onChange={(e) => setSelectedFile(e.target.files[0])}
               />
               <CustomFormField label={'Date'} name={'date'} type={'date'} value={currentDate} />
 

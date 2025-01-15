@@ -18,9 +18,9 @@ const ArticleList = ({ headline, description, date, author, imageUrl, id, taglin
           <p className="author-name">{author}</p>
         </div>
       </div>
-      {/* <div className="article-image">
-        <img src={imageUrl} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-      </div> */}
+      <div className="article-image">
+        <img src={imageUrl} alt={headline} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      </div>
 
       {articlepop && (
         <div className="form-overlay">
@@ -31,6 +31,9 @@ const ArticleList = ({ headline, description, date, author, imageUrl, id, taglin
               <div className="article-info">
                 <span className="article-date">Date Posted: {date.split('T')[0]}</span>
                 <p className="author-name">By {author}</p>
+              </div>
+              <div className="article-image-wrapper">
+                <img src={imageUrl} alt={headline} className="article-popup-image" />
               </div>
               <p>{description}</p>
             </div>
