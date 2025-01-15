@@ -106,6 +106,15 @@ const QuestionList = ({ question, date, postedby, comments }) => {
               </div>
               <div className="comment-display">
                 <h2>Answers</h2>
+                {comments.map((comment) => {
+                  return (
+                    <div className='comment-item'>
+                      <span className="commenter-name">{comment.commenter}</span>
+                      <p className="commenter-text">{comment.answer}</p>
+                    </div>
+                  );
+                })}
+                {console.log(comments)}
               </div>
             </div>
           </div>
