@@ -11,6 +11,7 @@ const QuestionList = ({ question, date, postedby, comments }) => {
   const [commentPop, setCommentPop] = useState(false);
 
   const handleAnswerPop = () => {
+    setCommentPop(false)
     setAnswerPop(!answerpop);
   };
 
@@ -108,13 +109,18 @@ const QuestionList = ({ question, date, postedby, comments }) => {
                 <h2>Answers</h2>
                 {comments.map((comment) => {
                   return (
-                    <div className='comment-item'>
+                    <div className="comment-item">
                       <span className="commenter-name">{comment.commenter}</span>
                       <p className="commenter-text">{comment.answer}</p>
                     </div>
                   );
                 })}
-                {console.log(comments)}
+              </div>
+              <div className='comment-footer'>
+                <p className='answer-footer'>Do you want to answer?</p>
+                <div className="question-answer" onClick={handleAnswerPop}>
+                  <FontAwesomeIcon icon={faPenToSquare} /> Answer
+                </div>
               </div>
             </div>
           </div>
