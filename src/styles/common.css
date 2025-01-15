@@ -68,6 +68,34 @@
   border-radius: 4px;
 }
 
+.closebutton.answer {
+  position: absolute;
+  right: 35px;
+  top: 23px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.closebutton.answer:hover {
+  background-color: #ceeaea;
+  border-radius: 4px;
+}
+
+.closebutton.comment {
+  position: absolute;
+  right: 35px;
+  top: 23px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.closebutton.comment:hover {
+  background-color: #ceeaea;
+  border-radius: 4px;
+}
+
 .closebutton.assignmentbox {
   position: absolute;
   right: 35px;

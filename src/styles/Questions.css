@@ -24,10 +24,10 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.question-item:hover {
+/* .question-item:hover {
   transform: translateY(-4px);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-}
+} */
 
 .question-content {
   flex: 1;
@@ -95,4 +95,78 @@
 .question-comment svg {
   color: #004d4d;
   font-size: 16px;
+}
+
+.answer-details-box {
+  position: relative;
+  width: 800px; /* Adjusted width */
+  max-height: 75vh;
+  background-color: #fffff0; /* Ivory */
+  border-radius: 16px; /* More rounded corners */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  overflow-y: auto;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.answer-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #004d4d;
+  margin: 0 0 8px;
+}
+
+.answer-form {
+  display: flex;
+  align-items: center; /* Align text fields and buttons vertically */
+  gap: 10px; /* Space between input and button */
+  margin-top: 20px; /* Add space above the form */
+}
+
+.answer-submit-button {
+  height: 40px; /* Match the text field height */
+  padding: 0 20px; /* Horizontal padding for a balanced look */
+  font-size: 16px; /* Same font size as text field */
+  font-weight: bold; /* Bold for emphasis */
+  color: #fff; /* White text color */
+  background-color: #004d4d; /* Deep Teal button color */
+  border: none; /* Remove border */
+  border-radius: 8px; /* Match text field corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.answer-submit-button:hover {
+  background-color: #556b2f; /* Dark Olive Green hover color */
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.answer-submit-button:active {
+  transform: scale(0.95); /* Slight shrink on click */
+}
+
+.answer-display{
+  border-top: 1px solid #afafaf;
+}
+
+.answer-item{
+  display: flex;
+  gap: 8px;
+}
+
+
+.comment-details-box {
+  position: relative;
+  width: 800px; /* Adjusted width */
+  max-height: 75vh;
+  background-color: #fffff0; /* Ivory */
+  border-radius: 16px; /* More rounded corners */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  overflow-y: auto;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
