@@ -68,7 +68,7 @@ body {
 }
 
 .event-list li {
-  background-color: #f5f5dc; /* Deep teal */
+  background-color: #f5f5dc;
   color: #fffff0; /* Ivory for text */
   padding: 10px 15px;
   border-radius: 8px;
@@ -77,20 +77,15 @@ body {
   transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
-.event-list li:hover {
-  background-color: #556b2f; /* Dark olive green on hover */
-  transform: scale(1.02);
-}
-
 .event-list p {
   font-size: 16px;
-  color: #a9a9a9; /* Gray for "No meetings" text */
+  color: #5e5d5d; /* Gray for "No meetings" text */
   border-radius: 12px;
   background-color: #f5f5dc;
   /* text-align: center; */
   padding: 20px;
   margin: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
 .box1 {

@@ -15,7 +15,6 @@ const DashCalendar = ({
   selectedDayMeetings,
   // handleDateClick,
 }) => {
-
   return (
     <>
       <div className="dashCalendar">
@@ -40,7 +39,12 @@ const DashCalendar = ({
         </div>
         <div className="calendarGrid">
           {days.map((day, dayIdx) => (
-            <div key={day.toString()} className={classNames(dayIdx === 0 && colStartClasses[getDay(day)], 'grid-item')}>
+            <div
+              key={day.toString()}
+              className="grid-item"
+              style={{
+                gridColumnStart: dayIdx === 0 ? getDay(day) + 1 : 'auto', // Dynamically set grid-column-start for the first day
+              }}>
               <button
                 type="button"
                 onClick={() => setSelectedDay(day)}
@@ -66,14 +70,14 @@ const DashCalendar = ({
 
               <div className="dot-container">
                 {meetings.some((meeting) => isSameDay(parseISO(meeting.date), day)) && (
-                  <div className="calendarDot">{console.log("meetings")}</div>
+                  <div className="calendarDot">{console.log('meetings')}</div>
                 )}
               </div>
             </div>
           ))}
         </div>
       </div>
-      
+
       {/* </div> */}
     </>
   );
