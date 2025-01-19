@@ -25,6 +25,7 @@ import ArticlePage from './pages/ArticlePage';
 import ProtectedRoute from './hooks/protectedRoute';
 import Unauthorized from './pages/unAuthorized';
 import QuestionPage from './pages/QuestionPage';
+import PieChart from './components/PieChart';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -35,7 +36,7 @@ root.render(
           <Route path="/" element={<App />}>
             <Route index element={<Login />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/unauthorized" element={<Unauthorized/>} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
 
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<DashBoard />} />
@@ -46,7 +47,7 @@ root.render(
               <Route path="/notices" element={<Notices />} />
               <Route path="/help" element={<Help />} />
               <Route path="/profile" element={<Profile />} />
-            
+
               <Route element={<ProtectedRoute allowedRoles={['University']} />}>
                 <Route path="/createsyllabus" element={<CreateSyllabus />} />
                 <Route path="/createresult" element={<CreateResult />} />
@@ -65,7 +66,8 @@ root.render(
               </Route>
 
               <Route path="/articles/:id" element={<ArticlePage />} />
-              <Route path='/questionpage' element={<QuestionPage/>}/>
+              <Route path="/questionpage" element={<QuestionPage />} />
+              <Route path="/piechart" element={<PieChart />} />
             </Route>
           </Route>
         </Routes>

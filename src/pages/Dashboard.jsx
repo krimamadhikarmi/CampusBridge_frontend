@@ -11,6 +11,7 @@ import axios from 'axios';
 import DashCalendar from '../components/calendar/DashCalendar';
 
 import EventDisplay from '../components/calendar/EventDisplay';
+import PieChart from '../components/PieChart';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -126,6 +127,10 @@ const DashBoard = () => {
             <p> No content</p>
           </div>
         </div> */}
+        <div className="content2">
+          <h3>Data Overview</h3>
+          <PieChart />
+        </div>
       </div>
       <ChatBox />
     </>
