@@ -12,6 +12,7 @@ import DashCalendar from '../components/calendar/DashCalendar';
 
 import EventDisplay from '../components/calendar/EventDisplay';
 import PieChart from '../components/PieChart';
+import { useToken } from '../context/TokenContext';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -48,6 +49,9 @@ const DashBoard = () => {
   // const { role } = useToken();
 
   let colStartClasses = ['', 'col-start-2', 'col-start-3', 'col-start-4', 'col-start-5', 'col-start-6', 'col-start-7'];
+
+  const { role } = useToken();
+  // const role = 'University';
 
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
@@ -127,10 +131,12 @@ const DashBoard = () => {
             <p> No content</p>
           </div>
         </div> */}
-        <div className="content2">
-          <h3>Data Overview</h3>
-          <PieChart />
-        </div>
+        {role.includes('University') && (
+          <div className="content2">
+            <h3 className="dataTitle">Data Overview</h3>
+            <PieChart />
+          </div>
+        )}
       </div>
       <ChatBox />
     </>
