@@ -60,7 +60,7 @@ const ChatBox = () => {
           },
         );
 
-        // var botMessage = response.data.answer || 'No answer available';
+        var botMessage = response.data.answer || 'No answer available';
 
         console.log('response:', response.data);
 

@@ -1,6 +1,13 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { format, getDay, isEqual, isSameDay, isSameMonth, isToday, parseISO } from 'date-fns';
-import ScheduleList from './ScheduleList';
+import { useToken } from '../../context/TokenContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import AddExamForm from './AddExamForm';
+import { DateReducer, GapReducer, initialDate, initialGap } from '../../hooks/reducer';
+import { useReducer } from 'react';
+import axios from 'axios';
 // import { useState } from 'react';
 const DashCalendar = ({
   previousMonth,
@@ -8,16 +15,108 @@ const DashCalendar = ({
   nextMonth,
   days,
   classNames,
-  colStartClasses,
   setSelectedDay,
   selectedDay,
   meetings,
-  selectedDayMeetings,
   // handleDateClick,
 }) => {
+  // const {role}=useToken();
+  const role = 'College';
+
+  const [addClick, setAddClick] = useState(false);
+  const [semester, setSemester] = useState('');
+  const [startdate, setStartDate] = useState('');
+  const [enddate, setEndDate] = useState('');
+  const [udate, setUdate] = useState('');
+  const [gaps, setGap] = useState('');
+
+  const [dateState, datedispatch] = useReducer(DateReducer, initialDate);
+  const [gapState, gapdispatch] = useReducer(GapReducer, initialGap);
+
+  const handleOnClick = () => {
+    setAddClick(!addClick);
+    setFormType(''); // Reset formType when toggling the popup
+  };
+
+  const handleDateField = (event) => {
+    event.preventDefault();
+    datedispatch({ type: 'ADD', name: 'UnavailableDates', placeholder: 'Enter unavailable dates', value: '' });
+  };
+
+  const handleUpdateDate = (event, id) => {
+    const value = event.target.value;
+    setUdate(value);
+    datedispatch({ type: 'UPDATE', id: id, value: value });
+  };
+
+  const handleAddDate = (event) => {
+    event.preventDefault();
+    console.log('added date');
+  };
+
+  const handleGapField = (event) => {
+    event.preventDefault();
+    gapdispatch({ type: 'ADD', name: 'GapBetweenExams', placeholder: 'Enter gap ', value: '' });
+  };
+
+  const handleUpdateGap = (event, id) => {
+    const value = event.target.value;
+    setGap(value);
+    gapdispatch({ type: 'UPDATE', id: id, value: value });
+  };
+
+  const handleAddGap = (event) => {
+    event.preventDefault();
+    console.log('added date');
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const unavailableDates = dateState.map((date) => date.value); // Only extract the date values
+    const gapBetweenExams = gapState.map((gap) => gap.value);
+
+    const scheduledata = {
+      semester: semester,
+      startDate: startdate,
+      endDate: enddate,
+      unavailableDates: unavailableDates,
+      gapBetweenExams: gapBetweenExams,
+    };
+
+    console.log(JSON.stringify(scheduledata));
+
+    try {
+      const response = await axios.post(
+        'https://localhost:7276/api/Schedule/CreateExamSchedule',
+        JSON.stringify(scheduledata),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log('schedule', response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const [formType, setFormType] = useState('');
+
+  const handleOptionSelect = (option) => {
+    setFormType(option);
+    setAddClick(false);
+  };
+
   return (
     <>
       <div className="dashCalendar">
+        <div className="calendar-title">
+          <p>Academic Calendar</p>
+          <div className="plus-icon" onClick={handleOnClick}>
+            <FontAwesomeIcon icon={faPlus} />
+          </div>
+        </div>
         <div className="calendarHeader">
           <button type="button" onClick={previousMonth} className="calendarNavButton">
             <ChevronLeftIcon className="calendarIcon" aria-hidden="true" />
@@ -78,7 +177,112 @@ const DashCalendar = ({
         </div>
       </div>
 
-      {/* </div> */}
+      {/* {addClick && (
+        <>
+          {role.includes('University') ? (
+            <AddExamForm
+              handlePop={handleOnClick}
+              handleSubmit={handleSubmit}
+              semester={semester}
+              setSemester={setSemester}
+              startdate={startdate}
+              setStartDate={setStartDate}
+              enddate={enddate}
+              setEndDate={setEndDate}
+              dateState={dateState}
+              handleAddDate={handleAddDate}
+              handleUpdateDate={handleUpdateDate}
+              handleDateField={handleDateField}
+              handleAddGap={handleAddGap}
+              gapState={gapState}
+              handleUpdateGap={handleUpdateGap}
+              handleGapField={handleGapField}
+            />
+          ) : (
+            <div className="popMenu">
+              <div className="menu-item">
+                <p onClick={() => handleOptionSelect('exam')}>Create Exam Schedule</p>
+                <p onClick={() => handleOptionSelect('teacher')}>Create Teacher Schedule</p>
+              </div>
+            </div>
+          )}
+        </>
+      )} */}
+
+      {/* {formType === 'exam' && (
+        <AddExamForm
+          handlePop={handleOnClick}
+          handleSubmit={handleSubmit}
+          semester={semester}
+          setSemester={setSemester}
+          startdate={startdate}
+          setStartDate={setStartDate}
+          enddate={enddate}
+          setEndDate={setEndDate}
+          dateState={dateState}
+          handleAddDate={handleAddDate}
+          handleUpdateDate={handleUpdateDate}
+          handleDateField={handleDateField}
+          handleAddGap={handleAddGap}
+          gapState={gapState}
+          handleUpdateGap={handleUpdateGap}
+          handleGapField={handleGapField}
+        />
+      )}
+      {formType === 'teacher' && console.log('Teacher form')} */}
+      {addClick && (
+        <>
+          {role.includes('University') ? (
+            <AddExamForm
+              handlePop={handleOnClick}
+              handleSubmit={handleSubmit}
+              semester={semester}
+              setSemester={setSemester}
+              startdate={startdate}
+              setStartDate={setStartDate}
+              enddate={enddate}
+              setEndDate={setEndDate}
+              dateState={dateState}
+              handleAddDate={handleAddDate}
+              handleUpdateDate={handleUpdateDate}
+              handleDateField={handleDateField}
+              handleAddGap={handleAddGap}
+              gapState={gapState}
+              handleUpdateGap={handleUpdateGap}
+              handleGapField={handleGapField}
+            />
+          ) : (
+            <div className="popMenu">
+              <div className="menu-item">
+                <p onClick={() => handleOptionSelect('exam')}>Create Exam Schedule</p>
+                <p onClick={() => handleOptionSelect('teacher')}>Create Teacher Schedule</p>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
+      {formType === 'exam' && (
+        <AddExamForm
+          handlePop={handleOnClick}
+          handleSubmit={handleSubmit}
+          semester={semester}
+          setSemester={setSemester}
+          startdate={startdate}
+          setStartDate={setStartDate}
+          enddate={enddate}
+          setEndDate={setEndDate}
+          dateState={dateState}
+          handleAddDate={handleAddDate}
+          handleUpdateDate={handleUpdateDate}
+          handleDateField={handleDateField}
+          handleAddGap={handleAddGap}
+          gapState={gapState}
+          handleUpdateGap={handleUpdateGap}
+          handleGapField={handleGapField}
+        />
+      )}
+      {formType === 'teacher' && console.log('Teacher form')}
     </>
   );
 };

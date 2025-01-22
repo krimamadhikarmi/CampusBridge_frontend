@@ -107,7 +107,6 @@ const DashBoard = () => {
           </div> */}
           <div className="box box1">
             {console.log(meetings)}
-            Academic Calendar
             <DashCalendar
               previousMonth={previousMonth}
               firstDayCurrentMonth={firstDayCurrentMonth}
