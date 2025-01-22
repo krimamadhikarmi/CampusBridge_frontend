@@ -29,13 +29,13 @@ const DashCalendar = ({
           </button>
         </div>
         <div className="calendarDays">
-          <div>S</div>
-          <div>M</div>
-          <div>T</div>
-          <div>W</div>
-          <div>T</div>
-          <div>F</div>
-          <div>S</div>
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thur</div>
+          <div>Fri</div>
+          <div>Sat</div>
         </div>
         <div className="calendarGrid">
           {days.map((day, dayIdx) => (
