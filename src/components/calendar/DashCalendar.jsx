@@ -20,8 +20,8 @@ const DashCalendar = ({
   meetings,
   // handleDateClick,
 }) => {
-  // const {role}=useToken();
-  const role = 'College';
+  const { role } = useToken();
+  // const role = 'University';
 
   const [addClick, setAddClick] = useState(false);
   const [semester, setSemester] = useState('');
@@ -113,9 +113,11 @@ const DashCalendar = ({
       <div className="dashCalendar">
         <div className="calendar-title">
           <p>Academic Calendar</p>
-          <div className="plus-icon" onClick={handleOnClick}>
-            <FontAwesomeIcon icon={faPlus} />
-          </div>
+          {role.includes('University') || role.includes('College') ? (
+            <div className="plus-icon" onClick={handleOnClick}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          ) : null}
         </div>
         <div className="calendarHeader">
           <button type="button" onClick={previousMonth} className="calendarNavButton">
