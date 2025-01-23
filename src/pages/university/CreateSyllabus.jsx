@@ -50,7 +50,7 @@ const CreateSyllabus = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
   };
 
-  const handleFormSubmit = async (syllabusData,event) => {
+  const handleFormSubmit = async (syllabusData, event) => {
     event.preventDefault();
     const completeSyllabusData = {
       syllabusId: syllabusData.syllabusId,
@@ -85,11 +85,10 @@ const CreateSyllabus = () => {
 
   const [courseIds, setCourseIds] = useState([]);
 
-
   const handleUpdateCourse = (event, id) => {
-    console.log("handleupdate:",id);
+    console.log('handleupdate:', id);
     if (id) {
-      setCourseIds((prevIds) => [...prevIds,value]);
+      setCourseIds((prevIds) => [...prevIds, value]);
     }
     const value = event.target.value;
 
@@ -140,7 +139,7 @@ const CreateSyllabus = () => {
       unitsDTO: units,
     };
 
-    console.log(JSON.stringify(completeCourseData));
+    console.log(JSON.stringify(completeCourseData),"hiiii");
 
     try {
       const response = await axios.post(
@@ -312,6 +311,7 @@ const CreateSyllabus = () => {
             handleUpdateCourse={handleUpdateCourse}
             fieldState={fieldState}
           />
+          {/* <FormData /> */}
         </div>
       )}
 
@@ -336,6 +336,7 @@ const CreateSyllabus = () => {
             handleSub={handleSub}
           />
         </div>
+        // <FormData />
       )}
     </>
   );

@@ -32,9 +32,9 @@ const ArticleList = ({ headline, description, date, author, imageUrl, id, taglin
                 <span className="article-date">Date Posted: {date.split('T')[0]}</span>
                 <p className="author-name">By {author}</p>
               </div>
-              <div className="article-image-wrapper">
+              {/* <div className="article-image-wrapper">
                 <img src={imageUrl} alt={headline} className="article-popup-image" />
-              </div>
+              </div> */}
               <p>{description}</p>
             </div>
           </div>

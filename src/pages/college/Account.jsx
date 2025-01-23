@@ -99,6 +99,12 @@ const Account = () => {
   };
 
   const handleStudentSubmit = async (formData) => {
+    if (formData.isAuthor === '') {
+      formData.isAuthor = 'false';
+    }
+    if (formData.isClubHead === '') {
+      formData.isClubHead = 'false';
+    }
     console.log(formData, 'nice');
     console.log('ClubIds:', clubIds);
     console.log('Electives:', electives);
@@ -110,8 +116,8 @@ const Account = () => {
       password: formData.StudentPassword,
       phone: formData.StudentPhone,
       location: formData.StudentAddress,
-      isClubHead: false,
-      isAuthor: false,
+      isClubHead: formData.isClubHead,
+      isAuthor: formData.isAuthor,
       financialId: formData.financialId,
       academicId: formData.academicId,
       electiveIds: electives,
