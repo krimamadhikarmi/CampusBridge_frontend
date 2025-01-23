@@ -2,24 +2,7 @@ import FormHeader from '../common/FormHeader';
 import ButtonGroup from '../common/ButtonGroup';
 import CustomFormField from '../customFormField';
 import { useState } from 'react';
-const CourseForm = ({
-  handleCourseSubmit,
-  handleCourseForm,
-  handleElectiveChange,
-  handleUpdateBook,
-  handleAddBook,
-  handleBookField,
-  bookState,
-  handleCourseId,
-  handleCourseTitle,
-  handleUnitAdd,
-  handleUpdateUnit,
-  handleAddMoreUnit,
-  handleAddSubUnit,
-  handleUpdateSubUnit,
-  handleSub,
-  unitState,
-}) => {
+const CourseForm = ({ handleCourseSubmit, handleCourseForm }) => {
   const [CourseId, setCourseId] = useState('');
   const [CourseTitle, setCourseTitle] = useState('');
   const [CourseDescription, setCourseDescription] = useState('');
@@ -104,7 +87,7 @@ const CourseForm = ({
       unitsDTO: formData.unitsDTO,
     };
     console.log('Form Data:', courseData);
-
+    handleCourseSubmit(courseData);
     console.log(JSON.stringify(courseData));
   };
 

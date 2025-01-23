@@ -3,29 +3,46 @@ import ButtonGroup from '../common/ButtonGroup';
 import CustomFormField from '../customFormField';
 import { useState } from 'react';
 
-const SyllabusForm = ({
-  handleSyllabusForm,
-  handleSyllabusSubmit,
-  handleSyllabusid,
-  handleSemester,
-  handleAddCourseId,
-  handleElective,
-  handleAddField,
-  handleUpdateCourse,
-  fieldState,
-}) => {
+const SyllabusForm = ({ handleSyllabusForm, handleSyllabusSubmit }) => {
+  const [SyllabusId, setSyllabusId] = useState('');
+  const [Semester, setSemester] = useState('');
+  const [Electiveno, setElectiveno] = useState('');
+  const [formData, setFormData] = useState({
+    syllabusId: '',
+    courseId: [],
+    semester: '',
+    allowedElectiveNo: '',
+  });
 
-  const [syllabusId, setSyllabusId] = useState('');
-  const [semester, setSemester] = useState('');
-  const [electiveno, setElectiveno] = useState('');
+  const [currentCourseId, setCurrentCourseId] = useState('');
 
-  const handleSubmit = (event)=>{
+  const addCourse = () => {
+    if (currentCourseId.trim() !== '') {
+      setFormData((prev) => ({
+        ...prev,
+        courseId: [...prev.courseId, currentCourseId],
+      }));
+      setCurrentCourseId('');
+    }
+  };
+
+  // const handleSyllabuSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log('FormData', formData);
+  // };
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     const syllabusData = {
-      syllabusId,semester,electiveno
-    }
-    handleSyllabusSubmit(syllabusData,event);
-  }
+      syllabusId: SyllabusId,
+      courseId: formData.courseId,
+      semester: Semester,
+      allowedElectiveNo: Electiveno,
+    };
+    handleSyllabusSubmit(syllabusData, event);
+    console.log('Form Data', syllabusData);
+    console.log(JSON.stringify(syllabusData));
+  };
 
   return (
     <div className="form-design" onClick={(e) => e.stopPropagation()}>
@@ -37,34 +54,54 @@ const SyllabusForm = ({
             name={'SyllabusId'}
             type={'text'}
             placeholder={'Enter the Syllabus Id'}
-            onChange={(e)=>setSyllabusId(e.target.value)}
+            onChange={(e) => setSyllabusId(e.target.value)}
           />
           <CustomFormField
             label={'Semester'}
             name={'Semester'}
             type={'text'}
             placeholder={'Enter the semester'}
-            onChange={(e)=>setSemester(e.target.value)}
+            onChange={(e) => setSemester(e.target.value)}
           />
 
-{fieldState.map((field) => (
-  <div key={field.id} className="course-field">
-    <CustomFormField
-      label="Course Id"
-      name={field.name}
-      type="text"
-      value={field.value}
-      onChange={(e) => handleUpdateCourse(e, field.id)} // Correctly pass the event and field ID
-    />
-    <button type="button" onClick={handleAddCourseId}>
-                  Add
-                </button>
-  </div>
-))}
-          <div className="add-div">
+          {/* {fieldState.map((field) => (
+            <div key={field.id} className="course-field">
+              <CustomFormField
+                label="Course Id"
+                name={field.name}
+                type="text"
+                value={field.value}
+                onChange={(e) => handleUpdateCourse(e, field.id)} // Correctly pass the event and field ID
+              />
+              <button type="button" onClick={handleAddCourseId}>
+                Add        
+              </button>
+            </div>
+          ))} */}
+          {/* <div className="add-div">
             <button onClick={handleAddField} className="add-field-button">
               Add Courses
             </button>
+          </div> */}
+          <div className="course-field">
+            <CustomFormField
+              label="Course Id"
+              // name={currentCourseId}
+              type="text"
+              placeholder={'ENter'}
+              value={currentCourseId}
+              onChange={(e) => setCurrentCourseId(e.target.value)} // Correctly pass the event and field ID
+            />
+            <button type="button" onClick={addCourse}>
+              Add
+            </button>
+            <div>
+              <ul>
+                {formData.courseId.map((course, index) => (
+                  <li key={index}>{course}</li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <CustomFormField
@@ -72,7 +109,7 @@ const SyllabusForm = ({
             name={'AllowedElectiveNo'}
             type={'number'}
             placeholder={'Enter the number of electives'}
-            onChange={(e)=>setElectiveno(e.target.value)}
+            onChange={(e) => setElectiveno(e.target.value)}
           />
 
           <ButtonGroup handleClose={handleSyllabusForm} />
