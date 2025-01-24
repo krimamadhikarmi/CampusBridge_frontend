@@ -27,7 +27,9 @@ const CreateSyllabus = () => {
   };
   const handleFormSubmit = async (syllabusData, event) => {
     event.preventDefault();
-
+=========
+  const handleFormSubmit = async (syllabusData) => {
+>>>>>>>>> Temporary merge branch 2
     const completeSyllabusData = {
       syllabusId: syllabusData.syllabusId,
       courseId: syllabusData.courseId,
@@ -101,6 +103,79 @@ const CreateSyllabus = () => {
       console.log(e, 'error');
     }
   };
+
+  const handleElectiveChange = (event) => {
+    setIsElective(event.target.checked);
+  };
+
+  const handleCourseId = (event) => {
+    setCourseId(event.target.value);
+  };
+
+  const handleCourseTitle = (event) => {
+    setCourseTitle(event.target.value);
+  };
+
+  // handling book field
+
+  // handling unit form
+
+<<<<<<<<< Temporary merge branch 1
+=========
+  const handleAddMoreUnit = (event) => {
+    event.preventDefault();
+    console.log('Submitting units:', unitState);
+    unitDispatch({
+      type: 'ADD_UNIT',
+      unitId,
+      title,
+      creditHour,
+    });
+  };
+
+  const [units, setUnits] = useState([]);
+
+  const handleUpdateUnit = (unitId, field, value) => {
+    setUnitId(value);
+    setCreditHour(value);
+    setTitle(value);
+
+    setUnits((prevUnits) => prevUnits.map((unit) => (unit.unitId === unitId ? { ...unit, [field]: value } : unit)));
+
+    unitDispatch({
+      type: 'UPDATE_UNIT',
+      id: unitId,
+      field: field,
+      value: value,
+    });
+  };
+
+>>>>>>>>> Temporary merge branch 2
+  const handleUnitAdd = (event) => {
+    event.preventDefault();
+    console.log('added unit');
+    console.log('unitid', unitId);
+    console.log('tile', title);
+    console.log('hour', creditHour);
+  };
+
+  //handling subunit
+  // Add a new subunit to a specific unit
+  const handleAddSubUnit = (unitId, e) => {
+    e.preventDefault();
+    // e.stopPropagation();
+    unitDispatch({ type: 'ADD_SUB_UNIT', unitId });
+  };
+
+  const handleSub = (event) => {
+    event.preventDefault();
+    event.stopPropagation(); // Prevent the event from propagating to the parent div
+    console.log('Added subunit');
+  };
+
+  const [subUnits, setSubUnits] = useState([]);
+
+  // Update a subunit's title
 
   return (
     <>
