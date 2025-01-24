@@ -306,3 +306,7 @@
   background: linear-gradient(135deg, #498080, #004d4d);
   transform: translateY(-2px);
 }
+
+.syllabus-content::-webkit-scrollbar {
+  display: none;
+}
