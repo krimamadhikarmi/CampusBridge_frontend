@@ -145,21 +145,21 @@ const Account = () => {
     }
   };
 
-  const handleTeacherSubmit = async (formData) => {
-    const teacherData = {
-      teacherId: formData.TeacherId,
-      name: formData.TeacherName,
-      email: formData.TeacherEmail,
-      password: formData.TeacherPassword,
-      phone: formData.TeacherPhone,
-      courseIds: ['101'],
-      collegeId: 'college@gmail.com',
+  const handleTeacherSubmit = async (teacherData) => {
+    const completeTeacherData = {
+      teacherId: teacherData.teacherId,
+      name: teacherData.name,
+      email: teacherData.email,
+      password: teacherData.password,
+      phone: teacherData.phone,
+      courseIds: teacherData.courseIds,
+      collegeId: teacherData.collegeId,
     };
-    console.log(JSON.stringify(teacherData));
+    console.log(JSON.stringify(completeTeacherData), 'cmpltd');
     try {
       const response = await axios.post(
         'https://localhost:7276/api/Teacher/CreateTeacher',
-        JSON.stringify(teacherData),
+        JSON.stringify(completeTeacherData),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -295,6 +295,7 @@ const Account = () => {
           handleUpdateCourse={handleUpdateCourse}
           handleAddCourse={handleAddCourse}
           handleAddedCourse={handleAddedCourse}
+          id={id}
         />
       )}
     </>
