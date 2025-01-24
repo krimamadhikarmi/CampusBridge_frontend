@@ -2,16 +2,7 @@ import FormHeader from '../common/FormHeader';
 import CustomFormField from '../customFormField';
 import ButtonGroup from '../common/ButtonGroup';
 import { useState } from 'react';
-const TeacherForm = ({
-  accountType,
-  handleAddAccount,
-  courseState,
-  handleSubmit,
-  handleUpdateCourse,
-  handleAddCourse,
-  handleAddedCourse,
-  id,
-}) => {
+const TeacherForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
   const [TeacherId, setTeacherId] = useState('');
   const [TeacherName, setTeacherName] = useState('');
   const [TeacherEmail, setTeacherEmail] = useState('');

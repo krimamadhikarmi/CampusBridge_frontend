@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 const CoursesTable = () => {
   const [courses, setCourses] = useState([]); // State to store the fetched courses
@@ -8,12 +8,12 @@ const CoursesTable = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("https://localhost:7276/api/Syllabus/GetCourse");
+        const response = await fetch('https://localhost:7276/api/Syllabus/GetCourse');
         const data = await response.json();
         setCourses(data); // Set the courses state with the fetched data
         setLoading(false); // Stop loading once data is fetched
       } catch (error) {
-        console.error("Error fetching courses:", error);
+        console.error('Error fetching courses:', error);
         setLoading(false); // Stop loading even if there is an error
       }
     };
@@ -37,16 +37,14 @@ const CoursesTable = () => {
           <tr>
             <th>Courses</th>
             <th>Semester</th>
-            <th>Activity</th>
           </tr>
         </thead>
         <tbody>
           {courses.map((course) => (
             <tr key={course.courseId}>
               <td>{course.courseTitle}</td> {/* Display courseTitle */}
-              <td>{course.semester}</td> {/* Display semester if available */}
               <td className="activity-button">
-                <button className="view-button">View</button>
+                <button className="delete-button">Delete</button>
               </td>
             </tr>
           ))}

@@ -214,25 +214,25 @@ const Account = () => {
   //   console.log('added elective');
   // };
 
-  const handleAddCourse = (event) => {
-    event.preventDefault();
-    coursedispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter the course id', value: '' });
-  };
+  // const handleAddCourse = (event) => {
+  //   event.preventDefault();
+  //   coursedispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter the course id', value: '' });
+  // };
 
-  const [courseIds, setCourseIds] = useState([]);
+  // const [courseIds, setCourseIds] = useState([]);
 
-  const handleUpdateCourse = (event, id) => {
-    if (id) {
-      setCourseIds((prevCourse) => prevCourse.concat(id));
-    }
-    const value = event.target.value;
-    coursedispatch({ type: 'UPDATE', id: id, value: value });
-  };
+  // const handleUpdateCourse = (event, id) => {
+  //   if (id) {
+  //     setCourseIds((prevCourse) => prevCourse.concat(id));
+  //   }
+  //   const value = event.target.value;
+  //   coursedispatch({ type: 'UPDATE', id: id, value: value });
+  // };
 
-  const handleAddedCourse = (event) => {
-    event.preventDefault();
-    console.log('added course');
-  };
+  // const handleAddedCourse = (event) => {
+  //   event.preventDefault();
+  //   console.log('added course');
+  // };
 
   const filterData = selectaccount === 'All' ? data : data.filter((account) => account.role === selectaccount);
 
@@ -290,11 +290,11 @@ const Account = () => {
         <TeacherForm
           accountType={accountType}
           handleAddAccount={handleAddAccount}
-          courseState={courseState}
+          // courseState={courseState}
           handleSubmit={handleTeacherSubmit}
-          handleUpdateCourse={handleUpdateCourse}
-          handleAddCourse={handleAddCourse}
-          handleAddedCourse={handleAddedCourse}
+          // handleUpdateCourse={handleUpdateCourse}
+          // handleAddCourse={handleAddCourse}
+          // handleAddedCourse={handleAddedCourse}
           id={id}
         />
       )}

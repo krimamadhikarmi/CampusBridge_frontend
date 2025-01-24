@@ -24,6 +24,7 @@ const SyllabusTable = ({ handleViewClick }) => {
         <thead>
           <tr>
             <th>Syllabus</th>
+            <th>Semester</th>
             <th>Activity</th>
           </tr>
         </thead>
@@ -32,13 +33,14 @@ const SyllabusTable = ({ handleViewClick }) => {
             syllabuses.map((syllabus) => (
               <tr key={syllabus.syllabusId}>
                 <td>{syllabus.syllabusId}</td> {/* Assuming syllabusName exists */}
+                <td>{syllabus.semester}</td>
                 <td>
                   <div className="activity-button">
                     <button
-                      className="view-button"
-                      onClick={() => handleViewClick(syllabus.syllabusId)}
+                      className="delete-button"
+                      
                     >
-                      View
+                      Delete
                     </button>
                   </div>
                 </td>
