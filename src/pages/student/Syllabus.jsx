@@ -10,9 +10,7 @@ const Syllabus = () => {
 
   const fetchSyllabusById = async () => {
     try {
-      const response = await axios.get(
-        'https://localhost:7276/api/Syllabus/GetSyllabusById/campus'
-      );
+      const response = await axios.get('https://localhost:7276/api/Syllabus/GetSyllabusById/SY1');
       console.log(response.data);
       setSyllabus(response.data);
       // Set the default active course to the first course in the list
@@ -37,37 +35,38 @@ const Syllabus = () => {
       <Navbar />
       <PageHeader pageTitle={'Syllabus'} />
       <div className="syllabus-box">
-              <div className="syllabus-side-bar">
+        <div className="syllabus-side-bar">
           {syllabus && syllabus.courseDTO && syllabus.courseDTO.length > 0 ? (
             <>
               {/* Regular Courses Section */}
               <div>
                 <h3>Regular Courses</h3>
-                {syllabus.courseDTO.map((course) => (
-                  !course.isElective && (
-                    <p
-                      key={course.courseId}
-                      className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
-                      onClick={() => handleCourseClick(course)}
-                    >
-                      {course.courseId}
-                    </p>
-                  )
-                ))}
+                {syllabus.courseDTO.map(
+                  (course) =>
+                    !course.isElective && (
+                      <p
+                        key={course.courseId}
+                        className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
+                        onClick={() => handleCourseClick(course)}>
+                        {course.courseId}
+                      </p>
+                    ),
+                )}
               </div>
 
               {/* Elective Courses Section */}
               <div>
                 <h3>Elective Courses</h3>
-                {syllabus.courseDTO.filter(course => course.isElective).map((course) => (
-                  <p
-                    key={course.courseId}
-                    className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
-                    onClick={() => handleCourseClick(course)}
-                  >
-                    {course.courseId}
-                  </p>
-                ))}
+                {syllabus.courseDTO
+                  .filter((course) => course.isElective)
+                  .map((course) => (
+                    <p
+                      key={course.courseId}
+                      className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
+                      onClick={() => handleCourseClick(course)}>
+                      {course.courseId}
+                    </p>
+                  ))}
               </div>
             </>
           ) : (
@@ -75,19 +74,34 @@ const Syllabus = () => {
           )}
         </div>
 
-
         <div className="syllabus-content">
           {activeCourse ? (
             <div>
               <h2>{activeCourse.courseId}</h2>
-              <p><strong>Description:</strong> {activeCourse.courseDescription}</p>
-              <p><strong>Objective:</strong> {activeCourse.courseObjective}</p>
-              <p><strong>Full Marks:</strong> {activeCourse.fullMarks}</p>
-              <p><strong>Pass Marks:</strong> {activeCourse.passMarks}</p>
-              <p><strong>Credit Hour:</strong> {activeCourse.creditHour}</p>
-              <p><strong>Lab Description:</strong> {activeCourse.labDescription}</p>
-              <p><strong>Books:</strong> {activeCourse.books.join(', ')}</p>
-              <p><strong>Is Elective:</strong> {activeCourse.isElective ? 'Yes' : 'No'}</p>
+              <p>
+                <strong>Description:</strong> {activeCourse.courseDescription}
+              </p>
+              <p>
+                <strong>Objective:</strong> {activeCourse.courseObjective}
+              </p>
+              <p>
+                <strong>Full Marks:</strong> {activeCourse.fullMarks}
+              </p>
+              <p>
+                <strong>Pass Marks:</strong> {activeCourse.passMarks}
+              </p>
+              <p>
+                <strong>Credit Hour:</strong> {activeCourse.creditHour}
+              </p>
+              <p>
+                <strong>Lab Description:</strong> {activeCourse.labDescription}
+              </p>
+              <p>
+                <strong>Books:</strong> {activeCourse.books.join(', ')}
+              </p>
+              <p>
+                <strong>Is Elective:</strong> {activeCourse.isElective ? 'Yes' : 'No'}
+              </p>
 
               {/* Display Units */}
               <h3>Units</h3>
