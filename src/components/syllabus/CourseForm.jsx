@@ -2,48 +2,96 @@ import FormHeader from '../common/FormHeader';
 import ButtonGroup from '../common/ButtonGroup';
 import CustomFormField from '../customFormField';
 import { useState } from 'react';
-const CourseForm = ({
-  handleCourseSubmit,
-  handleCourseForm,
-  handleElectiveChange,
-  handleUpdateBook,
-  handleAddBook,
-  handleBookField,
-  bookState,
-  handleCourseId,
-  handleCourseTitle,
-  handleUnitAdd,
-  handleUpdateUnit,
-  handleAddMoreUnit,
-  handleAddSubUnit,
-  handleUpdateSubUnit,
-  handleSub,
-  unitState,
-}) => {
-
+const CourseForm = ({ handleCourseSubmit, handleCourseForm }) => {
   const [CourseId, setCourseId] = useState('');
   const [CourseTitle, setCourseTitle] = useState('');
   const [CourseDescription, setCourseDescription] = useState('');
-  const [CourseObjective,setCourseObjective]=useState('');
+  const [CourseObjective, setCourseObjective] = useState('');
   const [IsElective, setIsElective] = useState('');
   const [FullMarks, setFullMarks] = useState('');
   const [PassMarks, setPassMarks] = useState('');
   const [CreditHour, setCreditHour] = useState('');
-  const [LabDescription,setLabDescription] = useState('');
+  const [LabDescription, setLabDescription] = useState('');
 
-  const handleSubmit = () =>{
+  const [formData, setFormData] = useState({
+    courseId: '',
+    courseTitle: '',
+    courseDescription: '',
+    courseObjective: '',
+    isElective: false,
+    fullMarks: '',
+    passMarks: '',
+    creditHour: 0,
+    labDescription: '',
+    books: [],
+    unitsDTO: [],
+  });
 
-    const courseData = {
-      CourseId,CourseTitle,CourseDescription,
-      CourseObjective,IsElective,
-      FullMarks,PassMarks,CreditHour,
-      LabDescription
+  const [currentBook, setCurrentBook] = useState('');
+  const [currentUnit, setCurrentUnit] = useState({
+    unitId: '',
+    title: '',
+    completionHours: 0,
+    subUnits: [],
+  });
+  const [currentSubUnit, setCurrentSubUnit] = useState('');
+
+  const addBook = () => {
+    if (currentBook.trim() !== '') {
+      setFormData((prev) => ({
+        ...prev,
+        books: [...prev.books, currentBook],
+      }));
+      setCurrentBook('');
     }
+  };
+
+  const addSubUnit = () => {
+    if (currentSubUnit.trim() !== '') {
+      setCurrentUnit((prev) => ({
+        ...prev,
+        subUnits: [...prev.subUnits, currentSubUnit],
+      }));
+      setCurrentSubUnit('');
+    }
+  };
+
+  const addUnit = () => {
+    if (currentUnit.unitId.trim() !== '' && currentUnit.title.trim() !== '') {
+      setFormData((prev) => ({
+        ...prev,
+        unitsDTO: [...prev.unitsDTO, { ...currentUnit }],
+      }));
+      setCurrentUnit({
+        unitId: '',
+        title: '',
+        completionHours: 0,
+        subUnits: [],
+      });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const courseData = {
+      courseId: CourseId,
+      courseTitle: CourseTitle,
+      courseDescription: CourseDescription,
+      courseObjective: CourseObjective,
+      isElective: IsElective,
+      fullMarks: FullMarks,
+      passMarks: PassMarks,
+      creditHour: CreditHour,
+      labDescription: LabDescription,
+      books: formData.books,
+      unitsDTO: formData.unitsDTO,
+    };
+    console.log('Form Data:', courseData);
     handleCourseSubmit(courseData);
-  }
+    console.log(JSON.stringify(courseData));
+  };
 
   return (
-
     <div className="form-design" onClick={(e) => e.stopPropagation()}>
       <FormHeader handleForm={handleCourseForm} title={'Create Courses'} />
       <div>
@@ -53,35 +101,35 @@ const CourseForm = ({
             name={'CourseId'}
             type={'text'}
             placeholder={'Enter the Course Id'}
-            onChange={(e)=>setCourseId(e.target.value)}
+            onChange={(e) => setCourseId(e.target.value)}
           />
           <CustomFormField
             label={'Course Title'}
             name={'CourseTitle'}
             type={'text'}
             placeholder={'Enter the Course Title'}
-            onChange={(e)=>setCourseTitle(e.target.value)}
+            onChange={(e) => setCourseTitle(e.target.value)}
           />
           <CustomFormField
             label={'Course Description'}
             name={'CourseDescription'}
             type={'text'}
             placeholder={'Enter the Course Description'}
-            onChange={(e)=>setCourseDescription(e.target.value)}
+            onChange={(e) => setCourseDescription(e.target.value)}
           />
           <CustomFormField
             label={'Course Objectives'}
             name={'CourseObjective'}
             type={'text'}
             placeholder={'Enter the Course Objective'}
-            onChange={(e)=>setCourseObjective(e.target.value)}
+            onChange={(e) => setCourseObjective(e.target.value)}
           />
           <div className="checkbox-container">
             <CustomFormField
               label={'Is Elective?'}
               name={'isElective'}
               type={'checkbox'}
-              onChange={(e)=>setIsElective(e.target.checked)}
+              onChange={(e) => setIsElective(e.target.checked)}
             />
           </div>
 
@@ -90,30 +138,30 @@ const CourseForm = ({
             name={'FullMarks'}
             type={'text'}
             placeholder={'Enter the Full Marks of Course'}
-            onChange={(e)=>setFullMarks(e.target.value)}
+            onChange={(e) => setFullMarks(e.target.value)}
           />
           <CustomFormField
             label={'Pass Marks'}
             name={'PassMarks'}
             type={'text'}
             placeholder={'Enter the Pass Marks of Course'}
-            onChange={(e)=>setPassMarks(e.target.value)}
+            onChange={(e) => setPassMarks(e.target.value)}
           />
           <CustomFormField
             label={'Credit Hour'}
             name={'CreditHour'}
             type={'text'}
             placeholder={'Enter the Course Credit Hours'}
-            onChange={(e)=>setCreditHour(e.target.value)}
+            onChange={(e) => setCreditHour(e.target.value)}
           />
           <CustomFormField
             label={'Lab Description'}
             name={'LabDescription'}
             type={'text'}
             placeholder={'Enter the Lab Description'}
-            onChange={(e)=>setLabDescription(e.target.value)}
+            onChange={(e) => setLabDescription(e.target.value)}
           />
-          {bookState.map((book) => {
+          {/* {bookState.map((book) => {
             return (
               <div key={book.id} className="course-field">
                 <CustomFormField
@@ -129,13 +177,89 @@ const CourseForm = ({
                 </button>
               </div>
             );
-          })}
-          <div className="add-div">
-            <button onClick={handleBookField} className="add-field-button">
+          })} */}
+
+          <div className="course-field">
+            <CustomFormField
+              label={'Books'}
+              // name={book.name}
+              type={'text'}
+              value={currentBook}
+              placeholder={'Enter book name'}
+              onChange={(e) => setCurrentBook(e.target.value)}
+            />
+            <button type="button" onClick={addBook}>
               Add Book
             </button>
           </div>
-          {unitState.map((unit) => {
+          <div>
+            <ul>
+              {formData.books.map((book, index) => (
+                <li key={index}>{book}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="course-field">
+            <CustomFormField
+              label={'Unit Id'}
+              name={'UnitId'}
+              type={'text'}
+              placeholder={'Enter unit id'}
+              value={currentUnit.unitId}
+              onChange={(e) => setCurrentUnit({ ...currentUnit, unitId: e.target.value })}
+            />
+          </div>
+          <div className="course-field">
+            <CustomFormField
+              label={'Title'}
+              name={'Title'}
+              type={'text'}
+              placeholder={'Enter unit title'}
+              value={currentUnit.title}
+              onChange={(e) => setCurrentUnit({ ...currentUnit, title: e.target.value })}
+            />
+          </div>
+          <div className="course-field">
+            <CustomFormField
+              label={'Credit Hour'}
+              name={'CreditHour'}
+              type={'number'}
+              placeholder={'Enter credit hour of unit'}
+              value={currentUnit.completionHours}
+              onChange={(e) =>
+                setCurrentUnit({
+                  ...currentUnit,
+                  completionHours: parseInt(e.target.value, 10),
+                })
+              }
+            />
+          </div>
+
+          <div className="course-field">
+            <CustomFormField
+              label={'Subunit'}
+              name={'Subunit'}
+              type={'text'}
+              value={currentSubUnit}
+              placeholder={'Enter sub unit'}
+              onChange={(e) => setCurrentSubUnit(e.target.value)}
+            />
+            <button type="button" onClick={addSubUnit}>
+              Add Sub Unit
+            </button>
+          </div>
+          <ul>
+            {currentUnit.subUnits.map((subUnit, index) => (
+              <li key={index}>{subUnit}</li>
+            ))}
+          </ul>
+          <div className="add-div">
+            <button type="button" onClick={addUnit} className="add-button">
+              Add Unit
+            </button>
+          </div>
+
+          {/* {unitState.map((unit) => {
             return (
               <div key={unit.id}>
                 <div className="course-field">
@@ -191,12 +315,12 @@ const CourseForm = ({
                 </div>
               </div>
             );
-          })}
-          <div className="add-div">
+          })} */}
+          {/* <div className="add-div">
             <button onClick={handleAddMoreUnit} className="add-field-button">
               Add More Unit
             </button>
-          </div>
+          </div> */}
           <ButtonGroup handleClose={handleCourseForm} />
         </form>
       </div>

@@ -50,12 +50,13 @@ const CreateSyllabus = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
   };
 
-  const handleFormSubmit = async (syllabusData) => {
+  const handleFormSubmit = async (syllabusData, event) => {
+    event.preventDefault();
     const completeSyllabusData = {
       syllabusId: syllabusData.syllabusId,
-      courseId: courseIds,
+      courseId: syllabusData.courseId,
       semester: syllabusData.semester,
-      allowedElectiveNo: syllabusData.electiveno,
+      allowedElectiveNo: syllabusData.allowedElectiveNo,
     };
     console.log('Before api call:', JSON.stringify(completeSyllabusData));
 
@@ -77,47 +78,6 @@ const CreateSyllabus = () => {
     handleSyllabusForm();
   };
 
-  const handleAddField = (event) => {
-    event.preventDefault();
-    dispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter Course Id', value: '' });
-  };
-
-  const [courseIds, setCourseIds] = useState([]);
-
-
-  const handleUpdateCourse = (event, id) => {
-    console.log("handleupdate:",id);
-    if (id) {
-      setCourseIds((prevIds) => [...prevIds,value]);
-    }
-    const value = event.target.value;
-
-    if (id) {
-      setCourseIds((prevIds) => [...prevIds, value]);
-    }
-    dispatch({ type: 'UPDATE', id: id, value: value });
-  };
-
-  //setting the value entered in the input field
-
-  const handleSyllabusid = (event) => {
-    setSyllabusId(event.target.value);
-  };
-
-  const handleSemester = (event) => {
-    setSemester(event.target.value);
-  };
-
-  const handleAddCourseId = (event) => {
-    event.preventDefault();
-    console.log(fieldState);
-    console.log('added course');
-  };
-
-  const handleElective = (event) => {
-    setElectiveno(event.target.value);
-  };
-
   // course form functions
 
   const handleCourseForm = () => {
@@ -125,21 +85,30 @@ const CreateSyllabus = () => {
   };
 
   const handleCourseSubmit = async (courseData) => {
+    if (courseData.isElective === '') {
+      courseData.isElective = false;
+    }
+
+    console.log(courseData.courseId, 'id');
+    console.log(courseData.courseDescription, 'des');
+    console.log(courseData.courseObjective, 'ob');
+    console.log(courseData.courseTitle, 'ti');
+    console.log(courseData.FullMarks, 'fm');
     const completeCourseData = {
-      courseId: courseData.CourseId,
-      courseTitle: courseData.CourseTitle,
-      courseDescription: courseData.CourseDescription,
-      courseObjective: courseData.CourseObjective,
-      isElective: courseData.IsElective,
-      fullMarks: courseData.FullMarks,
-      passMarks: courseData.PassMarks,
-      creditHour: courseData.CreditHour,
-      labDescription: courseData.LabDescription,
-      books: books,
-      unitsDTO: units,
+      courseId: courseData.courseId,
+      courseTitle: courseData.courseTitle,
+      courseDescription: courseData.courseDescription,
+      courseObjective: courseData.courseObjective,
+      isElective: courseData.isElective,
+      fullMarks: courseData.fullMarks,
+      passMarks: courseData.passMarks,
+      creditHour: courseData.creditHour,
+      labDescription: courseData.labDescription,
+      books: courseData.books,
+      unitsDTO: courseData.unitsDTO,
     };
 
-    console.log(JSON.stringify(completeCourseData));
+    console.log(JSON.stringify(completeCourseData), 'hiiii');
 
     try {
       const response = await axios.post(
@@ -153,7 +122,7 @@ const CreateSyllabus = () => {
       );
       console.log('Response data:', response.data);
     } catch (e) {
-      console.log(e);
+      console.log(e, 'error');
     }
   };
 
@@ -170,28 +139,6 @@ const CreateSyllabus = () => {
   };
 
   // handling book field
-  const handleBookField = (event) => {
-    event.preventDefault();
-    bookDispatch({ type: 'ADD', name: 'Books', placeholder: 'Enter Books', value: '' });
-  };
-
-  const [books, setBooks] = useState([]);
-
-  const handleUpdateBook = (event, id) => {
-    const value = event.target.value;
-
-    if (value) {
-      setBooks((prevBook) => prevBook.concat(value));
-    }
-
-    setBook(value);
-    bookDispatch({ type: 'UPDATE', id: id, value: value });
-  };
-
-  const handleAddBook = (event) => {
-    event.preventDefault();
-    console.log('added book');
-  };
 
   // handling unit form
 
@@ -208,7 +155,7 @@ const CreateSyllabus = () => {
 
   const [units, setUnits] = useState([]);
 
-  const handleUpdateUnit = (unitId, field, value) => {
+  const handleUpdateUnit = (unitId, field, value, event) => {
     setUnitId(value);
     setCreditHour(value);
     setTitle(value);
@@ -248,26 +195,6 @@ const CreateSyllabus = () => {
   const [subUnits, setSubUnits] = useState([]);
 
   // Update a subunit's title
-  const handleUpdateSubUnit = (unitId, subUnitId, value) => {
-    if (value) {
-      setUnits((prevUnits) =>
-        prevUnits.map((unit) =>
-          unit.unitId === unitId
-            ? {
-                ...unit,
-                subUnits: [...unit.subUnits, value], // Append the subunit to the correct unit
-              }
-            : unit,
-        ),
-      );
-    }
-    unitDispatch({
-      type: 'UPDATE_SUB_UNIT',
-      unitId,
-      id: subUnitId,
-      value,
-    });
-  };
 
   return (
     <>
@@ -300,17 +227,8 @@ const CreateSyllabus = () => {
 
       {toogleSyllabusForm && (
         <div className="form-overlay">
-          <SyllabusForm
-            handleSyllabusForm={handleSyllabusForm}
-            handleSyllabusSubmit={handleFormSubmit}
-            handleSyllabusid={handleSyllabusid}
-            handleSemester={handleSemester}
-            handleAddCourseId={handleAddCourseId}
-            handleElective={handleElective}
-            handleAddField={handleAddField}
-            handleUpdateCourse={handleUpdateCourse}
-            fieldState={fieldState}
-          />
+          <SyllabusForm handleSyllabusForm={handleSyllabusForm} handleSyllabusSubmit={handleFormSubmit} />
+          {/* <FormData /> */}
         </div>
       )}
 
@@ -319,22 +237,23 @@ const CreateSyllabus = () => {
           <CourseForm
             handleCourseSubmit={handleCourseSubmit}
             handleCourseForm={handleCourseForm}
-            handleElectiveChange={handleElectiveChange}
-            handleUpdateBook={handleUpdateBook}
-            handleAddBook={handleAddBook}
-            handleBookField={handleBookField}
-            bookState={bookState}
-            handleCourseId={handleCourseId}
-            handleCourseTitle={handleCourseTitle}
-            handleAddMoreUnit={handleAddMoreUnit}
-            handleUpdateUnit={handleUpdateUnit}
-            handleUnitAdd={handleUnitAdd}
-            unitState={unitState}
-            handleAddSubUnit={handleAddSubUnit}
-            handleUpdateSubUnit={handleUpdateSubUnit}
-            handleSub={handleSub}
+            // handleElectiveChange={handleElectiveChange}
+            // // handleUpdateBook={handleUpdateBook}
+            // // handleAddBook={handleAddBook}
+            // // handleBookField={handleBookField}
+            // bookState={bookState}
+            // handleCourseId={handleCourseId}
+            // handleCourseTitle={handleCourseTitle}
+            // // handleAddMoreUnit={handleAddMoreUnit}
+            // // handleUpdateUnit={handleUpdateUnit}
+            // handleUnitAdd={handleUnitAdd}
+            // unitState={unitState}
+            // handleAddSubUnit={handleAddSubUnit}
+            // // handleUpdateSubUnit={handleUpdateSubUnit}
+            // handleSub={handleSub}
           />
         </div>
+        // <FormData />
       )}
     </>
   );

@@ -99,70 +99,80 @@ const Account = () => {
   };
 
   const handleStudentSubmit = async (formData) => {
-
-    console.log(formData);
-    console.log("ClubIds:",clubIds);
-    console.log("Electives:",electives);
+    if (formData.isAuthor === '') {
+      formData.isAuthor = 'false';
+    }
+    if (formData.isClubHead === '') {
+      formData.isClubHead = 'false';
+    }
+    console.log(formData, 'nice');
+    console.log('ClubIds:', clubIds);
+    console.log('Electives:', electives);
 
     const studentData = {
-        studentId: formData.StudentId,
-        name: formData.StudentName,
-        email: formData.StudentEmail,
-        password: formData.StudentPassword,
-        phone: formData.StudentPhone,
-        location: formData.StudentAddress,
-        isClubHead: false,
-        isAuthor: false,
-        financialId: formData.financialId,
-        academicId: formData.academicId,
-        electiveIds: electives,
-        clubIds: clubIds,
-        collegeId : "college@gmail.com"
-    }
+      studentId: formData.StudentId,
+      name: formData.StudentName,
+      email: formData.StudentEmail,
+      password: formData.StudentPassword,
+      phone: formData.StudentPhone,
+      location: formData.StudentAddress,
+      isClubHead: formData.isClubHead,
+      isAuthor: formData.isAuthor,
+      financialId: formData.financialId,
+      academicId: formData.academicId,
+      electiveIds: electives,
+      clubIds: clubIds,
+      collegeId: 'college@gmail.com',
+      gender: formData.gender,
+    };
 
-    console.log(JSON.stringify(studentData));
+    console.log(JSON.stringify(studentData), 'hi');
 
-
-    try{
-      const response = await axios.post('https://localhost:7276/api/Student/CreateStudent', JSON.stringify(studentData), {
-        headers: {
-          'Content-Type': 'application/json',
+    try {
+      const response = await axios.post(
+        'https://localhost:7276/api/Student/CreateStudent',
+        JSON.stringify(studentData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      });
-      console.log("Response data:",response.data);
-    } catch(e){
+      );
+      console.log('Response data:', response.data);
+    } catch (e) {
       console.log(e);
     }
 
     console.log('club', isclubHead);
     console.log('club', isauthor);
-
   };
 
-  const handleTeacherSubmit = async (formData)  =>{
-
+  const handleTeacherSubmit = async (formData) => {
     const teacherData = {
-      teacherId:formData.TeacherId,
-      name:formData.TeacherName,
-      email:formData.TeacherEmail,
-      password:formData.TeacherPassword,
-      phone:formData.TeacherPhone,
-      courseIds:["101"],
-      collegeId: "college@gmail.com"
-    }
+      teacherId: formData.TeacherId,
+      name: formData.TeacherName,
+      email: formData.TeacherEmail,
+      password: formData.TeacherPassword,
+      phone: formData.TeacherPhone,
+      courseIds: ['101'],
+      collegeId: 'college@gmail.com',
+    };
     console.log(JSON.stringify(teacherData));
-    try{
-      const response = await axios.post('https://localhost:7276/api/Teacher/CreateTeacher', JSON.stringify(teacherData), {
-        headers: {
-          'Content-Type': 'application/json',
+    try {
+      const response = await axios.post(
+        'https://localhost:7276/api/Teacher/CreateTeacher',
+        JSON.stringify(teacherData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      });
-      console.log("Response data:",response.data);
-    } catch(e){
-       console.log(e);
+      );
+      console.log('Response data:', response.data);
+    } catch (e) {
+      console.log(e);
     }
-
-  }
+  };
 
   const handleAddClub = (event) => {
     event.preventDefault();
@@ -172,8 +182,8 @@ const Account = () => {
   // const [n ewId,setNewId] = useState('');
 
   const handleUpdateClub = (event, id) => {
-    if(id){
-      setClubIds((prevIds)=>prevIds.concat(id));
+    if (id) {
+      setClubIds((prevIds) => prevIds.concat(id));
       // setNewId('');
     }
     const value = event.target.value;
@@ -190,11 +200,11 @@ const Account = () => {
     electivedispatch({ type: 'ADD_ELECTIVE', name: 'ElectiveIds', placeholder: 'Enter the elective id', value: '' });
   };
 
-  const [electives,setElectives] = useState([]);
+  const [electives, setElectives] = useState([]);
 
   const handleUpdateElective = (event, id) => {
-    if(id){
-      setElectives((prevElec)=>prevElec.concat(id));
+    if (id) {
+      setElectives((prevElec) => prevElec.concat(id));
     }
     const value = event.target.value;
     console.log(id);
@@ -211,11 +221,11 @@ const Account = () => {
     coursedispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter the course id', value: '' });
   };
 
-  const [courseIds,setCourseIds]=useState([]);
+  const [courseIds, setCourseIds] = useState([]);
 
   const handleUpdateCourse = (event, id) => {
-    if(id){
-      setCourseIds((prevCourse)=>prevCourse.concat(id));
+    if (id) {
+      setCourseIds((prevCourse) => prevCourse.concat(id));
     }
     const value = event.target.value;
     coursedispatch({ type: 'UPDATE', id: id, value: value });
