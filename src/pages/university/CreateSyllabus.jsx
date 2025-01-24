@@ -1,13 +1,6 @@
-import { useReducer, useState } from 'react';
+import { useState } from 'react';
 import Navbar from '../../components/Navbar';
-import {
-  BooksReducer,
-  SyllabusReducer,
-  UnitsReducer,
-  initialBook,
-  initialFields,
-  initialUnits,
-} from '../../hooks/reducer';
+
 import SyllabusForm from '../../components/syllabus/SyllabusForm';
 import CourseForm from '../../components/syllabus/CourseForm';
 import { useNavigate } from 'react-router-dom';
@@ -20,23 +13,6 @@ const CreateSyllabus = () => {
   const [toogleSyllabusForm, setToogleSyllabusForm] = useState(false);
   const [toogleCourseForm, setToogleCourseForm] = useState(false);
   const navigate = useNavigate();
-
-  const [fieldState, dispatch] = useReducer(SyllabusReducer, initialFields);
-  const [bookState, bookDispatch] = useReducer(BooksReducer, initialBook);
-  const [unitState, unitDispatch] = useReducer(UnitsReducer, initialUnits);
-
-  const [syllabusId, setSyllabusId] = useState('');
-  const [semester, setSemester] = useState('');
-  const [electiveno, setElectiveno] = useState('');
-  const [courseId, setCourseId] = useState('');
-
-  const [book, setBook] = useState('');
-  const [isElective, setIsElective] = useState(false);
-  const [coursetitle, setCourseTitle] = useState('');
-
-  const [unitId, setUnitId] = useState('');
-  const [title, setTitle] = useState('');
-  const [creditHour, setCreditHour] = useState('');
 
   const syllabus = true;
   const course = true;
@@ -126,44 +102,6 @@ const CreateSyllabus = () => {
     }
   };
 
-  const handleElectiveChange = (event) => {
-    setIsElective(event.target.checked);
-  };
-
-  const handleCourseId = (event) => {
-    setCourseId(event.target.value);
-  };
-
-  const handleCourseTitle = (event) => {
-    setCourseTitle(event.target.value);
-  };
-
-  const handleUnitAdd = (event) => {
-    event.preventDefault();
-    console.log('added unit');
-    console.log('unitid', unitId);
-    console.log('tile', title);
-    console.log('hour', creditHour);
-  };
-
-  //handling subunit
-  // Add a new subunit to a specific unit
-  const handleAddSubUnit = (unitId, e) => {
-    e.preventDefault();
-    // e.stopPropagation();
-    unitDispatch({ type: 'ADD_SUB_UNIT', unitId });
-  };
-
-  const handleSub = (event) => {
-    event.preventDefault();
-    event.stopPropagation(); // Prevent the event from propagating to the parent div
-    console.log('Added subunit');
-  };
-
-  const [subUnits, setSubUnits] = useState([]);
-
-  // Update a subunit's title
-
   return (
     <>
       <Navbar />
@@ -196,32 +134,13 @@ const CreateSyllabus = () => {
       {toogleSyllabusForm && (
         <div className="form-overlay">
           <SyllabusForm handleSyllabusForm={handleSyllabusForm} handleSyllabusSubmit={handleFormSubmit} />
-          {/* <FormData /> */}
         </div>
       )}
 
       {toogleCourseForm && (
         <div className="form-overlay">
-          <CourseForm
-            handleCourseSubmit={handleCourseSubmit}
-            handleCourseForm={handleCourseForm}
-            // handleElectiveChange={handleElectiveChange}
-            // // handleUpdateBook={handleUpdateBook}
-            // // handleAddBook={handleAddBook}
-            // // handleBookField={handleBookField}
-            // bookState={bookState}
-            // handleCourseId={handleCourseId}
-            // handleCourseTitle={handleCourseTitle}
-            // // handleAddMoreUnit={handleAddMoreUnit}
-            // // handleUpdateUnit={handleUpdateUnit}
-            // handleUnitAdd={handleUnitAdd}
-            // unitState={unitState}
-            // handleAddSubUnit={handleAddSubUnit}
-            // // handleUpdateSubUnit={handleUpdateSubUnit}
-            // handleSub={handleSub}
-          />
+          <CourseForm handleCourseSubmit={handleCourseSubmit} handleCourseForm={handleCourseForm} />
         </div>
-        // <FormData />
       )}
     </>
   );

@@ -3,21 +3,7 @@ import CustomFormField from '../customFormField';
 import ButtonGroup from '../common/ButtonGroup';
 import { useState } from 'react';
 
-const StudentForm = ({
-  accountType,
-  handleAddAccount,
-  handleSubmit,
-  handleIsAuthor,
-  handleIsClub,
-  clubState,
-  electiveState,
-  handleUpdateClub,
-  handleUpdateElective,
-  handleAddClub,
-  handleAddElective,
-  handleAddedClub,
-  handleAddedElective,
-}) => {
+const StudentForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
   const [StudentId, setStudentId] = useState('');
   const [StudentName, setStudentName] = useState('');
   const [StudentEmail, setStudentEmail] = useState('');
@@ -43,7 +29,7 @@ const StudentForm = ({
     academicId: '',
     electiveIds: [],
     clubIds: [],
-    collegeId: 'college@gmail.com',
+    collegeId: '',
     gender: '',
   });
 
@@ -86,7 +72,7 @@ const StudentForm = ({
       gender: Gender,
       clubIds: formData.clubIds,
       electiveIds: formData.electiveIds,
-      collegeId: formData.collegeId,
+      collegeId: id,
     };
     console.log('Student Data', studentData);
     handleSubmit(studentData);
@@ -194,12 +180,6 @@ const StudentForm = ({
             placeholder={'Enter the student academic id'}
             type={'text'}
             onChange={(e) => setAcademicId(e.target.value)}
-          />
-          <CustomFormField
-            label={'College Id'}
-            name={'CollegeId'}
-            placeholder={'Enter the student college id'}
-            type={'text'}
           />
 
           {/* {clubState.map((field) => {

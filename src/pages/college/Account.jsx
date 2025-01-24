@@ -16,9 +16,12 @@ import {
 } from '../../hooks/reducer';
 import StudentForm from '../../components/account/StudentForm';
 import TeacherForm from '../../components/account/TeacherForm';
+import { useToken } from '../../context/TokenContext';
 
 const Account = () => {
+  const { id } = useToken();
   const [selectaccount, setSelectAccount] = useState('All');
+
   const data = [
     {
       id: 1,
@@ -75,8 +78,8 @@ const Account = () => {
   const [createpop, setCreatePop] = useState(false);
   // const [formdata, setFormData] = useState(false);
   const [accountType, setAccountType] = useState('');
-  const [isclubHead, setIsClubHead] = useState(false);
-  const [isauthor, setIsAuthor] = useState(false);
+  // const [isclubHead, setIsClubHead] = useState(false);
+  // const [isauthor, setIsAuthor] = useState(false);
 
   const [clubState, clubdispatch] = useReducer(ClubReducer, initialClub);
   const [electiveState, electivedispatch] = useReducer(ElectiveReducer, initialElective);
@@ -91,12 +94,12 @@ const Account = () => {
     setCreatePop(true); // Open the form
   };
 
-  const handleIsClub = (event) => {
-    setIsClubHead(event.target.checked);
-  };
-  const handleIsAuthor = (event) => {
-    setIsAuthor(event.target.checked);
-  };
+  // const handleIsClub = (event) => {
+  //   setIsClubHead(event.target.checked);
+  // };
+  // const handleIsAuthor = (event) => {
+  //   setIsAuthor(event.target.checked);
+  // };
 
   const handleStudentSubmit = async (studentData) => {
     if (studentData.isAuthor === '') {
@@ -169,47 +172,47 @@ const Account = () => {
     }
   };
 
-  const handleAddClub = (event) => {
-    event.preventDefault();
-    clubdispatch({ type: 'ADD_CLUB', name: 'ClubIds', placeholder: 'Enter the club id', value: '' });
-  };
-  const [clubIds, setClubIds] = useState([]);
+  // const handleAddClub = (event) => {
+  //   event.preventDefault();
+  //   clubdispatch({ type: 'ADD_CLUB', name: 'ClubIds', placeholder: 'Enter the club id', value: '' });
+  // };
+  // const [clubIds, setClubIds] = useState([]);
   // const [n ewId,setNewId] = useState('');
 
-  const handleUpdateClub = (event, id) => {
-    if (id) {
-      setClubIds((prevIds) => prevIds.concat(id));
-      // setNewId('');
-    }
-    const value = event.target.value;
-    clubdispatch({ type: 'UPDATE_CLUB', id: id, value: value });
-  };
+  // const handleUpdateClub = (event, id) => {
+  //   if (id) {
+  //     setClubIds((prevIds) => prevIds.concat(id));
+  //     // setNewId('');
+  //   }
+  //   const value = event.target.value;
+  //   clubdispatch({ type: 'UPDATE_CLUB', id: id, value: value });
+  // };
 
-  const handleAddedClub = (event) => {
-    event.preventDefault();
-    console.log('added club');
-  };
+  // const handleAddedClub = (event) => {
+  //   event.preventDefault();
+  //   console.log('added club');
+  // };
 
-  const handleAddElective = (event) => {
-    event.preventDefault();
-    electivedispatch({ type: 'ADD_ELECTIVE', name: 'ElectiveIds', placeholder: 'Enter the elective id', value: '' });
-  };
+  // const handleAddElective = (event) => {
+  //   event.preventDefault();
+  //   electivedispatch({ type: 'ADD_ELECTIVE', name: 'ElectiveIds', placeholder: 'Enter the elective id', value: '' });
+  // };
 
-  const [electives, setElectives] = useState([]);
+  // const [electives, setElectives] = useState([]);
 
-  const handleUpdateElective = (event, id) => {
-    if (id) {
-      setElectives((prevElec) => prevElec.concat(id));
-    }
-    const value = event.target.value;
-    console.log(id);
-    electivedispatch({ type: 'UPDATE_ELECTIVE', id: id, value: value });
-  };
+  // const handleUpdateElective = (event, id) => {
+  //   if (id) {
+  //     setElectives((prevElec) => prevElec.concat(id));
+  //   }
+  //   const value = event.target.value;
+  //   console.log(id);
+  //   electivedispatch({ type: 'UPDATE_ELECTIVE', id: id, value: value });
+  // };
 
-  const handleAddedElective = (event) => {
-    event.preventDefault();
-    console.log('added elective');
-  };
+  // const handleAddedElective = (event) => {
+  //   event.preventDefault();
+  //   console.log('added elective');
+  // };
 
   const handleAddCourse = (event) => {
     event.preventDefault();
@@ -270,16 +273,17 @@ const Account = () => {
           accountType={accountType}
           handleAddAccount={handleAddAccount}
           handleSubmit={handleStudentSubmit}
-          handleIsAuthor={handleIsAuthor}
-          handleIsClub={handleIsClub}
-          clubState={clubState}
-          electiveState={electiveState}
-          handleUpdateClub={handleUpdateClub}
-          handleUpdateElective={handleUpdateElective}
-          handleAddClub={handleAddClub}
-          handleAddElective={handleAddElective}
-          handleAddedClub={handleAddedClub}
-          handleAddedElective={handleAddedElective}
+          // handleIsAuthor={handleIsAuthor}
+          // handleIsClub={handleIsClub}
+          // clubState={clubState}
+          // electiveState={electiveState}
+          // handleUpdateClub={handleUpdateClub}
+          // handleUpdateElective={handleUpdateElective}
+          // handleAddClub={handleAddClub}
+          // handleAddElective={handleAddElective}
+          // handleAddedClub={handleAddedClub}
+          // handleAddedElective={handleAddedElective}
+          id={id}
         />
       )}
       {createpop && accountType === 'Teacher' && (
