@@ -11,7 +11,7 @@ const Syllabus = () => {
   const fetchSyllabusById = async () => {
     try {
       const response = await axios.get(
-        'https://localhost:7276/api/Syllabus/GetSyllabusById/campus'
+        'https://localhost:7276/api/Syllabus/GetSyllabusById/CSC7'
       );
       console.log(response.data);
       setSyllabus(response.data);
@@ -50,7 +50,7 @@ const Syllabus = () => {
                       className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
                       onClick={() => handleCourseClick(course)}
                     >
-                      {course.courseId}
+                      {course.courseTitle}
                     </p>
                   )
                 ))}
@@ -65,7 +65,7 @@ const Syllabus = () => {
                     className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
                     onClick={() => handleCourseClick(course)}
                   >
-                    {course.courseId}
+                    {course.courseTitle}
                   </p>
                 ))}
               </div>

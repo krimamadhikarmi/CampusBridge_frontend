@@ -72,7 +72,7 @@ const CourseForm = ({ handleCourseSubmit, handleCourseForm }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     const courseData = {
       courseId: CourseId,
       courseTitle: CourseTitle,

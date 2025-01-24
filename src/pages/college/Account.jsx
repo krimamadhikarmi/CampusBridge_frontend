@@ -116,14 +116,14 @@ const Account = () => {
       password: formData.StudentPassword,
       phone: formData.StudentPhone,
       location: formData.StudentAddress,
+      gender: formData.gender,
       isClubHead: formData.isClubHead,
       isAuthor: formData.isAuthor,
       financialId: formData.financialId,
       academicId: formData.academicId,
       electiveIds: electives,
       clubIds: clubIds,
-      collegeId: 'college@gmail.com',
-      gender: formData.gender,
+      collegeId: 'college@gmail.com'
     };
 
     console.log(JSON.stringify(studentData), 'hi');
