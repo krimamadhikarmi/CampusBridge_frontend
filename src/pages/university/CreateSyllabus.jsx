@@ -49,9 +49,9 @@ const CreateSyllabus = () => {
   const handleSyllabusForm = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
   };
-
   const handleFormSubmit = async (syllabusData, event) => {
     event.preventDefault();
+
     const completeSyllabusData = {
       syllabusId: syllabusData.syllabusId,
       courseId: syllabusData.courseId,
@@ -137,10 +137,6 @@ const CreateSyllabus = () => {
   const handleCourseTitle = (event) => {
     setCourseTitle(event.target.value);
   };
-
-  // handling book field
-
-  // handling unit form
 
   const handleUnitAdd = (event) => {
     event.preventDefault();
