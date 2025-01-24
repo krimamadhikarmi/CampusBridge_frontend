@@ -98,40 +98,38 @@ const Account = () => {
     setIsAuthor(event.target.checked);
   };
 
-  const handleStudentSubmit = async (formData) => {
-    if (formData.isAuthor === '') {
-      formData.isAuthor = 'false';
+  const handleStudentSubmit = async (studentData) => {
+    if (studentData.isAuthor === '') {
+      studentData.isAuthor = false;
     }
-    if (formData.isClubHead === '') {
-      formData.isClubHead = 'false';
+    if (studentData.isClubHead === '') {
+      studentData.isClubHead = false;
     }
-    console.log(formData, 'nice');
-    console.log('ClubIds:', clubIds);
-    console.log('Electives:', electives);
+    console.log(JSON.stringify(studentData), 'fullstdata');
 
-    const studentData = {
-      studentId: formData.StudentId,
-      name: formData.StudentName,
-      email: formData.StudentEmail,
-      password: formData.StudentPassword,
-      phone: formData.StudentPhone,
-      location: formData.StudentAddress,
-      isClubHead: formData.isClubHead,
-      isAuthor: formData.isAuthor,
-      financialId: formData.financialId,
-      academicId: formData.academicId,
-      electiveIds: electives,
-      clubIds: clubIds,
-      collegeId: 'college@gmail.com',
-      gender: formData.gender,
+    const completeStudentData = {
+      studentId: studentData.studentId,
+      name: studentData.name,
+      email: studentData.email,
+      password: studentData.password,
+      phone: studentData.phone,
+      location: studentData.location,
+      isClubHead: studentData.isClubHead,
+      isAuthor: studentData.isAuthor,
+      financialId: studentData.financialId,
+      academicId: studentData.academicId,
+      electiveIds: studentData.electiveIds,
+      clubIds: studentData.clubIds,
+      collegeId: studentData.collegeId,
+      gender: studentData.gender,
     };
 
-    console.log(JSON.stringify(studentData), 'hi');
+    console.log(JSON.stringify(completeStudentData), 'cmdata');
 
     try {
       const response = await axios.post(
         'https://localhost:7276/api/Student/CreateStudent',
-        JSON.stringify(studentData),
+        JSON.stringify(completeStudentData),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -142,9 +140,6 @@ const Account = () => {
     } catch (e) {
       console.log(e);
     }
-
-    console.log('club', isclubHead);
-    console.log('club', isauthor);
   };
 
   const handleTeacherSubmit = async (formData) => {
