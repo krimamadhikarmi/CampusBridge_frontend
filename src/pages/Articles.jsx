@@ -139,7 +139,7 @@ const Articles = () => {
                 headline={article.headline}
                 tagline={article.tagline}
                 date={article.datePosted}
-                author={authorName}
+                author={article.CreatorId}
                 id={article.id}
                 description={article.description}
                 imageUrl={article.imageUrl}
