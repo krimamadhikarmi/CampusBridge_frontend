@@ -88,20 +88,20 @@ const SyllabusForm = ({ handleSyllabusForm, handleSyllabusSubmit }) => {
               label="Course Id"
               // name={currentCourseId}
               type="text"
-              placeholder={'ENter'}
+              placeholder={'Enter course id'}
               value={currentCourseId}
               onChange={(e) => setCurrentCourseId(e.target.value)} // Correctly pass the event and field ID
             />
             <button type="button" onClick={addCourse}>
               Add
             </button>
-            <div>
-              <ul>
-                {formData.courseId.map((course, index) => (
-                  <li key={index}>{course}</li>
-                ))}
-              </ul>
-            </div>
+          </div>
+          <div>
+            <ul>
+              {formData.courseId.map((course, index) => (
+                <li key={index}>{course}</li>
+              ))}
+            </ul>
           </div>
 
           <CustomFormField

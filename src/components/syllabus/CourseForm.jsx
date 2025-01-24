@@ -191,19 +191,20 @@ const CourseForm = ({ handleCourseSubmit, handleCourseForm }) => {
             <button type="button" onClick={addBook}>
               Add Book
             </button>
-            <div>
-              <ul>
-                {formData.books.map((book, index) => (
-                  <li key={index}>{book}</li>
-                ))}
-              </ul>
-            </div>
+          </div>
+          <div>
+            <ul>
+              {formData.books.map((book, index) => (
+                <li key={index}>{book}</li>
+              ))}
+            </ul>
           </div>
           <div className="course-field">
             <CustomFormField
               label={'Unit Id'}
               name={'UnitId'}
               type={'text'}
+              placeholder={'Enter unit id'}
               value={currentUnit.unitId}
               onChange={(e) => setCurrentUnit({ ...currentUnit, unitId: e.target.value })}
             />
@@ -213,42 +214,50 @@ const CourseForm = ({ handleCourseSubmit, handleCourseForm }) => {
               label={'Title'}
               name={'Title'}
               type={'text'}
+              placeholder={'Enter unit title'}
               value={currentUnit.title}
               onChange={(e) => setCurrentUnit({ ...currentUnit, title: e.target.value })}
             />
           </div>
-          <CustomFormField
-            label={'Credit Hour'}
-            name={'CreditHour'}
-            type={'number'}
-            value={currentUnit.completionHours}
-            onChange={(e) =>
-              setCurrentUnit({
-                ...currentUnit,
-                completionHours: parseInt(e.target.value, 10),
-              })
-            }
-          />
+          <div className="course-field">
+            <CustomFormField
+              label={'Credit Hour'}
+              name={'CreditHour'}
+              type={'number'}
+              placeholder={'Enter credit hour of unit'}
+              value={currentUnit.completionHours}
+              onChange={(e) =>
+                setCurrentUnit({
+                  ...currentUnit,
+                  completionHours: parseInt(e.target.value, 10),
+                })
+              }
+            />
+          </div>
+
           <div className="course-field">
             <CustomFormField
               label={'Subunit'}
               name={'Subunit'}
               type={'text'}
               value={currentSubUnit}
+              placeholder={'Enter sub unit'}
               onChange={(e) => setCurrentSubUnit(e.target.value)}
             />
             <button type="button" onClick={addSubUnit}>
               Add Sub Unit
             </button>
-            <ul>
-              {currentUnit.subUnits.map((subUnit, index) => (
-                <li key={index}>{subUnit}</li>
-              ))}
-            </ul>
           </div>
-          <button type="button" onClick={addUnit}>
-            Add Unit
-          </button>
+          <ul>
+            {currentUnit.subUnits.map((subUnit, index) => (
+              <li key={index}>{subUnit}</li>
+            ))}
+          </ul>
+          <div className="add-div">
+            <button type="button" onClick={addUnit} className="add-button">
+              Add Unit
+            </button>
+          </div>
 
           {/* {unitState.map((unit) => {
             return (
