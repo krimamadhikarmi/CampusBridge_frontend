@@ -50,8 +50,7 @@ const CreateSyllabus = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
   };
 
-  const handleFormSubmit = async (syllabusData,event) => {
-    event.preventDefault();
+  const handleFormSubmit = async (syllabusData) => {
     const completeSyllabusData = {
       syllabusId: syllabusData.syllabusId,
       courseId: courseIds,
@@ -209,7 +208,7 @@ const CreateSyllabus = () => {
 
   const [units, setUnits] = useState([]);
 
-  const handleUpdateUnit = (unitId, field, value, event) => {
+  const handleUpdateUnit = (unitId, field, value) => {
     setUnitId(value);
     setCreditHour(value);
     setTitle(value);
