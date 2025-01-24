@@ -70,7 +70,8 @@ const Notices = () => {
   };
 
   const handleNoticeSubmit = async (formData, event) => {
-    event.preventDefault()
+    // event.preventDefault()
+    console.log(formData)
     const noticeData = {
       noticeId: formData.noticeId,
       title: formData.title,

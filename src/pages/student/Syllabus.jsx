@@ -37,7 +37,7 @@ const Syllabus = () => {
       <Navbar />
       <PageHeader pageTitle={'Syllabus'} />
       <div className="syllabus-box">
-              <div className="syllabus-side-bar">
+        <div className="syllabus-side-bar">
           {syllabus && syllabus.courseDTO && syllabus.courseDTO.length > 0 ? (
             <>
               {/* Regular Courses Section */}
@@ -50,7 +50,7 @@ const Syllabus = () => {
                       className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
                       onClick={() => handleCourseClick(course)}
                     >
-                      {course.courseTitle}
+                      {course.courseId}
                     </p>
                   )
                 ))}
@@ -65,7 +65,7 @@ const Syllabus = () => {
                     className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
                     onClick={() => handleCourseClick(course)}
                   >
-                    {course.courseTitle}
+                    {course.courseId}
                   </p>
                 ))}
               </div>
@@ -75,19 +75,34 @@ const Syllabus = () => {
           )}
         </div>
 
-
         <div className="syllabus-content">
           {activeCourse ? (
             <div>
               <h2>{activeCourse.courseId}</h2>
-              <p><strong>Description:</strong> {activeCourse.courseDescription}</p>
-              <p><strong>Objective:</strong> {activeCourse.courseObjective}</p>
-              <p><strong>Full Marks:</strong> {activeCourse.fullMarks}</p>
-              <p><strong>Pass Marks:</strong> {activeCourse.passMarks}</p>
-              <p><strong>Credit Hour:</strong> {activeCourse.creditHour}</p>
-              <p><strong>Lab Description:</strong> {activeCourse.labDescription}</p>
-              <p><strong>Books:</strong> {activeCourse.books.join(', ')}</p>
-              <p><strong>Is Elective:</strong> {activeCourse.isElective ? 'Yes' : 'No'}</p>
+              <p>
+                <strong>Description:</strong> {activeCourse.courseDescription}
+              </p>
+              <p>
+                <strong>Objective:</strong> {activeCourse.courseObjective}
+              </p>
+              <p>
+                <strong>Full Marks:</strong> {activeCourse.fullMarks}
+              </p>
+              <p>
+                <strong>Pass Marks:</strong> {activeCourse.passMarks}
+              </p>
+              <p>
+                <strong>Credit Hour:</strong> {activeCourse.creditHour}
+              </p>
+              <p>
+                <strong>Lab Description:</strong> {activeCourse.labDescription}
+              </p>
+              <p>
+                <strong>Books:</strong> {activeCourse.books.join(', ')}
+              </p>
+              <p>
+                <strong>Is Elective:</strong> {activeCourse.isElective ? 'Yes' : 'No'}
+              </p>
 
               {/* Display Units */}
               <h3>Units</h3>

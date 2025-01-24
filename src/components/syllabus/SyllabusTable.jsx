@@ -1,10 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ConfirmPopup from '../LogoutPopup';
 
-const SyllabusTable = ({ handleViewClick }) => {
+const SyllabusTable = () => {
   const [syllabuses, setSyllabuses] = useState([]);
+  const [deleteData, setDeleteData] = useState(false);
+  const [selectSyllabussId, setSelectSyllabusId] = useState(null);
 
-  // Fetch syllabuses from the API
+  const handleDeletePop = (id) => {
+    setSelectSyllabusId(id);
+    setDeleteData(true);
+  };
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      const response = await axios.delete(`https://localhost:7276/api/Syllabus/DeleteSyllabus/${id}`);
+      console.log(response.data);
+
+      setSyllabuses((prevSyllabus) => prevSyllabus.filter((syllabus) => syllabus.syllabusId !== id));
+
+      setDeleteData(false);
+    } catch (e) {
+      console.error('Error deleting syllabus:', e);
+    }
+  };
+
   const fetchSyllabuses = async () => {
     try {
       const response = await axios.get('https://localhost:7276/api/Syllabus/GetSyllabus');
@@ -24,6 +45,7 @@ const SyllabusTable = ({ handleViewClick }) => {
         <thead>
           <tr>
             <th>Syllabus</th>
+            <th>Semester</th>
             <th>Activity</th>
           </tr>
         </thead>
@@ -31,14 +53,12 @@ const SyllabusTable = ({ handleViewClick }) => {
           {syllabuses.length > 0 ? (
             syllabuses.map((syllabus) => (
               <tr key={syllabus.syllabusId}>
-                <td>{syllabus.syllabusId}</td> {/* Assuming syllabusName exists */}
+                <td>{syllabus.syllabusId}</td>
+                <td>{syllabus.semester}</td>
                 <td>
                   <div className="activity-button">
-                    <button
-                      className="view-button"
-                      onClick={() => handleViewClick(syllabus.syllabusId)}
-                    >
-                      View
+                    <button className="delete-button" onClick={() => handleDeletePop(syllabus.syllabusId)}>
+                      Delete
                     </button>
                   </div>
                 </td>
@@ -51,6 +71,13 @@ const SyllabusTable = ({ handleViewClick }) => {
           )}
         </tbody>
       </table>
+      {deleteData && (
+        <ConfirmPopup
+          onClose={() => setDeleteData(false)}
+          onConfirm={() => handleDelete(selectSyllabussId)}
+          title={'Are you sure you want to delete?'}
+        />
+      )}
     </div>
   );
 };

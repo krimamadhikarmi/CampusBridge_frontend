@@ -16,9 +16,12 @@ import {
 } from '../../hooks/reducer';
 import StudentForm from '../../components/account/StudentForm';
 import TeacherForm from '../../components/account/TeacherForm';
+import { useToken } from '../../context/TokenContext';
 
 const Account = () => {
+  const { id } = useToken();
   const [selectaccount, setSelectAccount] = useState('All');
+
   const data = [
     {
       id: 1,
@@ -75,8 +78,8 @@ const Account = () => {
   const [createpop, setCreatePop] = useState(false);
   // const [formdata, setFormData] = useState(false);
   const [accountType, setAccountType] = useState('');
-  const [isclubHead, setIsClubHead] = useState(false);
-  const [isauthor, setIsAuthor] = useState(false);
+  // const [isclubHead, setIsClubHead] = useState(false);
+  // const [isauthor, setIsAuthor] = useState(false);
 
   const [clubState, clubdispatch] = useReducer(ClubReducer, initialClub);
   const [electiveState, electivedispatch] = useReducer(ElectiveReducer, initialElective);
@@ -91,47 +94,45 @@ const Account = () => {
     setCreatePop(true); // Open the form
   };
 
-  const handleIsClub = (event) => {
-    setIsClubHead(event.target.checked);
-  };
-  const handleIsAuthor = (event) => {
-    setIsAuthor(event.target.checked);
-  };
+  // const handleIsClub = (event) => {
+  //   setIsClubHead(event.target.checked);
+  // };
+  // const handleIsAuthor = (event) => {
+  //   setIsAuthor(event.target.checked);
+  // };
 
-  const handleStudentSubmit = async (formData) => {
-    if (formData.isAuthor === '') {
-      formData.isAuthor = 'false';
+  const handleStudentSubmit = async (studentData) => {
+    if (studentData.isAuthor === '') {
+      studentData.isAuthor = false;
     }
-    if (formData.isClubHead === '') {
-      formData.isClubHead = 'false';
+    if (studentData.isClubHead === '') {
+      studentData.isClubHead = false;
     }
-    console.log(formData, 'nice');
-    console.log('ClubIds:', clubIds);
-    console.log('Electives:', electives);
+    console.log(JSON.stringify(studentData), 'fullstdata');
 
-    const studentData = {
-      studentId: formData.StudentId,
-      name: formData.StudentName,
-      email: formData.StudentEmail,
-      password: formData.StudentPassword,
-      phone: formData.StudentPhone,
-      location: formData.StudentAddress,
-      gender: formData.gender,
-      isClubHead: formData.isClubHead,
-      isAuthor: formData.isAuthor,
-      financialId: formData.financialId,
-      academicId: formData.academicId,
-      electiveIds: electives,
-      clubIds: clubIds,
-      collegeId: 'college@gmail.com'
+    const completeStudentData = {
+      studentId: studentData.studentId,
+      name: studentData.name,
+      email: studentData.email,
+      password: studentData.password,
+      phone: studentData.phone,
+      location: studentData.location,
+      isClubHead: studentData.isClubHead,
+      isAuthor: studentData.isAuthor,
+      financialId: studentData.financialId,
+      academicId: studentData.academicId,
+      electiveIds: studentData.electiveIds,
+      clubIds: studentData.clubIds,
+      collegeId: studentData.collegeId,
+      gender: studentData.gender,
     };
 
-    console.log(JSON.stringify(studentData), 'hi');
+    console.log(JSON.stringify(completeStudentData), 'cmdata');
 
     try {
       const response = await axios.post(
         'https://localhost:7276/api/Student/CreateStudent',
-        JSON.stringify(studentData),
+        JSON.stringify(completeStudentData),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -142,26 +143,23 @@ const Account = () => {
     } catch (e) {
       console.log(e);
     }
-
-    console.log('club', isclubHead);
-    console.log('club', isauthor);
   };
 
-  const handleTeacherSubmit = async (formData) => {
-    const teacherData = {
-      teacherId: formData.TeacherId,
-      name: formData.TeacherName,
-      email: formData.TeacherEmail,
-      password: formData.TeacherPassword,
-      phone: formData.TeacherPhone,
-      courseIds: ['101'],
-      collegeId: 'college@gmail.com',
+  const handleTeacherSubmit = async (teacherData) => {
+    const completeTeacherData = {
+      teacherId: teacherData.teacherId,
+      name: teacherData.name,
+      email: teacherData.email,
+      password: teacherData.password,
+      phone: teacherData.phone,
+      courseIds: teacherData.courseIds,
+      collegeId: teacherData.collegeId,
     };
-    console.log(JSON.stringify(teacherData));
+    console.log(JSON.stringify(completeTeacherData), 'cmpltd');
     try {
       const response = await axios.post(
         'https://localhost:7276/api/Teacher/CreateTeacher',
-        JSON.stringify(teacherData),
+        JSON.stringify(completeTeacherData),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -174,67 +172,67 @@ const Account = () => {
     }
   };
 
-  const handleAddClub = (event) => {
-    event.preventDefault();
-    clubdispatch({ type: 'ADD_CLUB', name: 'ClubIds', placeholder: 'Enter the club id', value: '' });
-  };
-  const [clubIds, setClubIds] = useState([]);
+  // const handleAddClub = (event) => {
+  //   event.preventDefault();
+  //   clubdispatch({ type: 'ADD_CLUB', name: 'ClubIds', placeholder: 'Enter the club id', value: '' });
+  // };
+  // const [clubIds, setClubIds] = useState([]);
   // const [n ewId,setNewId] = useState('');
 
-  const handleUpdateClub = (event, id) => {
-    if (id) {
-      setClubIds((prevIds) => prevIds.concat(id));
-      // setNewId('');
-    }
-    const value = event.target.value;
-    clubdispatch({ type: 'UPDATE_CLUB', id: id, value: value });
-  };
+  // const handleUpdateClub = (event, id) => {
+  //   if (id) {
+  //     setClubIds((prevIds) => prevIds.concat(id));
+  //     // setNewId('');
+  //   }
+  //   const value = event.target.value;
+  //   clubdispatch({ type: 'UPDATE_CLUB', id: id, value: value });
+  // };
 
-  const handleAddedClub = (event) => {
-    event.preventDefault();
-    console.log('added club');
-  };
+  // const handleAddedClub = (event) => {
+  //   event.preventDefault();
+  //   console.log('added club');
+  // };
 
-  const handleAddElective = (event) => {
-    event.preventDefault();
-    electivedispatch({ type: 'ADD_ELECTIVE', name: 'ElectiveIds', placeholder: 'Enter the elective id', value: '' });
-  };
+  // const handleAddElective = (event) => {
+  //   event.preventDefault();
+  //   electivedispatch({ type: 'ADD_ELECTIVE', name: 'ElectiveIds', placeholder: 'Enter the elective id', value: '' });
+  // };
 
-  const [electives, setElectives] = useState([]);
+  // const [electives, setElectives] = useState([]);
 
-  const handleUpdateElective = (event, id) => {
-    if (id) {
-      setElectives((prevElec) => prevElec.concat(id));
-    }
-    const value = event.target.value;
-    console.log(id);
-    electivedispatch({ type: 'UPDATE_ELECTIVE', id: id, value: value });
-  };
+  // const handleUpdateElective = (event, id) => {
+  //   if (id) {
+  //     setElectives((prevElec) => prevElec.concat(id));
+  //   }
+  //   const value = event.target.value;
+  //   console.log(id);
+  //   electivedispatch({ type: 'UPDATE_ELECTIVE', id: id, value: value });
+  // };
 
-  const handleAddedElective = (event) => {
-    event.preventDefault();
-    console.log('added elective');
-  };
+  // const handleAddedElective = (event) => {
+  //   event.preventDefault();
+  //   console.log('added elective');
+  // };
 
-  const handleAddCourse = (event) => {
-    event.preventDefault();
-    coursedispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter the course id', value: '' });
-  };
+  // const handleAddCourse = (event) => {
+  //   event.preventDefault();
+  //   coursedispatch({ type: 'ADD', name: 'CourseId', placeholder: 'Enter the course id', value: '' });
+  // };
 
-  const [courseIds, setCourseIds] = useState([]);
+  // const [courseIds, setCourseIds] = useState([]);
 
-  const handleUpdateCourse = (event, id) => {
-    if (id) {
-      setCourseIds((prevCourse) => prevCourse.concat(id));
-    }
-    const value = event.target.value;
-    coursedispatch({ type: 'UPDATE', id: id, value: value });
-  };
+  // const handleUpdateCourse = (event, id) => {
+  //   if (id) {
+  //     setCourseIds((prevCourse) => prevCourse.concat(id));
+  //   }
+  //   const value = event.target.value;
+  //   coursedispatch({ type: 'UPDATE', id: id, value: value });
+  // };
 
-  const handleAddedCourse = (event) => {
-    event.preventDefault();
-    console.log('added course');
-  };
+  // const handleAddedCourse = (event) => {
+  //   event.preventDefault();
+  //   console.log('added course');
+  // };
 
   const filterData = selectaccount === 'All' ? data : data.filter((account) => account.role === selectaccount);
 
@@ -275,27 +273,29 @@ const Account = () => {
           accountType={accountType}
           handleAddAccount={handleAddAccount}
           handleSubmit={handleStudentSubmit}
-          handleIsAuthor={handleIsAuthor}
-          handleIsClub={handleIsClub}
-          clubState={clubState}
-          electiveState={electiveState}
-          handleUpdateClub={handleUpdateClub}
-          handleUpdateElective={handleUpdateElective}
-          handleAddClub={handleAddClub}
-          handleAddElective={handleAddElective}
-          handleAddedClub={handleAddedClub}
-          handleAddedElective={handleAddedElective}
+          // handleIsAuthor={handleIsAuthor}
+          // handleIsClub={handleIsClub}
+          // clubState={clubState}
+          // electiveState={electiveState}
+          // handleUpdateClub={handleUpdateClub}
+          // handleUpdateElective={handleUpdateElective}
+          // handleAddClub={handleAddClub}
+          // handleAddElective={handleAddElective}
+          // handleAddedClub={handleAddedClub}
+          // handleAddedElective={handleAddedElective}
+          id={id}
         />
       )}
       {createpop && accountType === 'Teacher' && (
         <TeacherForm
           accountType={accountType}
           handleAddAccount={handleAddAccount}
-          courseState={courseState}
+          // courseState={courseState}
           handleSubmit={handleTeacherSubmit}
-          handleUpdateCourse={handleUpdateCourse}
-          handleAddCourse={handleAddCourse}
-          handleAddedCourse={handleAddedCourse}
+          // handleUpdateCourse={handleUpdateCourse}
+          // handleAddCourse={handleAddCourse}
+          // handleAddedCourse={handleAddedCourse}
+          id={id}
         />
       )}
     </>

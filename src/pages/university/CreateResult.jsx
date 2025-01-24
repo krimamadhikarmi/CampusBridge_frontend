@@ -23,49 +23,43 @@ const CreateResult = () => {
     setEditResult(!editResult);
   };
 
-  // const handleDeletePop = (id) => {
-
-  //   setDeleteData(!deleteData);
-  // };
-
   
-const handleDeletePop = (id) => {
-  setSelectedResultId(id);
-  setDeleteData(true); // Open the delete confirmation popup
-};
+  const handleDeletePop = (id) => {
+    setSelectedResultId(id);
+    setDeleteData(true); 
+  };
 
-const handleDelete = async (id) => {
-  console.log(id)
-  try {
-    const response = await axios.delete(`https://localhost:7276/api/Result/DeleteResult/${id}`);
-    console.log(response.data);
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      const response = await axios.delete(`https://localhost:7276/api/Result/DeleteResult/${id}`);
+      console.log(response.data);
 
-    // Update the results state by filtering out the deleted result
-    setResults((prevResults) => prevResults.filter((result) => result.resultId !== id));
+     
+      setResults((prevResults) => prevResults.filter((result) => result.resultId !== id));
 
-    // Close the confirmation popup
-    setDeleteData(false);
-  } catch (e) {
-    console.error('Error deleting result:', e);
-  }
-};
+      
+      setDeleteData(false);
+    } catch (e) {
+      console.error('Error deleting result:', e);
+    }
+  };
 
 
-  // Fetch results from the API
   useEffect(() => {
     const fetchResults = async () => {
       try {
         const response = await axios.get('https://localhost:7276/api/Result/GetResult');
-        setResults(response.data); // Set fetched results to state
+        setResults(response.data); 
       } catch (error) {
         console.error('Error fetching results:', error);
       } finally {
-        setLoading(false); // Stop loading after the API call
+        setLoading(false); 
       }
     };
 
     fetchResults();
-  }, []); // Runs once on component load
+  }, []); 
 
   return (
     <>
@@ -103,7 +97,7 @@ const handleDelete = async (id) => {
                         <button className="view-button" onClick={handleEditPop}>
                           Edit
                         </button>
-                        <button className="delete-button"  onClick={() => handleDeletePop(result.resultId)}>
+                        <button className="delete-button" onClick={() => handleDeletePop(result.resultId)}>
                           Delete
                         </button>
                       </td>
@@ -121,20 +115,14 @@ const handleDelete = async (id) => {
       </div>
       {addResult && <AddResultForm handleResultPop={handleResultPop} />}
       {editResult && <EditResultForm handleEditPop={handleEditPop} />}
-      {/* {deleteData && (
+
+      {deleteData && (
         <ConfirmPopup
-          onClose={handleDeletePop}
-          onConfirm={handleDelete(result.id)}
+          onClose={() => setDeleteData(false)} 
+          onConfirm={() => handleDelete(selectedResultId)} 
           title={'Are you sure you want to delete?'}
         />
-      )} */}
-      {deleteData && (
-  <ConfirmPopup
-    onClose={() => setDeleteData(false)} // Close popup on cancel
-    onConfirm={() => handleDelete(selectedResultId)} // Delete result on confirmation
-    title={'Are you sure you want to delete?'}
-  />
-)}
+      )}
     </>
   );
 };

@@ -1,13 +1,6 @@
-import { useReducer, useState } from 'react';
+import { useState } from 'react';
 import Navbar from '../../components/Navbar';
-import {
-  BooksReducer,
-  SyllabusReducer,
-  UnitsReducer,
-  initialBook,
-  initialFields,
-  initialUnits,
-} from '../../hooks/reducer';
+
 import SyllabusForm from '../../components/syllabus/SyllabusForm';
 import CourseForm from '../../components/syllabus/CourseForm';
 import { useNavigate } from 'react-router-dom';
@@ -21,23 +14,6 @@ const CreateSyllabus = () => {
   const [toogleCourseForm, setToogleCourseForm] = useState(false);
   const navigate = useNavigate();
 
-  const [fieldState, dispatch] = useReducer(SyllabusReducer, initialFields);
-  const [bookState, bookDispatch] = useReducer(BooksReducer, initialBook);
-  const [unitState, unitDispatch] = useReducer(UnitsReducer, initialUnits);
-
-  const [syllabusId, setSyllabusId] = useState('');
-  const [semester, setSemester] = useState('');
-  const [electiveno, setElectiveno] = useState('');
-  const [courseId, setCourseId] = useState('');
-
-  const [book, setBook] = useState('');
-  const [isElective, setIsElective] = useState(false);
-  const [coursetitle, setCourseTitle] = useState('');
-
-  const [unitId, setUnitId] = useState('');
-  const [title, setTitle] = useState('');
-  const [creditHour, setCreditHour] = useState('');
-
   const syllabus = true;
   const course = true;
 
@@ -49,9 +25,11 @@ const CreateSyllabus = () => {
   const handleSyllabusForm = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
   };
-
   const handleFormSubmit = async (syllabusData, event) => {
     event.preventDefault();
+=========
+  const handleFormSubmit = async (syllabusData) => {
+>>>>>>>>> Temporary merge branch 2
     const completeSyllabusData = {
       syllabusId: syllabusData.syllabusId,
       courseId: syllabusData.courseId,
@@ -142,6 +120,8 @@ const CreateSyllabus = () => {
 
   // handling unit form
 
+<<<<<<<<< Temporary merge branch 1
+=========
   const handleAddMoreUnit = (event) => {
     event.preventDefault();
     console.log('Submitting units:', unitState);
@@ -155,7 +135,7 @@ const CreateSyllabus = () => {
 
   const [units, setUnits] = useState([]);
 
-  const handleUpdateUnit = (unitId, field, value, event) => {
+  const handleUpdateUnit = (unitId, field, value) => {
     setUnitId(value);
     setCreditHour(value);
     setTitle(value);
@@ -170,6 +150,7 @@ const CreateSyllabus = () => {
     });
   };
 
+>>>>>>>>> Temporary merge branch 2
   const handleUnitAdd = (event) => {
     event.preventDefault();
     console.log('added unit');
@@ -228,32 +209,13 @@ const CreateSyllabus = () => {
       {toogleSyllabusForm && (
         <div className="form-overlay">
           <SyllabusForm handleSyllabusForm={handleSyllabusForm} handleSyllabusSubmit={handleFormSubmit} />
-          {/* <FormData /> */}
         </div>
       )}
 
       {toogleCourseForm && (
         <div className="form-overlay">
-          <CourseForm
-            handleCourseSubmit={handleCourseSubmit}
-            handleCourseForm={handleCourseForm}
-            // handleElectiveChange={handleElectiveChange}
-            // // handleUpdateBook={handleUpdateBook}
-            // // handleAddBook={handleAddBook}
-            // // handleBookField={handleBookField}
-            // bookState={bookState}
-            // handleCourseId={handleCourseId}
-            // handleCourseTitle={handleCourseTitle}
-            // // handleAddMoreUnit={handleAddMoreUnit}
-            // // handleUpdateUnit={handleUpdateUnit}
-            // handleUnitAdd={handleUnitAdd}
-            // unitState={unitState}
-            // handleAddSubUnit={handleAddSubUnit}
-            // // handleUpdateSubUnit={handleUpdateSubUnit}
-            // handleSub={handleSub}
-          />
+          <CourseForm handleCourseSubmit={handleCourseSubmit} handleCourseForm={handleCourseForm} />
         </div>
-        // <FormData />
       )}
     </>
   );

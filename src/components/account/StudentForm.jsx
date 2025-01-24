@@ -3,50 +3,80 @@ import CustomFormField from '../customFormField';
 import ButtonGroup from '../common/ButtonGroup';
 import { useState } from 'react';
 
-const StudentForm = ({
-  accountType,
-  handleAddAccount,
-  handleSubmit,
-  handleIsAuthor,
-  handleIsClub,
-  clubState,
-  electiveState,
-  handleUpdateClub,
-  handleUpdateElective,
-  handleAddClub,
-  handleAddElective,
-  handleAddedClub,
-  handleAddedElective,
-}) => {
+const StudentForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
   const [StudentId, setStudentId] = useState('');
   const [StudentName, setStudentName] = useState('');
   const [StudentEmail, setStudentEmail] = useState('');
   const [StudentPassword, setStudentPassword] = useState('');
   const [StudentPhone, setStudentPhone] = useState('');
   const [StudentAddress, setStudentAddress] = useState('');
-  const [isClubHead, setIsClubHead] = useState('');
-  const [isAuthor, setIsAuthor] = useState('');
-  const [financialId, setFinancialId] = useState('');
-  const [academicId, setAcademicId] = useState('');
-  const [gender, setGender] = useState('');
+  const [IsClubHead, setIsClubHead] = useState('');
+  const [IsAuthor, setIsAuthor] = useState('');
+  const [FinancialId, setFinancialId] = useState('');
+  const [AcademicId, setAcademicId] = useState('');
+  const [Gender, setGender] = useState('');
+
+  const [formData, setFormData] = useState({
+    studentId: '',
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    location: '',
+    isClubHead: false,
+    isAuthor: false,
+    financialId: '',
+    academicId: '',
+    electiveIds: [],
+    clubIds: [],
+    collegeId: '',
+    gender: '',
+  });
+
+  const [currentElective, setCurrentElective] = useState('');
+  const [currentClubId, setCurrentClubId] = useState('');
+
+  const addElective = () => {
+    if (currentElective.trim() !== '') {
+      setFormData((prev) => ({
+        ...prev,
+        electiveIds: [...prev.electiveIds, currentElective],
+      }));
+      setCurrentElective('');
+    }
+  };
+  const addClubId = () => {
+    if (currentClubId.trim() !== '') {
+      setFormData((prev) => ({
+        ...prev,
+        clubIds: [...prev.clubIds, currentClubId],
+      }));
+      setCurrentClubId('');
+    }
+  };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    
-    const formData = {
-      StudentId,
-      StudentName,
-      StudentEmail,
-      StudentPassword,
-      StudentPhone,
-      StudentAddress,
-      isClubHead: isClubHead,
-      isAuthor: isAuthor,
-      financialId,
-      academicId,
-      gender,
+
+    const studentData = {
+      studentId: StudentId,
+      name: StudentName,
+      email: StudentEmail,
+      password: StudentPassword,
+      phone: StudentPhone,
+      location: StudentAddress,
+      isClubHead: IsClubHead,
+      isAuthor: IsAuthor,
+      financialId: FinancialId,
+      academicId: AcademicId,
+      gender: Gender,
+      clubIds: formData.clubIds,
+      electiveIds: formData.electiveIds,
+      collegeId: id,
     };
-    handleSubmit(formData);
+    console.log('Student Data', studentData);
+    handleSubmit(studentData);
+    console.log(JSON.stringify(studentData), 'dent');
   };
 
   return (
@@ -124,7 +154,7 @@ const StudentForm = ({
               name={'isClubHead'}
               value={'isClubHead'}
               type={'checkbox'}
-              checked={isClubHead} 
+              checked={IsClubHead}
               onChange={(e) => setIsClubHead(e.target.checked)}
             />
             <CustomFormField
@@ -132,7 +162,7 @@ const StudentForm = ({
               name={'isAuthor'}
               type={'checkbox'}
               value={'isAuthor'}
-              checked={isClubHead} 
+              checked={IsAuthor}
               onChange={(e) => setIsAuthor(e.target.checked)}
             />
           </div>
@@ -151,14 +181,8 @@ const StudentForm = ({
             type={'text'}
             onChange={(e) => setAcademicId(e.target.value)}
           />
-          <CustomFormField
-            label={'College Id'}
-            name={'CollegeId'}
-            placeholder={'Enter the student college id'}
-            type={'text'}
-          />
 
-          {clubState.map((field) => {
+          {/* {clubState.map((field) => {
             return (
               <div key={field.id} className="course-field">
                 <CustomFormField
@@ -179,9 +203,50 @@ const StudentForm = ({
             <button onClick={handleAddClub} className="add-field-button">
               Add More
             </button>
+          </div> */}
+          <div className="course-field">
+            <CustomFormField
+              label={'Club Id'}
+              // name={currentClubId}
+              type={'text'}
+              value={currentClubId}
+              placeholder={'Enter club Id'}
+              onChange={(e) => setCurrentClubId(e.target.value)}
+            />
+            <button type="button" onClick={addClubId}>
+              Add
+            </button>
+          </div>
+          <div>
+            <ul>
+              {formData.clubIds.map((clubId, index) => (
+                <li key={index}>{clubId}</li>
+              ))}
+            </ul>
           </div>
 
-          {electiveState.map((elective) => {
+          <div className="course-field">
+            <CustomFormField
+              label={'Elective Id'}
+              // name={elective.name}
+              type={'text'}
+              value={currentElective}
+              placeholder={'Enter elective id'}
+              onChange={(e) => setCurrentElective(e.target.value)}
+            />
+            <button type="button" onClick={addElective}>
+              Add
+            </button>
+          </div>
+          <div>
+            <ul>
+              {formData.electiveIds.map((electiveId, index) => (
+                <li key={index}>{electiveId}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* {electiveState.map((elective) => {
             return (
               <div key={elective.id} className="course-field">
                 <CustomFormField
@@ -202,7 +267,7 @@ const StudentForm = ({
             <button onClick={handleAddElective} className="add-field-button">
               Add More
             </button>
-          </div>
+          </div> */}
 
           <ButtonGroup handleClose={handleAddAccount} />
         </form>
