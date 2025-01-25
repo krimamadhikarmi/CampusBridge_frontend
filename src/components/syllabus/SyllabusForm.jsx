@@ -32,7 +32,7 @@ const SyllabusForm = ({ handleSyllabusForm, handleSyllabusSubmit }) => {
   // };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     const syllabusData = {
       syllabusId: SyllabusId,
       courseId: formData.courseId,
