@@ -29,37 +29,89 @@ const Account = () => {
     setCreatePop(true);
   };
 
-  const handleStudentFetch = async () => {
-    try {
-      const response = await axios.get('https://localhost:7276/api/Student/GetStudent');
-      console.log('studnets', response.data);
-      setStudents(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    // const handleStudentFetch = async () => {
+    //   try {
+    //     const response = await axios.get('https://localhost:7276/api/Student/GetStudent');
+    //     console.log('studnets', response.data);
+    //     setStudents(response.data);
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // };
 
-  const handleTeacherFetch = async () => {
-    try {
-      const response = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
-      console.log('teachers', response.data);
-      setTeachers(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  useEffect(() => {
-    handleStudentFetch();
-    handleTeacherFetch();
-  }, []);
+    // const handleTeacherFetch = async () => {
+    //   try {
+    //     const response = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
+    //     console.log('teachers', response.data);
+    //     setTeachers(response.data);
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // };
+    // useEffect(() => {
+    //   handleStudentFetch();
+    //   handleTeacherFetch();
+    // }, []);
+    const data = [
+      {
+      id: 1,
+      name: 'Krima Madhikarmi',
+      role: 'Student',
+    },
+    {
+      id: 2,
+      name: 'John Doe',
+      role: 'Student',
+    },
+    {
+      id: 3,
+      name: 'Jane Smith',
+      role: 'Teacher',
+    },
+    {
+      id: 4,
+      name: 'Emily Davis',
+      role: 'Teacher',
+    },
+    {
+      id: 5,
+      name: 'Michael Johnson',
+      role: 'Student',
+    },
+    {
+      id: 6,
+      name: 'Alice Williams',
+      role: 'Teacher',
+    },
+    {
+      id: 7,
+      name: 'David Brown',
+      role: 'Student',
+    },
+    {
+      id: 8,
+      name: 'Sophia White',
+      role: 'Teacher',
+    },
+    {
+      id: 9,
+      name: 'Liam Lee',
+      role: 'Student',
+    },
+    {
+      id: 10,
+      name: 'Olivia Garcia',
+      role: 'Teacher',
+    },
+  ];
 
   //create student form submit
   const handleStudentSubmit = async (studentData, event) => {
     if (studentData.isAuthor === '') {
-      studentData.isAuthor = false;
+      studentData.isAuthor = "false";
     }
     if (studentData.isClubHead === '') {
-      studentData.isClubHead = false;
+      studentData.isClubHead = "false";
     }
     console.log(JSON.stringify(studentData), 'fullstdata');
 
@@ -94,7 +146,7 @@ const Account = () => {
       );
 
       console.log('Response data:', response.data);
-      handleStudentFetch();
+      // handleStudentFetch();
     } catch (e) {
       console.log(e);
     }
@@ -123,24 +175,26 @@ const Account = () => {
         },
       );
       console.log('Response data:', response.data);
-      handleTeacherFetch();
+      // handleTeacherFetch();
     } catch (e) {
       console.log(e);
     }
   };
 
-  const filterData = () => {
-    if (selectaccount === 'All') {
-      return [...students, ...teachers];
-    }
-    if (selectaccount === 'Student') {
-      return students;
-    }
-    if (selectaccount === 'Teacher') {
-      return teachers;
-    }
-    return [];
-  };
+  // const filterData = () => {
+  //   // if (selectaccount === 'All') {
+  //   //   return [...students, ...teachers];
+  //   // }
+  //   if (selectaccount === 'Student') {
+  //     return students;
+  //   }
+  //   if (selectaccount === 'Teacher') {
+  //     return teachers;
+  //   }
+  //   return [];
+  // };
+
+  const filterData = selectaccount === 'All' ? data : data.filter((account) => account.role === selectaccount);
 
   return (
     <>
@@ -156,11 +210,11 @@ const Account = () => {
           <AccountType selectaccount={selectaccount} setSelectAccount={setSelectAccount} />
         </div>
 
-        {filterData().length > 0 ? (
+        {filterData.length > 0 ? (
           <AccountTable
-            filterData={filterData()}
-            handleStudentFetch={handleStudentFetch()}
-            handleTeacherFetch={handleTeacherFetch()}
+            filterData={filterData}
+            // handleStudentFetch={handleStudentFetch()}
+            // handleTeacherFetch={handleTeacherFetch()}
           />
         ) : (
           <div className="no-account">

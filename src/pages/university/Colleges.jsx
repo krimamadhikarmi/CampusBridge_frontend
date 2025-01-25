@@ -98,9 +98,7 @@ const Colleges = () => {
         },
       );
       console.log('article', response.data);
-      const newData = response.data;
-      setColleges((prevNotices) => [newData, ...prevNotices]);
-      setCollegePopUp(false); // Close the popup after submission
+      
       fetchColleges();
     } catch (e) {
       console.log(e)
@@ -154,4 +152,5 @@ const Colleges = () => {
     </>
   );
 };
+
 export default Colleges;
