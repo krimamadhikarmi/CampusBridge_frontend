@@ -88,6 +88,11 @@ const Notices = () => {
           'Content-Type': 'application/json',
         },
       });
+      const newNotice = response.data;
+
+      // Update the notices list with the newly added notice
+      setNotices((prevNotices) => [newNotice, ...prevNotices]);
+      setShowPopUp(false); // Close the popup after submission
       console.log('Resonse', response.data);
     } catch (e) {
       console.log(e);

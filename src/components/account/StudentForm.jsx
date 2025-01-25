@@ -57,7 +57,6 @@ const StudentForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
     const studentData = {
       studentId: StudentId,
       name: StudentName,

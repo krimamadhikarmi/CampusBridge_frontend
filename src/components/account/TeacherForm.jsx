@@ -31,8 +31,8 @@ const TeacherForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
     }
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
+  const handleFormSubmit = () => {
+
     const teacherData = {
       teacherId: TeacherId,
       name: TeacherName,

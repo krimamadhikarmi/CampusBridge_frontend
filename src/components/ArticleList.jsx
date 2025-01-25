@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CloseButton from './common/CloseButton';
 
-const ArticleList = ({ headline, description, date, author, imageUrl, id, tagline }) => {
+const ArticleList = ({ headline, description, date, author, id, tagline }) => {
   const [articlepop, setArticlePop] = useState(false);
 
   const handleArticle = () => {
@@ -17,9 +17,6 @@ const ArticleList = ({ headline, description, date, author, imageUrl, id, taglin
           <span className="article-date">DatePosted: {date.split('T')[0]}</span>
           <p className="author-name">{author}</p>
         </div>
-      </div>
-      <div className="article-image">
-        <img src={imageUrl} alt={headline} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </div>
 
       {articlepop && (

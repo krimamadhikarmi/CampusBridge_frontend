@@ -14,14 +14,13 @@ const AddNotice = ({ handleArticlePop, currentDate, getCheckboxOptions, handleSu
     setDirectedTo((prev) => (checked ? [...prev, value] : prev.filter((item) => item !== value)));
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
+  const handleFormSubmit = () => {
     const formData = {
       noticeId,
       title,
       description,
       datePosted,
-      directedTo:directedTo,
+      directedTo: directedTo,
     };
     handleSubmit(formData);
   };
