@@ -15,7 +15,7 @@ const AddNotice = ({ handleArticlePop, currentDate, getCheckboxOptions, handleSu
   };
 
   const handleFormSubmit = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     const formData = {
       noticeId,
       title,

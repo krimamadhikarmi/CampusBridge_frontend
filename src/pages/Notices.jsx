@@ -89,6 +89,11 @@ const Notices = () => {
         },
       });
       console.log('Resonse', response.data);
+      const newNotice = response.data;
+      // Update the notices list with the newly added notice
+      setNotices((prevNotices) => [newNotice, ...prevNotices]);
+      setShowPopUp(false); // Close the popup after submission
+      //fetchNotice();
     } catch (e) {
       console.log(e);
     }

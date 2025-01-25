@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/College.css';
@@ -10,6 +10,7 @@ import { useToken } from '../../context/TokenContext';
 
 const Colleges = () => {
   const [collegePopup, setCollegePopUp] = useState(false);
+  const [colleges,setColleges]=useState([])
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -59,6 +60,20 @@ const Colleges = () => {
     setDescription(event.target.value);
   };
 
+    const fetchColleges = async () => {
+      try {
+        const response = await axios.get('https://localhost:7276/api/College/GetCollege');
+        setColleges(response.data);
+        console.log(response.data,"college")
+      } catch (error) {
+        console.error('Error fetching colleges:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchColleges();
+    }, []);
+
   const handleCollgeFormSubmit = async (formData) => {
     const collegeData = {
       collegeId: formData.CollegeId,
@@ -83,8 +98,14 @@ const Colleges = () => {
         },
       );
       console.log('article', response.data);
+      const newData = response.data;
+      setColleges((prevNotices) => [newData, ...prevNotices]);
+      setCollegePopUp(false); // Close the popup after submission
+      fetchColleges();
     } catch (e) {
       console.log(e)
+    } finally {
+      handleCollegePopUp();  // To close the form popup after submit
     }
   };
 
@@ -97,11 +118,11 @@ const Colleges = () => {
         <div className="college-button">
           <button className="add-college-button" onClick={handleCollegePopUp}>
             Add College
-          </button>
+          </button> 
         </div>
-        {college ? (
+        {colleges.length > 0 ? (
           <div className="college-present">
-            <CollegeTable handleEditForm={handleEditForm} showEdit={showEdit} />
+            <CollegeTable handleEditForm={handleEditForm} showEdit={showEdit} colleges={colleges} fetchColleges={fetchColleges} />
           </div>
         ) : (
           <div className="no-data-list">No Registered College </div>

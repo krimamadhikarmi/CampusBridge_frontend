@@ -3,8 +3,36 @@ import FormHeader from '../common/FormHeader';
 import CustomFormField from '../customFormField';
 import ButtonGroup from '../common/ButtonGroup';
 import ConfirmPopup from '../LogoutPopup';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useToken } from '../../context/TokenContext';
 
-const CollegeTable = ({ handleEditForm, showEdit }) => {
+const CollegeTable = ({ handleEditForm, showEdit,colleges,fetchColleges}) => {
+
+    // const [colleges, setColleges] = useState([]);
+    const [deleteData, setDeleteData] = useState(false);
+    const [selectCollegeId, setSelectCollegeId] = useState(null);
+    const {id}= useToken();
+
+    const handleDeletePop = (id) => {
+      setSelectCollegeId(id);
+      setDeleteData(true);
+    };
+
+    const handleDelete = async (cid) => {
+        console.log(cid);
+        console.log(id);
+        try {
+          const response = await axios.delete(`https://localhost:7276/api/College/DeleteCollege/${cid}/${id}`);
+          console.log(response.data);
+          setDeleteData(false);
+          fetchColleges();
+        } catch (e) {
+          console.error('Error deleting course:', e);
+        }
+      };
+
+
   const [formData, setFormData] = useState({
     name: 'Samriddhi College',
     email: 'samriddhi@college.com',
@@ -28,9 +56,20 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
     handleEditForm();
   };
 
-  const handleDelete = () => {
-    setDeletePop(!deletepop);
-  };
+  // const fetchColleges = async () => {
+  //   try {
+  //     const response = await axios.get('https://localhost:7276/api/College/GetCollege');
+  //     setColleges(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching colleges:', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchColleges();
+  // }, []);
+
+
 
   return (
     <>
@@ -44,19 +83,27 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Samriddhi College</td>
-            <td>samriddhi@college.com</td>
-            <td>Lokanthali,Bhaktapur</td>
-            <td className="activity-button">
-              <button className="view-button" onClick={handleEditForm}>
-                Edit
-              </button>
-              <button className="delete-button" onClick={handleDelete}>
-                Delete
-              </button>
-            </td>
-          </tr>
+          {console.log(colleges,"hi")}
+          {colleges.length > 0 ? (
+            colleges.map((college) => (
+              <tr key={college.collegeId}>
+                <td>{college.name}</td>
+                <td>{college.email}</td>
+                <td>{college.location}</td>
+                <td>
+                  <div className="activity-button">
+                    <button className="delete-button" onClick={() => handleDeletePop(college.collegeId)}>
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4">No colleges available</td>
+            </tr>
+          )}
         </tbody>
       </table>
       {showEdit && (
@@ -102,8 +149,12 @@ const CollegeTable = ({ handleEditForm, showEdit }) => {
           </div>
         </div>
       )}
-      {deletepop && (
-        <ConfirmPopup onConfirm={handleDelete} onClose={handleDelete} title={'Are you sure you want to delete?'} />
+      {deleteData && (
+        <ConfirmPopup
+          onClose={() => setDeleteData(false)}
+          onConfirm={() => handleDelete(selectCollegeId)}
+          title={'Are you sure you want to delete?'}
+        />
       )}
     </>
   );
