@@ -55,12 +55,12 @@ const Account = () => {
 
   //create student form submit
   const handleStudentSubmit = async (studentData, event) => {
-    if (studentData.isAuthor === '') {
-      studentData.isAuthor = false;
-    }
-    if (studentData.isClubHead === '') {
-      studentData.isClubHead = false;
-    }
+    // if (studentData.isAuthor === '') {
+    //   studentData.isAuthor = false;
+    // }
+    // if (studentData.isClubHead === '') {
+    //   studentData.isClubHead = false;
+    // }
     console.log(JSON.stringify(studentData), 'fullstdata');
 
     const completeStudentData = {
