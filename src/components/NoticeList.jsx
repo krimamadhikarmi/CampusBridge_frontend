@@ -4,10 +4,23 @@ import { useState, useEffect } from 'react';
 
 import ConfirmPopup from './LogoutPopup';
 import EditNotice from './notice/EditNotice';
-const NoticeList = ({ index, id, title, content, category, role, date, getCheckboxOptions }) => {
+const NoticeList = ({
+  index,
+  nid,
+  title,
+  content,
+  category,
+  role,
+  date,
+  getCheckboxOptions,
+  handleDeletePop,
+  deleteData,
+  setDeleteData,
+  handleDelete,
+  selectNoticeId,
+}) => {
   const [showEdit, setShowEdit] = useState(false);
   const [currentDate, setCurrentDate] = useState('');
-  const [deletepop, setDeletePop] = useState(false);
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -16,10 +29,6 @@ const NoticeList = ({ index, id, title, content, category, role, date, getCheckb
 
   const handleEditForm = () => {
     setShowEdit(!showEdit);
-  };
-
-  const handleDeletePop = () => {
-    setDeletePop(!deletepop);
   };
 
   return (
@@ -36,14 +45,14 @@ const NoticeList = ({ index, id, title, content, category, role, date, getCheckb
       {role.includes('College') || role.includes('University') || role.includes('ClubHead') ? (
         <div className="notice-options">
           <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" onClick={handleEditForm} />
-          <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={handleDeletePop} />
+          <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={() => handleDeletePop(nid)} />
         </div>
       ) : null}
 
       {showEdit && (
         <EditNotice
           handleEditForm={handleEditForm}
-          id={id}
+          id={nid}
           title={title}
           content={content}
           getCheckboxOptions={getCheckboxOptions}
@@ -51,10 +60,10 @@ const NoticeList = ({ index, id, title, content, category, role, date, getCheckb
         />
       )}
 
-      {deletepop && (
+      {deleteData && (
         <ConfirmPopup
-          onClose={handleDeletePop}
-          onConfirm={handleDeletePop}
+          onClose={() => setDeleteData(false)}
+          onConfirm={() => handleDelete(selectNoticeId)}
           title={'Are you sure you want to delete ?'}
         />
       )}

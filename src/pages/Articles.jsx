@@ -19,7 +19,7 @@ const Articles = () => {
   const [tagline, setTagLine] = useState('');
   const [articles, setArticles] = useState([]);
   const [deleteData, setDeleteData] = useState(false);
-  const [selectArticelId, setSelectArticleId] = useState(false);
+  const [selectArticelId, setSelectArticleId] = useState(null);
   const [editForm, setEditForm] = useState(false);
 
   const [currentDate, setCurrentDate] = useState('');

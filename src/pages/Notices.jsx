@@ -8,45 +8,18 @@ import AddNotice from '../components/notice/AddNotice';
 import SelectNotice from '../components/notice/SelectNotice';
 import { useToken } from '../context/TokenContext';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Notices = () => {
   const { role, id } = useToken();
 
-  //for now i have created fake json data to test purpose
-  // const NoticesData = [
-  //   {
-  //     id: 1,
-  //     title: 'Class Rescheduled',
-  //     content: 'The CS101 class has been rescheduled to 10:00 AM on 01/01/2023.',
-  //     category: 'College',
-  //     date: '2023-01-01',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'BSc Exam Schedule',
-  //     content: 'Final exam schedule for the BSc program has been released.',
-  //     category: 'University',
-  //     date: '2081-08-08',
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'Class Cancelled',
-  //     content: 'The Wednesday class for TU101 has been cancelled.',
-  //     category: 'University',
-  //     date: '2081-08-15',
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'Club Meeting Cancelled',
-  //     content: 'The Wednesday Club Meeting for Cl101 has been cancelled.',
-  //     category: 'Club',
-  //     date: '2081-08-15',
-  //   },
-  // ];
   const [selectCategory, setSelectCategory] = useState('All');
   const [showpopup, setShowPopUp] = useState(false);
   const [currentDate, setCurrentDate] = useState('');
   const [notices, setNotices] = useState([]);
+  const [deleteData, setDeleteData] = useState(false);
+  const [selectNoticeId, setSelectNoticeId] = useState(null);
 
   useEffect(() => {
     // Set today's date in the correct format
@@ -69,6 +42,30 @@ const Notices = () => {
     setShowPopUp(!showpopup);
   };
 
+  const handleDeletePop = (nid) => {
+    console.log(nid, 'nid');
+    setSelectNoticeId(nid);
+    setDeleteData(true);
+  };
+
+  const handleDelete = async (nid) => {
+    try {
+      const response = await axios.delete(`https://localhost:7276/api/Notice/DeleteNotice/${nid}/${id}`);
+      console.log(response.data, 'notice deleted');
+      setNotices((prevNotices) => prevNotices.filter((notice) => notice.noticeId !== nid));
+      setDeleteData(false);
+      toast.success('Notice deleted successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+    } catch (e) {
+      console.log(e, 'error');
+      toast.error('Failed to delete notices.Please try again!');
+    }
+  };
+
   const handleNoticeSubmit = async (formData, event) => {
     // event.preventDefault()
     console.log(formData);
@@ -89,11 +86,9 @@ const Notices = () => {
         },
       });
       console.log('Resonse', response.data);
-      const newNotice = response.data;
-      // Update the notices list with the newly added notice
-      setNotices((prevNotices) => [newNotice, ...prevNotices]);
-      setShowPopUp(false); // Close the popup after submission
-      //fetchNotice();
+      setShowPopUp(false);
+      setNotices((prevNotice) => [...prevNotice, response.data]);
+      // Close the popup after submission
     } catch (e) {
       console.log(e);
     }
@@ -151,6 +146,19 @@ const Notices = () => {
       {console.log(notices)}
       <Navbar />
       <PageHeader pageTitle={'Notices'} />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeButton={false}
+        style={{
+          top: '50%', // Vertical center
+          left: '50%', // Horizontal center
+          transform: 'translate(-50%, -50%)', // Offset the toast to perfectly center it
+          zIndex: 9999, // Ensure it's on top of other elements (like the navbar)
+        }}
+      />
       <div className="notice-box">
         <SelectNotice selectCategory={selectCategory} setSelectCategory={setSelectCategory} />
         {role.includes('College') || role.includes('University') || role.includes('ClubHead') ? (
@@ -165,13 +173,18 @@ const Notices = () => {
             <div key={index} className="notice-item">
               <NoticeList
                 index={index}
-                id={notice.noticeId}
+                nid={notice.noticeId}
                 title={notice.title}
                 content={notice.description}
                 category={notice.creator}
                 date={notice.datePosted}
                 getCheckboxOptions={getCheckboxOptions}
                 role={role}
+                deleteData={deleteData}
+                setDeleteData={setDeleteData}
+                handleDelete={handleDelete}
+                handleDeletePop={handleDeletePop}
+                selectNoticeId={selectNoticeId}
               />
             </div>
           ))}
