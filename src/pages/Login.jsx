@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate from react
 import '../styles/LoginStyle.css';
 import { useToken } from '../context/TokenContext';
 import axios from 'axios';
+import NormalPopup from '../components/NormalPopup';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { setToken, setRole, setId } = useToken();
+  const [errorMessage,setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   // const handleSubmit = async (event) => {
@@ -45,23 +47,34 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('https://localhost:7276/api/Auth/Login', { username, password });
+      const response = await axios.post('https://localhost:7276/api/Auth/Login',
+       { username, password },
+       { validateStatus: (status) => status < 500 });
+
       // setResponseMessage(response.data.message); // Handle the response data
+      
       console.log('Response data:', response.data);
-      const jwtToken = {
-        jwtToken: response.data.jwtToken,
-      };
-      const userRole = response.data.role;
-      const userId = response.data.id;
-      console.log(response.data.id)
 
-      console.log('Token data:', jwtToken);
-      console.log('role', userRole);
-      setToken(jwtToken);
-      setRole(userRole);
-      setId(userId);
-
-      navigate('/dashboard');
+      if(response.status===200){
+          const jwtToken = {
+            jwtToken: response.data.jwtToken,
+          };
+          const userRole = response.data.role;
+          const userId = response.data.id;
+          console.log(response.data.id)
+    
+          console.log('Token data:', jwtToken);
+          console.log('role', userRole);
+          setToken(jwtToken);
+          setRole(userRole);
+          setId(userId);
+    
+          navigate('/dashboard');
+      }else if(response.status === 400){
+        console.log("Setting error message:", response.data);
+        setErrorMessage(response.data || "Something went wrong. Please try again.");
+      }
+    
     } catch (error) {
       console.error('Error during POST request:', error);
       console.log(error.response.data.message);
@@ -106,6 +119,13 @@ const Login = () => {
           </form>
         </div>
       </div>
+      {errorMessage && (
+        <NormalPopup
+          title="Login Failed"
+          message={errorMessage} 
+          onClose={() => setErrorMessage(null)}
+        />
+      )}
     </>
   );
 };
