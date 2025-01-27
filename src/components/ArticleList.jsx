@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ConfirmPopup from './LogoutPopup';
 import { useToken } from '../context/TokenContext';
 import axios from 'axios';
+import FormHeader from './common/FormHeader';
+import CustomFormField from './customFormField';
+import ButtonGroup from './common/ButtonGroup';
 const ArticleList = ({
   headline,
   description,
@@ -17,6 +20,15 @@ const ArticleList = ({
   setDeleteData,
   handleDeleteData,
   selectArticelId,
+  editForm,
+  handleEdit,
+  currentDate,
+  toggleDown,
+  handleTitle,
+  handleTagLine,
+  handleTag,
+  handleDescription,
+  setHeadLine,
 }) => {
   const [articlepop, setArticlePop] = useState(false);
   const { id } = useToken();
@@ -39,7 +51,7 @@ const ArticleList = ({
 
         {author === id && (
           <div className="notice-options">
-            <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" />
+            <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" onClick={handleEdit} />
             <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={() => handleDeletePop(cid)} />
           </div>
         )}
@@ -60,6 +72,47 @@ const ArticleList = ({
               </div> */}
               <p>{description}</p>
             </div>
+          </div>
+        </div>
+      )}
+      {editForm && (
+        <div className="form-overlay">
+          <div className="form-design">
+            <FormHeader title={'Edit Article'} handleForm={handleEdit} />
+            <form>
+              <CustomFormField
+                label={'Tag'}
+                name={'tag'}
+                type={'text'}
+                value={tagline}
+                onChange={(e) => handleTag(e)}
+              />
+              <CustomFormField
+                label={'Headline'}
+                name={'headline'}
+                type={'text'}
+                value={headline}
+                onChange={(e) => setHeadLine(e.target.value)}
+              />
+              <CustomFormField
+                label={'Tagline'}
+                name={'tagline'}
+                type={'text'}
+                value={tagline}
+                onChange={(e) => handleTagLine(e)}
+              />
+              <CustomFormField
+                label={'Description'}
+                name={'description'}
+                type={'text'}
+                value={description}
+                onChange={(e) => handleDescription(e)}
+              />
+
+              <CustomFormField label={'Date'} name={'date'} type={'date'} value={date.split('T')[0]} />
+
+              <ButtonGroup handleClose={handleEdit} />
+            </form>
           </div>
         </div>
       )}

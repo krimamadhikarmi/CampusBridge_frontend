@@ -20,6 +20,7 @@ const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [deleteData, setDeleteData] = useState(false);
   const [selectArticelId, setSelectArticleId] = useState(false);
+  const [editForm, setEditForm] = useState(false);
 
   const [currentDate, setCurrentDate] = useState('');
   const { role, id } = useToken();
@@ -90,6 +91,10 @@ const Articles = () => {
       setDropDown(false);
       toast.error('Failed to create article. Please try again!');
     }
+  };
+
+  const handleEdit = () => {
+    setEditForm(!editForm);
   };
 
   const handleDeletePop = (aid) => {
@@ -176,6 +181,14 @@ const Articles = () => {
                 setDeleteData={setDeleteData}
                 handleDeleteData={handleDeleteData}
                 selectArticelId={selectArticelId}
+                handleEdit={handleEdit}
+                editForm={editForm}
+                currentDate={currentDate}
+                handleDescription={handleDescription}
+                handleTag={handleTag}
+                handleTagLine={handleTagLine}
+                handleTitle={handleTitle}
+                setHeadLine={setHeadLine}
               />
             </div>
           ))}
