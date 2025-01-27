@@ -26,7 +26,7 @@ const CreateSyllabus = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
   };
   const handleFormSubmit = async (syllabusData, event) => {
-    event.preventDefault();
+    //event.preventDefault();
     const completeSyllabusData = {
       syllabusId: syllabusData.syllabusId,
       courseId: syllabusData.courseId,
@@ -46,6 +46,7 @@ const CreateSyllabus = () => {
         },
       );
       console.log('Response data:', response.data);
+      axios.get('https://localhost:7276/api/Syllabus/GetSyllabus');
     } catch (e) {
       console.log(e);
     }
@@ -96,6 +97,7 @@ const CreateSyllabus = () => {
         },
       );
       console.log('Response data:', response.data);
+      await fetch('https://localhost:7276/api/Syllabus/GetCourse');
     } catch (e) {
       console.log(e, 'error');
     }
