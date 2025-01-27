@@ -89,7 +89,7 @@ const Login = () => {
     setPassword(event.target.value);
   };
   return (
-    <>
+    <div className='login-body'>
       <div id="loginBox">
         <div id="title">
           <h2>Login Page</h2>
@@ -126,7 +126,7 @@ const Login = () => {
           onClose={() => setErrorMessage(null)}
         />
       )}
-    </>
+    </div>
   );
 };
 export default Login;
