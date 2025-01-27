@@ -8,6 +8,8 @@ import ButtonGroup from '../components/common/ButtonGroup';
 import FormHeader from '../components/common/FormHeader';
 import { useToken } from '../context/TokenContext';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Articles = () => {
   const [dropdown, setDropDown] = useState(false);
@@ -16,7 +18,6 @@ const Articles = () => {
   const [tag, setTag] = useState('');
   const [tagline, setTagLine] = useState('');
   const [articles, setArticles] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
 
   const [currentDate, setCurrentDate] = useState('');
   const { role, id } = useToken();
@@ -42,7 +43,7 @@ const Articles = () => {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     const articleData = {
       articleId: tag,
       headline: headline,
@@ -65,9 +66,27 @@ const Articles = () => {
           },
         },
       );
+      setHeadLine('');
+      setDescription('');
+      setTag('');
+      setTagLine('');
       console.log('article', response.data);
+      toast.success('Article created successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+      setDropDown(false);
+      setArticles((prevArticles) => [...prevArticles, response.data]);
     } catch (e) {
+      setHeadLine('');
+      setDescription('');
+      setTag('');
+      setTagLine('');
       console.log(e);
+      setDropDown(false);
+      toast.error('Failed to create article. Please try again!');
     }
   };
 
@@ -85,33 +104,24 @@ const Articles = () => {
     setDescription(event.target.value);
   };
 
-  // const articles = [
-  //   {
-  //     id: 1,
-  //     headline: '5 Amazing New JavaScript Features in ES15 (2024)',
-  //     tagline: '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
-  //     description:
-  //       '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
-  //     author: 'Tari Ibaba',
-  //     datePosted: '2024-04-18',
-  //     imageUrl: 'sports.jpeg',
-  //   },
-  //   {
-  //     id: 2,
-  //     headline: 'React Native’s New Architecture: The Tricky Parts (2/2)',
-  //     tagline: 'The first part ended with you implementing a custom Shadow component.',
-  //     author: 'Jakub Piasecki',
-  //     datePosted: '2024-04-18',
-  //     imageUrl: 'images.png',
-  //     description:
-  //       '5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.5 juicy ES15 features with new functionality for cleaner and shorter JavaScript code in 2024.',
-  //   },
-  // ];
-
   return (
     <>
       <Navbar />
+
       <PageHeader pageTitle={'Articles'} />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeButton={false}
+        style={{
+          top: '50%', // Vertical center
+          left: '50%', // Horizontal center
+          transform: 'translate(-50%, -50%)', // Offset the toast to perfectly center it
+          zIndex: 9999, // Ensure it's on top of other elements (like the navbar)
+        }}
+      />
       {/* {console.log(role)} */}
       <div className="article-box">
         <div className="article-form">
@@ -124,6 +134,7 @@ const Articles = () => {
             </button>
           ) : null}
         </div>
+
         <div className="article-list">
           {articles.map((article) => (
             <div key={article.id} className="article-item">
@@ -134,7 +145,6 @@ const Articles = () => {
                 author={article.creatorId}
                 id={article.id}
                 description={article.description}
-                
               />
             </div>
           ))}
