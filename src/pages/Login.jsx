@@ -92,7 +92,7 @@ const Login = () => {
     <div className='login-body'>
       <div id="loginBox">
         <div id="title">
-          <h2>Login Page</h2>
+          <h2>Hello and Welcome!</h2>
         </div>
         <div>
           <form onSubmit={handleSubmit}>
