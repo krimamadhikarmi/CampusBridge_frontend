@@ -18,6 +18,8 @@ const Articles = () => {
   const [tag, setTag] = useState('');
   const [tagline, setTagLine] = useState('');
   const [articles, setArticles] = useState([]);
+  const [deleteData, setDeleteData] = useState(false);
+  const [selectArticelId, setSelectArticleId] = useState(false);
 
   const [currentDate, setCurrentDate] = useState('');
   const { role, id } = useToken();
@@ -90,6 +92,30 @@ const Articles = () => {
     }
   };
 
+  const handleDeletePop = (aid) => {
+    console.log(aid, 'aid');
+    setSelectArticleId(aid);
+    setDeleteData(true);
+  };
+
+  const handleDeleteData = async (aid) => {
+    try {
+      const response = await axios.delete(`https://localhost:7276/api/Article/DeleteArticle/${aid}/${id}`);
+      console.log(response.data);
+      setArticles((prevArticles) => prevArticles.filter((article) => article.articleId !== aid));
+      setDeleteData(false);
+      toast.success('Article deleted successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+    } catch (e) {
+      console.error('Error deleting course:', e);
+      toast.error('Failed to delete article. Please try again!');
+    }
+  };
+
   const handleTag = (event) => {
     setTag(event.target.value);
   };
@@ -143,8 +169,13 @@ const Articles = () => {
                 tagline={article.tagline}
                 date={article.datePosted}
                 author={article.creatorId}
-                id={article.id}
+                cid={article.articleId}
                 description={article.description}
+                handleDeletePop={handleDeletePop}
+                deleteData={deleteData}
+                setDeleteData={setDeleteData}
+                handleDeleteData={handleDeleteData}
+                selectArticelId={selectArticelId}
               />
             </div>
           ))}

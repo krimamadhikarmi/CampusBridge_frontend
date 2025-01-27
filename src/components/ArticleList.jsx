@@ -1,8 +1,25 @@
 import { useState } from 'react';
 import CloseButton from './common/CloseButton';
-
-const ArticleList = ({ headline, description, date, author, id, tagline }) => {
+import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ConfirmPopup from './LogoutPopup';
+import { useToken } from '../context/TokenContext';
+import axios from 'axios';
+const ArticleList = ({
+  headline,
+  description,
+  date,
+  author,
+  cid,
+  tagline,
+  handleDeletePop,
+  deleteData,
+  setDeleteData,
+  handleDeleteData,
+  selectArticelId,
+}) => {
   const [articlepop, setArticlePop] = useState(false);
+  const { id } = useToken();
 
   const handleArticle = () => {
     setArticlePop(!articlepop);
@@ -10,13 +27,22 @@ const ArticleList = ({ headline, description, date, author, id, tagline }) => {
 
   return (
     <>
-      <div className="article-content" onClick={handleArticle} style={{ cursor: 'pointer' }}>
-        <h2 className="article-title">{headline}</h2>
+      <div className="article-content">
+        <h2 className="article-title" onClick={handleArticle} style={{ cursor: 'pointer' }}>
+          {headline}
+        </h2>
         <p className="article-description">{tagline}</p>
         <div className="article-info">
           <span className="article-date">DatePosted: {date.split('T')[0]}</span>
           <p className="author-name">{author}</p>
         </div>
+
+        {author === id && (
+          <div className="notice-options">
+            <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" />
+            <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={() => handleDeletePop(cid)} />
+          </div>
+        )}
       </div>
 
       {articlepop && (
@@ -36,6 +62,13 @@ const ArticleList = ({ headline, description, date, author, id, tagline }) => {
             </div>
           </div>
         </div>
+      )}
+      {deleteData && (
+        <ConfirmPopup
+          onClose={() => setDeleteData(false)}
+          onConfirm={() => handleDeleteData(selectArticelId)}
+          title={'Are you sure you want to delete ?'}
+        />
       )}
     </>
   );
