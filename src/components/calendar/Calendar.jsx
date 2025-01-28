@@ -4,8 +4,6 @@ import axios from 'axios';
 
 import { add, eachDayOfInterval, endOfMonth, format, isSameDay, parse, parseISO, startOfToday } from 'date-fns';
 
-// import normalizeDates from 'date-fns/_lib/normalizeDates';
-
 import { useReducer, useState } from 'react';
 
 import { useEffect } from 'react';

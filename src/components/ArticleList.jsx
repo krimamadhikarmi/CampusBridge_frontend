@@ -16,7 +16,6 @@ const ArticleList = ({
   author,
   aid,
   tagline,
-  tag,
   handleDeletePop,
   deleteData,
   setDeleteData,
@@ -26,9 +25,11 @@ const ArticleList = ({
   handleEdit,
   currentDate,
   handleUpdateForm,
+  handleCloseEdit,
 }) => {
   const [articlepop, setArticlePop] = useState(false);
   const { id } = useToken();
+
   const [articleHeadline, setArticleHeadline] = useState(headline);
   const [articleTagline, setArticleTagline] = useState(tagline);
   const [articleDescription, setArticleDescription] = useState(description);
@@ -40,6 +41,7 @@ const ArticleList = ({
 
   const handleEditFormSubmit = (e) => {
     e.preventDefault();
+    console.log('article id', aid);
     const updateArticle = {
       articleId: aid,
       creatorId: id,
@@ -79,6 +81,7 @@ const ArticleList = ({
             <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={() => handleDeletePop(aid)} />
           </div>
         )}
+        {console.log(aid)}
       </div>
 
       {articlepop && (
@@ -110,9 +113,17 @@ const ArticleList = ({
       {editForm && (
         <div className="form-overlay">
           <div className="form-design">
-            <FormHeader title={'Edit Article'} handleForm={handleEdit} />
+            <FormHeader title={'Edit Article'} handleForm={handleCloseEdit} />
             <form onSubmit={handleEditFormSubmit}>
-              <CustomFormField label={'Tag'} name={'tag'} type={'text'} value={aid} disabled />
+              <CustomFormField
+                label={'Tag'}
+                name={'tag'}
+                placeholder={'Enter the Article Id'}
+                type={'text'}
+                value={aid}
+                disabled
+              />
+           
               <CustomFormField
                 label={'Headline'}
                 name={'headline'}
@@ -124,7 +135,7 @@ const ArticleList = ({
                 label={'Tagline'}
                 name={'tagline'}
                 type={'text'}
-                value={tagline}
+                value={articleTagline}
                 onChange={(e) => setArticleTagline(e.target.value)}
               />
               <CustomFormField
@@ -143,7 +154,7 @@ const ArticleList = ({
                 onChange={(e) => setDateUpdated(e.target.value)}
               />
 
-              <ButtonGroup handleClose={handleEdit} />
+              <ButtonGroup handleClose={handleCloseEdit} />
             </form>
           </div>
         </div>
