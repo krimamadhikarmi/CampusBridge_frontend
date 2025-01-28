@@ -97,6 +97,42 @@ const Articles = () => {
     setEditForm(!editForm);
   };
 
+  const handleUpdateForm = async (updateArticle) => {
+    const formData = {
+      articleId: updateArticle.articleId,
+      creatorId: updateArticle.creatorId,
+      headline: updateArticle.headline,
+      tagline: updateArticle.tagline,
+      description: updateArticle.description,
+      dateUpdated: updateArticle.dateUpdated,
+    };
+    console.log(JSON.stringify(formData));
+    try {
+      const response = await axios.put(
+        `https://localhost:7276/api/Article/UpdateArticle/${formData.articleId}/${id}`,
+        JSON.stringify(formData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log('Resonse', response.data);
+      setArticles((prevArticles) =>
+        prevArticles.map((article) =>
+          article.articleId === formData.articleId
+            ? { ...article, ...response.data } // Merge updated data
+            : article,
+        ),
+      );
+      setDropDown(false);
+
+      // Close the popup after submission
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleDeletePop = (aid) => {
     console.log(aid, 'aid');
     setSelectArticleId(aid);
@@ -174,7 +210,7 @@ const Articles = () => {
                 tagline={article.tagline}
                 date={article.datePosted}
                 author={article.creatorId}
-                cid={article.articleId}
+                aid={article.articleId}
                 description={article.description}
                 handleDeletePop={handleDeletePop}
                 deleteData={deleteData}
@@ -189,6 +225,7 @@ const Articles = () => {
                 handleTagLine={handleTagLine}
                 handleTitle={handleTitle}
                 setHeadLine={setHeadLine}
+                handleUpdateForm={handleUpdateForm}
               />
             </div>
           ))}

@@ -8,13 +8,15 @@ import axios from 'axios';
 import FormHeader from './common/FormHeader';
 import CustomFormField from './customFormField';
 import ButtonGroup from './common/ButtonGroup';
+
 const ArticleList = ({
   headline,
   description,
   date,
   author,
-  cid,
+  aid,
   tagline,
+  tag,
   handleDeletePop,
   deleteData,
   setDeleteData,
@@ -23,6 +25,7 @@ const ArticleList = ({
   editForm,
   handleEdit,
   currentDate,
+  handleUpdateForm,
   toggleDown,
   handleTitle,
   handleTagLine,
@@ -33,7 +36,7 @@ const ArticleList = ({
   const [articlepop, setArticlePop] = useState(false);
   const { id } = useToken();
   const [articleHeadline, setArticleHeadline] = useState(headline);
-  const [articleTag, setArticleTag] = useState(tagline);
+  const [articleTagline, setArticleTagline] = useState(tagline);
   const [articleDescription, setArticleDescription] = useState(description);
   const [dateUpdated, setDateUpdated] = useState(currentDate);
 
@@ -41,9 +44,19 @@ const ArticleList = ({
     setArticlePop(!articlepop);
   };
 
-  const handleEditFormSubmit = (e, aid) => {
+  const handleEditFormSubmit = (e) => {
     e.preventDefault();
-    const updateArticle = {};
+    const updateArticle = {
+      articleId: aid,
+      creatorId: id,
+      headline: articleHeadline,
+      tagline: articleTagline,
+      description: articleDescription,
+      dateUpdated: new Date().toISOString(),
+    };
+    console.log(JSON.stringify(updateArticle));
+    handleEdit();
+    handleUpdateForm(updateArticle);
   };
 
   return (
@@ -61,7 +74,7 @@ const ArticleList = ({
         {author === id && (
           <div className="notice-options">
             <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" onClick={handleEdit} />
-            <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={() => handleDeletePop(cid)} />
+            <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={() => handleDeletePop(aid)} />
           </div>
         )}
       </div>
@@ -88,37 +101,37 @@ const ArticleList = ({
         <div className="form-overlay">
           <div className="form-design">
             <FormHeader title={'Edit Article'} handleForm={handleEdit} />
-            <form>
-              <CustomFormField
-                label={'Tag'}
-                name={'tag'}
-                type={'text'}
-                value={tagline}
-                onChange={(e) => handleTag(e)}
-              />
+            <form onSubmit={handleEditFormSubmit}>
+              <CustomFormField label={'Tag'} name={'tag'} type={'text'} value={aid} disabled />
               <CustomFormField
                 label={'Headline'}
                 name={'headline'}
                 type={'text'}
-                value={headline}
-                onChange={(e) => setHeadLine(e.target.value)}
+                value={articleHeadline}
+                onChange={(e) => setArticleHeadline(e.target.value)}
               />
               <CustomFormField
                 label={'Tagline'}
                 name={'tagline'}
                 type={'text'}
                 value={tagline}
-                onChange={(e) => handleTagLine(e)}
+                onChange={(e) => setArticleTagline(e.target.value)}
               />
               <CustomFormField
                 label={'Description'}
                 name={'description'}
                 type={'text'}
-                value={description}
-                onChange={(e) => handleDescription(e)}
+                value={articleDescription}
+                onChange={(e) => setArticleDescription(e.target.value)}
               />
 
-              <CustomFormField label={'Date'} name={'date'} type={'date'} value={date.split('T')[0]} />
+              <CustomFormField
+                label={'Date'}
+                name={'date'}
+                type={'date'}
+                value={dateUpdated}
+                onChange={(e) => setDateUpdated(e.target.value)}
+              />
 
               <ButtonGroup handleClose={handleEdit} />
             </form>

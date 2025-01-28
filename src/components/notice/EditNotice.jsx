@@ -64,7 +64,7 @@ const EditNotice = ({ handleEditForm, nid, content, title, getCheckboxOptions, c
   };
 
   const handleEditFormSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     console.log('notice id:', nid);
     const updatedNotice = {
       noticeId: nid,
