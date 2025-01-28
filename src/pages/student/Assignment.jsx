@@ -2,7 +2,8 @@ import Navbar from '../../components/Navbar';
 import StudentAssignmentList from '../../components/assignment/StudentAssignmentList';
 import PageHeader from '../../components/common/PageHeader';
 import '../../styles/Assignment.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 //function to get assignment status
 const getStatus = (submissionDate) => {
@@ -16,30 +17,36 @@ const getStatus = (submissionDate) => {
   return { statusText: 'Past Due', statusClass: 'status-past-due' };
 };
 
+
+
 const Assignment = () => {
   const [filterBy, setFilterBy] = useState('all'); // State to track filtering
 
-  const assignments = [
-    {
-      id: 1,
-      title: 'Introduction to Data Science',
-      subject: 'Data Science',
-      submissionDate: '2024-12-10',
-      question: './assignment.pdf',
-    },
-    {
-      id: 2,
-      title: 'Advanced React Concepts',
-      subject: 'Web Development',
-      submissionDate: '2024-12-02',
-    },
-    {
-      id: 3,
-      title: 'Java React Concepts',
-      subject: 'Development',
-      submissionDate: '2024-01-15',
-    },
-  ];
+  const[assignments,setAssignment]=useState([]);
+
+  useEffect(()=>{
+    setAssignment([]);
+    fetchAssignments();
+  },[]);
+  
+  const fetchAssignments = async () => {
+    try {
+      const response = await axios.get('https://localhost:7276/api/Assignment/GetAssignment');
+      console.log('articles', response.data);
+      
+      const assignmentData = response.data.map(data=>({
+        id:data.assignmentId,
+        title:data.question,
+        subject:data.courseDTO.courseTitle,
+        submissionDate:data.submissionDate.split('T')[0],
+        question:data.filePath
+      }));
+      setAssignment(assignmentData);
+      console.log(assignmentData);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   // Sort and filter assignments based on state
   const filteredAssignments = assignments.filter((assignment) => {
@@ -69,7 +76,7 @@ const Assignment = () => {
             const { statusText, statusClass } = getStatus(assignment.submissionDate);
             return (
               <StudentAssignmentList
-                key={assignment.id} // Always use a unique key when rendering lists
+                key={assignment.id} 
                 index={index}
                 id={assignment.id}
                 title={assignment.title}

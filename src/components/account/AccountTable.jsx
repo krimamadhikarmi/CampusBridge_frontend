@@ -6,44 +6,49 @@ import { useToken } from '../../context/TokenContext';
 const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch }) => {
   const [deleteData, setDeleteData] = useState(false);
   const [selectAccountId, setSelectAccountId] = useState(null);
-  // const { id } = useToken();
+  const [selectAccountRole, setSelectAccountRole] = useState(null);
 
-  // const handleDeletePop = (aid) => {
-  //   console.log(aid, 'id');
-  //   setSelectAccountId(aid);
-  //   setDeleteData(true);
-  // };
+  const { id } = useToken();
 
-  // const handleDelete = async (aid) => {
-  //   console.log(aid, 'user');
-  //   try {
-  //     const roleResponse = await axios.get(`https://localhost:7276/api/Auth/GetNameFromId?id=${aid}`);
+  const handleDeletePop = (aid,arole) => {
+    console.log(aid, 'id');
+    console.log(arole, 'role');
+    setSelectAccountId(aid);
+    setSelectAccountRole(arole);
+    setDeleteData(true);
+    // handleDelete(aid,arole);
+  };
 
-  //     console.log(roleResponse.data.role, 'role');
+  const handleDelete = async (aid,arole) => {
+    console.log(aid, 'user');
+    try {
+      // const roleResponse = await axios.get(`https://localhost:7276/api/Auth/GetNameFromId?id=${aid}`);
 
-  //     const role = roleResponse.data.role;
+      // console.log(roleResponse.data.role, 'role');
 
-  //     let deleteUrl = '';
+      // const role = roleResponse.data.role;
 
-  //     if (role === 'Student') {
-  //       deleteUrl = `https://localhost:7276/api/Student/DeleteStudent/${aid}/${id}`;
-  //     } else if (role === 'Teacher') {
-  //       deleteUrl = `https://localhost:7276/api/Teacher/DeleteTeacher/${aid}/${id}`;
-  //     } else {
-  //       console.error('Unknown role:', role);
-  //       return;
-  //     }
+      let deleteUrl = '';
 
-  //     const response = await axios.delete(deleteUrl);
-  //     console.log(response.data);
+      if (arole === 'Student') {
+        deleteUrl = `https://localhost:7276/api/Student/DeleteStudent/${aid}/${id}`;
+      } else if (arole === 'Teacher') {
+        deleteUrl = `https://localhost:7276/api/Teacher/DeleteTeacher/${aid}/${id}`;
+      } else {
+        console.error('Unknown role:', role);
+        return;
+      }
 
-  //     // handleTeacherFetch();
-  //     // handleStudentFetch();
-  //     setDeleteData(false);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+      const response = await axios.delete(deleteUrl);
+      console.log(response.data);
+
+      // handleTeacherFetch();
+      // handleStudentFetch();
+      setDeleteData(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div className="account-present">
       <table className="account-table">
@@ -63,10 +68,10 @@ const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch }) =>
               <td>{account.name}</td>
               <td>{account.role}</td>
               <td className="activity-button">
-                <button className="view-button">Edit</button>
-                {/* <button className="delete-button" onClick={() => handleDeletePop(account.email)}>
+                {/* <button className="view-button">Edit</button> */}
+                <button className="delete-button" onClick={() => handleDeletePop(account.id,account.role)}>
                   Delete
-                </button> */}
+                </button>
               </td>
             </tr>
           ))}
@@ -75,8 +80,8 @@ const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch }) =>
       {deleteData && (
         <ConfirmPopup
           onClose={() => setDeleteData(false)}
-          // onConfirm={() => handleDelete(selectAccountId)}
-          title={'Are you sure you wnat to delete?'}
+          onConfirm={() => handleDelete(selectAccountId,selectAccountRole)}
+          title={'Are you sure you want to delete?'}
         />
       )}
     </div>

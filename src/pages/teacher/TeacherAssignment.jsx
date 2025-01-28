@@ -4,29 +4,10 @@ import '../../styles/Assignment.css';
 import { useState, useEffect } from 'react';
 import AddAssignmentForm from '../../components/assignment/AddAssignmentForm';
 import AssignmentList from '../../components/assignment/AssignmentList';
+import axios from 'axios';
 
 const TeacherAssignment = () => {
-  const assignments = [
-    {
-      id: 1,
-      title: 'Introduction to Data Science',
-      subject: 'Data Science',
-      submissionDate: '2024-12-10',
-    },
-    {
-      id: 2,
-      title: 'Advanced React Concepts',
-      subject: 'Web Development',
-      submissionDate: '2024-11-15',
-    },
-    {
-      id: 3,
-      title: 'Java React Concepts',
-      subject: 'Development',
-      submissionDate: '2024-01-15',
-    },
-  ];
-
+  
   const [popup, setPopUp] = useState(false);
 
   const [currentDate, setCurrentDate] = useState('');
@@ -38,7 +19,31 @@ const TeacherAssignment = () => {
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
+    fetchAssignments();
   }, []);
+
+  
+  const[assignments,setAssignment]=useState([]);
+
+  const fetchAssignments = async () => {
+    try {
+      const response = await axios.get('https://localhost:7276/api/Assignment/GetAssignment');
+      console.log('articles', response.data);
+      
+      const assignmentData = response.data.map(data=>({
+        id:data.assignmentId,
+        title:data.question,
+        subject:data.courseDTO.courseTitle,
+        submissionDate:data.submissionDate.split('T')[0]
+      }));
+      setAssignment(assignmentData);
+      console.log(assignmentData);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+
 
   return (
     <>

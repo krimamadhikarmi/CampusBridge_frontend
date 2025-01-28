@@ -40,9 +40,17 @@ const NoticeList = ({
         <p className="notice-title">{title}</p>
         <p className="notice-data">{content}</p>
         <div className="notice-bottom">
-          <p className="notice-category">{creator} </p>
-          <p className="notice-date">Date Created:{createdDate.split('T')[0]}</p>
-          <p className="notice-date">Date Updated:{updatedDate.split('T')[0]}</p>
+          <span className="notice-category">{creator} </span>
+          {createdDate != updatedDate ? (
+                <div>
+                  <span className="article-date">Date Posted: {createdDate.split('T')[0]}</span>
+                  <span className="article-date">Date Upated: {updatedDate.split('T')[0]}</span>
+                </div>
+              ) : (
+                <div>
+                  <span className="article-date">Date Created: {updatedDate.split('T')[0]}</span>
+                </div>
+              )}
 
         </div>
       </div>

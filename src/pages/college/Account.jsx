@@ -20,6 +20,8 @@ const Account = () => {
   const [createpop, setCreatePop] = useState(false);
   const [accountType, setAccountType] = useState('');
 
+  const [tbldata, setTbldata] = useState([]);
+
   const handleCreate = () => {
     setCreatePop(!createpop);
   };
@@ -28,12 +30,18 @@ const Account = () => {
     setAccountType(type);
     setCreatePop(true);
   };
-
+  
     // const handleStudentFetch = async () => {
     //   try {
     //     const response = await axios.get('https://localhost:7276/api/Student/GetStudent');
-    //     console.log('studnets', response.data);
+    //     console.log('students', response.data);
     //     setStudents(response.data);
+    //     const newTbldata = response.data.map(data => ({
+    //       id: data.studentId,
+    //       name: data.name,
+    //       role: 'Student',
+    //     }));
+    //     setTbldata(prevData => [...prevData, ...newTbldata]);
     //   } catch (e) {
     //     console.log(e);
     //   }
@@ -44,74 +52,57 @@ const Account = () => {
     //     const response = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
     //     console.log('teachers', response.data);
     //     setTeachers(response.data);
+    //     const newTbldata = response.data.map(data => ({
+    //       id: data.teacherId,
+    //       name: data.name,
+    //       role: 'Teacher',
+    //     }));
+    //     setTbldata(prevData => [...prevData, ...newTbldata]);
     //   } catch (e) {
     //     console.log(e);
     //   }
     // };
-    // useEffect(() => {
-    //   handleStudentFetch();
-    //   handleTeacherFetch();
-    // }, []);
-    const data = [
-      {
-      id: 1,
-      name: 'Krima Madhikarmi',
-      role: 'Student',
-    },
-    {
-      id: 2,
-      name: 'John Doe',
-      role: 'Student',
-    },
-    {
-      id: 3,
-      name: 'Jane Smith',
-      role: 'Teacher',
-    },
-    {
-      id: 4,
-      name: 'Emily Davis',
-      role: 'Teacher',
-    },
-    {
-      id: 5,
-      name: 'Michael Johnson',
-      role: 'Student',
-    },
-    {
-      id: 6,
-      name: 'Alice Williams',
-      role: 'Teacher',
-    },
-    {
-      id: 7,
-      name: 'David Brown',
-      role: 'Student',
-    },
-    {
-      id: 8,
-      name: 'Sophia White',
-      role: 'Teacher',
-    },
-    {
-      id: 9,
-      name: 'Liam Lee',
-      role: 'Student',
-    },
-    {
-      id: 10,
-      name: 'Olivia Garcia',
-      role: 'Teacher',
-    },
-  ];
+    useEffect(() => {
+      const fetchAllData = async () => {
+        try {
+          // Clear table data before fetch
+          const studentResponse = await axios.get('https://localhost:7276/api/Student/GetStudent');
+          const teacherResponse = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
+    
+          const studentData = studentResponse.data.map(data => ({
+            id: data.studentId,
+            name: data.name,
+            role: 'Student',
+          }));
+    
+          const teacherData = teacherResponse.data.map(data => ({
+            id: data.teacherId,
+            name: data.name,
+            role: 'Teacher',
+          }));
+    
+          setTbldata([...studentData, ...teacherData]);
+        } catch (e) {
+          console.error(e);
+        }
+      };
+    
+      fetchAllData();
+    }, []);
 
   //create student form submit
   const handleStudentSubmit = async (studentData, event) => {
     if (studentData.isAuthor === '') {
       studentData.isAuthor = "false";
+    }else{
+      studentData.isAuthor = "true";
     }
     if (studentData.isClubHead === '') {
       studentData.isClubHead = "false";
+    }
+    else{
+      studentData.isClubHead = "true";
+
     }
     console.log(JSON.stringify(studentData), 'fullstdata');
 
@@ -146,6 +137,7 @@ const Account = () => {
       );
 
       console.log('Response data:', response.data);
+      
       // handleStudentFetch();
     } catch (e) {
       console.log(e);
@@ -194,7 +186,7 @@ const Account = () => {
   //   return [];
   // };
 
-  const filterData = selectaccount === 'All' ? data : data.filter((account) => account.role === selectaccount);
+  const filterData = selectaccount === 'All' ? tbldata : tbldata.filter((account) => account.role === selectaccount);
 
   return (
     <>

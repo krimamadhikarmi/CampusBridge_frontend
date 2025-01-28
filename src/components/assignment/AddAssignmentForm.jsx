@@ -26,7 +26,9 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
     formData.append('TeacherId', TeacherId);
 
     if (file) {
-      formData.append('File', file);
+      formData.append('FileId', file.name);
+      formData.append('FileToUpload', file);
+      formData.append('FileName', file.name);
     }
     console.log('Form submitted successfully!');
     //checking formData files
@@ -35,9 +37,11 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
     }
 
     try {
-      const response = axios.post('https://localhost:7276/api/Assignment/CreateAssignment', JSON.stringify(formData), {
+      const response = axios.post('https://localhost:7276/api/Assignment/CreateAssignment',
+        formData, 
+        {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
       });
       console.log('assignment', response.data);
@@ -89,7 +93,7 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
               name={'AssignedDate'}
               type={'date'}
               value={currentDate}
-              onChange={(e) => setAssignedDate(e.target.value)}
+              onChange={(e) => setAssignedDate(currentDate)}
             />
             <CustomFormField
               label={'Submission Date'}

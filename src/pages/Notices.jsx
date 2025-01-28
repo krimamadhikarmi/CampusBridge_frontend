@@ -97,6 +97,12 @@ const Notices = () => {
       });
       console.log('Resonse', response.data);
       setShowPopUp(false);
+       toast.success('Notice created successfully!', {
+              style: {
+                backgroundColor: '#004d4d',
+                color: '#ffffff',
+              },
+            });
       setNotices((prevNotice) => [...prevNotice, response.data]);
       // Close the popup after submission
     } catch (e) {
@@ -157,7 +163,7 @@ const Notices = () => {
       title: updatedNotice.title,
       description: updatedNotice.description,
       directedTo: updatedNotice.directedTo,
-      datePosted: updatedNotice.dateUpdated,
+      dateUpdated: updatedNotice.dateUpdated,
       creatorId: id,
     };
     console.log(JSON.stringify(formData));
@@ -208,7 +214,7 @@ const Notices = () => {
       <PageHeader pageTitle={'Notices'} />
       <ToastContainer
         position="top-center"
-        autoClose={3000}
+        autoClose={1000}
         hideProgressBar
         newestOnTop={false}
         closeButton={false}

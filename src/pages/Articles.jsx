@@ -184,7 +184,7 @@ const Articles = () => {
       <PageHeader pageTitle={'Articles'} />
       <ToastContainer
         position="top-center"
-        autoClose={3000}
+        autoClose={1000}
         hideProgressBar
         newestOnTop={false}
         closeButton={false}

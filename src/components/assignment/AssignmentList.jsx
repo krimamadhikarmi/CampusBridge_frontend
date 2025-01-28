@@ -14,6 +14,7 @@ const AssignmentList = ({ title, subject, submissionDate, index }) => {
 //     setCurrentDate(today);
 //   }, []);
 
+
   const handleDelete = () => {
     setDeletePop(!deletePop);
   };
