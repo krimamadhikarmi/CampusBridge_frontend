@@ -63,10 +63,11 @@ const EditNotice = ({ handleEditForm, nid, content, title, getCheckboxOptions, c
     }
   };
 
-  const handleEditFormSubmit = (e, nid) => {
-    e.preventDefault();
+  const handleEditFormSubmit = (e) => {
+    // e.preventDefault();
+    console.log('notice id:', nid);
     const updatedNotice = {
-      NoticeId: nid,
+      noticeId: nid,
       title: noticeTitle,
       description: noticeContent,
       directedTo: directedTo, // Array of selected checkboxes

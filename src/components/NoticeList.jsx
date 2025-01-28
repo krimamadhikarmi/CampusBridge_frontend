@@ -18,7 +18,7 @@ const NoticeList = ({
   setDeleteData,
   handleDelete,
   selectNoticeId,
-  handleUpdateForm
+  handleUpdateForm,
 }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [currentDate, setCurrentDate] = useState('');

@@ -32,9 +32,18 @@ const ArticleList = ({
 }) => {
   const [articlepop, setArticlePop] = useState(false);
   const { id } = useToken();
+  const [articleHeadline, setArticleHeadline] = useState(headline);
+  const [articleTag, setArticleTag] = useState(tagline);
+  const [articleDescription, setArticleDescription] = useState(description);
+  const [dateUpdated, setDateUpdated] = useState(currentDate);
 
   const handleArticle = () => {
     setArticlePop(!articlepop);
+  };
+
+  const handleEditFormSubmit = (e, aid) => {
+    e.preventDefault();
+    const updateArticle = {};
   };
 
   return (

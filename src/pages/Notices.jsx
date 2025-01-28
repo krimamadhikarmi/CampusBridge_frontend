@@ -172,10 +172,14 @@ const Notices = () => {
         },
       );
       console.log('Resonse', response.data);
-      setShowPopUp(false);
       setNotices((prevNotices) =>
-        prevNotices.map((notice) => (notice.noticeId === formData.noticeId ? formData : notice)),
+        prevNotices.map((notice) =>
+          notice.noticeId === formData.noticeId
+            ? { ...notice, ...response.data } // Merge updated data
+            : notice,
+        ),
       );
+      setShowPopUp(false);
 
       // Close the popup after submission
     } catch (e) {
@@ -241,6 +245,7 @@ const Notices = () => {
                 handleDelete={handleDelete}
                 handleDeletePop={handleDeletePop}
                 selectNoticeId={selectNoticeId}
+                handleUpdateForm={handleUpdateForm}
               />
             </div>
           ))}
