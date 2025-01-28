@@ -24,6 +24,7 @@ const Articles = () => {
 
   const [currentDate, setCurrentDate] = useState('');
   const { role, id } = useToken();
+  const [editArticleId, setEditArticleId] = useState(null);
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -45,6 +46,15 @@ const Articles = () => {
     setDropDown(!dropdown);
   };
 
+  const handleEdit = (articleId) => {
+    if (editForm && editArticleId === articleId) {
+      setEditForm(false);
+      setEditArticleId(null);
+    } else {
+      setEditArticleId(articleId);
+      setEditForm(true);
+    }
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const articleData = {
@@ -93,9 +103,9 @@ const Articles = () => {
     }
   };
 
-  const handleEdit = () => {
-    setEditForm(!editForm);
-  };
+  // const handleEdit = () => {
+  //   setEditForm(!editForm);
+  // };
 
   const handleUpdateForm = async (updateArticle) => {
     const formData = {
@@ -120,10 +130,10 @@ const Articles = () => {
       console.log('Resonse', response.data);
       setArticles((prevArticles) =>
         prevArticles.map((article) =>
-          article.articleId === formData.articleId ? { ...article, ...response.data } : article,
+          article.articleId === updateArticle.articleId ? { ...article, ...response.data } : article,
         ),
       );
-      setDropDown(false);
+      setEditArticleId(null);
     } catch (e) {
       console.log(e);
     }
@@ -181,8 +191,8 @@ const Articles = () => {
         style={{
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -50%)', 
-          zIndex: 9999, 
+          transform: 'translate(-50%, -50%)',
+          zIndex: 9999,
         }}
       />
       {/* {console.log(role)} */}
@@ -213,8 +223,16 @@ const Articles = () => {
                 setDeleteData={setDeleteData}
                 handleDeleteData={handleDeleteData}
                 selectArticelId={selectArticelId}
-                handleEdit={handleEdit}
-                editForm={editForm}
+                // handleEdit={handleEdit}
+                // editForm={editForm}
+                // handleEdit={() => handleEdit(article.articleId)} // Pass the article ID to the handler
+                // editForm={editForm && editArticleId === article.articleId}
+                handleEdit={() => handleEdit(article.articleId)}
+                handleCloseEdit={() => {
+                  setEditForm(false);
+                  setEditArticleId(null);
+                }}
+                editForm={editForm && editArticleId === article.articleId}
                 currentDate={currentDate}
                 handleDescription={handleDescription}
                 handleTag={handleTag}
