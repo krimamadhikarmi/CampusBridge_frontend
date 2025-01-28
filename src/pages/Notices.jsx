@@ -157,7 +157,7 @@ const Notices = () => {
       title: updatedNotice.title,
       description: updatedNotice.description,
       directedTo: updatedNotice.directedTo,
-      datePosted: updatedNotice.dateUpdated,
+      dateUpdated: updatedNotice.dateUpdated,
       creatorId: id,
     };
     console.log(JSON.stringify(formData));
