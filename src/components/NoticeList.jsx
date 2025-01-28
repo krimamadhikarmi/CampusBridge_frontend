@@ -18,6 +18,7 @@ const NoticeList = ({
   setDeleteData,
   handleDelete,
   selectNoticeId,
+  handleUpdateForm
 }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [currentDate, setCurrentDate] = useState('');
@@ -53,11 +54,12 @@ const NoticeList = ({
       {showEdit && (
         <EditNotice
           handleEditForm={handleEditForm}
-          id={nid}
+          nid={nid}
           title={title}
           content={content}
           getCheckboxOptions={getCheckboxOptions}
           currentDate={currentDate}
+          handleUpdateForm={handleUpdateForm}
         />
       )}
 

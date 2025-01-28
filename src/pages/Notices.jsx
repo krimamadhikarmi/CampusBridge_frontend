@@ -150,6 +150,38 @@ const Notices = () => {
       </>
     );
   };
+
+  const handleUpdateForm = async (updatedNotice) => {
+    const formData = {
+      noticeId: updatedNotice.noticeId,
+      title: updatedNotice.title,
+      description: updatedNotice.description,
+      directedTo: updatedNotice.directedTo,
+      datePosted: updatedNotice.datePosted,
+      creatorId: id,
+    };
+    console.log(JSON.stringify(formData));
+    try {
+      const response = await axios.put(
+        `https://localhost:7276/api/Notice/UpdateNotice/${formData.noticeId}`,
+        JSON.stringify(formData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log('Resonse', response.data);
+      setShowPopUp(false);
+      setNotices((prevNotices) =>
+        prevNotices.map((notice) => (notice.noticeId === formData.noticeId ? formData : notice)),
+      );
+
+      // Close the popup after submission
+    } catch (e) {
+      console.log(e);
+    }
+  };
   // const filterData = selectCategory === 'All' ? notices : notices.filter((notice) => notice.creator === selectCategory);
 
   const filterNoticesByRole = () => {
@@ -220,6 +252,7 @@ const Notices = () => {
           currentDate={currentDate}
           getCheckboxOptions={getCheckboxOptions}
           handleSubmit={handleNoticeSubmit}
+          handleUpdateForm={handleUpdateForm}
         />
       )}
     </>
