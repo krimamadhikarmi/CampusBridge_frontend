@@ -9,7 +9,7 @@ const NoticeList = ({
   nid,
   title,
   content,
-  category,
+  creator,
   role,
   date,
   getCheckboxOptions,
@@ -38,16 +38,17 @@ const NoticeList = ({
         <p className="notice-title">{title}</p>
         <p className="notice-data">{content}</p>
         <div className="notice-bottom">
-          <p className="notice-category">{category} </p>
-          <p className="notice-date">Date:{date}</p>
+          <p className="notice-category">{creator} </p>
+          <p className="notice-date">Date:{date.split('T')[0]}</p>
         </div>
       </div>
-      {role.includes('College') || role.includes('University') || role.includes('ClubHead') ? (
+
+      {role[0] === creator && (
         <div className="notice-options">
           <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" onClick={handleEditForm} />
           <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={() => handleDeletePop(nid)} />
         </div>
-      ) : null}
+      )}
 
       {showEdit && (
         <EditNotice

@@ -27,12 +27,22 @@ const Notices = () => {
     setCurrentDate(today);
 
     const fetchNotice = async () => {
-      try {
-        const response = await axios.get('https://localhost:7276/api/Notice/GetNotice');
-        console.log('Response Data:', response.data);
-        setNotices(response.data);
-      } catch (e) {
-        console.log('Error:', e);
+      if (role.includes('University') || role.includes('College')) {
+        try {
+          const response = await axios.get('https://localhost:7276/api/Notice/GetNotice');
+          console.log('Response Data:', response.data);
+          setNotices(response.data);
+        } catch (e) {
+          console.log('Error:', e);
+        }
+      } else if (role.includes('Student') || role.includes('Teacher')) {
+        try {
+          const response = await axios.get(`https://localhost:7276/api/Notice/GetNoticeByAudience/${role}`);
+          console.log('Response Data:', response.data);
+          setNotices(response.data);
+        } catch (e) {
+          console.log('Error:', e);
+        }
       }
     };
     fetchNotice();
@@ -140,7 +150,21 @@ const Notices = () => {
       </>
     );
   };
-  const filterData = selectCategory === 'All' ? notices : notices.filter((notice) => notice.creator === selectCategory);
+  // const filterData = selectCategory === 'All' ? notices : notices.filter((notice) => notice.creator === selectCategory);
+
+  const filterNoticesByRole = () => {
+    if (role.includes('University')) {
+      return notices.filter((notice) => notice.creator === 'University');
+    }
+    if (role.includes('College')) {
+      return notices.filter((notice) => notice.creator === 'College' || notice.directedTo.includes('College'));
+    }
+    if (role.includes('Student') || role.includes('Teacher')) {
+      return selectCategory === 'All' ? notices : notices.filter((notice) => notice.creator === selectCategory);
+    }
+  };
+
+  const filterData = filterNoticesByRole();
   return (
     <>
       {console.log(notices)}
@@ -160,7 +184,7 @@ const Notices = () => {
         }}
       />
       <div className="notice-box">
-        <SelectNotice selectCategory={selectCategory} setSelectCategory={setSelectCategory} />
+        <SelectNotice selectCategory={selectCategory} setSelectCategory={setSelectCategory} role={role} />
         {role.includes('College') || role.includes('University') || role.includes('ClubHead') ? (
           <div>
             <button className="add-notice-button" onClick={handleArticlePop}>
@@ -176,7 +200,7 @@ const Notices = () => {
                 nid={notice.noticeId}
                 title={notice.title}
                 content={notice.description}
-                category={notice.creator}
+                creator={notice.creator}
                 date={notice.datePosted}
                 getCheckboxOptions={getCheckboxOptions}
                 role={role}

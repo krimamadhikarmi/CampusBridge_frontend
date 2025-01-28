@@ -62,6 +62,7 @@ const Login = () => {
           const userRole = response.data.role;
           const userId = response.data.id;
           console.log(response.data.id)
+          console.log(response.data)
     
           console.log('Token data:', jwtToken);
           console.log('role', userRole);
