@@ -66,7 +66,7 @@ const SyllabusTable = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="2">No syllabuses available</td>
+              <td colSpan="3">No syllabuses available</td>
             </tr>
           )}
         </tbody>

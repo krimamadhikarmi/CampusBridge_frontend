@@ -204,7 +204,8 @@ const Articles = () => {
               <ArticleList
                 headline={article.headline}
                 tagline={article.tagline}
-                date={article.datePosted}
+                createdDate={article.datePosted}
+                updatedDate={article.dateUpdated}
                 author={article.creatorId}
                 aid={article.articleId}
                 description={article.description}

@@ -50,13 +50,13 @@ const GeneralTab = () => {
             <b>Name:</b> {info?.name}
           </p>
           <p>
-            <b>Faculty:</b> {info?.academicDTO.faculty}
+            {/* <b>Faculty:</b> {info?.academicDTO.faculty} */}
           </p>
           {/* <p>
                 <b>College:</b> {user.college}
               </p> */}
           <p>
-            <b>Batch:</b> {info?.academicDTO.batch}
+            {/* <b>Batch:</b> {info?.academicDTO.batch} */}
           </p>
           <p>
             <b>Address:</b> {info?.location}

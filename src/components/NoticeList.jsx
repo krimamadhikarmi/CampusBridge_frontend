@@ -11,7 +11,8 @@ const NoticeList = ({
   content,
   creator,
   role,
-  date,
+  createdDate,
+  updatedDate,
   getCheckboxOptions,
   handleDeletePop,
   deleteData,
@@ -40,11 +41,13 @@ const NoticeList = ({
         <p className="notice-data">{content}</p>
         <div className="notice-bottom">
           <p className="notice-category">{creator} </p>
-          <p className="notice-date">Date:{date.split('T')[0]}</p>
+          <p className="notice-date">Date Created:{createdDate.split('T')[0]}</p>
+          <p className="notice-date">Date Updated:{updatedDate.split('T')[0]}</p>
+
         </div>
       </div>
 
-      {role[0] === creator && (
+      {role.includes(creator) && (
         <div className="notice-options">
           <FontAwesomeIcon icon={faPenToSquare} className="fa-icon" onClick={handleEditForm} />
           <FontAwesomeIcon icon={faTrash} className="fa-icon-trash" onClick={() => handleDeletePop(nid)} />

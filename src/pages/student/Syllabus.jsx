@@ -50,7 +50,7 @@ const Syllabus = () => {
                       className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
                       onClick={() => handleCourseClick(course)}
                     >
-                      {course.courseId}
+                      {course.courseTitle}
                     </p>
                   )
                 ))}
@@ -65,7 +65,7 @@ const Syllabus = () => {
                     className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
                     onClick={() => handleCourseClick(course)}
                   >
-                    {course.courseId}
+                    {course.courseTitle}
                   </p>
                 ))}
               </div>
