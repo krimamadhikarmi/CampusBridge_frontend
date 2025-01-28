@@ -4,7 +4,6 @@ import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ConfirmPopup from './LogoutPopup';
 import { useToken } from '../context/TokenContext';
-import axios from 'axios';
 import FormHeader from './common/FormHeader';
 import CustomFormField from './customFormField';
 import ButtonGroup from './common/ButtonGroup';
@@ -27,12 +26,6 @@ const ArticleList = ({
   handleEdit,
   currentDate,
   handleUpdateForm,
-  toggleDown,
-  handleTitle,
-  handleTagLine,
-  handleTag,
-  handleDescription,
-  setHeadLine,
 }) => {
   const [articlepop, setArticlePop] = useState(false);
   const { id } = useToken();

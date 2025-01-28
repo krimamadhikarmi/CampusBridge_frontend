@@ -104,26 +104,23 @@ const Calendar = () => {
     console.log('added date');
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (scheduleData) => {
+    // event.preventDefault();
 
-    const unavailableDates = dateState.map((date) => date.value); // Only extract the date values
-    const gapBetweenExams = gapState.map((gap) => gap.value);
-
-    const scheduledata = {
-      semester: semester,
-      startDate: startdate,
-      endDate: enddate,
-      unavailableDates: unavailableDates,
-      gapBetweenExams: gapBetweenExams,
+    const completeScheduleData = {
+      semester: scheduleData.semester,
+      startDate: scheduleData.startDate,
+      endDate: scheduleData.endDate,
+      unavailableDates: scheduleData.unavailableDates,
+      gapBetweenExams: scheduleData.gapBetweenExams,
     };
 
-    console.log(JSON.stringify(scheduledata));
+    console.log(JSON.stringify(completeScheduleData), 'complete');
 
     try {
       const response = await axios.post(
         'https://localhost:7276/api/Schedule/CreateExamSchedule',
-        JSON.stringify(scheduledata),
+        JSON.stringify(completeScheduleData),
         {
           headers: {
             'Content-Type': 'application/json',

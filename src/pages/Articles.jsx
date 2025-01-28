@@ -120,14 +120,10 @@ const Articles = () => {
       console.log('Resonse', response.data);
       setArticles((prevArticles) =>
         prevArticles.map((article) =>
-          article.articleId === formData.articleId
-            ? { ...article, ...response.data } // Merge updated data
-            : article,
+          article.articleId === formData.articleId ? { ...article, ...response.data } : article,
         ),
       );
       setDropDown(false);
-
-      // Close the popup after submission
     } catch (e) {
       console.log(e);
     }
@@ -183,10 +179,10 @@ const Articles = () => {
         newestOnTop={false}
         closeButton={false}
         style={{
-          top: '50%', // Vertical center
-          left: '50%', // Horizontal center
-          transform: 'translate(-50%, -50%)', // Offset the toast to perfectly center it
-          zIndex: 9999, // Ensure it's on top of other elements (like the navbar)
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)', 
+          zIndex: 9999, 
         }}
       />
       {/* {console.log(role)} */}
