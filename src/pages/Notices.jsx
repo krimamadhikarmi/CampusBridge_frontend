@@ -237,7 +237,8 @@ const Notices = () => {
                 title={notice.title}
                 content={notice.description}
                 creator={notice.creator}
-                date={notice.datePosted}
+                createdDate={notice.datePosted}
+                updatedDate={notice.dateUpdated}
                 getCheckboxOptions={getCheckboxOptions}
                 role={role}
                 deleteData={deleteData}

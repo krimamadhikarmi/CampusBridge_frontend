@@ -11,7 +11,8 @@ import ButtonGroup from './common/ButtonGroup';
 const ArticleList = ({
   headline,
   description,
-  date,
+  createdDate,
+  updatedDate,
   author,
   aid,
   tagline,
@@ -61,10 +62,18 @@ const ArticleList = ({
           {headline}
         </h2>
         <p className="article-description">{tagline}</p>
-        <div className="article-info">
-          <span className="article-date">DatePosted: {date.split('T')[0]}</span>
-          <p className="author-name">{author}</p>
-        </div>
+        {createdDate != updatedDate ? (
+                <div className="article-info">
+                  <span className="article-date">Date Posted: {createdDate.split('T')[0]}</span>
+                  <span className="article-date">Date Upated: {updatedDate.split('T')[0]}</span>
+                  <p className="author-name">By {author}</p>
+                </div>
+              ) : (
+                <div className="article-info">
+                  <span className="article-date">Date Created: {updatedDate.split('T')[0]}</span>
+                  <p className="author-name">By {author}</p>
+                </div>
+              )}
 
         {author === id && (
           <div className="notice-options">
@@ -81,11 +90,21 @@ const ArticleList = ({
             <CloseButton toggleBox={handleArticle} variant={'articlelist'} />
             <div className="article-details">
               <h2>{headline}</h2>
-              <div className="article-info">
-                <span className="article-date">Date Posted: {date.split('T')[0]}</span>
-                <p className="author-name">By {author}</p>
-              </div>
-
+              {createdDate != updatedDate ? (
+                <div className="article-info">
+                  <span className="article-date">Date Posted: {createdDate.split('T')[0]}</span>
+                  <span className="article-date">Date Upated: {updatedDate.split('T')[0]}</span>
+                  <p className="author-name">By {author}</p>
+                </div>
+              ) : (
+                <div className="article-info">
+                  <span className="article-date">Date Created: {updatedDate.split('T')[0]}</span>
+                  <p className="author-name">By {author}</p>
+                </div>
+              )}
+              {/* <div className="article-image-wrapper">
+                <img src={imageUrl} alt={headline} className="article-popup-image" />
+              </div> */}
               <p>{description}</p>
             </div>
           </div>
