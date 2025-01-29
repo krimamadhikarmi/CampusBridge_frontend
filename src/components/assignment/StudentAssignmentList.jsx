@@ -11,7 +11,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
   const [assignmentPop, setAssignmentPop] = useState(false);
   const [answer, setText] = useState('');
 
-  const [submissionId, setSubmissionId] = useState(1);
+  const [submissionId, setSubmissionId] = useState('');
   const { id: tid } = useToken();
   const [files, setFile] = useState(null);
 
@@ -27,7 +27,13 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     console.log('assign id:', id);
     console.log('text', answer);
     console.log('file', files);
-    // setSubmissionId(submissionId+1);
+    const newSubmissionId = "SUBMISSION" + files?.name + id + uuidv4();
+    setSubmissionId(newSubmissionId);
+    
+    console.log("files.name: ", files?.name);
+    console.log("id: ", id);
+    console.log("uuidv4(): ", uuidv4());
+    console.log(newSubmissionId);
     const formData = new FormData();
     formData.append('SubmissionId', submissionId);
     formData.append('Answer', answer);
