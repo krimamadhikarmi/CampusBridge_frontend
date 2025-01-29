@@ -51,7 +51,7 @@ const AddExamForm = ({
   };
 
   const handleCreateSubmit = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     const scheduleData = {
       semester: Semester,
       startDate: StartDate,
