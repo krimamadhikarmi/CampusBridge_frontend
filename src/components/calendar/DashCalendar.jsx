@@ -3,14 +3,15 @@ import { format, getDay, isEqual, isSameDay, isSameMonth, isToday, parseISO } fr
 import { useToken } from '../../context/TokenContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddExamForm from './AddExamForm';
 // import { DateReducer, GapReducer, initialDate, initialGap } from '../../hooks/reducer';
 // import { useReducer } from 'react';
 import axios from 'axios';
-import FormHeader from '../common/FormHeader';
-import CustomFormField from '../customFormField';
-// import { useState } from 'react';
+
+import AddTeacherSchedule from './AddTeacherSchedule';
+// import { ButtonGroup } from 'flowbite-react';
+// import {useState,usE } from 'react';
 const DashCalendar = ({
   previousMonth,
   firstDayCurrentMonth,
@@ -24,8 +25,22 @@ const DashCalendar = ({
 }) => {
   const { role } = useToken();
   // const role = 'University';
-  const [selectedSemester, setSelectedSemester] = useState('');
-  const [teachers, setTeachers] = useState([]);
+  // const [selectedSemester, setSelectedSemester] = useState('');
+  // const [teachers, setTeachers] = useState([]);
+  // const [startDate, setStartDate] = useState('');
+  // const [endDate, setEndDate] = useState('');
+  // const [breakMinutes, setBreakMinutes] = useState(0);
+  // const [slots, setSlots] = useState('');
+
+  // const addHolidays = () => {
+  //   if (currentHolidays.trim() !== '') {
+  //     setFromData((prev) => ({
+  //       ...prev,
+  //       holidays: [...prev.holidays, currentHolidays],
+  //     }));
+  //     setCurrentHolidays('');
+  //   }
+  // };
 
   const [addClick, setAddClick] = useState(false);
   // const [semester, setSemester] = useState('');
@@ -86,11 +101,16 @@ const DashCalendar = ({
   //     console.error('Error fetching teacher data:', error);
   //   }
   // };
+  // useEffect(() => {
+  //   if (selectedSemester) {
+  //     fetchTeachers(selectedSemester);
+  //   }
+  // }, [selectedSemester]);
 
   const handleCalendarSubmit = async (event, scheduleData) => {
     event.preventDefault();
 
-    console.log(JSON.stringify(scheduleData), 'Bedore response');
+    console.log(JSON.stringify(scheduleData), 'Before response');
     const completeScheduleData = {
       semester: scheduleData.semester,
       startDate: scheduleData.startdate,
@@ -98,9 +118,6 @@ const DashCalendar = ({
       unavailableDates: scheduleData.unavailableDates,
       gapBetweenExams: scheduleData.gapBetweenExams,
     };
-
-    console.log(JSON.stringify(completeScheduleData), 'After response');
-
     try {
       const response = await axios.post(
         'https://localhost:7276/api/Schedule/CreateExamSchedule',
@@ -111,7 +128,7 @@ const DashCalendar = ({
           },
         },
       );
-      console.log('schedule', response);
+      console.log('schedule', response.data);
     } catch (e) {
       console.log(e);
     }
@@ -247,16 +264,7 @@ const DashCalendar = ({
           // handleGapField={handleGapField}
         />
       )}
-      {formType === 'teacher' && (
-        <div className="form-overlay">
-          <div className="form-design">
-            <FormHeader title={'Create Teacher Schedule'} handleForm={handleOnClick} />
-            <form>
-              <CustomFormField label={'Semester'} name={'Semester'} />
-            </form>
-          </div>
-        </div>
-      )}
+      {formType === 'teacher' && <AddTeacherSchedule handleOnClick={handleOnClick} />}
     </>
   );
 };
