@@ -7,31 +7,30 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
 
-const CollegeTable = ({ handleEditForm, showEdit,colleges,fetchColleges}) => {
+const CollegeTable = ({ handleEditForm, showEdit, colleges, fetchColleges }) => {
+  // const [colleges, setColleges] = useState([]);
+  const [deleteData, setDeleteData] = useState(false);
+  const [selectCollegeId, setSelectCollegeId] = useState(null);
+  const { id } = useToken();
 
-    // const [colleges, setColleges] = useState([]);
-    const [deleteData, setDeleteData] = useState(false);
-    const [selectCollegeId, setSelectCollegeId] = useState(null);
-    const {id}= useToken();
+  const handleDeletePop = (cid) => {
+    console.log('collegeid', cid);
+    setSelectCollegeId(cid);
+    setDeleteData(true);
+  };
 
-    const handleDeletePop = (id) => {
-      setSelectCollegeId(id);
-      setDeleteData(true);
-    };
-
-    const handleDelete = async (cid) => {
-        console.log(cid);
-        console.log(id);
-        try {
-          const response = await axios.delete(`https://localhost:7276/api/College/DeleteCollege/${cid}/${id}`);
-          console.log(response.data);
-          setDeleteData(false);
-          fetchColleges();
-        } catch (e) {
-          console.error('Error deleting course:', e);
-        }
-      };
-
+  const handleDelete = async (cid) => {
+    console.log(cid, 'collegeId');
+    console.log(id, 'user');
+    try {
+      const response = await axios.delete(`https://localhost:7276/api/College/DeleteCollege/${cid}/${id}`);
+      console.log(response.data);
+      setDeleteData(false);
+      // fetchColleges();
+    } catch (e) {
+      console.error('Error deleting college:', e);
+    }
+  };
 
   const [formData, setFormData] = useState({
     name: 'Samriddhi College',
@@ -41,8 +40,6 @@ const CollegeTable = ({ handleEditForm, showEdit,colleges,fetchColleges}) => {
     location: 'Lokanthali,Bhaktapur',
     description: 'It is an IT College',
   });
-
-  const [deletepop, setDeletePop] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -69,10 +66,9 @@ const CollegeTable = ({ handleEditForm, showEdit,colleges,fetchColleges}) => {
   //   fetchColleges();
   // }, []);
 
-
-
   return (
     <>
+    
       <table className="college-table">
         <thead>
           <tr>
@@ -83,7 +79,6 @@ const CollegeTable = ({ handleEditForm, showEdit,colleges,fetchColleges}) => {
           </tr>
         </thead>
         <tbody>
-          {console.log(colleges,"hi")}
           {colleges.length > 0 ? (
             colleges.map((college) => (
               <tr key={college.collegeId}>
