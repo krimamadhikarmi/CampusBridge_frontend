@@ -158,7 +158,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
                 </a>
               </p>
             </div>
-            {differenceInDays > 2 ? (
+            {differenceInDays? (
               <div className="late-submission">
                 You cannot submit the assignment now. The submission period has expired.
               </div>

@@ -48,9 +48,12 @@ const ArticleList = ({
       headline: articleHeadline,
       tagline: articleTagline,
       description: articleDescription,
-      dateUpdated: new Date().toISOString().split('T')[0],
+      dateUpdated: new Date().toISOString(),
     };
     console.log(JSON.stringify(updateArticle));
+    console.log('createdDate:',createdDate);
+    console.log('updatedDate:',updatedDate);
+
     handleEdit();
     handleUpdateForm(updateArticle);
   };

@@ -12,7 +12,7 @@ const AttendanceTable = ({students,attendance,handleCheckboxChange}) => {
       <tbody>
         {students.map((student,index) => (
           <tr key={student.id}>
-            <td>{index}</td>
+            <td>{index+1}</td>
             <td>{student.name}</td>
             <td>
               <input
