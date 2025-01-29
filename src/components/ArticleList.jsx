@@ -90,7 +90,7 @@ const ArticleList = ({
             <CloseButton toggleBox={handleArticle} variant={'articlelist'} />
             <div className="article-details">
               <h2>{headline}</h2>
-              {createdDate != updatedDate ? (
+              {createdDate !== updatedDate ? (
                 <div className="article-info">
                   <span className="article-date">Date Posted: {createdDate.split('T')[0]}</span>
                   <span className="article-date">Date Upated: {updatedDate.split('T')[0]}</span>
@@ -98,7 +98,7 @@ const ArticleList = ({
                 </div>
               ) : (
                 <div className="article-info">
-                  <span className="article-date">Date Created: {updatedDate.split('T')[0]}</span>
+                  <span className="article-date">Date Created: {createdDate.split('T')[0]}</span>
                   <p className="author-name">By {author}</p>
                 </div>
               )}
