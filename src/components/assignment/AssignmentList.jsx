@@ -6,10 +6,11 @@ import EditAssignmentForm from './EditAssignment.Form';
 import CloseButton from '../common/CloseButton';
 import axios from 'axios';
 
-const AssignmentList = ({ title, subject, submissionDate, index }) => {
+const AssignmentList = ({ title, subject, submissionDate, index,aid }) => {
   const [deletePop, setDeletePop] = useState(false);
   const [editForm, setEditForm] = useState(false);
   const[assignmentPop,setAssignmentPop]=useState(false)
+  const [submissions, setSubmissions] = useState([]);
 //   const [currentDate, setCurrentDate] = useState('');
 
 //   useEffect(() => {
@@ -17,9 +18,15 @@ const AssignmentList = ({ title, subject, submissionDate, index }) => {
 //     setCurrentDate(today);
 //   }, []);
 
-   const handleAssignmentPop=()=>{
-      setAssignmentPop(true)
-   }
+const handleAssignmentPop = async () => {
+  setAssignmentPop(!assignmentPop);
+
+  if (!assignmentPop) {
+    // Fetch submission details only when opening the popup
+    await handleAssignmentFetch();
+  }
+};
+
 
   const handleDelete = () => {
     setDeletePop(!deletePop);
@@ -29,16 +36,18 @@ const AssignmentList = ({ title, subject, submissionDate, index }) => {
     setEditForm(!editForm);
   };
 
-  const handleAssignmentFetch=async(aid)=>{
-    try{
-      const response=await axios.get(``)
+  const handleAssignmentFetch = async () => {
+    try {
+      const response = await axios.get(
+        `https://localhost:7276/api/Assignment/GetSubmissionByAssignmentId/${aid}`
+      );
 
+      setSubmissions(response.data); // Set the fetched data
+    } catch (e) {
+      console.log(e);
     }
-    catch(e){
+  };
 
-    }
-
-  }
   return (
     <>
       <div className="assignment-content">
@@ -60,7 +69,7 @@ const AssignmentList = ({ title, subject, submissionDate, index }) => {
       {deletePop && (
         <ConfirmPopup onClose={handleDelete} onConfirm={handleDelete} title={'Are you sure you want to delete?'} />
       )}
-      {assignmentPop &&(
+      {/* {assignmentPop &&(
         <div className='form-overlay'>
           <div className="article-details-box">
             <CloseButton toggleBox={handleAssignmentPop} variant={'articlelist'}/>
@@ -70,6 +79,43 @@ const AssignmentList = ({ title, subject, submissionDate, index }) => {
           <p className="subject-style">{subject}</p>
           <p className="date-style">Submission Date: {submissionDate}</p>
         </div>
+            </div>
+          </div>
+        </div>
+      )} */}
+      {assignmentPop && (
+        <div className="form-overlay">
+          <div className="article-details-box">
+            <CloseButton toggleBox={handleAssignmentPop} variant={'articlelist'} />
+            <div className="article-details">
+              <h2>{title}</h2>
+              <div className="assignment-info">
+                <p className="subject-style">{subject}</p>
+                <p className="date-style">Submission Date: {submissionDate}</p>
+              </div>
+              {/* Table to display submission details */}
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>File Path</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {submissions.map((submission) => (
+                    <tr key={submission.submissionId}>
+                      <td>{submission.studentDTO.studentId}</td>
+                      <td>{submission.studentDTO.name}</td>
+                      <td>
+                        <a href={submission.filePath} target="_blank" rel="noopener noreferrer">
+                          View File
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

@@ -33,7 +33,8 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     console.log("files.name: ", files?.name);
     console.log("id: ", id);
     console.log("uuidv4(): ", uuidv4());
-    console.log(newSubmissionId);
+    console.log(newSubmissionId,"ns");
+    console.log(submissionId,"si")
     const formData = new FormData();
     formData.append('SubmissionId', submissionId);
     formData.append('Answer', answer);
@@ -59,6 +60,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
         },
       });
       console.log('Response data:', response.data);
+      console.log('Response data:', JSON.stringify(  console.log('Response data:', response.data)));
     } catch (e) {
       console.log(e);
     }
