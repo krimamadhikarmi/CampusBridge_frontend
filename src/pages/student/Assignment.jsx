@@ -4,6 +4,9 @@ import PageHeader from '../../components/common/PageHeader';
 import '../../styles/Assignment.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 //function to get assignment status
 const getStatus = (submissionDate) => {
@@ -58,7 +61,19 @@ const Assignment = () => {
     <>
       <Navbar />
       <PageHeader pageTitle={'Assignments'} />
-
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeButton={false}
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 9999,
+        }}
+      />
       {/* Header with Sorting and Filtering Options */}
       <div className="assignment-header">
         <select onChange={(e) => setFilterBy(e.target.value)} className="filter-dropdown">

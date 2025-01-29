@@ -6,6 +6,9 @@ import ButtonGroup from '../common/ButtonGroup';
 import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
 import { v4 as uuidv4 } from 'uuid';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const StudentAssignmentList = ({ id, question, title, subject, submissionDate, statusClass, statusText, index }) => {
   const [assignmentPop, setAssignmentPop] = useState(false);
@@ -59,10 +62,32 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
         },
       });
       console.log('Response data:', response.data);
+      toast.success('Assignment submitted successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+      setAssignmentPop(false);
     } catch (e) {
       console.log(e);
     }
   };
+
+
+  const checkStudentSubmit = async()=>{
+    try {
+      const studentResponse = axios.get(`https://localhost:7276/api/Student/GetStudentById/${tid}`);
+      const studentId = (await studentResponse).data.studentId;
+      const response = axios.get(`https://localhost:7276/api/Assignment/GetSubmissionByStudentId/${id}/${studentId}`);
+      console.log('Response data:',(await response).data);
+      if((await response).data.submissionId){return true;}
+      else {return false;}
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 
   const handleFileChange = (e) => {
     const uploadedFile = e.target.files[0];
@@ -73,7 +98,17 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
   };
 
   const handleAssignmentPop = () => {
-    setAssignmentPop(!assignmentPop);
+    const studentAlreadySubmitted = checkStudentSubmit();
+    if(studentAlreadySubmitted===false){
+      setAssignmentPop(!assignmentPop);
+    }else{
+      toast.error('You have already submitted assignment!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+    }
   };
   return (
     <>
