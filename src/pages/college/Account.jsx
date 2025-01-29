@@ -246,6 +246,7 @@ const Account = () => {
         {filterData.length > 0 ? (
           <AccountTable
             filterData={filterData}
+            setTbldata={setTbldata}
             // handleStudentFetch={handleStudentFetch()}
             // handleTeacherFetch={handleTeacherFetch()}
           />
