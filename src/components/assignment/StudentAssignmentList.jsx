@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
 import { v4 as uuidv4 } from 'uuid';
 
-const StudentAssignmentList = ({ aid, question, title, subject, submissionDate, statusClass, statusText, index }) => {
+const StudentAssignmentList = ({ id, question, title, subject, submissionDate, statusClass, statusText, index }) => {
   const [assignmentPop, setAssignmentPop] = useState(false);
   const [answer, setText] = useState('');
 
@@ -24,7 +24,7 @@ const StudentAssignmentList = ({ aid, question, title, subject, submissionDate, 
 
   const handleAssignmentSubmit = (event) => {
     event.preventDefault();
-    console.log('assign id:', aid);
+    console.log('assign id:', id);
     console.log('text', answer);
     console.log('file', files);
     // setSubmissionId(submissionId+1);
@@ -32,12 +32,12 @@ const StudentAssignmentList = ({ aid, question, title, subject, submissionDate, 
     formData.append('SubmissionId', submissionId);
     formData.append('Answer', answer);
     formData.append('StudentId', tid);
-    formData.append('AssignmentId', aid);
+    formData.append('AssignmentId', id);
 
     if (files) {
-      formData.append('filesId', FileId);
-      formData.append('filesToUpload', files);
-      formData.append('filesName', files.name);
+      formData.append('FileId', FileId);
+      formData.append('FileToUpload', files);
+      formData.append('FileName', files.name);
     }
     console.log('formdata', formData); //formdata isnot displayed in console because it is special type of data so using below method for validataing formData
 
@@ -49,7 +49,7 @@ const StudentAssignmentList = ({ aid, question, title, subject, submissionDate, 
     try {
       const response = axios.post('https://localhost:7276/api/Assignment/SubmitAssignment', formData, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
       });
       console.log('Response data:', response.data);
@@ -71,7 +71,7 @@ const StudentAssignmentList = ({ aid, question, title, subject, submissionDate, 
   };
   return (
     <>
-      <div key={aid} className="assignment-item" style={{ cursor: 'pointer' }} onClick={handleAssignmentPop}>
+      <div key={id} className="assignment-item" style={{ cursor: 'pointer' }} onClick={handleAssignmentPop}>
         <div className="assignment-content">
           <h2 className="assignment-title">
             {index + 1}. {title}
@@ -120,7 +120,8 @@ const StudentAssignmentList = ({ aid, question, title, subject, submissionDate, 
                       name={'AssignmentId'}
                       placeholder={'Enter the assignment id'}
                       type={'text'}
-                      onChange={(e) => setSubmissionId(e.target.value)}
+                      value={id}
+                      disabled
                     />
                     <CustomFormField
                       label={'File'}

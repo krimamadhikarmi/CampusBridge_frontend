@@ -3,6 +3,8 @@ import FormHeader from '../common/FormHeader';
 import ButtonGroup from '../common/ButtonGroup';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useToken } from '../../context/TokenContext';
+
 import { v4 as uuidv4 } from 'uuid';
 const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
   const [AssignmentId, setAssignment] = useState('');
@@ -11,6 +13,7 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
   const [AssignedDate, setAssignedDate] = useState('');
   const [SubmissionDate, setSubmissionDate] = useState('');
   const [TeacherId, setTeacherId] = useState('');
+  const {id:teacherId} = useToken();
 
   const [file, setFile] = useState(null);
   const [FileId, setFileId] = useState(''); // State for unique FileId
@@ -25,7 +28,7 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
     formData.append('CourseId', CourseId);
     formData.append('AssignedDate', AssignedDate);
     formData.append('SubmissionDate', SubmissionDate);
-    formData.append('TeacherId', TeacherId);
+    formData.append('TeacherId', teacherId);
 
     if (file) {
       formData.append('FileId', FileId);
@@ -111,13 +114,13 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
               type={'date'}
               onChange={(e) => setSubmissionDate(e.target.value)}
             />
-            <CustomFormField
+            {/* <CustomFormField
               label={'Teacher Id'}
               placeholder={'Enter the teacher id'}
               name={'TeacherId'}
               type={'text'}
               onChange={(e) => setTeacherId(e.target.value)}
-            />
+            /> */}
             <ButtonGroup handleClose={handleAddForm} />
           </form>
         </div>
