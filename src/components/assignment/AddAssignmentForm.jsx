@@ -57,7 +57,8 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
     const uploadedFile = e.target.files[0];
     if (uploadedFile) {
       setFile(uploadedFile);
-      setFileId(uuidv4()); // Generate a unique FileId when a file is selected
+      const currentDateTime = new Date().toLocaleString();
+      setFileId(uuidv4()+currentDateTime); // Generate a unique FileId when a file is selected
     }
   };
 
