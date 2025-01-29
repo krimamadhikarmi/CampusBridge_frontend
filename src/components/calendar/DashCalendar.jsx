@@ -8,6 +8,8 @@ import AddExamForm from './AddExamForm';
 // import { DateReducer, GapReducer, initialDate, initialGap } from '../../hooks/reducer';
 // import { useReducer } from 'react';
 import axios from 'axios';
+import FormHeader from '../common/FormHeader';
+import CustomFormField from '../customFormField';
 // import { useState } from 'react';
 const DashCalendar = ({
   previousMonth,
@@ -22,6 +24,8 @@ const DashCalendar = ({
 }) => {
   const { role } = useToken();
   // const role = 'University';
+  const [selectedSemester, setSelectedSemester] = useState('');
+  const [teachers, setTeachers] = useState([]);
 
   const [addClick, setAddClick] = useState(false);
   // const [semester, setSemester] = useState('');
@@ -69,6 +73,19 @@ const DashCalendar = ({
     setAddClick(!addClick);
     setFormType(''); // Reset formType when toggling the popup
   };
+
+  // const fetchTeachers = async (semester) => {
+  //   try {
+  //     const response = await fetch(`https://your-api.com/teachers?semester=${semester}`);
+  //     if (!response.ok) {
+  //       throw new Error('Failed to fetch teachers');
+  //     }
+  //     const data = await response.json();
+  //     setTeachers(data);
+  //   } catch (error) {
+  //     console.error('Error fetching teacher data:', error);
+  //   }
+  // };
 
   const handleCalendarSubmit = async (event, scheduleData) => {
     event.preventDefault();
@@ -230,7 +247,16 @@ const DashCalendar = ({
           // handleGapField={handleGapField}
         />
       )}
-      {formType === 'teacher' && (console.log('Teacher form'))}
+      {formType === 'teacher' && (
+        <div className="form-overlay">
+          <div className="form-design">
+            <FormHeader title={'Create Teacher Schedule'} handleForm={handleOnClick} />
+            <form>
+              <CustomFormField label={'Semester'} name={'Semester'} />
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

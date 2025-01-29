@@ -5,13 +5,17 @@ import TextAreaWithFile from '../TextAreaField';
 import ButtonGroup from '../common/ButtonGroup';
 import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
-const StudentAssignmentList = ({ id, question, title, subject, submissionDate, statusClass, statusText, index }) => {
+import { v4 as uuidv4 } from 'uuid';
+
+const StudentAssignmentList = ({ aid, question, title, subject, submissionDate, statusClass, statusText, index }) => {
   const [assignmentPop, setAssignmentPop] = useState(false);
   const [answer, setText] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [submissionId,setSubmissionId]=useState(1);
-  const { id:tid } = useToken();
 
+  const [submissionId, setSubmissionId] = useState(1);
+  const { id: tid } = useToken();
+  const [files, setFile] = useState(null);
+
+  const [FileId, setFileId] = useState(''); 
 
   const currentDate = new Date();
   const date = new Date(submissionDate.split('T')[0]);
@@ -20,23 +24,21 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
 
   const handleAssignmentSubmit = (event) => {
     event.preventDefault();
-    console.log('assgn id:', id);
+    console.log('assign id:', aid);
     console.log('text', answer);
-    console.log('file', selectedFiles);
+    console.log('file', files);
     // setSubmissionId(submissionId+1);
     const formData = new FormData();
-    formData.append('SubmissionId',submissionId);
-    formData.append('Answer',answer);
-    formData.append('StudentId',tid);
-    formData.append('AssignmentId',id);
+    formData.append('SubmissionId', submissionId);
+    formData.append('Answer', answer);
+    formData.append('StudentId', tid);
+    formData.append('AssignmentId', aid);
 
-
-    selectedFiles.forEach((file, index) => {
-      formData.append('FileId',file.name);
-      formData.append('FileToUpload',file);
-      formData.append('FileName',file.name);
-    });
-
+    if (files) {
+      formData.append('filesId', FileId);
+      formData.append('filesToUpload', files);
+      formData.append('filesName', files.name);
+    }
     console.log('formdata', formData); //formdata isnot displayed in console because it is special type of data so using below method for validataing formData
 
     //validating formData
@@ -56,12 +58,20 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     }
   };
 
+  const handleFileChange = (e) => {
+    const uploadedFile = e.target.files[0];
+    if (uploadedFile) {
+      setFile(uploadedFile);
+      setFileId(uuidv4()); // Generate a unique FileId when a file is selected
+    }
+  };
+
   const handleAssignmentPop = () => {
     setAssignmentPop(!assignmentPop);
   };
   return (
     <>
-      <div key={id} className="assignment-item" style={{ cursor: 'pointer' }} onClick={handleAssignmentPop}>
+      <div key={aid} className="assignment-item" style={{ cursor: 'pointer' }} onClick={handleAssignmentPop}>
         <div className="assignment-content">
           <h2 className="assignment-title">
             {index + 1}. {title}
@@ -102,9 +112,23 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
               <div className="assignment-form">
                 <form onSubmit={handleAssignmentSubmit}>
                   <div className="answer-field">
-                    <TextAreaWithFile onFilesSelected={setSelectedFiles}
+                    {/* <TextAreaWithFile onFilesSelected={setSelectedFiles}
 
-                     />
+                     /> */}
+                    <CustomFormField
+                      label={'Assigment Id'}
+                      name={'AssignmentId'}
+                      placeholder={'Enter the assignment id'}
+                      type={'text'}
+                      onChange={(e) => setSubmissionId(e.target.value)}
+                    />
+                    <CustomFormField
+                      label={'File'}
+                      name={'File'}
+                      placeholder={'Upload the file'}
+                      type={'file'}
+                      onChange={handleFileChange}
+                    />
                     <CustomFormField
                       placeholder={'Submit your assignment'}
                       type={'text'}

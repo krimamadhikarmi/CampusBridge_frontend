@@ -1,8 +1,9 @@
 import CustomFormField from '../customFormField';
 import FormHeader from '../common/FormHeader';
 import ButtonGroup from '../common/ButtonGroup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
   const [AssignmentId, setAssignment] = useState('');
   const [Question, setQuestion] = useState('');
@@ -12,8 +13,9 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
   const [TeacherId, setTeacherId] = useState('');
 
   const [file, setFile] = useState(null);
+  const [FileId, setFileId] = useState(''); // State for unique FileId
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
@@ -26,7 +28,7 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
     formData.append('TeacherId', TeacherId);
 
     if (file) {
-      formData.append('FileId', file.name);
+      formData.append('FileId', FileId);
       formData.append('FileToUpload', file);
       formData.append('FileName', file.name);
     }
@@ -37,22 +39,30 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
     }
 
     try {
-      const response = axios.post('https://localhost:7276/api/Assignment/CreateAssignment',
-        formData, 
-        {
+      const response = await axios.post('https://localhost:7276/api/Assignment/CreateAssignment', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('assignment', response.data);
+      console.log('assignment1', response.data);
     } catch (e) {
       console.log(e);
     }
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const uploadedFile = e.target.files[0];
+    if (uploadedFile) {
+      setFile(uploadedFile);
+      setFileId(uuidv4()); // Generate a unique FileId when a file is selected
+    }
   };
+
+  useEffect(() => {
+    if (currentDate) {
+      setAssignedDate(currentDate);
+    }
+  }, [currentDate]);
 
   return (
     <>
@@ -93,7 +103,7 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
               name={'AssignedDate'}
               type={'date'}
               value={currentDate}
-              onChange={(e) => setAssignedDate(currentDate)}
+              onChange={(e) => setAssignedDate(e.target.value)}
             />
             <CustomFormField
               label={'Submission Date'}
