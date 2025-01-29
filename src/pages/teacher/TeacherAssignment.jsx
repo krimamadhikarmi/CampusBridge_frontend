@@ -7,6 +7,7 @@ import AssignmentList from '../../components/assignment/AssignmentList';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useToken } from '../../context/TokenContext';
 
 const TeacherAssignment = () => {
   
@@ -14,6 +15,7 @@ const TeacherAssignment = () => {
 
   const [currentDate, setCurrentDate] = useState('');
   
+  const{id:tid} = useToken();
 
   const handleAddForm = () => {
     setPopUp(!popup);
@@ -30,7 +32,7 @@ const TeacherAssignment = () => {
 
   const fetchAssignments = async () => {
     try {
-      const response = await axios.get('https://localhost:7276/api/Assignment/GetAssignment');
+      const response = await axios.get(`https://localhost:7276/api/Assignment/GetAssignmentByTeacherId/${tid}`);
       console.log('articles', response.data);
       
       const assignmentData = response.data.map(data=>({
