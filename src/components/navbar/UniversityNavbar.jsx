@@ -20,7 +20,7 @@ const UniversityNavbar = ({ toggleDropdown, dropDown, handleLogout }) => {
         {/* {resultdropDown && (
               <div className="syllabus-dropdown">
                 <Link to="/result">View Result</Link> */}
-        <Link to="/createresult">Result</Link>
+        {/* <Link to="/createresult">Result</Link> */}
         {/* </div>
             )} */}
 

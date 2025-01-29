@@ -86,7 +86,7 @@ const DashCalendar = ({
 
   const handleOnClick = () => {
     setAddClick(!addClick);
-    setFormType(''); // Reset formType when toggling the popup
+    // setFormType(''); // Reset formType when toggling the popup
   };
 
   // const fetchTeachers = async (semester) => {
@@ -157,12 +157,12 @@ const DashCalendar = ({
     }
   };
 
-  const [formType, setFormType] = useState('');
+  // const [formType, setFormType] = useState('');
 
-  const handleOptionSelect = (option) => {
-    setFormType(option);
-    setAddClick(false);
-  };
+  // const handleOptionSelect = (option) => {
+  //   setFormType(option);
+  //   setAddClick(false);
+  // };
 
   return (
     <>
@@ -257,17 +257,18 @@ const DashCalendar = ({
               // handleGapField={handleGapField}
             />
           ) : (
-            <div className="popMenu">
-              <div className="menu-item">
-                <p onClick={() => handleOptionSelect('exam')}>Create Exam Schedule</p>
-                <p onClick={() => handleOptionSelect('teacher')}>Create Teacher Schedule</p>
-              </div>
-            </div>
+            // <div className="popMenu">
+            //   <div className="menu-item">
+            //     <p onClick={() => handleOptionSelect('exam')}>Create Exam Schedule</p>
+            //     <p onClick={() => handleOptionSelect('teacher')}>Create Teacher Schedule</p>
+            //   </div>
+            // </div>
+            <AddTeacherSchedule handleOnClick={handleOnClick} handleTeacherScheduleSubmit={handleTeacherScheduleSubmit} />
           )}
         </>
       )}
 
-      {formType === 'exam' && (
+      {/* {formType === 'exam' && (
         <AddExamForm
           handlePop={handleOnClick}
           handleCalendarSubmit={handleCalendarSubmit}
@@ -289,7 +290,7 @@ const DashCalendar = ({
       )}
       {formType === 'teacher' && (
         <AddTeacherSchedule handleOnClick={handleOnClick} handleTeacherScheduleSubmit={handleTeacherScheduleSubmit} />
-      )}
+      )} */}
     </>
   );
 };

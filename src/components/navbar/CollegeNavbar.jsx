@@ -6,7 +6,7 @@ const CollegeNavbar = ({ toggleDropdown, handleLogout, dropDown }) => {
     <>
       <div className="college-menuitem">
         <Link to="/syllabus">Syllabus</Link>
-        <Link to="/result">Result</Link>
+        {/* <Link to="/result">Result</Link> */}
         <Link to="/articles">Articles</Link>
         <Link to="/notices">Notices</Link>
         <Link to="/account">Accounts</Link>
