@@ -5,12 +5,17 @@ import ConfirmPopup from '../LogoutPopup';
 import EditAssignmentForm from './EditAssignment.Form';
 import CloseButton from '../common/CloseButton';
 import axios from 'axios';
+import { useToken } from '../../context/TokenContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const AssignmentList = ({ title, subject, submissionDate, index,aid }) => {
   const [deletePop, setDeletePop] = useState(false);
   const [editForm, setEditForm] = useState(false);
   const[assignmentPop,setAssignmentPop]=useState(false)
   const [submissions, setSubmissions] = useState([]);
+  const {id:tid} = useToken();
 //   const [currentDate, setCurrentDate] = useState('');
 
 //   useEffect(() => {
@@ -35,7 +40,24 @@ const handleAssignmentPop = async () => {
   const handleEdit = () => {
     setEditForm(!editForm);
   };
-
+  const handleDeleteAssignment = async () =>{
+    try{
+      console.log('aid',aid);
+      console.log('tid',tid);
+      const response = await axios.delete(`https://localhost:7276/api/Assignment/DeleteAssignment/${aid}/${tid}`)
+      console.log(response.data);
+      toast.success('Assignment deleted successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+      window.location.reload();
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
   const handleAssignmentFetch = async () => {
     try {
       const response = await axios.get(
@@ -67,7 +89,7 @@ const handleAssignmentPop = async () => {
         <EditAssignmentForm handleEdit={handleEdit} title={title} subject={subject} submissionDate={submissionDate} />
       )}
       {deletePop && (
-        <ConfirmPopup onClose={handleDelete} onConfirm={handleDelete} title={'Are you sure you want to delete?'} />
+        <ConfirmPopup onClose={handleDelete} onConfirm={handleDeleteAssignment} title={'Are you sure you want to delete?'} />
       )}
       {/* {assignmentPop &&(
         <div className='form-overlay'>

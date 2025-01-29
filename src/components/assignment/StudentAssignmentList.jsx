@@ -22,10 +22,10 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
 
   const currentDate = new Date();
   const date = new Date(submissionDate.split('T')[0]);
-  const differenceInTime = currentDate - date;
+  const differenceInTime = date - currentDate;
   const differenceInDays = Math.floor(differenceInTime / (1000 * 60 * 60 * 24)); // Convert to days
 
-  const handleAssignmentSubmit = (event) => {
+  const handleAssignmentSubmit = async (event) => {
     event.preventDefault();
     console.log('assign id:', id);
     console.log('text', answer);
@@ -57,7 +57,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     }
 
     try {
-      const response = axios.post('https://localhost:7276/api/Assignment/SubmitAssignment', formData, {
+      const response = await axios.post('https://localhost:7276/api/Assignment/SubmitAssignment', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -158,7 +158,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
                 </a>
               </p>
             </div>
-            {differenceInDays? (
+            {differenceInDays<1? (
               <div className="late-submission">
                 You cannot submit the assignment now. The submission period has expired.
               </div>
