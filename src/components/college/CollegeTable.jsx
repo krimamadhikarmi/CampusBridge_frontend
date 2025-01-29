@@ -6,8 +6,10 @@ import ConfirmPopup from '../LogoutPopup';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const CollegeTable = ({ handleEditForm, showEdit, colleges, fetchColleges }) => {
+const CollegeTable = ({ handleEditForm, showEdit, colleges, setColleges }) => {
   // const [colleges, setColleges] = useState([]);
   const [deleteData, setDeleteData] = useState(false);
   const [selectCollegeId, setSelectCollegeId] = useState(null);
@@ -25,7 +27,14 @@ const CollegeTable = ({ handleEditForm, showEdit, colleges, fetchColleges }) => 
     try {
       const response = await axios.delete(`https://localhost:7276/api/College/DeleteCollege/${cid}/${id}`);
       console.log(response.data);
+      setColleges((prevColleges)=>prevColleges.filter((college)=>college.collegeId !==cid))
       setDeleteData(false);
+      toast.success('College deleted successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
       // fetchColleges();
     } catch (e) {
       console.error('Error deleting college:', e);
