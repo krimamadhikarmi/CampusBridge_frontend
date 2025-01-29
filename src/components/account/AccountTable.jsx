@@ -22,11 +22,7 @@ const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch }) =>
   const handleDelete = async (aid,arole) => {
     console.log(aid, 'user');
     try {
-      // const roleResponse = await axios.get(`https://localhost:7276/api/Auth/GetNameFromId?id=${aid}`);
-
-      // console.log(roleResponse.data.role, 'role');
-
-      // const role = roleResponse.data.role;
+     
 
       let deleteUrl = '';
 

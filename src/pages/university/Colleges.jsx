@@ -142,6 +142,7 @@ const Colleges = () => {
               showEdit={showEdit}
               colleges={colleges}
               fetchColleges={fetchColleges}
+              setColleges={setColleges}
             />
           </div>
         ) : (

@@ -36,7 +36,8 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     console.log("files.name: ", files?.name);
     console.log("id: ", id);
     console.log("uuidv4(): ", uuidv4());
-    console.log(newSubmissionId);
+    console.log(newSubmissionId,"ns");
+    console.log(submissionId,"si")
     const formData = new FormData();
     formData.append('SubmissionId', submissionId);
     formData.append('Answer', answer);
@@ -62,6 +63,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
         },
       });
       console.log('Response data:', response.data);
+
       toast.success('Assignment submitted successfully!', {
         style: {
           backgroundColor: '#004d4d',
@@ -69,6 +71,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
         },
       });
       setAssignmentPop(false);
+
     } catch (e) {
       console.log(e);
     }
