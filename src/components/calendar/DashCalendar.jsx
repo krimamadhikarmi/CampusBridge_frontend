@@ -230,7 +230,7 @@ const DashCalendar = ({
           // handleGapField={handleGapField}
         />
       )}
-      {formType === 'teacher' && console.log('Teacher form')}
+      {formType === 'teacher' && (console.log('Teacher form'))}
     </>
   );
 };

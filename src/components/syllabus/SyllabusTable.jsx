@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ConfirmPopup from '../LogoutPopup';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SyllabusTable = () => {
   const [syllabuses, setSyllabuses] = useState([]);
@@ -17,10 +19,14 @@ const SyllabusTable = () => {
     try {
       const response = await axios.delete(`https://localhost:7276/api/Syllabus/DeleteSyllabus/${id}`);
       console.log(response.data);
-
-      setSyllabuses((prevSyllabus) => prevSyllabus.filter((syllabus) => syllabus.syllabusId !== id));
-
       setDeleteData(false);
+      toast.success('Article created successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+      setSyllabuses((prevSyllabus) => prevSyllabus.filter((syllabus) => syllabus.syllabusId !== id));
     } catch (e) {
       console.error('Error deleting syllabus:', e);
     }

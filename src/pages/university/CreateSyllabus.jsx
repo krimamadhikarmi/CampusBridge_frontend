@@ -8,6 +8,8 @@ import SyllabusTable from '../../components/syllabus/SyllabusTable';
 import CoursesTable from '../../components/syllabus/CoursesTable';
 import '../../styles/common.css';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateSyllabus = () => {
   const [toogleSyllabusForm, setToogleSyllabusForm] = useState(false);
@@ -46,6 +48,12 @@ const CreateSyllabus = () => {
         },
       );
       console.log('Response data:', response.data);
+      toast.success('Syllabus created successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
       axios.get('https://localhost:7276/api/Syllabus/GetSyllabus');
     } catch (e) {
       console.log(e);
@@ -103,20 +111,9 @@ const CreateSyllabus = () => {
     }
   };
 
-
-
-
-
-
-
   // handling book field
 
   // handling unit form
-
-
-
-
-
 
   // const handleUnitAdd = (event) => {
   //   event.preventDefault();
@@ -140,13 +137,26 @@ const CreateSyllabus = () => {
   //   console.log('Added subunit');
   // };
 
-  const [subUnits, setSubUnits] = useState([]);
+  // const [subUnits, setSubUnits] = useState([]);
 
   // Update a subunit's title
 
   return (
     <>
       <Navbar />
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeButton={false}
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 9999,
+        }}
+      />
       <div className="syllabus-body">
         <div className="display-div">
           <h2> Syllabus</h2>
