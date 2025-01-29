@@ -10,6 +10,9 @@ import StudentForm from '../../components/account/StudentForm';
 import TeacherForm from '../../components/account/TeacherForm';
 import { useToken } from '../../context/TokenContext';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Account = () => {
   const { id } = useToken();
   const [selectaccount, setSelectAccount] = useState('All');
@@ -30,84 +33,79 @@ const Account = () => {
     setAccountType(type);
     setCreatePop(true);
   };
-  
-    // const handleStudentFetch = async () => {
-    //   try {
-    //     const response = await axios.get('https://localhost:7276/api/Student/GetStudent');
-    //     console.log('students', response.data);
-    //     setStudents(response.data);
-    //     const newTbldata = response.data.map(data => ({
-    //       id: data.studentId,
-    //       name: data.name,
-    //       role: 'Student',
-    //     }));
-    //     setTbldata(prevData => [...prevData, ...newTbldata]);
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // };
 
-    // const handleTeacherFetch = async () => {
-    //   try {
-    //     const response = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
-    //     console.log('teachers', response.data);
-    //     setTeachers(response.data);
-    //     const newTbldata = response.data.map(data => ({
-    //       id: data.teacherId,
-    //       name: data.name,
-    //       role: 'Teacher',
-    //     }));
-    //     setTbldata(prevData => [...prevData, ...newTbldata]);
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // };
+  // const handleStudentFetch = async () => {
+  //   try {
+  //     const response = await axios.get('https://localhost:7276/api/Student/GetStudent');
+  //     console.log('students', response.data);
+  //     setStudents(response.data);
+  //     const newTbldata = response.data.map(data => ({
+  //       id: data.studentId,
+  //       name: data.name,
+  //       role: 'Student',
+  //     }));
+  //     setTbldata(prevData => [...prevData, ...newTbldata]);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
+  // const handleTeacherFetch = async () => {
+  //   try {
+  //     const response = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
+  //     console.log('teachers', response.data);
+  //     setTeachers(response.data);
+  //     const newTbldata = response.data.map(data => ({
+  //       id: data.teacherId,
+  //       name: data.name,
+  //       role: 'Teacher',
+  //     }));
+  //     setTbldata(prevData => [...prevData, ...newTbldata]);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
-    const fetchAllData = async () => {
-      try {
-        // Clear table data before fetch
-        const studentResponse = await axios.get('https://localhost:7276/api/Student/GetStudent');
-        const teacherResponse = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
-  
-        const studentData = studentResponse.data.map(data => ({
-          id: data.studentId,
-          name: data.name,
-          role: 'Student',
-        }));
-  
-        const teacherData = teacherResponse.data.map(data => ({
-          id: data.teacherId,
-          name: data.name,
-          role: 'Teacher',
-        }));
-  
-        setTbldata([...studentData, ...teacherData]);
-      } catch (e) {
-        console.error(e);
-      }
-    };
+  const fetchAllData = async () => {
+    try {
+      // Clear table data before fetch
+      const studentResponse = await axios.get('https://localhost:7276/api/Student/GetStudent');
+      const teacherResponse = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
 
+      const studentData = studentResponse.data.map((data) => ({
+        id: data.studentId,
+        name: data.name,
+        role: 'Student',
+      }));
 
+      const teacherData = teacherResponse.data.map((data) => ({
+        id: data.teacherId,
+        name: data.name,
+        role: 'Teacher',
+      }));
 
+      setTbldata([...studentData, ...teacherData]);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
-    useEffect(() => {
-      fetchAllData();
-    }, []);
+  useEffect(() => {
+    fetchAllData();
+  }, []);
 
   //create student form submit
-  const handleStudentSubmit = async (studentData, event) => {
+  const handleStudentSubmit = async (event, studentData) => {
+    event.preventDefault();
     if (studentData.isAuthor === '') {
-      studentData.isAuthor = "false";
-    }else{
-      studentData.isAuthor = "true";
+      studentData.isAuthor = 'false';
+    } else {
+      studentData.isAuthor = 'true';
     }
     if (studentData.isClubHead === '') {
-      studentData.isClubHead = "false";
-    }
-    else{
-      studentData.isClubHead = "true";
-
+      studentData.isClubHead = 'false';
+    } else {
+      studentData.isClubHead = 'true';
     }
     console.log(JSON.stringify(studentData), 'fullstdata');
 
@@ -140,24 +138,36 @@ const Account = () => {
           },
         },
       );
-      if (response.status === 200) { // Ensure it was created successfully
+      if (response.status === 200) {
+        // Ensure it was created successfully
         const newStudent = {
-          id: response.data.studentId,  // Adjust according to API response
+          id: response.data.studentId,
           name: response.data.name,
-          role: 'Student'
+          role: 'Student',
         };
-  
-        setTbldata(prevData => [...prevData, newStudent]);
+        // window.location.reload();
+        toast.success('Student created successfully!', {
+          style: {
+            backgroundColor: '#004d4d',
+            color: '#ffffff',
+          },
+        });
+
+        setCreatePop(false);
+        setTbldata((prevData) => [...prevData, newStudent]);
+        console.log('Response data:', response.data);
       }
-      console.log('Response data:', response.data);
+
       // handleStudentFetch();
     } catch (e) {
       console.log(e);
+      toast.error('Failed to delete student. Please try again!');
     }
   };
 
   //create teacher submit
-  const handleTeacherSubmit = async (teacherData) => {
+  const handleTeacherSubmit = async (event, teacherData) => {
+    event.preventDefault();
     const completeTeacherData = {
       teacherId: teacherData.teacherId,
       name: teacherData.name,
@@ -179,33 +189,30 @@ const Account = () => {
         },
       );
       console.log('Response data:', response.data);
-      if (response.status === 200) { // Ensure successful creation
+      if (response.status === 200) {
+        // Ensure successful creation
         const newTeacher = {
           id: response.data.teacherId, // Adjust based on actual API response
           name: response.data.name,
-          role: 'Teacher'
+          role: 'Teacher',
         };
-  
-        setTbldata(prevData => [...prevData, newTeacher]);
+        toast.success('Teacher created successfully!', {
+          style: {
+            backgroundColor: '#004d4d',
+            color: '#ffffff',
+          },
+        });
+
+        setCreatePop(false);
+        setTbldata((prevData) => [...prevData, newTeacher]);
+        console.log('Response data:', response.data);
       }
       // handleTeacherFetch();
     } catch (e) {
       console.log(e);
+      toast.error('Failed to delete teacher. Please try again!');
     }
   };
-
-  // const filterData = () => {
-  //   // if (selectaccount === 'All') {
-  //   //   return [...students, ...teachers];
-  //   // }
-  //   if (selectaccount === 'Student') {
-  //     return students;
-  //   }
-  //   if (selectaccount === 'Teacher') {
-  //     return teachers;
-  //   }
-  //   return [];
-  // };
 
   const filterData = selectaccount === 'All' ? tbldata : tbldata.filter((account) => account.role === selectaccount);
 
@@ -213,6 +220,19 @@ const Account = () => {
     <>
       <Navbar />
       <PageHeader pageTitle={'Account'} />
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeButton={false}
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 9999,
+        }}
+      />
       <div className="account-box">
         <div className="account-header">
           <div className="account-button">

@@ -19,6 +19,7 @@ const AddExamForm = ({
   const [StartDate, setStartDate] = useState('');
   const [EndDate, setEndDate] = useState('');
 
+
   const [formData, setFormData] = useState({
     semester: '',
     startDate: '',
@@ -60,7 +61,7 @@ const AddExamForm = ({
       gapBetweenExams: formData.gapBetweenExams,
     };
     console.log('Form Data:', scheduleData);
-    handleCalendarSubmit(event,scheduleData);
+    handleCalendarSubmit(event, scheduleData);
     console.log(JSON.stringify(scheduleData));
   };
 

@@ -31,8 +31,8 @@ const TeacherForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
     }
   };
 
-  const handleFormSubmit = () => {
-
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
     const teacherData = {
       teacherId: TeacherId,
       name: TeacherName,
@@ -43,7 +43,7 @@ const TeacherForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
       collegeId: id,
     };
     console.log('Teacher Data', teacherData);
-    handleSubmit(teacherData);
+    handleSubmit(event,teacherData);
     console.log(JSON.stringify(teacherData), 'dent');
   };
 

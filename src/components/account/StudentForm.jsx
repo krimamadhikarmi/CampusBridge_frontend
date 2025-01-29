@@ -56,7 +56,7 @@ const StudentForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
   };
 
   const handleFormSubmit = (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     const studentData = {
       studentId: StudentId,
       name: StudentName,
@@ -74,7 +74,7 @@ const StudentForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
       collegeId: id,
     };
     console.log('Student Data', studentData);
-    handleSubmit(studentData);
+    handleSubmit(event,studentData);
     console.log(JSON.stringify(studentData), 'dent');
   };
 
