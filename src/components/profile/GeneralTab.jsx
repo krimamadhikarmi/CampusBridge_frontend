@@ -7,14 +7,14 @@ import { useToken } from '../../context/TokenContext';
 
 const GeneralTab = () => {
   const [editForm, setEditForm] = useState(false);
-  const { id } = useToken();
+  const { id:studentid } = useToken();
   const [info, setInfo] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         console.log('Fetching user data...');
-        const response = await axios.get('https://localhost:7276/api/Student/GetStudentById/1');
+        const response = await axios.get(`https://localhost:7276/api/Student/GetStudentById/${studentid}`);
         console.log('response', response.data);
         setInfo(response.data);
       } catch (e) {

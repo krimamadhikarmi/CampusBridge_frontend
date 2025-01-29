@@ -4,6 +4,10 @@ import Navbar from '../../components/Navbar';
 import '../../styles/Attendance.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const Attendance = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -80,6 +84,15 @@ fetchAttendance();
         }
       );
       console.log('Attendance Submission Response:', response.data);
+       toast.success('Attendance submitted successfully!', {
+              style: {
+                backgroundColor: '#004d4d',
+                color: '#ffffff',
+              },
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
     } catch (error) {
       console.error('Error submitting attendance:', error);
     } finally {
@@ -91,6 +104,19 @@ fetchAttendance();
     <>
       <Navbar />
       <PageHeader pageTitle={'Attendance'} />
+      <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              hideProgressBar
+              newestOnTop={false}
+              closeButton={false}
+              style={{
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 9999,
+              }}
+            />
       <div className="attendance-container">
         <div className="attendance-card">
           <h2>Today's Date:</h2>
