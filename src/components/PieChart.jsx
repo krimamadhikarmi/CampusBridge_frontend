@@ -1,15 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
+import axios from 'axios';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
+
 const PieChart = () => {
+
+  const [girlsData,setGirlsData]=useState();
+  const [boysData,setBoysData]=useState();
+
+
+  useEffect(()=>{
+    fetchGenderData();
+  },[]);
+
+  const fetchGenderData =async () =>{
+    const response =  await axios.post('https://localhost:7276/api/Analytics/GetGenderData');
+    if(response.status===200){
+      console.log(parseInt(response.data.femaleNo, 10));
+      setGirlsData(parseInt(response.data.femaleNo, 10));
+      setBoysData(parseInt(response.data.maleNo, 10));
+    }else{
+      console.log('error');
+    }
+
+  };
+
+
   const genderData = {
     labels: ['Girls', 'Boys'],
     datasets: [
       {
-        data: [250, 300],
+        data: [girlsData, boysData],
         backgroundColor: ['#FF6384', '#36A2EB'],
         hoverBackgroundColor: ['#FF80A0', '#50B5F2'],
       },
