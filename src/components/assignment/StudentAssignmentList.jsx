@@ -82,10 +82,19 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     try {
       const studentResponse = axios.get(`https://localhost:7276/api/Student/GetStudentById/${tid}`);
       const studentId = (await studentResponse).data.studentId;
-      const response = axios.get(`https://localhost:7276/api/Assignment/GetSubmissionByStudentId/${id}/${studentId}`);
+      const response = axios.get(`https://localhost:7276/api/Assignment/GetSubmissionByStudentId/${id}/${studentId}`, {
+        validateStatus: (status) => {
+            return status < 500; // Accept all responses below 500 (including 400)
+        }});
       console.log('Response data:',(await response).data);
-      if((await response).data.submissionId){return true;}
-      else {return false;}
+      if((await response).data.submissionId)
+        {
+          return true;
+        }
+      else {
+        console.log('student hasnt submitted');
+        return false;
+      }
     } catch (e) {
       console.log(e);
     }
@@ -100,8 +109,9 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     }
   };
 
-  const handleAssignmentPop = () => {
-    const studentAlreadySubmitted = checkStudentSubmit();
+  const handleAssignmentPop = async () => {
+    const studentAlreadySubmitted = await checkStudentSubmit();
+    console.log(studentAlreadySubmitted);
     if(studentAlreadySubmitted===false){
       setAssignmentPop(!assignmentPop);
     }else{
@@ -148,7 +158,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
                 </a>
               </p>
             </div>
-            {differenceInDays > 2 ? (
+            {differenceInDays? (
               <div className="late-submission">
                 You cannot submit the assignment now. The submission period has expired.
               </div>

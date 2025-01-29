@@ -58,7 +58,7 @@ const AddAssignmentForm = ({ handleAddForm, currentDate,assignments,setAssignmen
     };
 
     setAssignments((prevAssignments) => [...prevAssignments, newAssignment]);
-      toast.success('Article created successfully!', {
+      toast.success('Assignment created successfully!', {
         style: {
           backgroundColor: '#004d4d',
           color: '#ffffff',
