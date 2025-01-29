@@ -135,7 +135,15 @@ const AddAssignmentForm = ({ handleAddForm, currentDate,assignments,setAssignmen
               label={'Submission Date'}
               name={'SubmissionDate'}
               type={'date'}
-              onChange={(e) => setSubmissionDate(e.target.value)}
+              min={new Date().toISOString().split('T')[0]}
+              onChange={(e) => {
+                if (e.target.value < new Date().toISOString().split('T')[0]) {
+                  alert("Submission date cannot be in the past!");
+                  setSubmissionDate(" "); // Reset field if past date is chosen
+                } else {
+                  setSubmissionDate(e.target.value);
+                }
+              }}
             />
             {/* <CustomFormField
               label={'Teacher Id'}
