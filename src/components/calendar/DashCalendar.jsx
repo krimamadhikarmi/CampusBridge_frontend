@@ -134,6 +134,29 @@ const DashCalendar = ({
     }
   };
 
+  const handleTeacherScheduleSubmit = async (teacherSchedule) => {
+    const teacherFormData = {
+      semester: teacherSchedule.semester,
+      startDate: new Date(teacherSchedule.startDate).toISOString(),
+      endDate: new Date(teacherSchedule.endDate).toISOString(),
+      slotsPerDay: teacherSchedule.slotsPerDay,
+      breakMinutes: teacherSchedule.breakMinutes,
+      teachers: teacherSchedule.teachers.map((teacher) => ({
+        id: teacher.id,
+        name: teacher.name,
+        availability: teacher.availability,
+      })),
+      holidays: teacherSchedule.holidays,
+    };
+    console.log(JSON.stringify(teacherFormData));
+    try {
+      const response = await axios.post('');
+      console.log(response);
+    } catch (e) {
+      console.log(e, 'error');
+    }
+  };
+
   const [formType, setFormType] = useState('');
 
   const handleOptionSelect = (option) => {
@@ -264,7 +287,9 @@ const DashCalendar = ({
           // handleGapField={handleGapField}
         />
       )}
-      {formType === 'teacher' && <AddTeacherSchedule handleOnClick={handleOnClick} />}
+      {formType === 'teacher' && (
+        <AddTeacherSchedule handleOnClick={handleOnClick} handleTeacherScheduleSubmit={handleTeacherScheduleSubmit} />
+      )}
     </>
   );
 };
