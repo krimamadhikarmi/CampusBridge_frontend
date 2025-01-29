@@ -8,13 +8,20 @@ import axios from 'axios';
 const Attendance = () => {
   const [currentDate, setCurrentDate] = useState('');
   const [attendance, setAttendance] = useState({});
+  const[students,setStudents]=useState([])
   const [loading, setLoading] = useState(false);
 
-  const students = [
-    { id: 1, name: 'Krima Madhikarmi' },
-    { id: 2, name: 'Shishant Shrestha' },
-    { id: 3, name: 'Sarina Shrestha' },
-  ];
+
+  const fetchAttendance=async()=>{
+    try{
+      const response= await axios.get('https://localhost:7276/api/Student/GetStudent')
+      console.log(response.data,"students")
+      setStudents(response.data)
+    }
+    catch(e){
+      console.log(e,"error")
+    }
+  }
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -27,11 +34,10 @@ const Attendance = () => {
     });
     setAttendance(initialAttendance);
 
-
-    const fetchAttendance=()=>{
-      
-    }
+fetchAttendance();
+    
   }, []);
+
 
   const handleCheckboxChange = (studentId, status) => {
     setAttendance((prevAttendance) => ({
@@ -62,7 +68,7 @@ const Attendance = () => {
 
     try {
       const response = await axios.post(
-        'https://localhost:7276/api/Attendance/SubmitAttendance',
+        'https://localhost:7276/api/Attendance/CreateAttendance',
         JSON.stringify(attendanceData),
         {
           headers: {
