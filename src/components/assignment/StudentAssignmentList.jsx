@@ -4,10 +4,14 @@ import CustomFormField from '../customFormField';
 import TextAreaWithFile from '../TextAreaField';
 import ButtonGroup from '../common/ButtonGroup';
 import axios from 'axios';
+import { useToken } from '../../context/TokenContext';
 const StudentAssignmentList = ({ id, question, title, subject, submissionDate, statusClass, statusText, index }) => {
   const [assignmentPop, setAssignmentPop] = useState(false);
   const [answer, setText] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [submissionId,setSubmissionId]=useState(1);
+  const { id:tid } = useToken();
+
 
   const currentDate = new Date();
   const date = new Date(submissionDate.split('T')[0]);
@@ -16,13 +20,21 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
 
   const handleAssignmentSubmit = (event) => {
     event.preventDefault();
+    console.log('assgn id:', id);
     console.log('text', answer);
     console.log('file', selectedFiles);
-
+    // setSubmissionId(submissionId+1);
     const formData = new FormData();
-    formData.append('text', answer);
+    formData.append('SubmissionId',submissionId);
+    formData.append('Answer',answer);
+    formData.append('StudentId',tid);
+    formData.append('AssignmentId',id);
+
+
     selectedFiles.forEach((file, index) => {
-      formData.append(`file${index}`, file);
+      formData.append('FileId',file.name);
+      formData.append('FileToUpload',file);
+      formData.append('FileName',file.name);
     });
 
     console.log('formdata', formData); //formdata isnot displayed in console because it is special type of data so using below method for validataing formData
@@ -33,7 +45,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     }
 
     try {
-      const response = axios.post('https://localhost:7276/api/Assignment/SubmitAssignment', JSON.stringify(formData), {
+      const response = axios.post('https://localhost:7276/api/Assignment/SubmitAssignment', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -47,7 +59,6 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
   const handleAssignmentPop = () => {
     setAssignmentPop(!assignmentPop);
   };
-
   return (
     <>
       <div key={id} className="assignment-item" style={{ cursor: 'pointer' }} onClick={handleAssignmentPop}>
@@ -79,7 +90,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
                 Complete the following given assignment
                 <br />
                 <a href={question} target="_blank" rel="noopener noreferrer">
-                  assignment
+                  Click here to view the question.
                 </a>
               </p>
             </div>
@@ -91,7 +102,9 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
               <div className="assignment-form">
                 <form onSubmit={handleAssignmentSubmit}>
                   <div className="answer-field">
-                    <TextAreaWithFile onFilesSelected={setSelectedFiles} />
+                    <TextAreaWithFile onFilesSelected={setSelectedFiles}
+
+                     />
                     <CustomFormField
                       placeholder={'Submit your assignment'}
                       type={'text'}

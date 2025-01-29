@@ -7,6 +7,8 @@ import CollegeTable from '../../components/college/CollegeTable';
 import '../../styles/common.css';
 import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Colleges = () => {
   const [collegePopup, setCollegePopUp] = useState(false);
@@ -98,8 +100,13 @@ const Colleges = () => {
         },
       );
       console.log('article', response.data);
-      
-      fetchColleges();
+      toast.success('College created successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+
     } catch (e) {
       console.log(e)
     } finally {
@@ -111,7 +118,19 @@ const Colleges = () => {
     <>
       <Navbar />
       <PageHeader pageTitle={'Colleges'} />
-
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeButton={false}
+        style={{
+          top: '50%', // Vertical center
+          left: '50%', // Horizontal center
+          transform: 'translate(-50%, -50%)', // Offset the toast to perfectly center it
+          zIndex: 9999, // Ensure it's on top of other elements (like the navbar)
+        }}
+      />
       <div className="college-box">
         <div className="college-button">
           <button className="add-college-button" onClick={handleCollegePopUp}>
