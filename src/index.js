@@ -54,7 +54,7 @@ root.render(
                 <Route path="/colleges" element={<Colleges />} />
               </Route>
 
-              <Route path="/calendar" element={<Calendar />} />
+              {/* <Route path="/calendar" element={<Calendar />} /> */}
 
               <Route element={<ProtectedRoute allowedRoles={['Teacher']} />}>
                 <Route path="/attendance" element={<Attendance />} />

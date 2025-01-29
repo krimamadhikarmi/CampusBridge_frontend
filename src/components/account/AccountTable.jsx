@@ -35,7 +35,7 @@ const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch }) =>
       } else if (arole === 'Teacher') {
         deleteUrl = `https://localhost:7276/api/Teacher/DeleteTeacher/${aid}/${id}`;
       } else {
-        console.error('Unknown role:', role);
+        console.error('Unknown role:');
         return;
       }
 

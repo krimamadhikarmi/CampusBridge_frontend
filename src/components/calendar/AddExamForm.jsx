@@ -4,15 +4,16 @@ import ButtonGroup from '../common/ButtonGroup';
 import { useState } from 'react';
 const AddExamForm = ({
   handlePop,
-  handleSubmit,
-  dateState,
-  handleAddDate,
-  handleUpdateDate,
-  handleDateField,
-  handleAddGap,
-  gapState,
-  handleUpdateGap,
-  handleGapField,
+  // handleSubmit,
+  // dateState,
+  // handleAddDate,
+  // handleUpdateDate,
+  // handleDateField,
+  // handleAddGap,
+  // gapState,
+  // handleUpdateGap,
+  // handleGapField,
+  handleCalendarSubmit,
 }) => {
   const [Semester, setSemester] = useState('');
   const [StartDate, setStartDate] = useState('');
@@ -50,7 +51,7 @@ const AddExamForm = ({
   };
 
   const handleCreateSubmit = (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     const scheduleData = {
       semester: Semester,
       startDate: StartDate,
@@ -59,7 +60,7 @@ const AddExamForm = ({
       gapBetweenExams: formData.gapBetweenExams,
     };
     console.log('Form Data:', scheduleData);
-    handleSubmit(scheduleData);
+    handleCalendarSubmit(event,scheduleData);
     console.log(JSON.stringify(scheduleData));
   };
 
