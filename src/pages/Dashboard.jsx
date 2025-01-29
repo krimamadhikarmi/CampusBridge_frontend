@@ -51,6 +51,7 @@ const DashBoard = () => {
   let colStartClasses = ['', 'col-start-2', 'col-start-3', 'col-start-4', 'col-start-5', 'col-start-6', 'col-start-7'];
 
   const { role } = useToken();
+  const {id:userId} = useToken();
   // const role = 'University';
 
   let today = startOfToday();
@@ -59,6 +60,14 @@ const DashBoard = () => {
   let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
 
   const [meetings, setMeetings] = useState([]);
+
+  const[username,setUsername]=useState('');
+  const fetchUserNameDetails = async () =>{
+    const response = await axios.get(`https://localhost:7276/api/Auth/GetDataFromId?id=${userId}`);
+    const name = response.data.name;
+    setUsername(name);
+    console.log(username);
+  }
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -89,6 +98,7 @@ const DashBoard = () => {
       }
     };
     fetchSchedule();
+    fetchUserNameDetails();
   }, []);
 
   let selectedDayMeetings = meetings.filter(
@@ -97,6 +107,9 @@ const DashBoard = () => {
   return (
     <>
       <Navbar />
+        <div className="greetingBox">
+            Hello, {username}.
+        </div>
       <div className="dashContent">
         <div className="content1">
           {/* <div className="box box1">

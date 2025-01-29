@@ -8,20 +8,18 @@ import axios from 'axios';
 const Attendance = () => {
   const [currentDate, setCurrentDate] = useState('');
   const [attendance, setAttendance] = useState({});
-  const[students,setStudents]=useState([])
+  const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
 
 
-  const fetchAttendance=async()=>{
-    try{
-      const response= await axios.get('https://localhost:7276/api/Student/GetStudent')
-      console.log(response.data,"students")
-      setStudents(response.data)
+  const fetchAttendance = async () => {
+    try {
+      const response = await axios.get('https://localhost:7276/api/Student/GetStudent');
+      setStudents(response.data);
+    } catch (e) {
+      console.error(e, 'error');
     }
-    catch(e){
-      console.log(e,"error")
-    }
-  }
+  };
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -48,28 +46,33 @@ fetchAttendance();
 
   const handleSubmit = async () => {
     setLoading(true);
-    const attendanceData = students.map((student) => ({
-      studentId: student.id,
-      studentName: student.name,
-      attendanceStatus: attendance[student.id] || 'Not Marked',
-      date: currentDate,
-    }));
 
-    console.log('Submitting Attendance:', attendanceData);
+    // const attendanceData = students.map((student) => ({
+    //   studentId: student.id,
+    //   studentName: student.name,
+    //   attendanceStatus: attendance[student.id] || 'Not Marked',
+    //   date: currentDate,
+    // }));
+
+
+      const studentPresence = {};
+      students.forEach((student) => {
+        studentPresence[student.studentId] = attendance[student.studentId] === 'Present';
+      });
 
     const completeAttendanceData = {
-         id:1,
-         attendanceDate : attendanceData[0].date,
-         studentPresence:{}
+        //  id:1,
+         attendanceDate : currentDate,
+         studentPresence:studentPresence
     }
     // attendanceData.map((student)=>{
     //   const getResponse = await axios.get("")
     // })
-
+    console.log('completeattendancedate',JSON.stringify(completeAttendanceData));
     try {
       const response = await axios.post(
         'https://localhost:7276/api/Attendance/CreateAttendance',
-        JSON.stringify(attendanceData),
+        JSON.stringify(completeAttendanceData),
         {
           headers: {
             'Content-Type': 'application/json',
