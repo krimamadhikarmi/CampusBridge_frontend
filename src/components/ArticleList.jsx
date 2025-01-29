@@ -48,7 +48,7 @@ const ArticleList = ({
       headline: articleHeadline,
       tagline: articleTagline,
       description: articleDescription,
-      dateUpdated: new Date().toISOString(),
+      dateUpdated: new Date().toISOString().split('T')[0],
     };
     console.log(JSON.stringify(updateArticle));
     handleEdit();
@@ -65,7 +65,7 @@ const ArticleList = ({
         {createdDate != updatedDate ? (
                 <div className="article-info">
                   <span className="article-date">Date Posted: {createdDate.split('T')[0]}</span>
-                  <span className="article-date">Date Upated: {updatedDate.split('T')[0]}</span>
+                  <span className="article-date">Date Updated: {updatedDate.split('T')[0]}</span>
                   <p className="author-name">By {author}</p>
                 </div>
               ) : (
@@ -93,7 +93,7 @@ const ArticleList = ({
               {createdDate !== updatedDate ? (
                 <div className="article-info">
                   <span className="article-date">Date Posted: {createdDate.split('T')[0]}</span>
-                  <span className="article-date">Date Upated: {updatedDate.split('T')[0]}</span>
+                  <span className="article-date">Date Updated: {updatedDate.split('T')[0]}</span>
                   <p className="author-name">By {author}</p>
                 </div>
               ) : (

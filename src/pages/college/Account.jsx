@@ -62,31 +62,36 @@ const Account = () => {
     //     console.log(e);
     //   }
     // };
+
+
+    const fetchAllData = async () => {
+      try {
+        // Clear table data before fetch
+        const studentResponse = await axios.get('https://localhost:7276/api/Student/GetStudent');
+        const teacherResponse = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
+  
+        const studentData = studentResponse.data.map(data => ({
+          id: data.studentId,
+          name: data.name,
+          role: 'Student',
+        }));
+  
+        const teacherData = teacherResponse.data.map(data => ({
+          id: data.teacherId,
+          name: data.name,
+          role: 'Teacher',
+        }));
+  
+        setTbldata([...studentData, ...teacherData]);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+
+
+
     useEffect(() => {
-      const fetchAllData = async () => {
-        try {
-          // Clear table data before fetch
-          const studentResponse = await axios.get('https://localhost:7276/api/Student/GetStudent');
-          const teacherResponse = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
-    
-          const studentData = studentResponse.data.map(data => ({
-            id: data.studentId,
-            name: data.name,
-            role: 'Student',
-          }));
-    
-          const teacherData = teacherResponse.data.map(data => ({
-            id: data.teacherId,
-            name: data.name,
-            role: 'Teacher',
-          }));
-    
-          setTbldata([...studentData, ...teacherData]);
-        } catch (e) {
-          console.error(e);
-        }
-      };
-    
       fetchAllData();
     }, []);
 
@@ -135,9 +140,16 @@ const Account = () => {
           },
         },
       );
-
+      if (response.status === 200) { // Ensure it was created successfully
+        const newStudent = {
+          id: response.data.studentId,  // Adjust according to API response
+          name: response.data.name,
+          role: 'Student'
+        };
+  
+        setTbldata(prevData => [...prevData, newStudent]);
+      }
       console.log('Response data:', response.data);
-      
       // handleStudentFetch();
     } catch (e) {
       console.log(e);
@@ -167,6 +179,15 @@ const Account = () => {
         },
       );
       console.log('Response data:', response.data);
+      if (response.status === 200) { // Ensure successful creation
+        const newTeacher = {
+          id: response.data.teacherId, // Adjust based on actual API response
+          name: response.data.name,
+          role: 'Teacher'
+        };
+  
+        setTbldata(prevData => [...prevData, newTeacher]);
+      }
       // handleTeacherFetch();
     } catch (e) {
       console.log(e);

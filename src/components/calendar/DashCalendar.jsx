@@ -108,13 +108,13 @@ const DashCalendar = ({
   // }, [selectedSemester]);
 
   const handleCalendarSubmit = async (event, scheduleData) => {
-    event.preventDefault();
+    //event.preventDefault();
 
     console.log(JSON.stringify(scheduleData), 'Before response');
     const completeScheduleData = {
       semester: scheduleData.semester,
-      startDate: scheduleData.startdate,
-      endDate: scheduleData.enddate,
+      startDate: new Date(scheduleData.startDate).toISOString(),
+      endDate: new Date(scheduleData.endDate).toISOString(),
       unavailableDates: scheduleData.unavailableDates,
       gapBetweenExams: scheduleData.gapBetweenExams,
     };
