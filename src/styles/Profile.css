@@ -77,9 +77,17 @@
   height: 160px;
   background-color: #fffff0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  margin-top: 20px;
+  margin-top: 35px;
   margin-right: 0px;
+  overflow: hidden; /* Ensures that the image doesn't overflow out of the circle */
 }
+
+.profile-picture img {
+  width: 100%;  /* Make image fill the container */
+  height: 100%; /* Make image fill the container */
+  object-fit: cover; /* Ensures the image covers the container, cropping excess */
+}
+
 
 /* Header section styling */
 .header-part {
@@ -366,10 +374,10 @@
   font-size: 0.95rem;
 }
 
-.assignment-table th:first-child,
+/* .assignment-table th:first-child,
 .assignment-table td:first-child {
-  width: 70%; /* Increases the width of the "Assignments" column */
-}
+  width: 70%; 
+} */
 
 .assignment-table tr:hover {
   background-color: #f0f0e0;
