@@ -30,6 +30,7 @@ const AssignmentTable = () => {
             <th>Course Name</th>
             <th>Assignment</th>
             <th>Submission</th>
+            <th>Score</th>
             <th>Activity</th>
           </tr>
         </thead>
@@ -41,11 +42,19 @@ const AssignmentTable = () => {
                   {submission.question?submission.question:'Click here'}
                 </a>
             </td>
+
                 <td>
                 <a href={submission.submissionFilePath} target="_blank" rel="noopener noreferrer">
                   {submission.answer? submission.answer:'Click here'}
                 </a>
                 </td>
+
+                <td>
+                  {submission.score ? submission.score : <p>Not Graded</p>}
+                </td>
+
+
+
           <td><button className="delete-button" onClick={() => handleDelete(submission.submissionId)}>
                   Delete
             </button></td>

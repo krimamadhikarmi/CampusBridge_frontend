@@ -36,12 +36,12 @@ const GeneralTab = () => {
         <div className="header-part">
           <div className="profile-header">
             <h2>Your Profile</h2>
-            <div className="edit-icon" onClick={toogleEditForm}>
+            {/* <div className="edit-icon" onClick={toogleEditForm}>
               <FontAwesomeIcon icon={faPenToSquare} color="#004d4d" />
-            </div>
+            </div> */}
           </div>
           <div className="profile-picture">
-            <img src="girl.webp" alt="girl" width={140} />
+            <img src="final_formal_profile_image.jpg" alt="profile" width={140}  />
           </div>
         </div>
 

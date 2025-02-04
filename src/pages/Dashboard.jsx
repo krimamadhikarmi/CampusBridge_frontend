@@ -87,7 +87,7 @@ const DashBoard = () => {
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await axios.get('https://localhost:7276/api/Schedule/GetScheduleByRole?Role=Student');
+        const response = await axios.get(`https://localhost:7276/api/Schedule/GetScheduleByRole?Role=${role}`);
         console.log(response.data);
 
         setMeetings(response.data); // Uncomment this if you want to update state with the fetched data
@@ -108,7 +108,7 @@ const DashBoard = () => {
     <>
       <Navbar />
         <div className="greetingBox">
-            Hello, {username}.
+            Hello, {username}!
         </div>
       <div className="dashContent">
         <div className="content1">

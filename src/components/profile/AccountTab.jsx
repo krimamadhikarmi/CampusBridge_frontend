@@ -1,5 +1,8 @@
 import React from 'react';
-
+import axios from 'axios';
+import { useToken } from '../../context/TokenContext';
+import { useState } from 'react';
+import { useEffect } from 'react';
 const AccountTab = () => {
   const studentData = {
     name: 'Krima Madhikarmi',
@@ -10,6 +13,25 @@ const AccountTab = () => {
     paymentStatus: 'Paid',
     dueDate: '2024-12-01',
   };
+
+  const { id:studentid } = useToken();
+  const [info, setInfo] = useState(null);
+ useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        console.log('Fetching user data...');
+        const response = await axios.get(`https://localhost:7276/api/Student/GetStudentById/${studentid}`);
+        console.log('response', response.data);
+        setInfo(response.data);
+      } catch (e) {
+        console.error('Error fetching user data:', e);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+
   return (
     <div className="account-tab-style">
       <div className="account-header">
@@ -17,9 +39,9 @@ const AccountTab = () => {
       </div>
 
       <div className="student-info">
-        <p>Name: {studentData.name}</p>
-        <p>Semester: {studentData.semester}</p>
-        <p>Faculty:{studentData.faculty}</p>
+        <p>Name: {info?.name}</p>
+        <p>Semester: {info?.academicDTO.semester}</p>
+        <p>Faculty:{info?.academicDTO.faculty}</p>
       </div>
 
       <div className="fee-table">
@@ -33,29 +55,32 @@ const AccountTab = () => {
           <tbody>
             <tr>
               <td>Semester Fee</td>
-              <td>{studentData.totalFee}</td>
+              <td>{info?.financialDTO.fee}</td>
             </tr>
             <tr>
               <td>Scholarship Fee</td>
-              <td>{studentData.scholarshipAmount ? studentData.scholarshipAmount : 0}</td>
+              <td>{info?.financialDTO.scholarship ? info.financialDTO.scholarship : 0}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td>Total Fee</td>
               <td>
-                {studentData.scholarshipAmount
-                  ? studentData.totalFee - studentData.scholarshipAmount
-                  : studentData.totalFee}
+                {info?.financialDTO.scholarship
+                  ? info?.financialDTO.fee -info?.financialDTO.scholarship
+                  : info?.financialDTO.fee}
               </td>
             </tr>
           </tfoot>
         </table>
       </div>
       <div className="fee-instruction">
-        <p className="duedate">Due Date: {studentData.dueDate}</p>
-        <p className={`status ${studentData.paymentStatus.toLowerCase()}`}>Status: {studentData.paymentStatus}</p>
-        <button className="pay-now-button">Pay Now</button>
+        <p>
+          {info?.financialDTO.feePaid===false?(
+ <button className="pay-now-button">Pay Now</button>
+          ):<p>Fee Paid</p>}
+        </p>
+       
       </div>
     </div>
   );

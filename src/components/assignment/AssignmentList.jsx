@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CustomFormField from '../customFormField';
 
 
 const AssignmentList = ({ title, subject, submissionDate, index,aid }) => {
@@ -15,7 +16,10 @@ const AssignmentList = ({ title, subject, submissionDate, index,aid }) => {
   const [editForm, setEditForm] = useState(false);
   const[assignmentPop,setAssignmentPop]=useState(false)
   const [submissions, setSubmissions] = useState([]);
-  const {id:tid} = useToken();
+  // const [score,setScore]=useState('');
+  const [scores, setScores] = useState({});
+  // const [score, setScore] = useState({});
+    const {id:tid} = useToken();
 //   const [currentDate, setCurrentDate] = useState('');
 
 //   useEffect(() => {
@@ -69,7 +73,23 @@ const handleAssignmentPop = async () => {
       console.log(e);
     }
   };
+  // const handleScoreChange = (value) => {
+  //   setScore(value); // Directly update the score as a string
+  // };
 
+  const handleScoreChange = (subid, value) => {
+    setScores((prevScores) => ({
+      ...prevScores,
+      [subid]: value, // Store score per submission ID
+    }));
+  };
+
+  const gradeAssignment = async (subid)=>{
+    const score = scores[subid];
+    const response = await axios.get(`https://localhost:7276/api/Assignment/GradeAssignment/${subid}/${score}`);
+    toast.success('Score updated successfully!');
+    window.location.reload();
+  }
   return (
     <>
       <div className="assignment-content">
@@ -122,6 +142,7 @@ const handleAssignmentPop = async () => {
                     <th>Student ID</th>
                     <th>Student Name</th>
                     <th>File Path</th>
+                    <th>Score</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -133,6 +154,21 @@ const handleAssignmentPop = async () => {
                         <a href={submission.filePath} target="_blank" rel="noopener noreferrer">
                           View File
                         </a>
+                      </td>
+                      <td>
+                        {submission.score !== ''?(
+                          submission.score
+                        ) : (
+                          <>
+                <CustomFormField
+                  placeholder="Enter score"
+                  onChange={(e) => handleScoreChange(submission.submissionId, e.target.value)}
+                  value={scores[submission.submissionId] || ''} // Ensure each field only updates its corresponding state
+                />
+                <button onClick={() => gradeAssignment(submission.submissionId)}>Grade</button>
+              </>
+                          
+                        )}
                       </td>
                     </tr>
                   ))}
