@@ -10,6 +10,8 @@ import { useToken } from '../context/TokenContext';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import TeacherConstraintsForm from '../components/calendar/TeacherSchedule'
+
 
 const Articles = () => {
   const [dropdown, setDropDown] = useState(false);
@@ -177,10 +179,24 @@ const Articles = () => {
     setDescription(event.target.value);
   };
 
+
+  const [showForm, setShowForm] = useState(false);
+
+  const handleToggleForm = () => {
+    setShowForm(prev => !prev);
+  };
+
+  const handleConstraintsSubmit = (data) => {
+    console.log("Constraints Submitted:", data);
+    // Here you can call your API with the submitted data
+    // e.g., axios.post('/api/teacherconstraints', data)
+    // After submission, hide the form if desired:
+    setShowForm(false);
+  };
+
   return (
     <>
       <Navbar />
-
       <PageHeader pageTitle={'Articles'} />
       <ToastContainer
         position="top-center"
@@ -195,6 +211,15 @@ const Articles = () => {
           zIndex: 9999,
         }}
       />
+
+
+<div>
+      <button onClick={handleToggleForm}>
+        {showForm ? "Hide Teacher Constraints" : "Open Teacher Constraints"}
+      </button>
+      {showForm && <TeacherConstraintsForm onSubmit={handleConstraintsSubmit} />}
+    </div>
+
       {/* {console.log(role)} */}
       <div className="article-box">
         <div className="article-form">
