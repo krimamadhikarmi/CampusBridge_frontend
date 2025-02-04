@@ -1,139 +1,180 @@
-import React, { useState } from 'react';
-import './TeacherSchedule.css';
+import React, { useState, useEffect } from 'react';
+import '../../styles/TeacherSchedule.css';
+import FormHeader from '../common/FormHeader';
+import ButtonGroup from '../common/ButtonGroup';
 
 // Example teacher data (this could be passed as a prop instead)
 const teacherData = [
-  { teacherId: "101", name: "Teacher 101" },
-  { teacherId: "102", name: "Teacher 102" },
-  { teacherId: "103", name: "Teacher 103" },
-  { teacherId: "104", name: "Teacher 104" },
+  { teacherId: '101', name: 'Teacher 101' },
+  { teacherId: '102', name: 'Teacher 102' },
+  { teacherId: '103', name: 'Teacher 103' },
+  { teacherId: '104', name: 'Teacher 104' },
 ];
 
 const totalSlots = [0, 1, 2, 3, 4]; // Example available slot numbers
 
-const TeacherConstraintsForm = ({ onSubmit }) => {
+const TeacherConstraintsForm = ({ onSubmit, handleOnClick, teacherScheduleData }) => {
   // State for unavailable slots: array of objects { teacherId, unavailableSlots }
+
+  const [scheduleData, setScheduleData] = useState(teacherScheduleData);
+
+  useEffect(() => {
+    setScheduleData(teacherScheduleData);
+  }, [teacherScheduleData]);
+
   const [unavailableData, setUnavailableData] = useState(
-    teacherData.map(t => ({
+    scheduleData.map((t) => ({
       teacherId: t.teacherId,
-      unavailableSlots: []
-    }))
+      unavailableSlots: [],
+    })),
   );
 
   // State for teacher time conflicts: array of objects { teacherId, conflictWith }
   const [conflictData, setConflictData] = useState(
-    teacherData.map(t => ({
+    scheduleData.map((t) => ({
       teacherId: t.teacherId,
-      conflictWith: []
-    }))
+      conflictWith: [],
+    })),
   );
 
   // Handle unavailable slots checkbox toggle
   const handleUnavailableToggle = (teacherId, slot) => {
-    setUnavailableData(prev =>
-      prev.map(item => {
+    setUnavailableData((prev) =>
+      prev.map((item) => {
         if (item.teacherId === teacherId) {
           const hasSlot = item.unavailableSlots.includes(slot);
           return {
             teacherId,
             unavailableSlots: hasSlot
-              ? item.unavailableSlots.filter(s => s !== slot)
-              : [...item.unavailableSlots, slot]
+              ? item.unavailableSlots.filter((s) => s !== slot)
+              : [...item.unavailableSlots, slot],
           };
         }
         return item;
-      })
+      }),
     );
   };
 
   // Handle teacher conflict checkbox toggle
   const handleConflictToggle = (teacherId, conflictTeacherId) => {
-    setConflictData(prev =>
-      prev.map(item => {
+    setConflictData((prev) =>
+      prev.map((item) => {
         if (item.teacherId === teacherId) {
           const alreadyConflicts = item.conflictWith.includes(conflictTeacherId);
           return {
             teacherId,
             conflictWith: alreadyConflicts
-              ? item.conflictWith.filter(id => id !== conflictTeacherId)
-              : [...item.conflictWith, conflictTeacherId]
+              ? item.conflictWith.filter((id) => id !== conflictTeacherId)
+              : [...item.conflictWith, conflictTeacherId],
           };
         }
         return item;
-      })
+      }),
     );
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Data in the desired format:
+  //   // unavailableData: [{ teacherId: "101", unavailableSlots: [0,1,3] }, ...]
+  //   // conflictData: [{ teacherId: "101", conflictWith: ["102","103"] }, ...]
+  //   const data = {
+  //     unavailableSlots: unavailableData,
+  //     teacherConflicts: conflictData,
+  //   };
+  //   console.log('Submitted Data:', data);
+  //   if (onSubmit) onSubmit(data);
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Data in the desired format:
-    // unavailableData: [{ teacherId: "101", unavailableSlots: [0,1,3] }, ...]
-    // conflictData: [{ teacherId: "101", conflictWith: ["102","103"] }, ...]
-    const data = {
+
+    const requestData = {
       unavailableSlots: unavailableData,
-      teacherConflicts: conflictData
+      teacherConflicts: conflictData,
+      scheduleData: scheduleData, // Sending teacherScheduleData as "scheduleData"
     };
-    console.log("Submitted Data:", data);
-    if (onSubmit) onSubmit(data);
+
+    console.log('Submitting Data:', requestData);
+
+    // try {
+    //   const response = await axios.post(
+    //     'https://localhost:7276/api/Schedule/CreateTeacherScheduleFromGraph',
+    //     requestData,
+    //     {
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     },
+    //   );
+
+    //   console.log('Success:', response.data);
+
+    if (onSubmit) onSubmit(requestData); // Handle response if needed
+    // } catch (error) {
+    //   console.error('Error submitting data:', error.response ? error.response.data : error.message);
+    // }
   };
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>Teacher Constraints</h2>
-      <form onSubmit={handleSubmit}>
-        <fieldset style={{ marginBottom: '2rem' }}>
-          <legend>Unavailable Slots</legend>
-          {teacherData.map(teacher => (
-            <div key={teacher.teacherId} style={{ marginBottom: '1rem' }}>
-              <strong>{teacher.name} ({teacher.teacherId})</strong>
-              <div>
-                {totalSlots.map(slot => (
-                  <label key={slot} style={{ marginRight: '1rem' }}>
-                    <input
-                      type="checkbox"
-                      checked={
-                        unavailableData.find(t => t.teacherId === teacher.teacherId)
-                          .unavailableSlots.includes(slot)
-                      }
-                      onChange={() => handleUnavailableToggle(teacher.teacherId, slot)}
-                    />
-                    Slot {slot}
-                  </label>
-                ))}
-              </div>
-            </div>
-          ))}
-        </fieldset>
-
-        <fieldset style={{ marginBottom: '2rem' }}>
-          <legend>Teacher Time Conflicts</legend>
-          {teacherData.map(teacher => (
-            <div key={teacher.teacherId} style={{ marginBottom: '1rem' }}>
-              <strong>{teacher.name} ({teacher.teacherId})</strong>
-              <div>
-                {teacherData
-                  .filter(t => t.teacherId !== teacher.teacherId) // Exclude self
-                  .map(otherTeacher => (
-                    <label key={otherTeacher.teacherId} style={{ marginRight: '1rem' }}>
+    <div className="form-overlay">
+      <div className="form-container">
+        <FormHeader title={'Create Teacher Schedule'} handleForm={handleOnClick} />
+        <form onSubmit={handleSubmit} className="form-content">
+          <div className="section">
+            <legend>Unavailable Slots</legend>
+            {scheduleData.map((teacher) => (
+              <div key={teacher.teacherId} className="teacher-card">
+                <strong>
+                  {teacher.courseName} ({teacher.teacherId})
+                </strong>
+                <div className="checkbox-group">
+                  {totalSlots.map((slot) => (
+                    <label key={slot} className="checkbox-label">
                       <input
                         type="checkbox"
-                        checked={
-                          conflictData.find(t => t.teacherId === teacher.teacherId)
-                            .conflictWith.includes(otherTeacher.teacherId)
-                        }
-                        onChange={() =>
-                          handleConflictToggle(teacher.teacherId, otherTeacher.teacherId)
-                        }
+                        checked={unavailableData
+                          .find((t) => t.teacherId === teacher.teacherId)
+                          .unavailableSlots.includes(slot)}
+                        onChange={() => handleUnavailableToggle(teacher.teacherId, slot)}
                       />
-                      {otherTeacher.name} ({otherTeacher.teacherId})
+                      Slot {slot}
                     </label>
                   ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </fieldset>
-        <button type="submit">Submit Constraints</button>
-      </form>
+            ))}
+          </div>
+
+          <div className="section">
+            <legend>Teacher Time Conflicts</legend>
+            {scheduleData.map((teacher) => (
+              <div key={teacher.teacherId} className="teacher-card">
+                <strong>
+                  {teacher.name} ({teacher.teacherId})
+                </strong>
+                <div className="checkbox-group">
+                  {scheduleData
+                    .filter((t) => t.teacherId !== teacher.teacherId) // Exclude self
+                    .map((otherTeacher) => (
+                      <label key={otherTeacher.teacherId} className="checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={conflictData
+                            .find((t) => t.teacherId === teacher.teacherId)
+                            .conflictWith.includes(otherTeacher.teacherId)}
+                          onChange={() => handleConflictToggle(teacher.teacherId, otherTeacher.teacherId)}
+                        />
+                        {otherTeacher.name} ({otherTeacher.teacherId})
+                      </label>
+                    ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <ButtonGroup handleClose={handleOnClick} />
+        </form>
+      </div>
     </div>
   );
 };

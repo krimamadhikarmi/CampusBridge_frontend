@@ -3,15 +3,11 @@ import { format, getDay, isEqual, isSameDay, isSameMonth, isToday, parseISO } fr
 import { useToken } from '../../context/TokenContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AddExamForm from './AddExamForm';
-// import { DateReducer, GapReducer, initialDate, initialGap } from '../../hooks/reducer';
-// import { useReducer } from 'react';
 import axios from 'axios';
+import TeacherConstraintsForm from './TeacherSchedule';
 
-import AddTeacherSchedule from './AddTeacherSchedule';
-// import { ButtonGroup } from 'flowbite-react';
-// import {useState,usE } from 'react';
 const DashCalendar = ({
   previousMonth,
   firstDayCurrentMonth,
@@ -21,91 +17,14 @@ const DashCalendar = ({
   setSelectedDay,
   selectedDay,
   meetings,
-  // handleDateClick,
 }) => {
   const { role } = useToken();
-  // const role = 'University';
-  // const [selectedSemester, setSelectedSemester] = useState('');
-  // const [teachers, setTeachers] = useState([]);
-  // const [startDate, setStartDate] = useState('');
-  // const [endDate, setEndDate] = useState('');
-  // const [breakMinutes, setBreakMinutes] = useState(0);
-  // const [slots, setSlots] = useState('');
-
-  // const addHolidays = () => {
-  //   if (currentHolidays.trim() !== '') {
-  //     setFromData((prev) => ({
-  //       ...prev,
-  //       holidays: [...prev.holidays, currentHolidays],
-  //     }));
-  //     setCurrentHolidays('');
-  //   }
-  // };
 
   const [addClick, setAddClick] = useState(false);
-  // const [semester, setSemester] = useState('');
-  // const [startdate, setStartDate] = useState('');
-  // const [enddate, setEndDate] = useState('');
-  // const [udate, setUdate] = useState('');
-  // const [gaps, setGap] = useState('');
-
-  // const [dateState, datedispatch] = useReducer(DateReducer, initialDate);
-  // const [gapState, gapdispatch] = useReducer(GapReducer, initialGap);
-
-  // const handleDateField = (event) => {
-  //   event.preventDefault();
-  //   datedispatch({ type: 'ADD', name: 'UnavailableDates', placeholder: 'Enter unavailable dates', value: '' });
-  // };
-
-  // const handleUpdateDate = (event, id) => {
-  //   const value = event.target.value;
-  //   setUdate(value);
-  //   datedispatch({ type: 'UPDATE', id: id, value: value });
-  // };
-
-  // const handleAddDate = (event) => {
-  //   event.preventDefault();
-  //   console.log('added date');
-  // };
-
-  // const handleGapField = (event) => {
-  //   event.preventDefault();
-  //   gapdispatch({ type: 'ADD', name: 'GapBetweenExams', placeholder: 'Enter gap ', value: '' });
-  // };
-
-  // const handleUpdateGap = (event, id) => {
-  //   const value = event.target.value;
-  //   setGap(value);
-  //   gapdispatch({ type: 'UPDATE', id: id, value: value });
-  // };
-
-  // const handleAddGap = (event) => {
-  //   event.preventDefault();
-  //   console.log('added date');
-  // };
 
   const handleOnClick = () => {
     setAddClick(!addClick);
-    // setFormType(''); // Reset formType when toggling the popup
   };
-
-  // const fetchTeachers = async (semester) => {
-  //   try {
-  //     const response = await fetch(`https://your-api.com/teachers?semester=${semester}`);
-  //     if (!response.ok) {
-  //       throw new Error('Failed to fetch teachers');
-  //     }
-  //     const data = await response.json();
-  //     setTeachers(data);
-  //   } catch (error) {
-  //     console.error('Error fetching teacher data:', error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (selectedSemester) {
-  //     fetchTeachers(selectedSemester);
-  //   }
-  // }, [selectedSemester]);
 
   const handleCalendarSubmit = async (event, scheduleData) => {
     //event.preventDefault();
@@ -134,35 +53,58 @@ const DashCalendar = ({
     }
   };
 
-  const handleTeacherScheduleSubmit = async (teacherSchedule) => {
-    const teacherFormData = {
-      semester: teacherSchedule.semester,
-      startDate: new Date(teacherSchedule.startDate).toISOString(),
-      endDate: new Date(teacherSchedule.endDate).toISOString(),
-      slotsPerDay: teacherSchedule.slotsPerDay,
-      breakMinutes: teacherSchedule.breakMinutes,
-      teachers: teacherSchedule.teachers.map((teacher) => ({
-        id: teacher.id,
-        name: teacher.name,
-        availability: teacher.availability,
-      })),
-      holidays: teacherSchedule.holidays,
-    };
-    console.log(JSON.stringify(teacherFormData));
-    try {
-      const response = await axios.post('');
-      console.log(response);
-    } catch (e) {
-      console.log(e, 'error');
-    }
+  const handleConstraintsSubmit = (data) => {
+    console.log('Constraints Submitted:', data);
+    // Here you can call your API with the submitted data
+    // e.g., axios.post('/api/teacherconstraints', data)
+    // After submission, hide the form if desired:
+    setAddClick(!addClick);
   };
 
-  // const [formType, setFormType] = useState('');
-
-  // const handleOptionSelect = (option) => {
-  //   setFormType(option);
-  //   setAddClick(false);
+  // const handleTeacherScheduleSubmit = async (teacherSchedule) => {
+  //   const teacherFormData = {
+  //     semester: teacherSchedule.semester,
+  //     startDate: new Date(teacherSchedule.startDate).toISOString(),
+  //     endDate: new Date(teacherSchedule.endDate).toISOString(),
+  //     slotsPerDay: teacherSchedule.slotsPerDay,
+  //     breakMinutes: teacherSchedule.breakMinutes,
+  //     teachers: teacherSchedule.teachers.map((teacher) => ({
+  //       id: teacher.id,
+  //       name: teacher.name,
+  //       availability: teacher.availability,
+  //     })),
+  //     holidays: teacherSchedule.holidays,
+  //   };
+  //   console.log(JSON.stringify(teacherFormData));
+  //   try {
+  //     const response = await axios.post('');
+  //     console.log(response);
+  //   } catch (e) {
+  //     console.log(e, 'error');
+  //   }
   // };
+
+  const [teacherScheduleData, setTeacherScheduleData] = useState([]);
+
+  const fetchCourseTeacher = async () => {
+    try {
+      const response = await axios.get('https://localhost:7276/api/Teacher/GetCourseTeacher');
+      const transformedData = response.data.map((course, index) => ({
+        id: index + 1,
+        courseName: course.courseTitle,
+        teacherId: course.teacherId,
+        assignedTimeSlot: 0,
+      }));
+
+      setTeacherScheduleData(transformedData);
+      console.log(teacherScheduleData, 'response');
+    } catch (error) {
+      console.error('Error fetching course-teacher data:', error);
+    }
+  };
+  useEffect(() => {
+    fetchCourseTeacher();
+  }, []);
 
   return (
     <>
@@ -238,59 +180,16 @@ const DashCalendar = ({
       {addClick && (
         <>
           {role.includes('University') ? (
-            <AddExamForm
-              handlePop={handleOnClick}
-              handleCalendarSubmit={handleCalendarSubmit}
-              // semester={semester}
-              // setSemester={setSemester}
-              // startdate={startdate}
-              // setStartDate={setStartDate}
-              // enddate={enddate}
-              // setEndDate={setEndDate}
-              // dateState={dateState}
-              // handleAddDate={handleAddDate}
-              // handleUpdateDate={handleUpdateDate}
-              // handleDateField={handleDateField}
-              // handleAddGap={handleAddGap}
-              // gapState={gapState}
-              // handleUpdateGap={handleUpdateGap}
-              // handleGapField={handleGapField}
-            />
+            <AddExamForm handlePop={handleOnClick} handleCalendarSubmit={handleCalendarSubmit} />
           ) : (
-            // <div className="popMenu">
-            //   <div className="menu-item">
-            //     <p onClick={() => handleOptionSelect('exam')}>Create Exam Schedule</p>
-            //     <p onClick={() => handleOptionSelect('teacher')}>Create Teacher Schedule</p>
-            //   </div>
-            // </div>
-            <AddTeacherSchedule handleOnClick={handleOnClick} handleTeacherScheduleSubmit={handleTeacherScheduleSubmit} />
+            // <AddTeacherSchedule
+            //   handleOnClick={handleOnClick}
+            //   handleTeacherScheduleSubmit={handleTeacherScheduleSubmit}
+            // />
+            <TeacherConstraintsForm onSubmit={handleConstraintsSubmit} handleOnClick={handleOnClick} teacherScheduleData={teacherScheduleData} />
           )}
         </>
       )}
-
-      {/* {formType === 'exam' && (
-        <AddExamForm
-          handlePop={handleOnClick}
-          handleCalendarSubmit={handleCalendarSubmit}
-          // semester={semester}
-          // setSemester={setSemester}
-          // startdate={startdate}
-          // setStartDate={setStartDate}
-          // enddate={enddate}
-          // setEndDate={setEndDate}
-          // dateState={dateState}
-          // handleAddDate={handleAddDate}
-          // handleUpdateDate={handleUpdateDate}
-          // handleDateField={handleDateField}
-          // handleAddGap={handleAddGap}
-          // gapState={gapState}
-          // handleUpdateGap={handleUpdateGap}
-          // handleGapField={handleGapField}
-        />
-      )}
-      {formType === 'teacher' && (
-        <AddTeacherSchedule handleOnClick={handleOnClick} handleTeacherScheduleSubmit={handleTeacherScheduleSubmit} />
-      )} */}
     </>
   );
 };
