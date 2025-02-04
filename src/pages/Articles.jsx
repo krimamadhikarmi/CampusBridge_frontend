@@ -159,7 +159,7 @@ const Articles = () => {
       });
     } catch (e) {
       console.error('Error deleting course:', e);
-      toast.error('Failed to delete article. Please try again!');
+      toast.error('Failed to delete. Please try again!');
     }
   };
 
