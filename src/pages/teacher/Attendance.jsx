@@ -4,17 +4,26 @@ import Navbar from '../../components/Navbar';
 import '../../styles/Attendance.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const Attendance = () => {
   const [currentDate, setCurrentDate] = useState('');
   const [attendance, setAttendance] = useState({});
+  const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const students = [
-    { id: 1, name: 'Krima Madhikarmi' },
-    { id: 2, name: 'Shishant Shrestha' },
-    { id: 3, name: 'Sarina Shrestha' },
-  ];
+
+  const fetchAttendance = async () => {
+    try {
+      const response = await axios.get('https://localhost:7276/api/Student/GetStudent');
+      setStudents(response.data);
+    } catch (e) {
+      console.error(e, 'error');
+    }
+  };
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -27,11 +36,10 @@ const Attendance = () => {
     });
     setAttendance(initialAttendance);
 
-
-    const fetchAttendance=()=>{
-      
-    }
+fetchAttendance();
+    
   }, []);
+
 
   const handleCheckboxChange = (studentId, status) => {
     setAttendance((prevAttendance) => ({
@@ -42,28 +50,33 @@ const Attendance = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const attendanceData = students.map((student) => ({
-      studentId: student.id,
-      studentName: student.name,
-      attendanceStatus: attendance[student.id] || 'Not Marked',
-      date: currentDate,
-    }));
 
-    console.log('Submitting Attendance:', attendanceData);
+    // const attendanceData = students.map((student) => ({
+    //   studentId: student.id,
+    //   studentName: student.name,
+    //   attendanceStatus: attendance[student.id] || 'Not Marked',
+    //   date: currentDate,
+    // }));
+
+
+      const studentPresence = {};
+      students.forEach((student) => {
+        studentPresence[student.studentId] = attendance[student.studentId] === 'Present';
+      });
 
     const completeAttendanceData = {
-         id:1,
-         attendanceDate : attendanceData[0].date,
-         studentPresence:{}
+        //  id:1,
+         attendanceDate : currentDate,
+         studentPresence:studentPresence
     }
     // attendanceData.map((student)=>{
     //   const getResponse = await axios.get("")
     // })
-
+    console.log('completeattendancedate',JSON.stringify(completeAttendanceData));
     try {
       const response = await axios.post(
-        'https://localhost:7276/api/Attendance/SubmitAttendance',
-        JSON.stringify(attendanceData),
+        'https://localhost:7276/api/Attendance/CreateAttendance',
+        JSON.stringify(completeAttendanceData),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -71,6 +84,15 @@ const Attendance = () => {
         }
       );
       console.log('Attendance Submission Response:', response.data);
+       toast.success('Attendance submitted successfully!', {
+              style: {
+                backgroundColor: '#004d4d',
+                color: '#ffffff',
+              },
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
     } catch (error) {
       console.error('Error submitting attendance:', error);
     } finally {
@@ -82,6 +104,19 @@ const Attendance = () => {
     <>
       <Navbar />
       <PageHeader pageTitle={'Attendance'} />
+      <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              hideProgressBar
+              newestOnTop={false}
+              closeButton={false}
+              style={{
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 9999,
+              }}
+            />
       <div className="attendance-container">
         <div className="attendance-card">
           <h2>Today's Date:</h2>

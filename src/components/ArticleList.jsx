@@ -7,7 +7,8 @@ import { useToken } from '../context/TokenContext';
 import FormHeader from './common/FormHeader';
 import CustomFormField from './customFormField';
 import ButtonGroup from './common/ButtonGroup';
-
+import { useEffect } from 'react';
+import axios from 'axios';
 const ArticleList = ({
   headline,
   description,
@@ -35,10 +36,22 @@ const ArticleList = ({
   const [articleDescription, setArticleDescription] = useState(description);
   const [dateUpdated, setDateUpdated] = useState(currentDate);
 
+  const [username, setUsername] = useState('');
+
   const handleArticle = () => {
     setArticlePop(!articlepop);
   };
-
+  const fetchUserNameDetails = async () =>{
+    console.log('author',author);
+      const response = await axios.get(`https://localhost:7276/api/Auth/GetDataFromId?id=${author}`);
+      const name = response.data.name;
+      setUsername(name);
+      console.log(username);
+    };
+    useEffect(() => {
+        fetchUserNameDetails();
+      }, []);
+    
   const handleEditFormSubmit = (e) => {
     e.preventDefault();
     console.log('article id', aid);
@@ -48,9 +61,12 @@ const ArticleList = ({
       headline: articleHeadline,
       tagline: articleTagline,
       description: articleDescription,
-      dateUpdated: new Date().toISOString().split('T')[0],
+      dateUpdated: new Date().toISOString(),
     };
     console.log(JSON.stringify(updateArticle));
+    console.log('createdDate:',createdDate);
+    console.log('updatedDate:',updatedDate);
+
     handleEdit();
     handleUpdateForm(updateArticle);
   };
@@ -66,12 +82,12 @@ const ArticleList = ({
                 <div className="article-info">
                   <span className="article-date">Date Posted: {createdDate.split('T')[0]}</span>
                   <span className="article-date">Date Updated: {updatedDate.split('T')[0]}</span>
-                  <p className="author-name">By {author}</p>
+                  <p className="author-name">By {username}</p>
                 </div>
               ) : (
                 <div className="article-info">
                   <span className="article-date">Date Created: {updatedDate.split('T')[0]}</span>
-                  <p className="author-name">By {author}</p>
+                  <p className="author-name">By {username}</p>
                 </div>
               )}
 

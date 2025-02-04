@@ -4,9 +4,11 @@ import ButtonGroup from '../common/ButtonGroup';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { v4 as uuidv4 } from 'uuid';
-const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
+const AddAssignmentForm = ({ handleAddForm, currentDate,assignments,setAssignments,setPopUp}) => {
   const [AssignmentId, setAssignment] = useState('');
   const [Question, setQuestion] = useState('');
   const [CourseId, setCourseId] = useState('');
@@ -16,7 +18,7 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
   const {id:teacherId} = useToken();
 
   const [file, setFile] = useState(null);
-  const [FileId, setFileId] = useState(''); // State for unique FileId
+  const [FileId, setFileId] = useState(''); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,8 +50,28 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
         },
       });
       console.log('assignment1', response.data);
+      const newAssignment = {
+        id: response.data.assignmentId,
+        title: response.data.question,
+        subject: response.data.courseDTO?.courseTitle || 'Unknown', // Handle missing course title gracefully
+        submissionDate: response.data.submissionDate.split('T')[0],
+    };
+
+    setAssignments((prevAssignments) => [...prevAssignments, newAssignment]);
+      toast.success('Assignment created successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+      setPopUp(false);
+      // setAssignments((prevAssignment)=>[...prevAssignment,response.data]);
+      
+
     } catch (e) {
       console.log(e);
+      setPopUp(false);
+      toast.error('Failed to create article. Please try again!');
     }
   };
 
@@ -57,7 +79,8 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
     const uploadedFile = e.target.files[0];
     if (uploadedFile) {
       setFile(uploadedFile);
-      setFileId(uuidv4()); // Generate a unique FileId when a file is selected
+      const currentDateTime = new Date().toLocaleString();
+      setFileId(uuidv4()+currentDateTime); // Generate a unique FileId when a file is selected
     }
   };
 
@@ -112,7 +135,15 @@ const AddAssignmentForm = ({ handleAddForm, currentDate }) => {
               label={'Submission Date'}
               name={'SubmissionDate'}
               type={'date'}
-              onChange={(e) => setSubmissionDate(e.target.value)}
+              min={new Date().toISOString().split('T')[0]}
+              onChange={(e) => {
+                if (e.target.value < new Date().toISOString().split('T')[0]) {
+                  alert("Submission date cannot be in the past!");
+                  setSubmissionDate(" "); // Reset field if past date is chosen
+                } else {
+                  setSubmissionDate(e.target.value);
+                }
+              }}
             />
             {/* <CustomFormField
               label={'Teacher Id'}

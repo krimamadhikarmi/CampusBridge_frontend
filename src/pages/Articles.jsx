@@ -201,6 +201,7 @@ const Articles = () => {
           {role.includes('Teacher') ||
           role.includes('University') ||
           role.includes('College') ||
+          role.includes('Author') ||
           role.includes('ClubHead') ? (
             <button className="article-button" onClick={toggleDown}>
               Add article

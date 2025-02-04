@@ -59,12 +59,10 @@ const ChatBox = () => {
             },
           },
         );
-
+        console.log('response chattbot api',response.data);
         var botMessage = response.data.answer || 'No answer available';
 
-        console.log('response:', response.data);
-
-        if(response.data.score>70){
+        if(response.data.score>40){
           botMessage=response.data.answer;
         }
         else{

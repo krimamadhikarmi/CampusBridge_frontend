@@ -210,7 +210,7 @@ const Account = () => {
       // handleTeacherFetch();
     } catch (e) {
       console.log(e);
-      toast.error('Failed to delete teacher. Please try again!');
+      toast.error('Failed to create teacher. Please try again!');
     }
   };
 
@@ -246,6 +246,7 @@ const Account = () => {
         {filterData.length > 0 ? (
           <AccountTable
             filterData={filterData}
+            setTbldata={setTbldata}
             // handleStudentFetch={handleStudentFetch()}
             // handleTeacherFetch={handleTeacherFetch()}
           />

@@ -3,10 +3,10 @@ body {
   padding: 0;
   background-color: #d9ead3;
 }
-.dashContent {
-  padding: 20px;
-  margin-top: 80px;
-}
+/* .dashContent {
+  padding: 10px;
+  margin-top: 20px;
+} */
 .content1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -339,4 +339,14 @@ body {
 }
 
 
+.greetingBox {
+  width: auto;
+  color: #4b8282;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px;
+  margin-top: 100px;
+  border-radius: 8px;
+}
 

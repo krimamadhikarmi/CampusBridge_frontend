@@ -7,14 +7,14 @@ import { useToken } from '../../context/TokenContext';
 
 const GeneralTab = () => {
   const [editForm, setEditForm] = useState(false);
-  const { id } = useToken();
+  const { id:studentid } = useToken();
   const [info, setInfo] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         console.log('Fetching user data...');
-        const response = await axios.get('https://localhost:7276/api/Student/GetStudentById/1');
+        const response = await axios.get(`https://localhost:7276/api/Student/GetStudentById/${studentid}`);
         console.log('response', response.data);
         setInfo(response.data);
       } catch (e) {
@@ -36,12 +36,12 @@ const GeneralTab = () => {
         <div className="header-part">
           <div className="profile-header">
             <h2>Your Profile</h2>
-            <div className="edit-icon" onClick={toogleEditForm}>
+            {/* <div className="edit-icon" onClick={toogleEditForm}>
               <FontAwesomeIcon icon={faPenToSquare} color="#004d4d" />
-            </div>
+            </div> */}
           </div>
           <div className="profile-picture">
-            <img src="girl.webp" alt="girl" width={140} />
+            <img src="final_formal_profile_image.jpg" alt="profile" width={140}  />
           </div>
         </div>
 

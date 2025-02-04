@@ -203,7 +203,7 @@ const StudentForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
               Add More
             </button>
           </div> */}
-          <div className="course-field">
+          {/* <div className="course-field">
             <CustomFormField
               label={'Club Id'}
               // name={currentClubId}
@@ -215,14 +215,14 @@ const StudentForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
             <button type="button" onClick={addClubId}>
               Add
             </button>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <ul>
               {formData.clubIds.map((clubId, index) => (
                 <li key={index}>{clubId}</li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           <div className="course-field">
             <CustomFormField

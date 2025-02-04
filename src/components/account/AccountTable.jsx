@@ -2,8 +2,10 @@ import axios from 'axios';
 import ConfirmPopup from '../LogoutPopup';
 import { useState } from 'react';
 import { useToken } from '../../context/TokenContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch }) => {
+const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch,setTbldata }) => {
   const [deleteData, setDeleteData] = useState(false);
   const [selectAccountId, setSelectAccountId] = useState(null);
   const [selectAccountRole, setSelectAccountRole] = useState(null);
@@ -22,14 +24,7 @@ const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch }) =>
   const handleDelete = async (aid,arole) => {
     console.log(aid, 'user');
     try {
-      // const roleResponse = await axios.get(`https://localhost:7276/api/Auth/GetNameFromId?id=${aid}`);
-
-      // console.log(roleResponse.data.role, 'role');
-
-      // const role = roleResponse.data.role;
-
       let deleteUrl = '';
-
       if (arole === 'Student') {
         deleteUrl = `https://localhost:7276/api/Student/DeleteStudent/${aid}/${id}`;
       } else if (arole === 'Teacher') {
@@ -41,10 +36,14 @@ const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch }) =>
 
       const response = await axios.delete(deleteUrl);
       console.log(response.data);
-
-      // handleTeacherFetch();
-      // handleStudentFetch();
+      setTbldata((prevData) => prevData.filter((account) => account.id !== aid));
       setDeleteData(false);
+      toast.success('Account deleted successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
     } catch (e) {
       console.log(e);
     }

@@ -5,12 +5,17 @@ import { useState, useEffect } from 'react';
 import AddAssignmentForm from '../../components/assignment/AddAssignmentForm';
 import AssignmentList from '../../components/assignment/AssignmentList';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useToken } from '../../context/TokenContext';
 
 const TeacherAssignment = () => {
   
   const [popup, setPopUp] = useState(false);
 
   const [currentDate, setCurrentDate] = useState('');
+  
+  const{id:tid} = useToken();
 
   const handleAddForm = () => {
     setPopUp(!popup);
@@ -27,7 +32,7 @@ const TeacherAssignment = () => {
 
   const fetchAssignments = async () => {
     try {
-      const response = await axios.get('https://localhost:7276/api/Assignment/GetAssignment');
+      const response = await axios.get(`https://localhost:7276/api/Assignment/GetAssignmentByTeacherId/${tid}`);
       console.log('articles', response.data);
       
       const assignmentData = response.data.map(data=>({
@@ -49,6 +54,19 @@ const TeacherAssignment = () => {
     <>
       <Navbar />
       <PageHeader pageTitle={'Assignment'} />
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeButton={false}
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 9999,
+        }}
+      />
       <div className="teacher-assignment-box">
         <div className="button-div">
           <button className="add-assignment-button" onClick={handleAddForm}>
@@ -60,17 +78,21 @@ const TeacherAssignment = () => {
             return (
               <div key={assignment.id} className="assignment-item">
                 <AssignmentList
+                aid={assignment.id}
                   title={assignment.title}
                   subject={assignment.subject}
                   submissionDate={assignment.submissionDate}
                   index={index}
+                  
                 />
               </div>
             );
           })}
         </div>
       </div>
-      {popup && <AddAssignmentForm currentDate={currentDate} handleAddForm={handleAddForm} />}
+      {popup && 
+      <AddAssignmentForm currentDate={currentDate} handleAddForm={handleAddForm} assignments={assignments}
+                  setAssignments={setAssignment} setPopUp={setPopUp}/>}
     </>
   );
 };
