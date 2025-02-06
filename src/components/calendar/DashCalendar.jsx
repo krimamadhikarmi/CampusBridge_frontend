@@ -92,8 +92,7 @@ const DashCalendar = ({
       const transformedData = response.data.map((course, index) => ({
         id: index + 1,
         courseName: course.courseTitle,
-        teacherId: course.teacherId,
-        assignedTimeSlot: 0,
+        teacherId: course.teacherId
       }));
 
       setTeacherScheduleData(transformedData);
