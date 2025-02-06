@@ -88,14 +88,35 @@ const TeacherConstraintsForm = ({ onSubmit, handleOnClick, teacherScheduleData }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const mergedDataMap = new Map();
 
-    const requestData = {
-      unavailableSlots: unavailableData,
-      teacherConflicts: conflictData,
-      scheduleData: scheduleData, // Sending teacherScheduleData as "scheduleData"
-    };
+    // Process unavailableSlots
+    unavailableData.forEach(({ teacherId, unavailableSlots }) => {
+      mergedDataMap.set(teacherId, { teacherId, unavailableSlots, conflictWith: [] });
+    });
 
-    console.log('Before API Call:', requestData);
+    // Process teacherConflicts and merge with existing data
+    conflictData.forEach(({ teacherId, conflictWith }) => {
+      if (mergedDataMap.has(teacherId)) {
+        mergedDataMap.get(teacherId).conflictWith = conflictWith;
+      } else {
+        mergedDataMap.set(teacherId, { teacherId, unavailableSlots: [], conflictWith });
+      }
+    });
+
+    // Convert map values to array
+    const finalData = Array.from(mergedDataMap.values());
+
+    console.log('Submitting Data:', JSON.stringify(finalData));
+
+    if (onSubmit) onSubmit(finalData);
+    // const requestData = {
+    //   unavailableSlots: unavailableData,
+    //   teacherConflicts: conflictData,
+    //   scheduleData: scheduleData, // Sending teacherScheduleData as "scheduleData"
+    // };
+
+    // console.log('Submitting Data:', JSON.stringify(requestData));
 
     // try {
     //   const response = await axios.post(
@@ -110,7 +131,7 @@ const TeacherConstraintsForm = ({ onSubmit, handleOnClick, teacherScheduleData }
 
     //   console.log('Success:', response.data);
 
-    if (onSubmit) onSubmit(requestData); // Handle response if needed
+    // if (onSubmit) onSubmit(requestData); // Handle response if needed
     // } catch (error) {
     //   console.error('Error submitting data:', error.response ? error.response.data : error.message);
     // }
