@@ -88,9 +88,20 @@ const DashBoard = () => {
     const fetchSchedule = async () => {
       try {
         const response = await axios.get(`https://localhost:7276/api/Schedule/GetScheduleByRole?Role=${role}`);
-        console.log(response.data);
+        console.log('result from getschedulebyrole:',response.data);
 
-        setMeetings(response.data); // Uncomment this if you want to update state with the fetched data
+        let examSchedule = response.data || [];
+        let teacherSchedule = [];
+        //setMeetings(response.data); // Uncomment this if you want to update state with the fetched data
+        
+        if(role.includes('Teacher')){
+          const response2 = await axios.get(`https://localhost:7276/api/Schedule/GetScheduleByTeacherId?Id=${userId}`);
+
+          console.log('result from getschedulebyteacherid',response2.data);
+
+          teacherSchedule = response2.data || [];
+        }
+        setMeetings([...examSchedule, ...teacherSchedule]);
         const schedule1 = response.data;
         console.log(schedule1);
       } catch (e) {

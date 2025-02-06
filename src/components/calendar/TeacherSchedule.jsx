@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/TeacherSchedule.css';
 import FormHeader from '../common/FormHeader';
 import ButtonGroup from '../common/ButtonGroup';
+import axios from 'axios';
 
 // Example teacher data (this could be passed as a prop instead)
 const teacherData = [
@@ -118,23 +119,23 @@ const TeacherConstraintsForm = ({ onSubmit, handleOnClick, teacherScheduleData }
 
     // console.log('Submitting Data:', JSON.stringify(requestData));
 
-    // try {
-    //   const response = await axios.post(
-    //     'https://localhost:7276/api/Schedule/CreateTeacherScheduleFromGraph',
-    //     requestData,
-    //     {
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     },
-    //   );
+    try {
+      const response = await axios.post(
+        'https://localhost:7276/api/Schedule/CreateTeacherScheduleFromGraph',
+        JSON.stringify(finalData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        },
+      );
 
-    //   console.log('Success:', response.data);
+      console.log('Success:', response.data);
 
-    // if (onSubmit) onSubmit(requestData); // Handle response if needed
-    // } catch (error) {
-    //   console.error('Error submitting data:', error.response ? error.response.data : error.message);
-    // }
+    if (onSubmit) onSubmit(requestData); // Handle response if needed
+    } catch (error) {
+      console.error('Error submitting data:', error.response ? error.response.data : error.message);
+    }
   };
 
   return (
