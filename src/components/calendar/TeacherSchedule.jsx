@@ -95,7 +95,7 @@ const TeacherConstraintsForm = ({ onSubmit, handleOnClick, teacherScheduleData }
       scheduleData: scheduleData, // Sending teacherScheduleData as "scheduleData"
     };
 
-    console.log('Submitting Data:', requestData);
+    console.log('Before API Call:', requestData);
 
     // try {
     //   const response = await axios.post(
