@@ -5,8 +5,6 @@ import '../styles/LoginStyle.css';
 import { useToken } from '../context/TokenContext';
 import axios from 'axios';
 import NormalPopup from '../components/NormalPopup';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -77,15 +75,10 @@ const Login = () => {
         navigate('/dashboard');
       } else if (response.status === 400) {
         console.log('Setting error message:', response.data);
+
         setErrorMessage(response.data || 'Something went wrong. Please try again.');
       }
     } catch (error) {
-      toast.error(error, {
-        style: {
-          backgroundColor: '#004d4d',
-          color: '#ffffff',
-        },
-      });
       console.error('Error during POST request:', error);
       console.log(error.response.data.message);
       // setResponseMessage(error.response?.data?.message || 'Error occurred');
