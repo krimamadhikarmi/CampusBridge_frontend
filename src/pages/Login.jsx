@@ -5,12 +5,14 @@ import '../styles/LoginStyle.css';
 import { useToken } from '../context/TokenContext';
 import axios from 'axios';
 import NormalPopup from '../components/NormalPopup';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { setToken, setRole, setId } = useToken();
-  const [errorMessage,setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   // const handleSubmit = async (event) => {
@@ -47,36 +49,43 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('https://localhost:7276/api/Auth/Login',
-       { username, password },
-       { validateStatus: (status) => status < 500 });
+      const response = await axios.post(
+        'https://localhost:7276/api/Auth/Login',
+        { username, password },
+        { validateStatus: (status) => status < 500 },
+      );
 
       // setResponseMessage(response.data.message); // Handle the response data
-      
+
       console.log('Response data:', response.data);
 
-      if(response.status===200){
-          const jwtToken = {
-            jwtToken: response.data.jwtToken,
-          };
-          const userRole = response.data.role;
-          const userId = response.data.id;
-          console.log(response.data.id)
-          console.log(response.data)
-    
-          console.log('Token data:', jwtToken);
-          console.log('role', userRole);
-          setToken(jwtToken);
-          setRole(userRole);
-          setId(userId);
-    
-          navigate('/dashboard');
-      }else if(response.status === 400){
-        console.log("Setting error message:", response.data);
-        setErrorMessage(response.data || "Something went wrong. Please try again.");
+      if (response.status === 200) {
+        const jwtToken = {
+          jwtToken: response.data.jwtToken,
+        };
+        const userRole = response.data.role;
+        const userId = response.data.id;
+        console.log(response.data.id);
+        console.log(response.data);
+
+        console.log('Token data:', jwtToken);
+        console.log('role', userRole);
+        setToken(jwtToken);
+        setRole(userRole);
+        setId(userId);
+
+        navigate('/dashboard');
+      } else if (response.status === 400) {
+        console.log('Setting error message:', response.data);
+        setErrorMessage(response.data || 'Something went wrong. Please try again.');
       }
-    
     } catch (error) {
+      toast.error(error, {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
       console.error('Error during POST request:', error);
       console.log(error.response.data.message);
       // setResponseMessage(error.response?.data?.message || 'Error occurred');
@@ -90,7 +99,7 @@ const Login = () => {
     setPassword(event.target.value);
   };
   return (
-    <div className='login-body'>
+    <div className="login-body">
       <div id="loginBox">
         <div id="title">
           <h2>Hello and Welcome!</h2>
@@ -121,11 +130,7 @@ const Login = () => {
         </div>
       </div>
       {errorMessage && (
-        <NormalPopup
-          title="Login Failed"
-          message={errorMessage} 
-          onClose={() => setErrorMessage(null)}
-        />
+        <NormalPopup title="Login Failed" message={errorMessage} onClose={() => setErrorMessage(null)} />
       )}
     </div>
   );
