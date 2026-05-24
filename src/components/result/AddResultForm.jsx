@@ -2,7 +2,7 @@ import FormHeader from '../common/FormHeader';
 import CustomFormField from '../customFormField';
 import ButtonGroup from '../common/ButtonGroup';
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../../api/axios';
 const handleResultSubmit = async (resultData, event) => {
   event.preventDefault();
   const completeResultData = {
@@ -14,15 +14,11 @@ const handleResultSubmit = async (resultData, event) => {
     studentId: resultData.StudentId,
   };
   console.log(JSON.stringify(completeResultData));
-  try{
-    const response = await axios.post('https://localhost:7276/api/Result/CreateResult', JSON.stringify(completeResultData), {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log("Response data:",response.data);
-  } catch(e){
-     console.log(e);
+  try {
+    const response = await api.post('/Result/CreateResult', JSON.stringify(completeResultData));
+    console.log('Response data:', response.data);
+  } catch (e) {
+    console.log(e);
   }
   console.log(resultData.ResultId);
 };

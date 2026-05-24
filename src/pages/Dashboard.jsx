@@ -6,13 +6,13 @@ import '../styles/Dashboard.css';
 import Navbar from '../components/Navbar';
 import { add, eachDayOfInterval, endOfMonth, format, isSameDay, parse, parseISO, startOfToday } from 'date-fns';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import DashCalendar from '../components/calendar/DashCalendar';
 
 import EventDisplay from '../components/calendar/EventDisplay';
 import PieChart from '../components/PieChart';
 import { useToken } from '../context/TokenContext';
+import api from '../api/axios';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -63,7 +63,7 @@ const DashBoard = () => {
 
   const[username,setUsername]=useState('');
   const fetchUserNameDetails = async () =>{
-    const response = await axios.get(`https://localhost:7276/api/Auth/GetDataFromId?id=${userId}`);
+    const response = await api.get(`/Auth/GetDataFromId?id=${userId}`);
     const name = response.data.name;
     setUsername(name);
     console.log(username);
@@ -87,7 +87,7 @@ const DashBoard = () => {
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await axios.get(`https://localhost:7276/api/Schedule/GetScheduleByRole?Role=${role}`);
+        const response = await api.get(`/Schedule/GetScheduleByRole?Role=${role}`);
         console.log('result from getschedulebyrole:',response.data);
 
         let examSchedule = response.data || [];
@@ -95,7 +95,7 @@ const DashBoard = () => {
         //setMeetings(response.data); // Uncomment this if you want to update state with the fetched data
         
         if(role.includes('Teacher')){
-          const response2 = await axios.get(`https://localhost:7276/api/Schedule/GetScheduleByTeacherId?Id=${userId}`);
+          const response2 = await api.get(`/Schedule/GetScheduleByTeacherId?Id=${userId}`);
 
           console.log('result from getschedulebyteacherid',response2.data);
 

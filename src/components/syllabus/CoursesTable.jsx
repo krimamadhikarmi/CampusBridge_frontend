@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ConfirmPopup from '../LogoutPopup';
-import axios from 'axios';
+import api from '../../api/axios';
 
 const CoursesTable = () => {
   const [courses, setCourses] = useState([]);
@@ -15,7 +15,7 @@ const CoursesTable = () => {
   const handleDelete = async (id) => {
     console.log(id);
     try {
-      const response = await axios.delete(`https://localhost:7276/api/Syllabus/DeleteCourse/${id}`);
+      const response = await api.delete(`/Syllabus/DeleteCourse/${id}`);
       console.log(response.data);
 
       setCourses((prevCourses) => prevCourses.filter((course) => course.courseId !== id));

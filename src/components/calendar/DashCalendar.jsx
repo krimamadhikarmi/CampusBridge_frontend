@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import AddExamForm from './AddExamForm';
-import axios from 'axios';
 import TeacherConstraintsForm from './TeacherSchedule';
+import api from '../../api/axios';
 
 const DashCalendar = ({
   previousMonth,
@@ -38,15 +38,7 @@ const DashCalendar = ({
       gapBetweenExams: scheduleData.gapBetweenExams,
     };
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Schedule/CreateExamSchedule',
-        JSON.stringify(completeScheduleData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await api.post('/Schedule/CreateExamSchedule', JSON.stringify(completeScheduleData));
       console.log('schedule', response.data);
     } catch (e) {
       console.log(e);
@@ -88,11 +80,11 @@ const DashCalendar = ({
 
   const fetchCourseTeacher = async () => {
     try {
-      const response = await axios.get('https://localhost:7276/api/Teacher/GetCourseTeacher');
+      const response = await api.get('/Teacher/GetCourseTeacher');
       const transformedData = response.data.map((course, index) => ({
         id: index + 1,
         courseName: course.courseTitle,
-        teacherId: course.teacherId
+        teacherId: course.teacherId,
       }));
 
       setTeacherScheduleData(transformedData);
@@ -185,7 +177,11 @@ const DashCalendar = ({
             //   handleOnClick={handleOnClick}
             //   handleTeacherScheduleSubmit={handleTeacherScheduleSubmit}
             // />
-            <TeacherConstraintsForm onSubmit={handleConstraintsSubmit} handleOnClick={handleOnClick} teacherScheduleData={teacherScheduleData} />
+            <TeacherConstraintsForm
+              onSubmit={handleConstraintsSubmit}
+              handleOnClick={handleOnClick}
+              teacherScheduleData={teacherScheduleData}
+            />
           )}
         </>
       )}

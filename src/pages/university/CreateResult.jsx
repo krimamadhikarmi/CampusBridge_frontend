@@ -6,6 +6,7 @@ import '../../styles/Result.css';
 import AddResultForm from '../../components/result/AddResultForm';
 import EditResultForm from '../../components/result/EditResultForm';
 import ConfirmPopup from '../../components/LogoutPopup';
+import api from '../../api/axios';
 
 const CreateResult = () => {
   const [addResult, setAddResult] = useState(false);
@@ -32,7 +33,7 @@ const CreateResult = () => {
   const handleDelete = async (id) => {
     console.log(id);
     try {
-      const response = await axios.delete(`https://localhost:7276/api/Result/DeleteResult/${id}`);
+      const response = await api.delete(`/Result/DeleteResult/${id}`);
       console.log(response.data);
 
      
@@ -49,7 +50,7 @@ const CreateResult = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await axios.get('https://localhost:7276/api/Result/GetResult');
+        const response = await api.get('/Result/GetResult');
         setResults(response.data); 
       } catch (error) {
         console.error('Error fetching results:', error);

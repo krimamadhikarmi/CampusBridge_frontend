@@ -4,10 +4,10 @@ import CustomFormField from '../customFormField';
 import ButtonGroup from '../common/ButtonGroup';
 import ConfirmPopup from '../LogoutPopup';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../../api/axios';
 
 const CollegeTable = ({ handleEditForm, showEdit, colleges, setColleges }) => {
   // const [colleges, setColleges] = useState([]);
@@ -25,7 +25,7 @@ const CollegeTable = ({ handleEditForm, showEdit, colleges, setColleges }) => {
     console.log(cid, 'collegeId');
     console.log(id, 'user');
     try {
-      const response = await axios.delete(`https://localhost:7276/api/College/DeleteCollege/${cid}/${id}`);
+      const response = await api.delete(`/College/DeleteCollege/${cid}/${id}`);
       console.log(response.data);
       setColleges((prevColleges)=>prevColleges.filter((college)=>college.collegeId !==cid))
       setDeleteData(false);

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import api from '../../api/axios';
 
 //function to get assignment status
 const getStatus = (submissionDate) => {
@@ -20,29 +20,27 @@ const getStatus = (submissionDate) => {
   return { statusText: 'Past Due', statusClass: 'status-past-due' };
 };
 
-
-
 const Assignment = () => {
   const [filterBy, setFilterBy] = useState('all'); // State to track filtering
 
-  const[assignments,setAssignment]=useState([]);
+  const [assignments, setAssignment] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setAssignment([]);
     fetchAssignments();
-  },[]);
-  
+  }, []);
+
   const fetchAssignments = async () => {
     try {
-      const response = await axios.get('https://localhost:7276/api/Assignment/GetAssignment');
+      const response = await api.get('/Assignment/GetAssignment');
       console.log('articles', response.data);
-      
-      const assignmentData = response.data.map(data=>({
-        id:data.assignmentId,
-        title:data.question,
-        subject:data.courseDTO.courseTitle,
-        submissionDate:data.submissionDate.split('T')[0],
-        question:data.filePath
+
+      const assignmentData = response.data.map((data) => ({
+        id: data.assignmentId,
+        title: data.question,
+        subject: data.courseDTO.courseTitle,
+        submissionDate: data.submissionDate.split('T')[0],
+        question: data.filePath,
       }));
       setAssignment(assignmentData);
       console.log(assignmentData);
@@ -91,7 +89,7 @@ const Assignment = () => {
             const { statusText, statusClass } = getStatus(assignment.submissionDate);
             return (
               <StudentAssignmentList
-                key={assignment.id} 
+                key={assignment.id}
                 index={index}
                 id={assignment.id}
                 title={assignment.title}

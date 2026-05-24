@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useToken } from "../../context/TokenContext";
 import { useState } from "react";
 import { useEffect } from "react";
+import api from "../../api/axios";
 const AttendanceTab = () => {
   // const monthsData = [
   //   { month: 'Baishak', operatingDays: 14, presentDays: 9 },
@@ -42,7 +42,7 @@ const AttendanceTab = () => {
   const[attendanceData,setAttendanceData] = useState([]);
 
   const fetchAttendanceData = async()=>{
-    const response = await axios.get(`https://localhost:7276/api/Attendance/GetStudentAttendance/${userId}`);
+    const response = await api.get(`/Attendance/GetStudentAttendance/${userId}`);
     console.log(response.data);
     setAttendanceData(response.data);
     console.log('attendance data:',attendanceData);

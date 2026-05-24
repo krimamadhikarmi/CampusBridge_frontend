@@ -8,7 +8,7 @@ import { useToken } from '../../context/TokenContext';
 import { v4 as uuidv4 } from 'uuid';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-
+import api from '../../api/axios';
 
 const StudentAssignmentList = ({ id, question, title, subject, submissionDate, statusClass, statusText, index }) => {
   const [assignmentPop, setAssignmentPop] = useState(false);
@@ -18,7 +18,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
   const { id: tid } = useToken();
   const [files, setFile] = useState(null);
 
-  const [FileId, setFileId] = useState(''); 
+  const [FileId, setFileId] = useState('');
 
   const currentDate = new Date();
   const date = new Date(submissionDate.split('T')[0]);
@@ -30,14 +30,14 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     console.log('assign id:', id);
     console.log('text', answer);
     console.log('file', files);
-    const newSubmissionId = "SUBMISSION" + files?.name + id + uuidv4();
+    const newSubmissionId = 'SUBMISSION' + files?.name + id + uuidv4();
     setSubmissionId(newSubmissionId);
-    
-    console.log("files.name: ", files?.name);
-    console.log("id: ", id);
-    console.log("uuidv4(): ", uuidv4());
-    console.log(newSubmissionId,"ns");
-    console.log(submissionId,"si")
+
+    console.log('files.name: ', files?.name);
+    console.log('id: ', id);
+    console.log('uuidv4(): ', uuidv4());
+    console.log(newSubmissionId, 'ns');
+    console.log(submissionId, 'si');
     const formData = new FormData();
     formData.append('SubmissionId', submissionId);
     formData.append('Answer', answer);
@@ -57,11 +57,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
     }
 
     try {
-      const response = await axios.post('https://localhost:7276/api/Assignment/SubmitAssignment', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await api.post('/Assignment/SubmitAssignment', formData);
       console.log('Response data:', response.data);
 
       toast.success('Assignment submitted successfully!', {
@@ -71,35 +67,31 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
         },
       });
       setAssignmentPop(false);
-
     } catch (e) {
       console.log(e);
     }
   };
 
-
-  const checkStudentSubmit = async()=>{
+  const checkStudentSubmit = async () => {
     try {
-      const studentResponse = axios.get(`https://localhost:7276/api/Student/GetStudentById/${tid}`);
+      const studentResponse = api.get(`/Student/GetStudentById/${tid}`);
       const studentId = (await studentResponse).data.studentId;
-      const response = axios.get(`https://localhost:7276/api/Assignment/GetSubmissionByStudentId/${id}/${studentId}`, {
+      const response = api.get(`/Assignment/GetSubmissionByStudentId/${id}/${studentId}`, {
         validateStatus: (status) => {
-            return status < 500; // Accept all responses below 500 (including 400)
-        }});
-      console.log('Response data:',(await response).data);
-      if((await response).data.submissionId)
-        {
-          return true;
-        }
-      else {
+          return status < 500; // Accept all responses below 500 (including 400)
+        },
+      });
+      console.log('Response data:', (await response).data);
+      if ((await response).data.submissionId) {
+        return true;
+      } else {
         console.log('student hasnt submitted');
         return false;
       }
     } catch (e) {
       console.log(e);
     }
-  }
-
+  };
 
   const handleFileChange = (e) => {
     const uploadedFile = e.target.files[0];
@@ -112,9 +104,9 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
   const handleAssignmentPop = async () => {
     const studentAlreadySubmitted = await checkStudentSubmit();
     console.log(studentAlreadySubmitted);
-    if(studentAlreadySubmitted===false){
+    if (studentAlreadySubmitted === false) {
       setAssignmentPop(!assignmentPop);
-    }else{
+    } else {
       toast.error('You have already submitted assignment!', {
         style: {
           backgroundColor: '#004d4d',
@@ -158,7 +150,7 @@ const StudentAssignmentList = ({ id, question, title, subject, submissionDate, s
                 </a>
               </p>
             </div>
-            {differenceInDays<1? (
+            {differenceInDays < 1 ? (
               <div className="late-submission">
                 You cannot submit the assignment now. The submission period has expired.
               </div>

@@ -1,6 +1,5 @@
 import '../../styles/Calendar.css';
 import '../../styles/common.css';
-import axios from 'axios';
 
 import { add, eachDayOfInterval, endOfMonth, format, isSameDay, parse, parseISO, startOfToday } from 'date-fns';
 
@@ -12,6 +11,7 @@ import { useToken } from '../../context/TokenContext';
 import Navbar from '../Navbar';
 import ScheduleContainer from './ScheduleContainer';
 import AddExamForm from './AddExamForm';
+import api from '../../api/axios';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -43,7 +43,7 @@ const Calendar = () => {
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await axios.get('https://localhost:7276/api/Schedule/GetScheduleByRole?Role=Teacher');
+        const response = await api.get('/Schedule/GetScheduleByRole?Role=Teacher');
         console.log(response.data);
 
         setMeetings(response.data); // Uncomment this if you want to update state with the fetched data
@@ -116,14 +116,9 @@ const Calendar = () => {
     console.log(JSON.stringify(completeScheduleData), 'complete');
 
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Schedule/CreateExamSchedule',
+      const response = await api.post(
+        '/Schedule/CreateExamSchedule',
         JSON.stringify(completeScheduleData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
       );
       console.log('schedule', response);
     } catch (e) {

@@ -3,11 +3,9 @@ import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/Attendance.css';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
+import api from '../../api/axios';
 
 const Attendance = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -15,10 +13,9 @@ const Attendance = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
 
-
   const fetchAttendance = async () => {
     try {
-      const response = await axios.get('https://localhost:7276/api/Student/GetStudent');
+      const response = await api.get('/Student/GetStudent');
       setStudents(response.data);
     } catch (e) {
       console.error(e, 'error');
@@ -36,10 +33,8 @@ const Attendance = () => {
     });
     setAttendance(initialAttendance);
 
-fetchAttendance();
-    
+    fetchAttendance();
   }, []);
-
 
   const handleCheckboxChange = (studentId, status) => {
     setAttendance((prevAttendance) => ({
@@ -58,41 +53,32 @@ fetchAttendance();
     //   date: currentDate,
     // }));
 
-
-      const studentPresence = {};
-      students.forEach((student) => {
-        studentPresence[student.studentId] = attendance[student.studentId] === 'Present';
-      });
+    const studentPresence = {};
+    students.forEach((student) => {
+      studentPresence[student.studentId] = attendance[student.studentId] === 'Present';
+    });
 
     const completeAttendanceData = {
-        //  id:1,
-         attendanceDate : currentDate,
-         studentPresence:studentPresence
-    }
+      //  id:1,
+      attendanceDate: currentDate,
+      studentPresence: studentPresence,
+    };
     // attendanceData.map((student)=>{
     //   const getResponse = await axios.get("")
     // })
-    console.log('completeattendancedate',JSON.stringify(completeAttendanceData));
+    console.log('completeattendancedate', JSON.stringify(completeAttendanceData));
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Attendance/CreateAttendance',
-        JSON.stringify(completeAttendanceData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await api.post('/Attendance/CreateAttendance', JSON.stringify(completeAttendanceData));
       console.log('Attendance Submission Response:', response.data);
-       toast.success('Attendance submitted successfully!', {
-              style: {
-                backgroundColor: '#004d4d',
-                color: '#ffffff',
-              },
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+      toast.success('Attendance submitted successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error('Error submitting attendance:', error);
     } finally {
@@ -105,34 +91,26 @@ fetchAttendance();
       <Navbar />
       <PageHeader pageTitle={'Attendance'} />
       <ToastContainer
-              position="top-center"
-              autoClose={3000}
-              hideProgressBar
-              newestOnTop={false}
-              closeButton={false}
-              style={{
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                zIndex: 9999,
-              }}
-            />
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeButton={false}
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 9999,
+        }}
+      />
       <div className="attendance-container">
         <div className="attendance-card">
           <h2>Today's Date:</h2>
           <p>{currentDate}</p>
         </div>
         <div className="attendance-table-container">
-          <AttendanceTable
-            students={students}
-            attendance={attendance}
-            handleCheckboxChange={handleCheckboxChange}
-          />
-          <button
-            className="submitbutton"
-            onClick={handleSubmit}
-            disabled={loading}
-          >
+          <AttendanceTable students={students} attendance={attendance} handleCheckboxChange={handleCheckboxChange} />
+          <button className="submitbutton" onClick={handleSubmit} disabled={loading}>
             {loading ? 'Submitting...' : 'Submit Attendance'}
           </button>
         </div>
@@ -141,4 +119,4 @@ fetchAttendance();
   );
 };
 
-export default Attendance;
+export default Attendance;

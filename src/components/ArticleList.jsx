@@ -9,6 +9,7 @@ import CustomFormField from './customFormField';
 import ButtonGroup from './common/ButtonGroup';
 import { useEffect } from 'react';
 import axios from 'axios';
+import api from '../api/axios';
 const ArticleList = ({
   headline,
   description,
@@ -43,7 +44,7 @@ const ArticleList = ({
   };
   const fetchUserNameDetails = async () =>{
     console.log('author',author);
-      const response = await axios.get(`https://localhost:7276/api/Auth/GetDataFromId?id=${author}`);
+      const response = await api.get(`/Auth/GetDataFromId?id=${author}`);
       const name = response.data.name;
       setUsername(name);
       console.log(username);

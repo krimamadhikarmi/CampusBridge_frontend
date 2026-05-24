@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import EditForm from './EditForm';
 import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
+import api from '../../api/axios';
 
 const GeneralTab = () => {
   const [editForm, setEditForm] = useState(false);
@@ -14,7 +15,7 @@ const GeneralTab = () => {
     const fetchUser = async () => {
       try {
         console.log('Fetching user data...');
-        const response = await axios.get(`https://localhost:7276/api/Student/GetStudentById/${studentid}`);
+        const response = await api.get(`/Student/GetStudentById/${studentid}`);
         console.log('response', response.data);
         setInfo(response.data);
       } catch (e) {

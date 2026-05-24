@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
+import api from '../../api/axios';
 
 const ResultTable = () => {
   const { role } = useToken();
@@ -11,7 +11,7 @@ const ResultTable = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await axios.get('https://localhost:7276/api/Result/GetResult');
+        const response = await api.get('/Result/GetResult');
         setResults(response.data); // Set the fetched data to state
       } catch (error) {
         console.error('Error fetching results:', error);

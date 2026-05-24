@@ -10,6 +10,7 @@ import '../../styles/common.css';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../../api/axios';
 
 const CreateSyllabus = () => {
   const [toogleSyllabusForm, setToogleSyllabusForm] = useState(false);
@@ -27,34 +28,29 @@ const CreateSyllabus = () => {
   const handleSyllabusForm = () => {
     setToogleSyllabusForm(!toogleSyllabusForm);
   };
-  const handleFormSubmit = async (syllabusData, event) => {
-    //event.preventDefault();
+  const handleFormSubmit = async (syllabusData) => {
     const completeSyllabusData = {
       syllabusId: syllabusData.syllabusId,
       courseId: syllabusData.courseId,
       semester: syllabusData.semester,
       allowedElectiveNo: syllabusData.allowedElectiveNo,
     };
-    console.log('Before api call:', JSON.stringify(completeSyllabusData));
+
+    console.log('Before api call:', completeSyllabusData);
 
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Syllabus/CreateSyllabus',
-        JSON.stringify(completeSyllabusData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await api.post('/Syllabus/CreateSyllabus', completeSyllabusData);
+
       console.log('Response data:', response.data);
+
       toast.success('Syllabus created successfully!', {
         style: {
           backgroundColor: '#004d4d',
           color: '#ffffff',
         },
       });
-      axios.get('https://localhost:7276/api/Syllabus/GetSyllabus');
+
+      await api.get('/Syllabus/GetSyllabus');
     } catch (e) {
       console.log(e);
     }
@@ -73,11 +69,6 @@ const CreateSyllabus = () => {
       courseData.isElective = false;
     }
 
-    console.log(courseData.courseId, 'id');
-    console.log(courseData.courseDescription, 'des');
-    console.log(courseData.courseObjective, 'ob');
-    console.log(courseData.courseTitle, 'ti');
-    console.log(courseData.FullMarks, 'fm');
     const completeCourseData = {
       courseId: courseData.courseId,
       courseTitle: courseData.courseTitle,
@@ -92,20 +83,14 @@ const CreateSyllabus = () => {
       unitsDTO: courseData.unitsDTO,
     };
 
-    console.log(JSON.stringify(completeCourseData), 'hiiii');
+    console.log(completeCourseData);
 
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Syllabus/CreateCourse',
-        JSON.stringify(completeCourseData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await api.post('/Syllabus/CreateCourse', completeCourseData);
+
       console.log('Response data:', response.data);
-      await fetch('https://localhost:7276/api/Syllabus/GetCourse');
+
+      await api.get('/Syllabus/GetCourse');
     } catch (e) {
       console.log(e, 'error');
     }

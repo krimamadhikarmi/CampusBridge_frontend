@@ -9,33 +9,32 @@ import { useToken } from '../../context/TokenContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomFormField from '../customFormField';
+import api from '../../api/axios';
 
-
-const AssignmentList = ({ title, subject, submissionDate, index,aid }) => {
+const AssignmentList = ({ title, subject, submissionDate, index, aid }) => {
   const [deletePop, setDeletePop] = useState(false);
   const [editForm, setEditForm] = useState(false);
-  const[assignmentPop,setAssignmentPop]=useState(false)
+  const [assignmentPop, setAssignmentPop] = useState(false);
   const [submissions, setSubmissions] = useState([]);
   // const [score,setScore]=useState('');
   const [scores, setScores] = useState({});
   // const [score, setScore] = useState({});
-    const {id:tid} = useToken();
-//   const [currentDate, setCurrentDate] = useState('');
+  const { id: tid } = useToken();
+  //   const [currentDate, setCurrentDate] = useState('');
 
-//   useEffect(() => {
-//     const today = new Date().toISOString().split('T')[0];
-//     setCurrentDate(today);
-//   }, []);
+  //   useEffect(() => {
+  //     const today = new Date().toISOString().split('T')[0];
+  //     setCurrentDate(today);
+  //   }, []);
 
-const handleAssignmentPop = async () => {
-  setAssignmentPop(!assignmentPop);
+  const handleAssignmentPop = async () => {
+    setAssignmentPop(!assignmentPop);
 
-  if (!assignmentPop) {
-    // Fetch submission details only when opening the popup
-    await handleAssignmentFetch();
-  }
-};
-
+    if (!assignmentPop) {
+      // Fetch submission details only when opening the popup
+      await handleAssignmentFetch();
+    }
+  };
 
   const handleDelete = () => {
     setDeletePop(!deletePop);
@@ -44,11 +43,11 @@ const handleAssignmentPop = async () => {
   const handleEdit = () => {
     setEditForm(!editForm);
   };
-  const handleDeleteAssignment = async () =>{
-    try{
-      console.log('aid',aid);
-      console.log('tid',tid);
-      const response = await axios.delete(`https://localhost:7276/api/Assignment/DeleteAssignment/${aid}/${tid}`)
+  const handleDeleteAssignment = async () => {
+    try {
+      console.log('aid', aid);
+      console.log('tid', tid);
+      const response = await api.delete(`/Assignment/DeleteAssignment/${aid}/${tid}`);
       console.log(response.data);
       toast.success('Assignment deleted successfully!', {
         style: {
@@ -57,16 +56,13 @@ const handleAssignmentPop = async () => {
         },
       });
       window.location.reload();
-    }
-    catch(e){
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
   const handleAssignmentFetch = async () => {
     try {
-      const response = await axios.get(
-        `https://localhost:7276/api/Assignment/GetSubmissionByAssignmentId/${aid}`
-      );
+      const response = await api.get(`/Assignment/GetSubmissionByAssignmentId/${aid}`);
 
       setSubmissions(response.data); // Set the fetched data
     } catch (e) {
@@ -84,12 +80,12 @@ const handleAssignmentPop = async () => {
     }));
   };
 
-  const gradeAssignment = async (subid)=>{
+  const gradeAssignment = async (subid) => {
     const score = scores[subid];
-    const response = await axios.get(`https://localhost:7276/api/Assignment/GradeAssignment/${subid}/${score}`);
+    const response = await api.get(`/Assignment/GradeAssignment/${subid}/${score}`);
     toast.success('Score updated successfully!');
     window.location.reload();
-  }
+  };
   return (
     <>
       <div className="assignment-content">
@@ -109,7 +105,11 @@ const handleAssignmentPop = async () => {
         <EditAssignmentForm handleEdit={handleEdit} title={title} subject={subject} submissionDate={submissionDate} />
       )}
       {deletePop && (
-        <ConfirmPopup onClose={handleDelete} onConfirm={handleDeleteAssignment} title={'Are you sure you want to delete?'} />
+        <ConfirmPopup
+          onClose={handleDelete}
+          onConfirm={handleDeleteAssignment}
+          title={'Are you sure you want to delete?'}
+        />
       )}
       {/* {assignmentPop &&(
         <div className='form-overlay'>
@@ -156,18 +156,17 @@ const handleAssignmentPop = async () => {
                         </a>
                       </td>
                       <td>
-                        {submission.score !== ''?(
+                        {submission.score !== '' ? (
                           submission.score
                         ) : (
                           <>
-                <CustomFormField
-                  placeholder="Enter score"
-                  onChange={(e) => handleScoreChange(submission.submissionId, e.target.value)}
-                  value={scores[submission.submissionId] || ''} // Ensure each field only updates its corresponding state
-                />
-                <button onClick={() => gradeAssignment(submission.submissionId)}>Grade</button>
-              </>
-                          
+                            <CustomFormField
+                              placeholder="Enter score"
+                              onChange={(e) => handleScoreChange(submission.submissionId, e.target.value)}
+                              value={scores[submission.submissionId] || ''} // Ensure each field only updates its corresponding state
+                            />
+                            <button onClick={() => gradeAssignment(submission.submissionId)}>Grade</button>
+                          </>
                         )}
                       </td>
                     </tr>

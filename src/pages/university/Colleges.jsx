@@ -5,7 +5,7 @@ import '../../styles/College.css';
 import AddCollegeForm from '../../components/college/AddCollegeForm';
 import CollegeTable from '../../components/college/CollegeTable';
 import '../../styles/common.css';
-import axios from 'axios';
+import api from '../../api/axios';
 import { useToken } from '../../context/TokenContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -62,7 +62,7 @@ const Colleges = () => {
 
   const fetchColleges = async () => {
     try {
-      const response = await axios.get('https://localhost:7276/api/College/GetCollege');
+      const response = await api.get('/College/GetCollege');
       setColleges(response.data);
       console.log(response.data, 'college');
     } catch (error) {
@@ -88,15 +88,7 @@ const Colleges = () => {
     console.log(JSON.stringify(collegeData));
 
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/College/CreateCollege',
-        JSON.stringify(collegeData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await api.post('/College/CreateCollege', JSON.stringify(collegeData));
       console.log('article', response.data);
       toast.success('College created successfully!', {
         style: {
@@ -108,7 +100,7 @@ const Colleges = () => {
     } catch (e) {
       console.log(e);
     } finally {
-      handleCollegePopUp(); 
+      handleCollegePopUp();
     }
   };
 

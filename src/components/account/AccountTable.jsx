@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useToken } from '../../context/TokenContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../../api/axios';
 
 const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch,setTbldata }) => {
   const [deleteData, setDeleteData] = useState(false);
@@ -26,15 +27,15 @@ const AccountTable = ({ filterData, handleStudentFetch, handleTeacherFetch,setTb
     try {
       let deleteUrl = '';
       if (arole === 'Student') {
-        deleteUrl = `https://localhost:7276/api/Student/DeleteStudent/${aid}/${id}`;
+        deleteUrl = `/Student/DeleteStudent/${aid}/${id}`;
       } else if (arole === 'Teacher') {
-        deleteUrl = `https://localhost:7276/api/Teacher/DeleteTeacher/${aid}/${id}`;
+        deleteUrl = `/Teacher/DeleteTeacher/${aid}/${id}`;
       } else {
         console.error('Unknown role:');
         return;
       }
 
-      const response = await axios.delete(deleteUrl);
+      const response = await api.delete(deleteUrl);
       console.log(response.data);
       setTbldata((prevData) => prevData.filter((account) => account.id !== aid));
       setDeleteData(false);

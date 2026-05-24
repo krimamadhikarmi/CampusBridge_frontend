@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import axios from 'axios';
+import api from '../api/axios';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -17,7 +18,7 @@ const PieChart = () => {
   },[]);
 
   const fetchGenderData =async () =>{
-    const response =  await axios.post('https://localhost:7276/api/Analytics/GetGenderData');
+    const response =  await api.post('/Analytics/GetGenderData');
     if(response.status===200){
       console.log(parseInt(response.data.femaleNo, 10));
       setGirlsData(parseInt(response.data.femaleNo, 10));

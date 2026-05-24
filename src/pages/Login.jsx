@@ -5,6 +5,7 @@ import '../styles/LoginStyle.css';
 import { useToken } from '../context/TokenContext';
 import axios from 'axios';
 import NormalPopup from '../components/NormalPopup';
+import api from '../api/axios';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -47,8 +48,8 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Auth/Login',
+      const response = await api.post(
+        '/Auth/Login',
         { username, password },
         { validateStatus: (status) => status < 500 },
       );

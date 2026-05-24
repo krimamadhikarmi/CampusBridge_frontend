@@ -1,8 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import api from '../../api/axios';
 const AccountTab = () => {
   const studentData = {
     name: 'Krima Madhikarmi',
@@ -20,7 +20,7 @@ const AccountTab = () => {
     const fetchUser = async () => {
       try {
         console.log('Fetching user data...');
-        const response = await axios.get(`https://localhost:7276/api/Student/GetStudentById/${studentid}`);
+        const response = await api.get(`/Student/GetStudentById/${studentid}`);
         console.log('response', response.data);
         setInfo(response.data);
       } catch (e) {

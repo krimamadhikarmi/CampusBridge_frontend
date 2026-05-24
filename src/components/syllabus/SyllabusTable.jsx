@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import ConfirmPopup from '../LogoutPopup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import api from '../../api/axios';
 const SyllabusTable = () => {
   const [syllabuses, setSyllabuses] = useState([]);
   const [deleteData, setDeleteData] = useState(false);
@@ -17,7 +16,7 @@ const SyllabusTable = () => {
   const handleDelete = async (id) => {
     console.log(id);
     try {
-      const response = await axios.delete(`https://localhost:7276/api/Syllabus/DeleteSyllabus/${id}`);
+      const response = await api.delete(`/Syllabus/DeleteSyllabus/${id}`);
       console.log(response.data);
       setDeleteData(false);
       toast.success('Article created successfully!', {
@@ -34,7 +33,7 @@ const SyllabusTable = () => {
 
   const fetchSyllabuses = async () => {
     try {
-      const response = await axios.get('https://localhost:7276/api/Syllabus/GetSyllabus');
+      const response = await api.get('/Syllabus/GetSyllabus');
       setSyllabuses(response.data); // Assuming the response is an array of syllabuses
     } catch (error) {
       console.error('Error fetching syllabuses:', error);

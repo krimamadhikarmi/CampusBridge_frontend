@@ -4,7 +4,6 @@ import Navbar from '../../components/Navbar';
 import '../../styles/Account.css';
 import AccountType from '../../components/account/AccountType';
 import AccountTable from '../../components/account/AccountTable';
-import axios from 'axios';
 
 import StudentForm from '../../components/account/StudentForm';
 import TeacherForm from '../../components/account/TeacherForm';
@@ -12,6 +11,7 @@ import { useToken } from '../../context/TokenContext';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../../api/axios';
 
 const Account = () => {
   const { id } = useToken();
@@ -69,8 +69,8 @@ const Account = () => {
   const fetchAllData = async () => {
     try {
       // Clear table data before fetch
-      const studentResponse = await axios.get('https://localhost:7276/api/Student/GetStudent');
-      const teacherResponse = await axios.get('https://localhost:7276/api/Teacher/GetTeacher');
+      const studentResponse = await api.get('/Student/GetStudent');
+      const teacherResponse = await api.get('/Teacher/GetTeacher');
 
       const studentData = studentResponse.data.map((data) => ({
         id: data.studentId,
@@ -129,15 +129,7 @@ const Account = () => {
     console.log(JSON.stringify(completeStudentData), 'cmdata');
 
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Student/CreateStudent',
-        JSON.stringify(completeStudentData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await api.post('/Student/CreateStudent', JSON.stringify(completeStudentData));
       if (response.status === 200) {
         // Ensure it was created successfully
         const newStudent = {
@@ -179,15 +171,7 @@ const Account = () => {
     };
     console.log(JSON.stringify(completeTeacherData), 'cmpltd');
     try {
-      const response = await axios.post(
-        'https://localhost:7276/api/Teacher/CreateTeacher',
-        JSON.stringify(completeTeacherData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await api.post('/Teacher/CreateTeacher', JSON.stringify(completeTeacherData));
       console.log('Response data:', response.data);
       if (response.status === 200) {
         // Ensure successful creation

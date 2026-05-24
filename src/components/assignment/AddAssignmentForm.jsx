@@ -8,17 +8,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { v4 as uuidv4 } from 'uuid';
-const AddAssignmentForm = ({ handleAddForm, currentDate,assignments,setAssignments,setPopUp}) => {
+import api from '../../api/axios';
+const AddAssignmentForm = ({ handleAddForm, currentDate, assignments, setAssignments, setPopUp }) => {
   const [AssignmentId, setAssignment] = useState('');
   const [Question, setQuestion] = useState('');
   const [CourseId, setCourseId] = useState('');
   const [AssignedDate, setAssignedDate] = useState('');
   const [SubmissionDate, setSubmissionDate] = useState('');
   const [TeacherId, setTeacherId] = useState('');
-  const {id:teacherId} = useToken();
+  const { id: teacherId } = useToken();
 
   const [file, setFile] = useState(null);
-  const [FileId, setFileId] = useState(''); 
+  const [FileId, setFileId] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,20 +45,16 @@ const AddAssignmentForm = ({ handleAddForm, currentDate,assignments,setAssignmen
     }
 
     try {
-      const response = await axios.post('https://localhost:7276/api/Assignment/CreateAssignment', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await api.post('/Assignment/CreateAssignment', formData);
       console.log('assignment1', response.data);
       const newAssignment = {
         id: response.data.assignmentId,
         title: response.data.question,
         subject: response.data.courseDTO?.courseTitle || 'Unknown', // Handle missing course title gracefully
         submissionDate: response.data.submissionDate.split('T')[0],
-    };
+      };
 
-    setAssignments((prevAssignments) => [...prevAssignments, newAssignment]);
+      setAssignments((prevAssignments) => [...prevAssignments, newAssignment]);
       toast.success('Assignment created successfully!', {
         style: {
           backgroundColor: '#004d4d',
@@ -66,8 +63,6 @@ const AddAssignmentForm = ({ handleAddForm, currentDate,assignments,setAssignmen
       });
       setPopUp(false);
       // setAssignments((prevAssignment)=>[...prevAssignment,response.data]);
-      
-
     } catch (e) {
       console.log(e);
       setPopUp(false);
@@ -80,7 +75,7 @@ const AddAssignmentForm = ({ handleAddForm, currentDate,assignments,setAssignmen
     if (uploadedFile) {
       setFile(uploadedFile);
       const currentDateTime = new Date().toLocaleString();
-      setFileId(uuidv4()+currentDateTime); // Generate a unique FileId when a file is selected
+      setFileId(uuidv4() + currentDateTime); // Generate a unique FileId when a file is selected
     }
   };
 
@@ -138,8 +133,8 @@ const AddAssignmentForm = ({ handleAddForm, currentDate,assignments,setAssignmen
               min={new Date().toISOString().split('T')[0]}
               onChange={(e) => {
                 if (e.target.value < new Date().toISOString().split('T')[0]) {
-                  alert("Submission date cannot be in the past!");
-                  setSubmissionDate(" "); // Reset field if past date is chosen
+                  alert('Submission date cannot be in the past!');
+                  setSubmissionDate(' '); // Reset field if past date is chosen
                 } else {
                   setSubmissionDate(e.target.value);
                 }

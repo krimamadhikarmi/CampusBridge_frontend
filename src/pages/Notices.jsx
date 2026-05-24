@@ -7,9 +7,9 @@ import '../styles/common.css';
 import AddNotice from '../components/notice/AddNotice';
 import SelectNotice from '../components/notice/SelectNotice';
 import { useToken } from '../context/TokenContext';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../api/axios';
 
 const Notices = () => {
   const { role, id } = useToken();
@@ -29,7 +29,7 @@ const Notices = () => {
     const fetchNotice = async () => {
       if (role.includes('University') || role.includes('College')) {
         try {
-          const response = await axios.get('https://localhost:7276/api/Notice/GetNotice');
+          const response = await api.get('/Notice/GetNotice');
           console.log('Response Data:', response.data);
           setNotices(response.data);
         } catch (e) {
@@ -37,7 +37,7 @@ const Notices = () => {
         }
       } else if (role.includes('Student') || role.includes('Teacher')) {
         try {
-          const response = await axios.get(`https://localhost:7276/api/Notice/GetNoticeByAudience/${role}`);
+          const response = await api.get(`/Notice/GetNoticeByAudience/${role}`);
           console.log('Response Data:', response.data);
           setNotices(response.data);
         } catch (e) {
@@ -60,7 +60,7 @@ const Notices = () => {
 
   const handleDelete = async (nid) => {
     try {
-      const response = await axios.delete(`https://localhost:7276/api/Notice/DeleteNotice/${nid}/${id}`);
+      const response = await api.delete(`/Notice/DeleteNotice/${nid}/${id}`);
       console.log(response.data, 'notice deleted');
       setNotices((prevNotices) => prevNotices.filter((notice) => notice.noticeId !== nid));
       setDeleteData(false);
@@ -90,19 +90,15 @@ const Notices = () => {
     console.log(JSON.stringify(noticeData));
 
     try {
-      const response = await axios.post('https://localhost:7276/api/Notice/CreateNotice', JSON.stringify(noticeData), {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await api.post('/Notice/CreateNotice', JSON.stringify(noticeData));
       console.log('Resonse', response.data);
       setShowPopUp(false);
-       toast.success('Notice created successfully!', {
-              style: {
-                backgroundColor: '#004d4d',
-                color: '#ffffff',
-              },
-            });
+      toast.success('Notice created successfully!', {
+        style: {
+          backgroundColor: '#004d4d',
+          color: '#ffffff',
+        },
+      });
       setNotices((prevNotice) => [...prevNotice, response.data]);
       // Close the popup after submission
     } catch (e) {
@@ -168,15 +164,7 @@ const Notices = () => {
     };
     console.log(JSON.stringify(formData));
     try {
-      const response = await axios.put(
-        `https://localhost:7276/api/Notice/UpdateNotice/${formData.noticeId}`,
-        JSON.stringify(formData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await api.put(`/Notice/UpdateNotice/${formData.noticeId}`, JSON.stringify(formData));
       console.log('Resonse', response.data);
       setNotices((prevNotices) =>
         prevNotices.map((notice) =>

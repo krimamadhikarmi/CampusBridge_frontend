@@ -2,18 +2,19 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useToken } from "../../context/TokenContext";
 import { useState } from "react";
+import api from "../../api/axios";
 const AssignmentTable = () => {
 
   const {id:stid} = useToken();
    const [submissions, setSubmissions] = useState([]);
 
     const fetchStudentSubmissions = async () =>{
-      const response = await axios.get(`https://localhost:7276/api/Assignment/GetStudentSubmissions/${stid}`);
+      const response = await api.get(`/Assignment/GetStudentSubmissions/${stid}`);
       setSubmissions(response.data);
       console.log('student submissions',response.data);
     }
     const handleDelete = async (sId) =>{
-      const response = await axios.delete(`https://localhost:7276/api/Assignment/DeleteSubmission/${sId}/${stid}`)
+      const response = await api.delete(`/Assignment/DeleteSubmission/${sId}/${stid}`)
       console.log(response.data);
       window.location.reload();
 

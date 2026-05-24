@@ -4,7 +4,7 @@ import { useState } from 'react';
 import '../styles/Chatbox.css';
 import CloseButton from './common/CloseButton';
 import CustomFormField from './customFormField';
-import axios from 'axios';
+import api from '../api/axios';
 
 const ChatBox = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -47,26 +47,17 @@ const ChatBox = () => {
       setQuest('');
 
       try {
-        const response = await axios.post(
-          'https://localhost:7276/api/FAQ/GetAnswer',
-          {
-            question: quest,
-            category: '',
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-        console.log('response chattbot api',response.data);
-        var botMessage = response.data.answer || 'No answer available';
+        const response = await api.post('/FAQ/GetAnswer', {
+          question: quest,
+          category: '',
+        });
+        console.log('response chattbot api', response.data);
+        let botMessage = response.data.answer || 'No answer available';
 
-        if(response.data.score>40){
-          botMessage=response.data.answer;
-        }
-        else{
-          botMessage="No answer available.";
+        if (response.data.score > 40) {
+          botMessage = response.data.answer;
+        } else {
+          botMessage = 'No answer available.';
         }
 
         setMessages((prevMessages) => [...prevMessages, { text: botMessage, type: 'bot' }]);

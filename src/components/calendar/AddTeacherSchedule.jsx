@@ -3,6 +3,7 @@ import CustomFormField from '../customFormField';
 import ButtonGroup from '../common/ButtonGroup';
 import { useState } from 'react';
 import axios from 'axios';
+import api from '../../api/axios';
 
 const AddTeacherSchedule = ({ handleOnClick, handleTeacherScheduleSubmit }) => {
   const [Semester, setSelectedSemester] = useState('');
@@ -22,31 +23,47 @@ const AddTeacherSchedule = ({ handleOnClick, handleTeacherScheduleSubmit }) => {
 
   const numberToWords = (num) => {
     const words = [
-        "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
-        "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
-        "Eighteen", "Nineteen"
+      'Zero',
+      'One',
+      'Two',
+      'Three',
+      'Four',
+      'Five',
+      'Six',
+      'Seven',
+      'Eight',
+      'Nine',
+      'Ten',
+      'Eleven',
+      'Twelve',
+      'Thirteen',
+      'Fourteen',
+      'Fifteen',
+      'Sixteen',
+      'Seventeen',
+      'Eighteen',
+      'Nineteen',
     ];
-    const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
 
     if (num < 20) return words[num];
-    if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? " " + words[num % 10] : "");
+    if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + words[num % 10] : '');
 
     return num; // Returns number if it's out of range (optional handling for larger numbers)
-};
-
+  };
 
   const fetchTeacher = async (semester) => {
     console.log('Fetching teachers for semester', numberToWords(semester));
 
-    const response = await axios.get(`https://localhost:7276/api/Teacher/GetTeacherBySemeseter/${numberToWords(semester)}
+    const response = await api.get(`/Teacher/GetTeacherBySemeseter/${numberToWords(semester)}
     `);
 
     const mappedTeachers = response.data.map((teacher, index) => ({
       id: index + 1, // Assigning a sequential ID
       name: teacher.name,
-  }));
-  console.log(mappedTeachers);
-    
+    }));
+    console.log(mappedTeachers);
+
     // const response = [
     //   { id: 1, name: 'Krima' },
     //   { id: 2, name: 'Csanat' },
@@ -107,38 +124,29 @@ const AddTeacherSchedule = ({ handleOnClick, handleTeacherScheduleSubmit }) => {
     };
     console.log('Form Data:', JSON.stringify(teacherSchedule));
 
-    const teacherNames = teacherSchedule.teachers.map(teacher => teacher.name);
+    const teacherNames = teacherSchedule.teachers.map((teacher) => teacher.name);
 
     console.log(JSON.stringify(teacherNames));
 
-    const teacherAvailabilityList = teacherSchedule.teachers.map(teacher => 
-      teacher.availability.split(",").map(value => value === "1")
-  );
-  
-  const newTeacherSchedule = {
-    ...formData,
-    teachers:teacherNames,
-    teacherAvailability:teacherAvailabilityList
-  }
-  
-  console.log('aval',JSON.stringify(teacherAvailabilityList));
+    const teacherAvailabilityList = teacherSchedule.teachers.map((teacher) =>
+      teacher.availability.split(',').map((value) => value === '1'),
+    );
 
-    console.log('new',JSON.stringify(newTeacherSchedule));
+    const newTeacherSchedule = {
+      ...formData,
+      teachers: teacherNames,
+      teacherAvailability: teacherAvailabilityList,
+    };
 
-    const resp = await axios.post(
-            `https://localhost:7276/api/Schedule/CreateTeacherSchedule`,
-            JSON.stringify(newTeacherSchedule),
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            },
-          );
+    console.log('aval', JSON.stringify(teacherAvailabilityList));
+
+    console.log('new', JSON.stringify(newTeacherSchedule));
+
+    const resp = await api.post(`/Schedule/CreateTeacherSchedule`, JSON.stringify(newTeacherSchedule));
     console.log(resp.data);
 
     handleTeacherScheduleSubmit(teacherSchedule);
   };
-
 
   const addHolidays = () => {
     if (currentHolidays.trim() !== '') {

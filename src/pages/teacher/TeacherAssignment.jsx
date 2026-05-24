@@ -8,14 +8,14 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToken } from '../../context/TokenContext';
+import api from '../../api/axios';
 
 const TeacherAssignment = () => {
-  
   const [popup, setPopUp] = useState(false);
 
   const [currentDate, setCurrentDate] = useState('');
-  
-  const{id:tid} = useToken();
+
+  const { id: tid } = useToken();
 
   const handleAddForm = () => {
     setPopUp(!popup);
@@ -27,19 +27,18 @@ const TeacherAssignment = () => {
     fetchAssignments();
   }, []);
 
-  
-  const[assignments,setAssignment]=useState([]);
+  const [assignments, setAssignment] = useState([]);
 
   const fetchAssignments = async () => {
     try {
-      const response = await axios.get(`https://localhost:7276/api/Assignment/GetAssignmentByTeacherId/${tid}`);
+      const response = await api.get(`/Assignment/GetAssignmentByTeacherId/${tid}`);
       console.log('articles', response.data);
-      
-      const assignmentData = response.data.map(data=>({
-        id:data.assignmentId,
-        title:data.question,
-        subject:data.courseDTO.courseTitle,
-        submissionDate:data.submissionDate.split('T')[0]
+
+      const assignmentData = response.data.map((data) => ({
+        id: data.assignmentId,
+        title: data.question,
+        subject: data.courseDTO.courseTitle,
+        submissionDate: data.submissionDate.split('T')[0],
       }));
       setAssignment(assignmentData);
       console.log(assignmentData);
@@ -47,8 +46,6 @@ const TeacherAssignment = () => {
       console.log(e);
     }
   };
-
-
 
   return (
     <>
@@ -78,21 +75,26 @@ const TeacherAssignment = () => {
             return (
               <div key={assignment.id} className="assignment-item">
                 <AssignmentList
-                aid={assignment.id}
+                  aid={assignment.id}
                   title={assignment.title}
                   subject={assignment.subject}
                   submissionDate={assignment.submissionDate}
                   index={index}
-                  
                 />
               </div>
             );
           })}
         </div>
       </div>
-      {popup && 
-      <AddAssignmentForm currentDate={currentDate} handleAddForm={handleAddForm} assignments={assignments}
-                  setAssignments={setAssignment} setPopUp={setPopUp}/>}
+      {popup && (
+        <AddAssignmentForm
+          currentDate={currentDate}
+          handleAddForm={handleAddForm}
+          assignments={assignments}
+          setAssignments={setAssignment}
+          setPopUp={setPopUp}
+        />
+      )}
     </>
   );
 };

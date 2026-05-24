@@ -7,11 +7,10 @@ import CustomFormField from '../components/customFormField';
 import ButtonGroup from '../components/common/ButtonGroup';
 import FormHeader from '../components/common/FormHeader';
 import { useToken } from '../context/TokenContext';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import TeacherConstraintsForm from '../components/calendar/TeacherSchedule'
-
+import TeacherConstraintsForm from '../components/calendar/TeacherSchedule';
+import api from '../api/axios';
 
 const Articles = () => {
   const [dropdown, setDropDown] = useState(false);
@@ -33,7 +32,7 @@ const Articles = () => {
     setCurrentDate(today);
     const fetchArticle = async () => {
       try {
-        const response = await axios.get('https://localhost:7276/api/Article/GetArticle');
+        const response = await api.get('/Article/GetArticle');
         console.log('articles', response.data);
         setArticles(response.data);
       } catch (e) {
@@ -72,15 +71,7 @@ const Articles = () => {
     console.log(id, 'id');
 
     try {
-      const response = await axios.post(
-        `https://localhost:7276/api/Article/CreateArticle/${id}`,
-        JSON.stringify(articleData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await api.post(`/Article/CreateArticle/${id}`, JSON.stringify(articleData));
       setHeadLine('');
       setDescription('');
       setTag('');
@@ -120,15 +111,7 @@ const Articles = () => {
     };
     console.log(JSON.stringify(formData));
     try {
-      const response = await axios.put(
-        `https://localhost:7276/api/Article/UpdateArticle/${formData.articleId}/${id}`,
-        JSON.stringify(formData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await api.put(`/Article/UpdateArticle/${formData.articleId}/${id}`, JSON.stringify(formData));
       console.log('Resonse', response.data);
       setArticles((prevArticles) =>
         prevArticles.map((article) =>
@@ -149,7 +132,7 @@ const Articles = () => {
 
   const handleDeleteData = async (aid) => {
     try {
-      const response = await axios.delete(`https://localhost:7276/api/Article/DeleteArticle/${aid}/${id}`);
+      const response = await api.delete(`/Article/DeleteArticle/${aid}/${id}`);
       console.log(response.data);
       setArticles((prevArticles) => prevArticles.filter((article) => article.articleId !== aid));
       setDeleteData(false);
@@ -179,15 +162,14 @@ const Articles = () => {
     setDescription(event.target.value);
   };
 
-
   const [showForm, setShowForm] = useState(false);
 
   const handleToggleForm = () => {
-    setShowForm(prev => !prev);
+    setShowForm((prev) => !prev);
   };
 
   const handleConstraintsSubmit = (data) => {
-    console.log("Constraints Submitted:", data);
+    console.log('Constraints Submitted:', data);
     // Here you can call your API with the submitted data
     // e.g., axios.post('/api/teacherconstraints', data)
     // After submission, hide the form if desired:
@@ -212,13 +194,10 @@ const Articles = () => {
         }}
       />
 
-
-<div>
-      <button onClick={handleToggleForm}>
-        {showForm ? "Hide Teacher Constraints" : "Open Teacher Constraints"}
-      </button>
-      {showForm && <TeacherConstraintsForm onSubmit={handleConstraintsSubmit} />}
-    </div>
+      <div>
+        <button onClick={handleToggleForm}>{showForm ? 'Hide Teacher Constraints' : 'Open Teacher Constraints'}</button>
+        {showForm && <TeacherConstraintsForm onSubmit={handleConstraintsSubmit} />}
+      </div>
 
       {/* {console.log(role)} */}
       <div className="article-box">

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import PageHeader from '../../components/common/PageHeader';
 import '../../styles/Syllabus.css';
-import axios from 'axios';
+
+import api from '../../api/axios';
 
 const Syllabus = () => {
   const [syllabus, setSyllabus] = useState(null);
@@ -10,9 +11,7 @@ const Syllabus = () => {
 
   const fetchSyllabusById = async () => {
     try {
-      const response = await axios.get(
-        'https://localhost:7276/api/Syllabus/GetSyllabusById/CSC7'
-      );
+      const response = await api.get('Syllabus/GetSyllabusById/CSC7');
       console.log(response.data);
       setSyllabus(response.data);
       // Set the default active course to the first course in the list
@@ -43,31 +42,32 @@ const Syllabus = () => {
               {/* Regular Courses Section */}
               <div>
                 <h3>Regular Courses</h3>
-                {syllabus.courseDTO.map((course) => (
-                  !course.isElective && (
-                    <p
-                      key={course.courseId}
-                      className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
-                      onClick={() => handleCourseClick(course)}
-                    >
-                      {course.courseTitle}
-                    </p>
-                  )
-                ))}
+                {syllabus.courseDTO.map(
+                  (course) =>
+                    !course.isElective && (
+                      <p
+                        key={course.courseId}
+                        className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
+                        onClick={() => handleCourseClick(course)}>
+                        {course.courseTitle}
+                      </p>
+                    ),
+                )}
               </div>
 
               {/* Elective Courses Section */}
               <div>
                 <h3>Elective Courses</h3>
-                {syllabus.courseDTO.filter(course => course.isElective).map((course) => (
-                  <p
-                    key={course.courseId}
-                    className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
-                    onClick={() => handleCourseClick(course)}
-                  >
-                    {course.courseTitle}
-                  </p>
-                ))}
+                {syllabus.courseDTO
+                  .filter((course) => course.isElective)
+                  .map((course) => (
+                    <p
+                      key={course.courseId}
+                      className={activeCourse && activeCourse.courseId === course.courseId ? 'active' : ''}
+                      onClick={() => handleCourseClick(course)}>
+                      {course.courseTitle}
+                    </p>
+                  ))}
               </div>
             </>
           ) : (

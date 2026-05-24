@@ -9,6 +9,7 @@ import UniversityNavbar from './navbar/UniversityNavbar';
 import CollegeNavbar from './navbar/CollegeNavbar';
 import TeacherNavbar from './navbar/TeacherNavbar';
 import StudentNavbar from './navbar/StudentNavbar';
+import api from '../api/axios';
 
 const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
@@ -29,11 +30,7 @@ const Navbar = () => {
 
   const onLogout = async () => {
     try {
-      const response = await axios.post('https://localhost:7276/api/Auth/Logout', token, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await api.post('/Auth/Logout', token);
       console.log(response.data);
       setToken(null);
       setRole([]);
@@ -47,7 +44,6 @@ const Navbar = () => {
   const renderItems = () => {
     if (role.includes('Student')) {
       return <StudentNavbar handleLogout={handleLogout} toggleDropdown={toggleDropdown} dropDown={dropDown} />;
-
     } else if (role.includes('University')) {
       return <UniversityNavbar handleLogout={handleLogout} dropDown={dropDown} toggleDropdown={toggleDropdown} />;
     } else if (role.includes('Teacher')) {
@@ -59,7 +55,7 @@ const Navbar = () => {
 
   return (
     <div id="nav">
-    {console.log(role)}
+      {console.log(role)}
       <div className="logo">
         <Link to="/dashboard">
           <img src="logo4.png" alt="Logo" width={150} />
