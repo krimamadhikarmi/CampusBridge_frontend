@@ -5,6 +5,29 @@ import '../styles/LoginStyle.css';
 import { useToken } from '../context/TokenContext';
 import NormalPopup from '../components/NormalPopup';
 import api from '../api/axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+
+const developers = [
+  {
+    name: 'Krima Madhikarmi',
+    role: 'Frontend Engineer',
+    linkedin: 'https://www.linkedin.com/in/krima-madhikarmi/',
+    github: 'https://github.com/krimamadhikarmi',
+  },
+  {
+    name: 'Shishant Shrestha',
+    role: 'Backend and Database Developer',
+    linkedin: 'https://www.linkedin.com/in/csant26',
+    github: 'https://github.com/csant26',
+  },
+  {
+    name: 'Sarina Shrestha',
+    role: 'UI/UX Designer',
+    linkedin: 'https://www.linkedin.com/in/sarina-shrestha-6224802b0/',
+    github: 'https://github.com/SarinaStha0',
+  },
+];
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -92,40 +115,115 @@ const Login = () => {
     setPassword(event.target.value);
   };
   return (
-    <div className="login-body">
-      <div id="loginBox">
-        <div id="title">
-          <h2>Hello and Welcome!</h2>
-        </div>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <CustomFormField
-              label="Email"
-              cname="Email"
-              placeholder="Enter your email"
-              type="email"
-              value={username}
-              onChange={handleEmail}
-            />
-            <CustomFormField
-              label="Password"
-              cname="password"
-              placeholder="Enter your password"
-              type="password"
-              value={password}
-              onChange={handlePassword}
-            />
+    <main className="login-page">
+      <section className="login-body" aria-labelledby="login-title">
+        <div id="loginBox">
+          <div id="title">
+            <p className="login-kicker">CampusBridge</p>
+            <h1 id="login-title">Hello and Welcome!</h1>
+            <p className="login-access-note">Sign in with an account provided by your institution.</p>
+          </div>
+          <div>
+            <form onSubmit={handleSubmit}>
+              <CustomFormField
+                label="Email"
+                cname="Email"
+                placeholder="Enter your email"
+                type="email"
+                value={username}
+                onChange={handleEmail}
+              />
+              <CustomFormField
+                label="Password"
+                cname="password"
+                placeholder="Enter your password"
+                type="password"
+                value={password}
+                onChange={handlePassword}
+              />
 
-            <div id="login-button">
-              <input type="submit" />
-            </div>
-          </form>
+              <div id="login-button">
+                <input type="submit" value="Sign in" />
+              </div>
+            </form>
+          </div>
+          <a className="learn-more-link" href="#about">
+            Learn about CampusBridge
+          </a>
         </div>
-      </div>
+      </section>
+
+      <section className="about-section" id="about" aria-labelledby="about-title">
+        <div className="section-content">
+          <p className="section-kicker">Why CampusBridge</p>
+          <h2 id="about-title">One connected academic ecosystem</h2>
+          <p className="about-intro">
+            Academic information often moves in one direction through disconnected channels, taking
+            too long to reach students, teachers, colleges, and universities. CampusBridge brings
+            them together in one digital system so information can move clearly and efficiently.
+          </p>
+
+          <div className="feature-list">
+            <div className="feature-item">
+              <strong>Connected communication</strong>
+              <span>Keep every part of the academic community informed.</span>
+            </div>
+            <div className="feature-item">
+              <strong>Digital academics</strong>
+              <span>Manage assignments, attendance, articles, and other academic work online.</span>
+            </div>
+            <div className="feature-item">
+              <strong>Intelligent scheduling</strong>
+              <span>
+                Build exam schedules around subject priorities, required gaps, holidays, and
+                weekdays.
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="team-section" aria-labelledby="team-title">
+        <div className="section-content">
+          <p className="section-kicker">The team</p>
+          <h2 id="team-title">Built by</h2>
+          <div className="developer-list">
+            {developers.map((developer) => (
+              <div className="developer" key={developer.name}>
+                <div>
+                  <h3>{developer.name}</h3>
+                  <p>{developer.role}</p>
+                </div>
+                <div className="developer-links">
+                  <a
+                    href={developer.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${developer.name} on LinkedIn`}
+                  >
+                    <FontAwesomeIcon icon={faLinkedin} />
+                    LinkedIn
+                  </a>
+                  <a
+                    href={developer.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${developer.name} on GitHub`}
+                  >
+                    <FontAwesomeIcon icon={faGithub} />
+                    GitHub
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {errorMessage && (
         <NormalPopup title="Login Failed" message={errorMessage} onClose={() => setErrorMessage(null)} />
       )}
-    </div>
+    </main>
   );
 };
 export default Login;

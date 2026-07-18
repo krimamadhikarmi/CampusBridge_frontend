@@ -1,10 +1,11 @@
-const CustomFormField = ({ label, name, placeholder, type, value, cname, onChange,readOnly}) => {
+const CustomFormField = ({ label, name, placeholder, type, value, cname, onChange, readOnly }) => {
   return (
     <>
       <p id="login-label">
-        <label for={cname}>{label}</label>
+        <label htmlFor={cname}>{label}</label>
       </p>
       <input
+        id={cname}
         className="login-field"
         type={type}
         name={name}
