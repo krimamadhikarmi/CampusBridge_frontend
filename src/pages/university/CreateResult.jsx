@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import PageHeader from '../../components/common/PageHeader';
 import Navbar from '../../components/Navbar';
 import '../../styles/Result.css';

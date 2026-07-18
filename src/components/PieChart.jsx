@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
-import axios from 'axios';
 import api from '../api/axios';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);

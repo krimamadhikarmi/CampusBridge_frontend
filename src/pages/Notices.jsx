@@ -46,7 +46,7 @@ const Notices = () => {
       }
     };
     fetchNotice();
-  }, []);
+  }, [role]);
 
   const handleArticlePop = () => {
     setShowPopUp(!showpopup);

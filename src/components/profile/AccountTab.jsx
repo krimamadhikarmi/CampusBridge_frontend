@@ -4,16 +4,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import api from '../../api/axios';
 const AccountTab = () => {
-  const studentData = {
-    name: 'Krima Madhikarmi',
-    faculty: 'BSc.CSIT',
-    semester: '7th',
-    totalFee: 95000,
-    // scholarshipAmount: 300,
-    paymentStatus: 'Paid',
-    dueDate: '2024-12-01',
-  };
-
   const { id:studentid } = useToken();
   const [info, setInfo] = useState(null);
  useEffect(() => {
@@ -29,7 +19,7 @@ const AccountTab = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [studentid]);
 
 
   return (

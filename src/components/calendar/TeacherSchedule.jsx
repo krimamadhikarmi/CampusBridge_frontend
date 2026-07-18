@@ -4,14 +4,6 @@ import FormHeader from '../common/FormHeader';
 import ButtonGroup from '../common/ButtonGroup';
 import api from '../../api/axios';
 
-// Example teacher data (this could be passed as a prop instead)
-const teacherData = [
-  { teacherId: '101', name: 'Teacher 101' },
-  { teacherId: '102', name: 'Teacher 102' },
-  { teacherId: '103', name: 'Teacher 103' },
-  { teacherId: '104', name: 'Teacher 104' },
-];
-
 const totalSlots = [0, 1, 2, 3, 4]; // Example available slot numbers
 
 const TeacherConstraintsForm = ({ onSubmit, handleOnClick, teacherScheduleData = [] }) => {

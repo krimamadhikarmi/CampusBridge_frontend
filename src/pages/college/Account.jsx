@@ -17,9 +17,6 @@ const Account = () => {
   const { id } = useToken();
   const [selectaccount, setSelectAccount] = useState('All');
 
-  const [students, setStudents] = useState([]);
-  const [teachers, setTeachers] = useState([]);
-
   const [createpop, setCreatePop] = useState(false);
   const [accountType, setAccountType] = useState('');
 

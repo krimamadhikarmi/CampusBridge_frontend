@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import SyllabusTable from '../../components/syllabus/SyllabusTable';
 import CoursesTable from '../../components/syllabus/CoursesTable';
 import '../../styles/common.css';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api/axios';

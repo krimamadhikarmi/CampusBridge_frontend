@@ -62,12 +62,6 @@ const DashBoard = () => {
   const [meetings, setMeetings] = useState([]);
 
   const[username,setUsername]=useState('');
-  const fetchUserNameDetails = async () =>{
-    const response = await api.get(`/Auth/GetDataFromId?id=${userId}`);
-    const name = response.data.name;
-    setUsername(name);
-    console.log(username);
-  }
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -85,6 +79,11 @@ const DashBoard = () => {
   }
 
   useEffect(() => {
+    const fetchUserNameDetails = async () =>{
+      const response = await api.get(`/Auth/GetDataFromId?id=${userId}`);
+      const name = response.data.name;
+      setUsername(name);
+    }
     const fetchSchedule = async () => {
       try {
         const response = await api.get(`/Schedule/GetScheduleByRole?Role=${role}`);
@@ -110,7 +109,7 @@ const DashBoard = () => {
     };
     fetchSchedule();
     fetchUserNameDetails();
-  }, []);
+  }, [role, userId]);
 
   let selectedDayMeetings = meetings.filter(
     (meeting) => meeting.date && isSameDay(parseISO(meeting.date), selectedDay),

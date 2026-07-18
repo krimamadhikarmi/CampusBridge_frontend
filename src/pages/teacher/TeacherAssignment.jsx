@@ -4,8 +4,7 @@ import '../../styles/Assignment.css';
 import { useState, useEffect } from 'react';
 import AddAssignmentForm from '../../components/assignment/AddAssignmentForm';
 import AssignmentList from '../../components/assignment/AssignmentList';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToken } from '../../context/TokenContext';
 import api from '../../api/axios';
@@ -21,31 +20,30 @@ const TeacherAssignment = () => {
     setPopUp(!popup);
   };
 
+  const [assignments, setAssignment] = useState([]);
+
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
+    const fetchAssignments = async () => {
+      try {
+        const response = await api.get(`/Assignment/GetAssignmentByTeacherId/${tid}`);
+        console.log('articles', response.data);
+
+        const assignmentData = response.data.map((data) => ({
+          id: data.assignmentId,
+          title: data.question,
+          subject: data.courseDTO.courseTitle,
+          submissionDate: data.submissionDate.split('T')[0],
+        }));
+        setAssignment(assignmentData);
+        console.log(assignmentData);
+      } catch (e) {
+        console.log(e);
+      }
+    };
     fetchAssignments();
-  }, []);
-
-  const [assignments, setAssignment] = useState([]);
-
-  const fetchAssignments = async () => {
-    try {
-      const response = await api.get(`/Assignment/GetAssignmentByTeacherId/${tid}`);
-      console.log('articles', response.data);
-
-      const assignmentData = response.data.map((data) => ({
-        id: data.assignmentId,
-        title: data.question,
-        subject: data.courseDTO.courseTitle,
-        submissionDate: data.submissionDate.split('T')[0],
-      }));
-      setAssignment(assignmentData);
-      console.log(assignmentData);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  }, [tid]);
 
   return (
     <>

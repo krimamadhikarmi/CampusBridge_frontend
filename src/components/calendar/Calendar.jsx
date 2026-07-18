@@ -23,8 +23,8 @@ const Calendar = () => {
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
   let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
   const [pop, setPop] = useState(false);
-  const [udate, setUdate] = useState('');
-  const [gaps, setGap] = useState('');
+  const [, setUdate] = useState('');
+  const [, setGap] = useState('');
   const [semester, setSemester] = useState('');
   const [startdate, setStartDate] = useState('');
   const [enddate, setEndDate] = useState('');
@@ -175,3 +175,4 @@ const Calendar = () => {
     </>
   );
 };
+export default Calendar;

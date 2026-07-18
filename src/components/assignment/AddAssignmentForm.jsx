@@ -2,9 +2,8 @@ import CustomFormField from '../customFormField';
 import FormHeader from '../common/FormHeader';
 import ButtonGroup from '../common/ButtonGroup';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -15,7 +14,6 @@ const AddAssignmentForm = ({ handleAddForm, currentDate, assignments, setAssignm
   const [CourseId, setCourseId] = useState('');
   const [AssignedDate, setAssignedDate] = useState('');
   const [SubmissionDate, setSubmissionDate] = useState('');
-  const [TeacherId, setTeacherId] = useState('');
   const { id: teacherId } = useToken();
 
   const [file, setFile] = useState(null);
