@@ -14,7 +14,7 @@ const teacherData = [
 
 const totalSlots = [0, 1, 2, 3, 4]; // Example available slot numbers
 
-const TeacherConstraintsForm = ({ onSubmit, handleOnClick, teacherScheduleData }) => {
+const TeacherConstraintsForm = ({ onSubmit, handleOnClick, teacherScheduleData = [] }) => {
   // State for unavailable slots: array of objects { teacherId, unavailableSlots }
 
   const [scheduleData, setScheduleData] = useState(teacherScheduleData);
@@ -32,7 +32,7 @@ const TeacherConstraintsForm = ({ onSubmit, handleOnClick, teacherScheduleData }
 
   // State for teacher time conflicts: array of objects { teacherId, conflictWith }
   const [conflictData, setConflictData] = useState(
-    scheduleData.map((t) => ({
+    scheduleData?.map((t) => ({
       teacherId: t.teacherId,
       conflictWith: [],
     })),
