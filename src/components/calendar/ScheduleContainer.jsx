@@ -1,6 +1,5 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
-import { format, getDay, isEqual, isSameDay, isSameMonth, isToday, parseISO } from 'date-fns';
-import ScheduleList, { Meeting } from './ScheduleList';
+import { format } from 'date-fns';
+import ScheduleList from './ScheduleList';
 import CalendarView from './CalendarView';
 const ScheduleContainer = ({
   previousMonth,

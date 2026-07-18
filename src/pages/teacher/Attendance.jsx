@@ -25,16 +25,17 @@ const Attendance = () => {
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
+    fetchAttendance();
+  }, []);
 
+  useEffect(() => {
     // Initialize attendance state
     const initialAttendance = {};
     students.forEach((student) => {
       initialAttendance[student.id] = null; // null means no selection
     });
     setAttendance(initialAttendance);
-
-    fetchAttendance();
-  }, []);
+  }, [students]);
 
   const handleCheckboxChange = (studentId, status) => {
     setAttendance((prevAttendance) => ({

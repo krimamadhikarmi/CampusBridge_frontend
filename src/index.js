@@ -16,7 +16,6 @@ import Assignment from './pages/student/Assignment';
 import { TokenProvider } from './context/TokenContext';
 import CreateSyllabus from './pages/university/CreateSyllabus';
 import Colleges from './pages/university/Colleges';
-import Calendar from './components/calendar/Calendar';
 import CreateResult from './pages/university/CreateResult';
 import Attendance from './pages/teacher/Attendance';
 import Account from './pages/college/Account';

@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import CloseButton from '../common/CloseButton';
 import CustomFormField from '../customFormField';
-import TextAreaWithFile from '../TextAreaField';
 import ButtonGroup from '../common/ButtonGroup';
-import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
 import { v4 as uuidv4 } from 'uuid';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import api from '../../api/axios';
 
 const StudentAssignmentList = ({ id, question, title, subject, submissionDate, statusClass, statusText, index }) => {

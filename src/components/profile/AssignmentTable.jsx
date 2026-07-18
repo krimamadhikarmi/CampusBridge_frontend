@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useToken } from "../../context/TokenContext";
 import { useState } from "react";
@@ -8,11 +7,6 @@ const AssignmentTable = () => {
   const {id:stid} = useToken();
    const [submissions, setSubmissions] = useState([]);
 
-    const fetchStudentSubmissions = async () =>{
-      const response = await api.get(`/Assignment/GetStudentSubmissions/${stid}`);
-      setSubmissions(response.data);
-      console.log('student submissions',response.data);
-    }
     const handleDelete = async (sId) =>{
       const response = await api.delete(`/Assignment/DeleteSubmission/${sId}/${stid}`)
       console.log(response.data);
@@ -20,8 +14,13 @@ const AssignmentTable = () => {
 
     }
     useEffect(() => {
+      const fetchStudentSubmissions = async () =>{
+        const response = await api.get(`/Assignment/GetStudentSubmissions/${stid}`);
+        setSubmissions(response.data);
+        console.log('student submissions',response.data);
+      }
       fetchStudentSubmissions();
-    }, []);
+    }, [stid]);
 
   return (
     <div className="assignment-present">

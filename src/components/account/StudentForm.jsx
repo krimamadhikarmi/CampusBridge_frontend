@@ -34,7 +34,6 @@ const StudentForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
   });
 
   const [currentElective, setCurrentElective] = useState('');
-  const [currentClubId, setCurrentClubId] = useState('');
 
   const addElective = () => {
     if (currentElective.trim() !== '') {
@@ -43,15 +42,6 @@ const StudentForm = ({ accountType, handleAddAccount, handleSubmit, id }) => {
         electiveIds: [...prev.electiveIds, currentElective],
       }));
       setCurrentElective('');
-    }
-  };
-  const addClubId = () => {
-    if (currentClubId.trim() !== '') {
-      setFormData((prev) => ({
-        ...prev,
-        clubIds: [...prev.clubIds, currentClubId],
-      }));
-      setCurrentClubId('');
     }
   };
 

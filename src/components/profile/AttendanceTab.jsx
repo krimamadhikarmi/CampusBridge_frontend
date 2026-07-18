@@ -41,16 +41,14 @@ const AttendanceTab = () => {
   const {id:userId}=useToken();
   const[attendanceData,setAttendanceData] = useState([]);
 
+useEffect(() => {
   const fetchAttendanceData = async()=>{
     const response = await api.get(`/Attendance/GetStudentAttendance/${userId}`);
     console.log(response.data);
     setAttendanceData(response.data);
-    console.log('attendance data:',attendanceData);
   }
-
-useEffect(() => {
   fetchAttendanceData();
-  }, []);
+  }, [userId]);
 
   return (
     <table className="attendance-table">

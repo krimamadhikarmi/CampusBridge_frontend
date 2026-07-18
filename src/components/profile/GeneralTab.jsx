@@ -1,8 +1,5 @@
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'; // Import specific icon
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import EditForm from './EditForm';
-import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
 import api from '../../api/axios';
 
@@ -24,7 +21,7 @@ const GeneralTab = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [studentid]);
 
   const toogleEditForm = () => {
     console.log('toogled');

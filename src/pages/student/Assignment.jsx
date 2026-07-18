@@ -3,8 +3,7 @@ import StudentAssignmentList from '../../components/assignment/StudentAssignment
 import PageHeader from '../../components/common/PageHeader';
 import '../../styles/Assignment.css';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api/axios';
 

@@ -78,22 +78,21 @@ const DashCalendar = ({
 
   const [teacherScheduleData, setTeacherScheduleData] = useState([]);
 
-  const fetchCourseTeacher = async () => {
-    try {
-      const response = await api.get('/Teacher/GetCourseTeacher');
-      const transformedData = response.data.map((course, index) => ({
-        id: index + 1,
-        courseName: course.courseTitle,
-        teacherId: course.teacherId,
-      }));
-
-      setTeacherScheduleData(transformedData);
-      console.log(teacherScheduleData, 'response');
-    } catch (error) {
-      console.error('Error fetching course-teacher data:', error);
-    }
-  };
   useEffect(() => {
+    const fetchCourseTeacher = async () => {
+      try {
+        const response = await api.get('/Teacher/GetCourseTeacher');
+        const transformedData = response.data.map((course, index) => ({
+          id: index + 1,
+          courseName: course.courseTitle,
+          teacherId: course.teacherId,
+        }));
+
+        setTeacherScheduleData(transformedData);
+      } catch (error) {
+        console.error('Error fetching course-teacher data:', error);
+      }
+    };
     fetchCourseTeacher();
   }, []);
 

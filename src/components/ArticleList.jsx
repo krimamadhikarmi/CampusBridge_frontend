@@ -8,7 +8,6 @@ import FormHeader from './common/FormHeader';
 import CustomFormField from './customFormField';
 import ButtonGroup from './common/ButtonGroup';
 import { useEffect } from 'react';
-import axios from 'axios';
 import api from '../api/axios';
 const ArticleList = ({
   headline,
@@ -42,16 +41,15 @@ const ArticleList = ({
   const handleArticle = () => {
     setArticlePop(!articlepop);
   };
-  const fetchUserNameDetails = async () =>{
-    console.log('author',author);
+  useEffect(() => {
+    const fetchUserNameDetails = async () => {
+      console.log('author', author);
       const response = await api.get(`/Auth/GetDataFromId?id=${author}`);
       const name = response.data.name;
       setUsername(name);
-      console.log(username);
     };
-    useEffect(() => {
-        fetchUserNameDetails();
-      }, []);
+    fetchUserNameDetails();
+  }, [author]);
     
   const handleEditFormSubmit = (e) => {
     e.preventDefault();
@@ -79,7 +77,7 @@ const ArticleList = ({
           {headline}
         </h2>
         <p className="article-description">{tagline}</p>
-        {createdDate != updatedDate ? (
+        {createdDate !== updatedDate ? (
                 <div className="article-info">
                   <span className="article-date">Date Posted: {createdDate.split('T')[0]}</span>
                   <span className="article-date">Date Updated: {updatedDate.split('T')[0]}</span>

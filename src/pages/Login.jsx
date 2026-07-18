@@ -3,7 +3,6 @@ import CustomFormField from '../components/customFormField';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import '../styles/LoginStyle.css';
 import { useToken } from '../context/TokenContext';
-import axios from 'axios';
 import NormalPopup from '../components/NormalPopup';
 import api from '../api/axios';
 

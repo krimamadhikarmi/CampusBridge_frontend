@@ -4,9 +4,8 @@ import { useState } from 'react';
 import ConfirmPopup from '../LogoutPopup';
 import EditAssignmentForm from './EditAssignment.Form';
 import CloseButton from '../common/CloseButton';
-import axios from 'axios';
 import { useToken } from '../../context/TokenContext';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomFormField from '../customFormField';
 import api from '../../api/axios';
@@ -82,7 +81,7 @@ const AssignmentList = ({ title, subject, submissionDate, index, aid }) => {
 
   const gradeAssignment = async (subid) => {
     const score = scores[subid];
-    const response = await api.get(`/Assignment/GradeAssignment/${subid}/${score}`);
+    await api.get(`/Assignment/GradeAssignment/${subid}/${score}`);
     toast.success('Score updated successfully!');
     window.location.reload();
   };

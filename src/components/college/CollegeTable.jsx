@@ -3,9 +3,8 @@ import FormHeader from '../common/FormHeader';
 import CustomFormField from '../customFormField';
 import ButtonGroup from '../common/ButtonGroup';
 import ConfirmPopup from '../LogoutPopup';
-import { useEffect } from 'react';
 import { useToken } from '../../context/TokenContext';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api/axios';
 

@@ -3,7 +3,6 @@ import '../styles/Navbar.css';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToken } from '../context/TokenContext';
-import axios from 'axios';
 import ConfirmPopup from './LogoutPopup';
 import UniversityNavbar from './navbar/UniversityNavbar';
 import CollegeNavbar from './navbar/CollegeNavbar';
